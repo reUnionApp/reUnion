@@ -82,6 +82,22 @@ const User = db.define("User", {
     },
     defaultValue: false,
   },
+  // isOwner: {
+  //   type: Sequelize.BOOLEAN,
+  //   allowNull: false,
+  //   validate: {
+  //     notEmpty: true,
+  //   },
+  //   defaultValue: false,
+  // },
+  // isCoordinator: {
+  //   type: Sequelize.BOOLEAN,
+  //   allowNull: false,
+  //   validate: {
+  //     notEmpty: true,
+  //   },
+  //   defaultValue: false,
+  // },
   // },
   // address: {
   //   type: Sequelize.STRING,
