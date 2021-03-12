@@ -37,4 +37,4 @@ const Activity = db.define("Activity", {
   },
 });
 
-module.exports = Event;
+module.exports = Activity;
