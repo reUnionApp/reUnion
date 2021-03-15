@@ -3,6 +3,27 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('User', {
+<<<<<<< Updated upstream
+=======
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  alias: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+>>>>>>> Stashed changes
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -31,6 +52,32 @@ const User = db.define('User', {
   googleId: {
     type: Sequelize.STRING,
   },
+<<<<<<< Updated upstream
+=======
+  dietaryRestrictions: {
+    type: Sequelize.ARRAY(
+      Sequelize.ENUM({
+        values: [
+          'gluten free',
+          'vegan',
+          'vegetarian',
+          'no seafood',
+          'peanut allergy',
+          'kosher',
+          'halal',
+          // {
+          //   other: {
+          //     type: Sequelize.STRING,
+          //   },
+          // },
+        ],
+      })
+    ),
+  },
+  specialRequests: {
+    type: Sequelize.ARRAY(Sequelize.TEXT),
+  },
+>>>>>>> Stashed changes
   isAdmin: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
