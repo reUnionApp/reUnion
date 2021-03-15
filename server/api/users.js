@@ -4,17 +4,19 @@ const adminsOnly = require('../auth/adminsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
+module.exports = router;
 
 // All Users: GET /api/users
 
-router.get('/', adminsOnly, async (req, res, next) => {
+//adminsOnly
+router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
       attributes: [
-        'userID',
+        'id',
         'firstName',
         'lastName',
         'alias',
@@ -31,12 +33,13 @@ router.get('/', adminsOnly, async (req, res, next) => {
 });
 
 // Single User: GET /api/users/:userId
-router.get('/:userID', userOrAdminOnly, async (req, res, next) => {
+// userOrAdminOnly
+router.get('/:userID', async (req, res, next) => {
   const id = req.params.userID;
   try {
     const user = await User.findByPk(id, {
       attributes: [
-        'userID',
+        'id',
         'firstName',
         'lastName',
         'alias',
@@ -62,8 +65,8 @@ router.get('/:userID', userOrAdminOnly, async (req, res, next) => {
 });
 
 // Single User: DELETE /api/users/:userID
-
-router.delete('/:userID', adminsOnly, async (req, res, next) => {
+// adminsOnly
+router.delete('/:userID', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userID);
     await user.destroy();
@@ -85,8 +88,8 @@ router.post('/', async (req, res, next) => {
 });
 
 // Single User: PUT /api/users/:userID
-
-router.put('/:userID', userOrAdminOnly, async (req, res, next) => {
+// userOrAdminOnly
+router.put('/:userID', async (req, res, next) => {
   const id = req.params.userID;
   try {
     const user = await User.findByPk(id);

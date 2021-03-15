@@ -18,7 +18,8 @@ module.exports = app;
  * keys as environment variables, so that they can still be read by the
  * Node process on process.env
  */
-if (process.env.NODE_ENV !== 'production') require('../secrets');
+
+// if (process.env.NODE_ENV !== 'production') require('../secrets');
 
 const createApp = () => {
   // logging middleware
@@ -32,7 +33,7 @@ const createApp = () => {
   app.use(compression());
 
   // auth and api routes
-  // app.use('/auth', require('./auth'))
+  // app.use('/auth', require('./auth'));
   app.use('/api', require('./api'));
 
   // static file-serving middleware
@@ -64,7 +65,9 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  app.listen(PORT, () => console.log(`Reuniting on port ${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`Reuniting on port ${PORT}`, `http://localhost:${PORT}`)
+  );
 };
 
 const syncDb = () => db.sync();
