@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-  if (req.user.isAdmin === true) {
+  if (req.user.type === 'owner') {
     next();
   } else {
     const err = new Error('Unauthorized access');

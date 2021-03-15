@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const Sequelize = require("sequelize");
 const db = require("../db");
 
+
 const User = db.define("User", {
   firstName: {
     type: Sequelize.STRING,
@@ -53,18 +54,20 @@ const User = db.define("User", {
     type: Sequelize.ARRAY(
       Sequelize.ENUM({
         values: [
-          "gluten free",
-          "vegan",
-          "vegetarian",
-          "no seafood",
-          "peanut allergy",
-          "kosher",
-          "halal",
-          {
-            other: {
-              type: Sequelize.STRING,
-            },
-          },
+
+          'gluten free',
+          'vegan',
+          'vegetarian',
+          'no seafood',
+          'peanut allergy',
+          'kosher',
+          'halal',
+          // {
+          //   other: {
+          //     type: Sequelize.STRING,
+          //   },
+          // },
+
         ],
       })
     ),
