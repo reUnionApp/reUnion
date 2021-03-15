@@ -1,11 +1,11 @@
 const db = require('./server/db/db');
-const { User, Event, Activity } = require('./server/db/models/');
+const { User, Event, Activity, UserEvent } = require('./server/db/models/');
 
 // getting tomorrow's date
 const tomorrow = new Date();
 tomorrow.setDate(new Date().getDate() + 1);
 
-console.log(tomorrow);
+// console.log(tomorrow);
 
 async function seed() {
   await db.sync({ force: true });
@@ -36,6 +36,7 @@ async function seed() {
   ]);
 
   // Filler seed, how to seed a through table?
+
   const activity = await Promise.all([
     Activity.create({
       activityName: 'Pin the tail on the donkey',
@@ -48,6 +49,8 @@ async function seed() {
       EventId: 1,
     }),
   ]);
+
+  await users[0].setEvents(1);
 }
 
 async function runSeed() {
