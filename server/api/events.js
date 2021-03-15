@@ -4,11 +4,13 @@ const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
 const { Event } = require('../db/models');
+module.exports = router;
 
 // All Events: GET /api/events
-
-router.get('/', adminsOnly, async (req, res, next) => {
+// adminsOnly
+router.get('/', async (req, res, next) => {
   try {
+    console.log('hello world');
     const events = await Event.findAll();
     res.json(events);
   } catch (error) {
@@ -17,8 +19,8 @@ router.get('/', adminsOnly, async (req, res, next) => {
 });
 
 // Single Event: GET /api/events/:eventID
-
-router.get('/:eventID', userOrAdminOnly, async function (req, res, next) {
+// userOrAdminOnly
+router.get('/:eventID', async function (req, res, next) {
   const id = req.params.eventID;
   try {
     const thisEvent = await Event.findByPk(id);
@@ -32,8 +34,8 @@ router.get('/:eventID', userOrAdminOnly, async function (req, res, next) {
 });
 
 // Single Event: DELETE /api/events/:eventID
-
-router.delete('/:eventID', adminsOnly, ownersOnly, async (req, res, next) => {
+// adminsOnly
+router.delete('/:eventID', ownersOnly, async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
     await event.destroy();
@@ -57,24 +59,20 @@ router.post('/', async (req, res, next) => {
 // Single Event: PUT /api/events/:eventID
 
 // Separated authentication into 3 seperate files. If this doesn't work we'll have to combine them into admin, admin+owner, admin+owner+coordinator
-
-router.put(
-  '/:eventID',
-  adminsOnly,
-  ownersOnly,
-  coordinatorsOnly,
-  async (req, res, next) => {
-    const id = req.params.eventID;
-    try {
-      const event = await Event.findByPk(id);
-      if (!event) {
-        res.sendStatus(404);
-      } else {
-        await event.update(req.body);
-        res.json(event);
-      }
-    } catch (error) {
-      next(error);
+// adminsOnly,
+// ownersOnly,
+// coordinatorsOnly,
+router.put('/:eventID', async (req, res, next) => {
+  const id = req.params.eventID;
+  try {
+    const event = await Event.findByPk(id);
+    if (!event) {
+      res.sendStatus(404);
+    } else {
+      await event.update(req.body);
+      res.json(event);
     }
+  } catch (error) {
+    next(error);
   }
-);
+});

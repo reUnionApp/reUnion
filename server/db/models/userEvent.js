@@ -1,9 +1,10 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize');
+const db = require('../db');
 
-const User_Event = db.define("User_Event", {
+const UserEvent = db.define('UserEvent', {
   isOwner: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -11,6 +12,7 @@ const User_Event = db.define("User_Event", {
   },
   isCoordinator: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -18,4 +20,4 @@ const User_Event = db.define("User_Event", {
   },
 });
 
-module.exports = User_Event;
+module.exports = UserEvent;
