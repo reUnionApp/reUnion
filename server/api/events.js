@@ -3,7 +3,7 @@ const adminsOnly = require('../auth/adminsOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
-const { Event } = require('../db/models');
+const { Event, Activity } = require('../db/models');
 module.exports = router;
 
 // All Events: GET /api/events

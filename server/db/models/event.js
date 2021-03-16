@@ -32,11 +32,11 @@ const Event = db.define('Event', {
     },
   },
   coordinator: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    type: Sequelize.ARRAY(
+      Sequelize.TEXT({
+        values: [],
+      })
+    ),
   },
   description: {
     type: Sequelize.TEXT,
