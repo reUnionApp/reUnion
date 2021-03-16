@@ -6,11 +6,17 @@ const userOrAdminOnly = require('../auth/userOrAdminOnly');
 const { Activity } = require('../db/models');
 module.exports = router;
 
-// All Activities: GET /api/events/:eventID/activities
+// All Activities: GET /api/:eventID/activities
 // adminsOnly
-router.get('/', async (req, res, next) => {
+router.get('/:eventID/activities', async (req, res, next) => {
   try {
-    const activities = await Activity.findAll();
+    const id = req.params.eventID;
+    console.log('req.params', req.params);
+    const activities = await Activity.findAll({
+      where: {
+        EventId: id,
+      },
+    });
     res.json(activities);
   } catch (error) {
     next(error);
@@ -19,14 +25,15 @@ router.get('/', async (req, res, next) => {
 
 // Single Event: GET /api/events/:eventID/activities/:activityID
 // userOrAdminOnly
-router.get('/:eventID', async function (req, res, next) {
-  const id = req.params.eventID;
+router.get('/:eventID/activities/:activityID', async function (req, res, next) {
+  const id = req.params.activityID;
+  console.log('params in single activity', req.params);
   try {
-    const thisEvent = await Event.findByPk(id);
-    if (!thisEvent) {
+    const thisActivity = await Activity.findByPk(id);
+    if (!thisActivity) {
       res.sendStatus(404).end();
     }
-    res.json(thisEvent);
+    res.json(thisActivity);
   } catch (error) {
     next(error);
   }
