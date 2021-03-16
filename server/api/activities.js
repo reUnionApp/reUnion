@@ -26,10 +26,16 @@ router.get('/:eventID/activities', async (req, res, next) => {
 // Single Event: GET /api/events/:eventID/activities/:activityID
 // userOrAdminOnly
 router.get('/:eventID/activities/:activityID', async function (req, res, next) {
-  const id = req.params.activityID;
-  console.log('params in single activity', req.params);
   try {
-    const thisActivity = await Activity.findByPk(id);
+    const activityId = req.params.activityID;
+    const eventId = req.params.eventID;
+
+    const thisActivity = await Activity.findOne({
+      where: {
+        EventId: eventId,
+        id: activityId,
+      },
+    });
     if (!thisActivity) {
       res.sendStatus(404).end();
     }
