@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const pkg = require("../../package.json");
+const Sequelize = require('sequelize');
+const pkg = require('../../package.json');
 
-const databaseName =
-  pkg.name + (process.env.NODE_ENV === "test" ? "-test" : "");
+const databaseName = 'reunion';
+// pkg.name + (process.env.NODE_ENV === "test" ? "-test" : "");
 
 let db;
 
@@ -10,8 +10,8 @@ if (process.env.DATABASE_URL) {
   db = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
     operatorsAliases: 0,
-    dialect: "postgres",
-    protocol: "postgres",
+    dialect: 'postgres',
+    protocol: 'postgres',
     ssl: true,
     dialectOptions: {
       ssl: true,

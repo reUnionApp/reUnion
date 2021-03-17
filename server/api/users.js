@@ -45,7 +45,7 @@ router.get('/:userID', async (req, res, next) => {
         'alias',
         'email',
         'dietaryRestrictions',
-        'accessibility',
+        'specialRequests',
         'isAdmin',
       ],
       // include: [
@@ -81,7 +81,7 @@ router.delete('/:userID', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newUser = await User.create(req.body);
-    res.json(newUser);
+    res.status(201).json(newUser);
   } catch (error) {
     next(error);
   }
@@ -97,7 +97,7 @@ router.put('/:userID', async (req, res, next) => {
       res.sendStatus(404);
     } else {
       await user.update(req.body);
-      res.json(user);
+      res.status(200).json(user);
     }
   } catch (error) {
     next(error);
