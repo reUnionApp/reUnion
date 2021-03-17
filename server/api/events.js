@@ -35,7 +35,7 @@ router.get('/:eventID', async function (req, res, next) {
 
 // Single Event: DELETE /api/events/:eventID
 // adminsOnly
-router.delete('/:eventID', ownersOnly, async (req, res, next) => {
+router.delete('/:eventID', async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
     await event.destroy();
