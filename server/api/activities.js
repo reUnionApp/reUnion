@@ -65,7 +65,7 @@ router.delete("/:eventID/activities/:activityID", async (req, res, next) => {
   }
 });
 
-// Single Event: POST /api/events/:eventID/activities
+// Single Activity: POST /api/events/:eventID/activities
 
 router.post("/:eventID/activities", async (req, res, next) => {
   try {
@@ -74,37 +74,35 @@ router.post("/:eventID/activities", async (req, res, next) => {
       ...req.body,
       EventId: event,
     });
-
     res.json(newActivity);
+    res.sendStatus(201);
   } catch (error) {
     next(error);
   }
 });
 
-// router.post("/", async (req, res, next) => {
-//   try {
-//     const newEvent = await Event.create(req.body);
-//     res.json(newEvent);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-// Single Event: PUT /api/events/:eventID
+// Single Activity: PUT /api/events/:eventID/activities/:activityID
 
 // Separated authentication into 3 seperate files. If this doesn't work we'll have to combine them into admin, admin+owner, admin+owner+coordinator
 // adminsOnly,
 // ownersOnly,
 // coordinatorsOnly,
-router.put("/:eventID", async (req, res, next) => {
-  const id = req.params.eventID;
+router.put("/:eventID/activities/:activityID", async (req, res, next) => {
   try {
-    const event = await Event.findByPk(id);
-    if (!event) {
+    const activityId = req.params.activityID;
+    const eventId = req.params.eventID;
+
+    const thisActivity = await Activity.findOne({
+      where: {
+        EventId: eventId,
+        id: activityId,
+      },
+    });
+    if (!thisActivity) {
       res.sendStatus(404);
     } else {
-      await event.update(req.body);
-      res.json(event);
+      await thisActivity.update(req.body);
+      res.json(thisActivity);
     }
   } catch (error) {
     next(error);
