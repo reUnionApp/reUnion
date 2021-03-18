@@ -1,18 +1,18 @@
-const router = require('express').Router();
-const adminsOnly = require('../auth/adminsOnly');
-const coordinatorsOnly = require('../auth/coordinatorsOnly');
-const ownersOnly = require('../auth/ownersOnly');
-const userOrAdminOnly = require('../auth/userOrAdminOnly');
-const { Event, Activity } = require('../db/models');
+const router = require("express").Router();
+const adminsOnly = require("../auth/adminsOnly");
+const coordinatorsOnly = require("../auth/coordinatorsOnly");
+const ownersOnly = require("../auth/ownersOnly");
+const userOrAdminOnly = require("../auth/userOrAdminOnly");
+const { Event, Activity } = require("../db/models");
 module.exports = router;
 
 // All Events: GET /api/events
 // adminsOnly
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    console.log('hello world');
+    console.log("hello world");
     const events = await Event.findAll();
-    res.json(events);
+    res.status(200).json(events);
   } catch (error) {
     next(error);
   }
@@ -20,14 +20,14 @@ router.get('/', async (req, res, next) => {
 
 // Single Event: GET /api/events/:eventID
 // userOrAdminOnly
-router.get('/:eventID', async function (req, res, next) {
+router.get("/:eventID", async function (req, res, next) {
   const id = req.params.eventID;
   try {
     const thisEvent = await Event.findByPk(id);
     if (!thisEvent) {
       res.sendStatus(404).end();
     }
-    res.json(thisEvent);
+    res.status(200).json(thisEvent);
   } catch (error) {
     next(error);
   }
@@ -35,11 +35,11 @@ router.get('/:eventID', async function (req, res, next) {
 
 // Single Event: DELETE /api/events/:eventID
 // adminsOnly
-router.delete('/:eventID', async (req, res, next) => {
+router.delete("/:eventID", async (req, res, next) => {
   try {
     const event = await Event.findByPk(req.params.id);
     await event.destroy();
-    res.json(event);
+    res.status(200).json(event);
   } catch (error) {
     next(error);
   }
@@ -47,10 +47,10 @@ router.delete('/:eventID', async (req, res, next) => {
 
 // Single Event: POST /api/events/
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const newEvent = await Event.create(req.body);
-    res.json(newEvent);
+    res.status(201).json(newEvent);
   } catch (error) {
     next(error);
   }
@@ -62,7 +62,7 @@ router.post('/', async (req, res, next) => {
 // adminsOnly,
 // ownersOnly,
 // coordinatorsOnly,
-router.put('/:eventID', async (req, res, next) => {
+router.put("/:eventID", async (req, res, next) => {
   const id = req.params.eventID;
   try {
     const event = await Event.findByPk(id);
@@ -70,7 +70,7 @@ router.put('/:eventID', async (req, res, next) => {
       res.sendStatus(404);
     } else {
       await event.update(req.body);
-      res.json(event);
+      res.status(200).json(event);
     }
   } catch (error) {
     next(error);
