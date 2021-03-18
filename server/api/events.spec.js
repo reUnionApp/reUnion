@@ -16,9 +16,9 @@ describe("Event API", () => {
       const res = await request(app)
         .post("/api/events")
         .send({
-          eventName: "Abbies Amazing Accenture Party",
+          eventName: "Farhads Free Fajitas Party",
           eventType: ["class reunion"],
-          owner: "Abbie",
+          owner: "Farhad",
           coordinator: ["Greta", "Sveta"],
           description: "Reunion for gobbling up skittles.",
           location: "Sungs Beverly Hills Mansion",
@@ -47,7 +47,7 @@ describe("Event API", () => {
 
   describe("Delete Single Event Route", () => {
     it("should delete a single event", async () => {
-      const res = await request(app).delete("/api/events/1");
+      const res = await request(app).delete("/api/events/2");
       expect(res.status).toEqual(200);
     });
   });
@@ -55,9 +55,9 @@ describe("Event API", () => {
   describe("Update Event Route", () => {
     it("should update a single event", async () => {
       const res = await request(app)
-        .put("/api/events/2")
+        .put("/api/events/1")
         .send({
-          eventName: "Svetas Silence of the Lambs Reunion",
+          eventName: "Gretas Green Berets Reunion",
           eventType: ["class reunion"],
           owner: "Greta",
           coordinator: ["Sung Lee", "Abbie Stauffer"],

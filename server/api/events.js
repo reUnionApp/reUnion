@@ -10,7 +10,6 @@ module.exports = router;
 // adminsOnly
 router.get("/", async (req, res, next) => {
   try {
-    console.log("hello world");
     const events = await Event.findAll();
     res.status(200).json(events);
   } catch (error) {
@@ -37,7 +36,7 @@ router.get("/:eventID", async function (req, res, next) {
 // adminsOnly
 router.delete("/:eventID", async (req, res, next) => {
   try {
-    const event = await Event.findByPk(req.params.id);
+    const event = await Event.findByPk(req.params.eventID);
     await event.destroy();
     res.status(200).json(event);
   } catch (error) {
