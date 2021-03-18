@@ -45,6 +45,30 @@ async function seed() {
       startTime: '07:00 AM',
       endTime: '05:00 PM',
     }),
+    Event.create({
+      eventName: 'Yellow Shirts Reunion',
+      eventType: ['class reunion'],
+      owner: 'Abbie Stauffer',
+      coordinator: ['Sung Lee', 'Abbie Stauffer'],
+      description: 'Reunion for wearing yellow shirts.',
+      location: 'online',
+      startDate: Date.now(),
+      endDate: tomorrow,
+      startTime: '07:00 AM',
+      endTime: '05:00 PM',
+    }),
+    Event.create({
+      eventName: 'Green Jackets Reunion',
+      eventType: ['class reunion'],
+      owner: 'Svetlana Leonova ',
+      coordinator: ['Sung Lee', 'Abbie Stauffer'],
+      description: 'Reunion for wearing green jackets.',
+      location: 'online',
+      startDate: Date.now(),
+      endDate: tomorrow,
+      startTime: '07:00 AM',
+      endTime: '05:00 PM',
+    }),
   ]);
 
   // Filler seed, how to seed a through table?
@@ -89,6 +113,16 @@ async function seed() {
       startTime: '11:00 AM',
       endTime: '10:00 PM',
       EventId: 2,
+    }),
+    Activity.create({
+      activityName: 'Waterballon Toss',
+      description: 'Toss a ballon to a friend and hope to not get wet!',
+      location: 'Pool',
+      startDate: Date.now(),
+      endDate: tomorrow,
+      startTime: '11:00 AM',
+      endTime: '10:00 PM',
+      EventId: 3,
     }),
   ]);
 
