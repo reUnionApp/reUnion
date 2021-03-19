@@ -7,7 +7,7 @@ const { Event } = require("../db/models");
 const tomorrow = new Date();
 tomorrow.setDate(new Date().getDate() + 1);
 
-describe("Event API", () => {
+describe('Event API', () => {
   beforeAll(() => {
     db.sync();
   });
@@ -27,33 +27,33 @@ describe("Event API", () => {
 
     it("should create a new event", async () => {
       const res = await request(app)
-        .post("/api/events")
+        .post('/api/events')
         .send({
-          eventName: "Farhads Free Fajitas Party",
-          eventType: ["class reunion"],
-          owner: "Farhad",
-          coordinator: ["Greta", "Sveta"],
-          description: "Reunion for gobbling up skittles.",
-          location: "Sungs Beverly Hills Mansion",
+          eventName: 'Farhads Free Fajitas Party',
+          eventType: ['class reunion'],
+          owner: 'Farhad',
+          coordinator: ['Greta', 'Sveta'],
+          description: 'Reunion for gobbling up skittles.',
+          location: 'Sungs Beverly Hills Mansion',
           startDate: Date.now(),
           endDate: tomorrow,
-          startTime: "07:00 AM",
-          endTime: "05:00 PM",
+          startTime: '07:00 AM',
+          endTime: '05:00 PM',
         });
       expect(res.status).toEqual(201);
     });
   });
 
-  describe("Get All Events Route", () => {
-    it("should get all events", async () => {
-      const res = await request(app).get("/api/events");
+  describe('Get All Events Route', () => {
+    it('should get all events', async () => {
+      const res = await request(app).get('/api/events');
       expect(res.status).toEqual(200);
     });
   });
 
-  describe("Get Single Event Route", () => {
-    it("should get a single event", async () => {
-      const res = await request(app).get("/api/events/1");
+  describe('Get Single Event Route', () => {
+    it('should get a single event', async () => {
+      const res = await request(app).get('/api/events/1');
       expect(res.status).toEqual(200);
     });
   });
@@ -118,16 +118,16 @@ describe("Event API", () => {
       const res = await request(app)
         .put(`/api/events/${testEvent.id}`)
         .send({
-          eventName: "Gretas Green Berets Reunion",
-          eventType: ["class reunion"],
-          owner: "Greta",
-          coordinator: ["Sung Lee", "Abbie Stauffer"],
-          description: "Reunion for vegan food.",
-          location: "online",
+          eventName: 'Gretas Green Berets Reunion',
+          eventType: ['class reunion'],
+          owner: 'Greta',
+          coordinator: ['Sung Lee', 'Abbie Stauffer'],
+          description: 'Reunion for vegan food.',
+          location: 'online',
           startDate: Date.now(),
           endDate: tomorrow,
-          startTime: "07:00 AM",
-          endTime: "05:00 PM",
+          startTime: '07:00 AM',
+          endTime: '05:00 PM',
         });
       expect(res.status).toEqual(200);
     });
