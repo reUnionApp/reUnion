@@ -17,6 +17,7 @@
     "connect-session-sequelize": "^7.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "faker": "^5.4.0",
     "jest": "^24.7.1",
     "pg": "^8.5.1",
     "react": "^17.0.1",

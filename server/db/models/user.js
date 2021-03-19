@@ -2,116 +2,115 @@ const crypto = require("crypto");
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-
-const User = db.define("User", {
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
+const User = db.define(
+  "User",
+  {
+    firstName: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-  },
-  lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
+    lastName: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-  },
-  alias: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      isEmail: true,
-      notEmpty: true,
+    alias: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
-  },
-  password: {
-    type: Sequelize.STRING,
-    // Making `.password` act like a func hides it when serializing to JSON.
-    // This is a hack to get around Sequelize's lack of a "private" option.
-    get() {
-      return () => this.getDataValue("password");
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+        isEmail: true,
+        notEmpty: true,
+      },
     },
-  },
-  salt: {
-    type: Sequelize.STRING,
-    // Making `.salt` act like a function hides it when serializing to JSON.
-    // This is a hack to get around Sequelize's lack of a "private" option.
-    get() {
-      return () => this.getDataValue("salt");
+    password: {
+      type: Sequelize.STRING,
+      // Making `.password` act like a func hides it when serializing to JSON.
+      // This is a hack to get around Sequelize's lack of a "private" option.
+      get() {
+        return () => this.getDataValue("password");
+      },
     },
-  },
-  googleId: {
-    type: Sequelize.STRING,
-  },
-  dietaryRestrictions: {
-    type: Sequelize.ARRAY(
-      Sequelize.ENUM({
-        values: [
-
-          'gluten free',
-          'vegan',
-          'vegetarian',
-          'no seafood',
-          'peanut allergy',
-          'kosher',
-          'halal',
-          // {
-          //   other: {
-          //     type: Sequelize.STRING,
-          //   },
-          // },
-
-        ],
-      })
-    ),
-  },
-  specialRequests: {
-    type: Sequelize.ARRAY(
-      Sequelize.TEXT
-    ),
-  },
-  isAdmin: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
+    salt: {
+      type: Sequelize.STRING,
+      // Making `.salt` act like a function hides it when serializing to JSON.
+      // This is a hack to get around Sequelize's lack of a "private" option.
+      get() {
+        return () => this.getDataValue("salt");
+      },
     },
-    defaultValue: false,
+    googleId: {
+      type: Sequelize.STRING,
+    },
+    dietaryRestrictions: {
+      type: Sequelize.ARRAY(
+        Sequelize.ENUM({
+          values: [
+            "gluten free",
+            "vegan",
+            "vegetarian",
+            "no seafood",
+            "peanut allergy",
+            "kosher",
+            "halal",
+            // {
+            //   other: {
+            //     type: Sequelize.STRING,
+            //   },
+            // },
+          ],
+        })
+      ),
+    },
+    specialRequests: {
+      type: Sequelize.ARRAY(Sequelize.TEXT),
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+      defaultValue: false,
+    },
+    // isOwner: {
+    //   type: Sequelize.BOOLEAN,
+    //   allowNull: false,
+    //   validate: {
+    //     notEmpty: true,
+    //   },
+    //   defaultValue: false,
+    // },
+    // isCoordinator: {
+    //   type: Sequelize.BOOLEAN,
+    //   allowNull: false,
+    //   validate: {
+    //     notEmpty: true,
+    //   },
+    //   defaultValue: false,
+    // },
+    // },
+    // address: {
+    //   type: Sequelize.STRING,
+    // },
+    // paymentInfo: {
+    //   type: Sequelize.STRING,
+    //   // validate: {
+    //   //   isCreditCard: true
+    //   // }
+    // },
   },
-  // isOwner: {
-  //   type: Sequelize.BOOLEAN,
-  //   allowNull: false,
-  //   validate: {
-  //     notEmpty: true,
-  //   },
-  //   defaultValue: false,
-  // },
-  // isCoordinator: {
-  //   type: Sequelize.BOOLEAN,
-  //   allowNull: false,
-  //   validate: {
-  //     notEmpty: true,
-  //   },
-  //   defaultValue: false,
-  // },
-  // },
-  // address: {
-  //   type: Sequelize.STRING,
-  // },
-  // paymentInfo: {
-  //   type: Sequelize.STRING,
-  //   // validate: {
-  //   //   isCreditCard: true
-  //   // }
-  // },
-});
+  { freezeTableName: true }
+);
 
 module.exports = User;
 
