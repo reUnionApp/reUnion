@@ -1,7 +1,7 @@
-const request = require("supertest");
-const app = require("../../index");
-const db = require("../db");
-const { Event } = require("../db/models");
+const request = require('supertest');
+const app = require('../../index');
+const db = require('../db');
+const { Event } = require('../db/models');
 
 // getting tomorrow's date
 const tomorrow = new Date();
@@ -15,21 +15,21 @@ describe('Event API', () => {
   afterAll(async (done) => {
     db.close(done);
   });
-  
-  describe("Create Event Route", () => {
+
+  describe('Create Event Route', () => {
     afterEach(async () => {
       const event = Event.destroy({
         where: {
-          eventName: "Farhads Free Fajitas Party",
+          eventName: 'Farhads Free Fajitas Fiesta',
         },
       });
     });
 
-    it("should create a new event", async () => {
+    it('should create a new event', async () => {
       const res = await request(app)
         .post('/api/events')
         .send({
-          eventName: 'Farhads Free Fajitas Party',
+          eventName: 'Farhads Free Fajitas Fiesta',
           eventType: ['class reunion'],
           owner: 'Farhad',
           coordinator: ['Greta', 'Sveta'],
@@ -58,26 +58,26 @@ describe('Event API', () => {
     });
   });
 
-  describe("Delete Single Event Route", () => {
+  describe('Delete Single Event Route', () => {
     beforeEach(async () => {
       const event = await Event.create({
-        eventName: "Red Sweater Reunion",
-        eventType: ["class reunion"],
-        owner: "Sung Lee",
-        coordinator: ["Sung Lee"],
-        description: "Reunion for wearing red sweater.",
-        location: "online",
+        eventName: 'Red Sweater Reunion',
+        eventType: ['class reunion'],
+        owner: 'Sung Lee',
+        coordinator: ['Sung Lee'],
+        description: 'Reunion for wearing red sweater.',
+        location: 'online',
         startDate: Date.now(),
         endDate: tomorrow,
-        startTime: "07:00 AM",
-        endTime: "05:00 PM",
+        startTime: '07:00 AM',
+        endTime: '05:00 PM',
       });
     });
 
-    it("should delete a single event", async () => {
+    it('should delete a single event', async () => {
       const testEvent = await Event.findOne({
         where: {
-          eventName: "Red Sweater Reunion",
+          eventName: 'Red Sweater Reunion',
         },
       });
       const res = await request(app).delete(`/api/events/${testEvent.id}`);
@@ -85,34 +85,34 @@ describe('Event API', () => {
     });
   });
 
-  describe("Update Event Route", () => {
+  describe('Update Event Route', () => {
     beforeEach(async () => {
       const event = await Event.create({
-        eventName: "Red Sweater Reunion",
-        eventType: ["class reunion"],
-        owner: "Sung Lee",
-        coordinator: ["Sung Lee"],
-        description: "Reunion for wearing red sweater.",
-        location: "online",
+        eventName: 'Red Sweater Reunion',
+        eventType: ['class reunion'],
+        owner: 'Sung Lee',
+        coordinator: ['Sung Lee'],
+        description: 'Reunion for wearing red sweater.',
+        location: 'online',
         startDate: Date.now(),
         endDate: tomorrow,
-        startTime: "07:00 AM",
-        endTime: "05:00 PM",
+        startTime: '07:00 AM',
+        endTime: '05:00 PM',
       });
     });
 
     afterEach(async () => {
       const event = Event.destroy({
         where: {
-          eventName: "Gretas Green Berets Reunion",
+          eventName: 'Gretas Green Berets Reunion',
         },
       });
     });
 
-    it("should update a single event", async () => {
+    it('should update a single event', async () => {
       const testEvent = await Event.findOne({
         where: {
-          eventName: "Red Sweater Reunion",
+          eventName: 'Red Sweater Reunion',
         },
       });
       const res = await request(app)

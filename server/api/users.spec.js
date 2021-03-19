@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../index');
 const db = require('../db');
+const { User } = require('../db/models');
 
 describe('User API', () => {
   beforeAll(() => {
@@ -8,6 +9,14 @@ describe('User API', () => {
   });
 
   describe('Create User Route', () => {
+    afterEach(async () => {
+      const user = User.destroy({
+        where: {
+          email: 'harryPotter14@gmail.com',
+        },
+      });
+    });
+
     it('should create a new user', async () => {
       const res = await request(app).post('/api/users').send({
         firstName: 'Harry',
@@ -34,15 +43,52 @@ describe('User API', () => {
   });
 
   describe('Delete Single User Route', () => {
+    beforeEach(async () => {
+      const user = await User.create({
+        firstName: 'Harry',
+        lastName: 'Potter',
+        email: 'harryPotter14@gmail.com',
+        isAdmin: true,
+      });
+    });
+
     it('should delete a single user', async () => {
-      const res = await request(app).delete('/api/users/2');
+      const testUser = await User.findOne({
+        where: {
+          email: 'harryPotter14@gmail.com',
+        },
+      });
+
+      const res = await request(app).delete(`/api/users/${testUser.id}`);
       expect(res.status).toEqual(200);
     });
   });
 
   describe('Update User Route', () => {
+    beforeEach(async () => {
+      const user = await User.create({
+        firstName: 'Harry',
+        lastName: 'Potter',
+        email: 'harryPotter14@gmail.com',
+        isAdmin: true,
+      });
+    });
+
+    afterEach(async () => {
+      const user = User.destroy({
+        where: {
+          email: 'harryPotter14@gmail.com',
+        },
+      });
+    });
+
     it('should update a single user', async () => {
-      const res = await request(app).put('/api/users/1').send({
+      const testUser = await User.findOne({
+        where: {
+          email: 'harryPotter14@gmail.com',
+        },
+      });
+      const res = await request(app).put(`/api/users/${testUser.id}`).send({
         firstName: 'Ron',
         lastName: 'Weasley',
         email: 'rwe@gmail.com',
