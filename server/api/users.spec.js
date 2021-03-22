@@ -85,7 +85,7 @@ describe("User API", () => {
     it("should update a single user", async () => {
       const testUser = await User.findOne({
         where: {
-          email: "harryPotter14@gmail.com",
+          email: "rwe@gmail.com",
         },
       });
       const res = await request(app).put(`/api/users/${testUser.id}`).send({
