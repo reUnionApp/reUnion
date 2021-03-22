@@ -1,8 +1,8 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require("sequelize");
+const db = require("../db");
 
 const Activity = db.define(
-  'Activity',
+  "Activities",
   {
     activityName: {
       type: Sequelize.TEXT,

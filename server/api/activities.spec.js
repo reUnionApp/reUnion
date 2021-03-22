@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../../index");
 const db = require("../db");
-const { Activity } = require("../db/models");
+const { Activity, Event } = require("../db/models");
 
 // getting tomorrow's date
 const tomorrow = new Date();
@@ -51,7 +51,26 @@ describe("Activities API", () => {
   });
 
   describe("Delete Single Activity Route", () => {
+    afterEach(async () => {
+      const testEvent = Event.destroy({
+        where: {
+          eventName: "Red Sweater Reunion",
+        },
+      });
+    });
     beforeEach(async () => {
+      const testEvent = await Event.create({
+        eventName: "Red Sweater Reunion",
+        eventType: ["class reunion"],
+        owner: "Sung Lee",
+        coordinator: ["Sung Lee"],
+        description: "Reunion for wearing red sweater.",
+        location: "online",
+        startDate: Date.now(),
+        endDate: tomorrow,
+        startTime: "07:00 AM",
+        endTime: "05:00 PM",
+      });
       const testActivity = await Activity.create({
         activityName: "Tacos Speed Eating Competition",
         description: "See who can Beat Svetas record of 3 tacos per second",
@@ -60,7 +79,7 @@ describe("Activities API", () => {
         endDate: tomorrow,
         startTime: "07:00 AM",
         endTime: "05:00 PM",
-        EventId: 1,
+        EventId: `${testEvent.id}`,
       });
     });
     it("should delete a single activity", async () => {
@@ -76,6 +95,18 @@ describe("Activities API", () => {
 
   describe("Update activity Route", () => {
     beforeEach(async () => {
+      const testEvent = await Event.create({
+        eventName: "Red Sweater Reunion",
+        eventType: ["class reunion"],
+        owner: "Sung Lee",
+        coordinator: ["Sung Lee"],
+        description: "Reunion for wearing red sweater.",
+        location: "online",
+        startDate: Date.now(),
+        endDate: tomorrow,
+        startTime: "07:00 AM",
+        endTime: "05:00 PM",
+      });
       const testActivity = await Activity.create({
         activityName: "Tacos Speed Eating Competition",
         description: "See who can Beat Svetas record of 3 tacos per second",
@@ -84,11 +115,16 @@ describe("Activities API", () => {
         endDate: tomorrow,
         startTime: "07:00 AM",
         endTime: "05:00 PM",
-        EventId: 1,
+        EventId: `${testEvent.id}`,
       });
     });
 
     afterEach(async () => {
+      const testEvent = Event.destroy({
+        where: {
+          eventName: "Red Sweater Reunion",
+        },
+      });
       const testActivity = Activity.destroy({
         where: {
           activityName: "Tacos Speed Eating Competition",
