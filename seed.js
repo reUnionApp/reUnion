@@ -65,7 +65,6 @@ async function seed() {
           endDate: tomorrow,
           startTime: '07:00 AM',
           endTime: '05:00 PM',
-          // EventId: faker.random.number({ min: 1, max: 100, precision: 1 }),
         })
       );
     }
@@ -78,8 +77,8 @@ async function seed() {
 
   // populate UserEvents through table
   for (let i = 0; i < 5; i++) {
-    // console.log(users[i]);
     await users[i].setEvents(i + 1);
+    await events[i].addActivity(i + 1);
   }
 }
 
