@@ -1,8 +1,8 @@
-const request = require("supertest");
-const db = require("../db");
-const { User } = require("./index");
+const request = require('supertest');
+const db = require('../db');
+const { User } = require('./index');
 
-describe("User Model", () => {
+describe('User Model', () => {
   beforeAll(() => {
     db.sync();
   });
@@ -12,23 +12,24 @@ describe("User Model", () => {
   });
 
   const user = {
-    firstName: "Any",
-    lastName: "Other",
-    email: "anyother@gmail.com",
+    firstName: 'Any',
+    lastName: 'Other',
+    email: 'anyother@gmail.com',
     isAdmin: false,
   };
 
-  it("has fields firstName, lastName, email, isAdmin", async () => {
+  it('has fields firstName, lastName, email, isAdmin', async () => {
     const testUser = await User.create(user);
-    expect(testUser.firstName).toEqual("Any");
-    expect(testUser.lastName).toEqual("Other");
-    expect(testUser.email).toEqual("anyother@gmail.com");
+    expect(testUser.firstName).toEqual('Any');
+    expect(testUser.lastName).toEqual('Other');
+    expect(testUser.email).toEqual('anyother@gmail.com');
     expect(testUser.isAdmin).toEqual(false);
   });
+
   afterEach(async () => {
     const user = User.destroy({
       where: {
-        email: "anyother@gmail.com",
+        email: 'anyother@gmail.com',
       },
     });
   });

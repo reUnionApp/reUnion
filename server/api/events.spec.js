@@ -18,7 +18,7 @@ describe('Event API', () => {
 
   describe('Create Event Route', () => {
     afterEach(async () => {
-      const event = Event.destroy({
+      await Event.destroy({
         where: {
           eventName: 'Farhads Free Fajitas Fiesta',
         },
@@ -61,7 +61,7 @@ describe('Event API', () => {
   describe('Delete Single Event Route', () => {
     beforeEach(async () => {
       const event = await Event.create({
-        eventName: 'Red Sweater Reunion',
+        eventName: 'Red Sweater Reunion2',
         eventType: ['class reunion'],
         owner: 'Sung Lee',
         coordinator: ['Sung Lee'],
@@ -77,7 +77,7 @@ describe('Event API', () => {
     it('should delete a single event', async () => {
       const testEvent = await Event.findOne({
         where: {
-          eventName: 'Red Sweater Reunion',
+          eventName: 'Red Sweater Reunion2',
         },
       });
       const res = await request(app).delete(`/api/events/${testEvent.id}`);
@@ -88,7 +88,7 @@ describe('Event API', () => {
   describe('Update Event Route', () => {
     beforeEach(async () => {
       const event = await Event.create({
-        eventName: 'Red Sweater Reunion',
+        eventName: 'Red Sweater Reunion3',
         eventType: ['class reunion'],
         owner: 'Sung Lee',
         coordinator: ['Sung Lee'],
@@ -104,7 +104,7 @@ describe('Event API', () => {
     afterEach(async () => {
       const event = Event.destroy({
         where: {
-          eventName: 'Gretas Green Berets Reunion',
+          eventName: 'Gretas Green Berets Reunion3',
         },
       });
     });
@@ -112,13 +112,13 @@ describe('Event API', () => {
     it('should update a single event', async () => {
       const testEvent = await Event.findOne({
         where: {
-          eventName: 'Red Sweater Reunion',
+          eventName: 'Red Sweater Reunion3',
         },
       });
       const res = await request(app)
         .put(`/api/events/${testEvent.id}`)
         .send({
-          eventName: 'Gretas Green Berets Reunion',
+          eventName: 'Gretas Green Berets Reunion3',
           eventType: ['class reunion'],
           owner: 'Greta',
           coordinator: ['Sung Lee', 'Abbie Stauffer'],
