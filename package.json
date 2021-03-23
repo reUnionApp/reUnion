@@ -38,7 +38,7 @@
     "seed": "node seed.js",
     "eject": "react-scripts eject",
     "start-dev": "nodemon index.js",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "eslintConfig": {
     "extends": [
