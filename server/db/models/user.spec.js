@@ -7,10 +7,6 @@ describe('User Model', () => {
     db.sync();
   });
 
-  afterAll(async (done) => {
-    db.close(done);
-  });
-
   const user = {
     firstName: 'Any',
     lastName: 'Other',
@@ -26,11 +22,31 @@ describe('User Model', () => {
     expect(testUser.isAdmin).toEqual(false);
   });
 
+  it('firstName should not be null', async () => {
+    const newUser = User.build();
+    try {
+      await newUser.validate();
+      throw Error('validation should have failed without firstName');
+    } catch (err) {
+      expect(err.message).toContain('firstName cannot be null');
+    }
+
+    await User.destroy({
+      where: {
+        email: 'testd@gmail.com',
+      },
+    });
+  });
+
   afterEach(async () => {
-    const user = User.destroy({
+    const user = await User.destroy({
       where: {
         email: 'anyother@gmail.com',
       },
     });
   });
+
+  // afterAll(async (done) => {
+  //   await db.close(done);
+  // });
 });
