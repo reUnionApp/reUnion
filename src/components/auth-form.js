@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { auth } from "../store";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { auth } from '../store';
 
 /**
  * COMPONENT
@@ -9,8 +9,8 @@ import { auth } from "../store";
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
@@ -68,16 +68,16 @@ const AuthForm = (props) => {
  */
 const mapLogin = (state) => {
   return {
-    name: "login",
-    displayName: "Login",
+    name: 'login',
+    displayName: 'Login',
     error: state.user.error,
   };
 };
 
 const mapSignup = (state) => {
   return {
-    name: "signup",
-    displayName: "Sign Up",
+    name: 'signup',
+    displayName: 'Sign Up',
     error: state.user.error,
   };
 };
