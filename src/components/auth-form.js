@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { auth } from '../store';
+import { auth } from '../store/index';
 
 /**
  * COMPONENT
@@ -11,6 +11,8 @@ const AuthForm = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
@@ -20,6 +22,14 @@ const AuthForm = (props) => {
     setPassword(e.target.value);
   };
 
+  const handleFirstNameInput = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleLastNameInput = (e) => {
+    setLastName(e.target.value);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -27,6 +37,21 @@ const AuthForm = (props) => {
           <label htmlFor="email">
             <small>Email</small>
           </label>
+          <input
+            name="firstName"
+            type="text"
+            // consider refactoring to make this an anonymous arrow function
+            onChange={handleFirstNameInput}
+            value={firstName}
+            placeholder="Your First Name"
+          />
+          <input
+            name="lastName"
+            type="text"
+            onChange={handleLastNameInput}
+            value={lastName}
+            placeholder="Your Last Name"
+          />
           <input
             name="email"
             type="text"
@@ -70,7 +95,7 @@ const mapLogin = (state) => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error,
+    error: state.authReducer.error,
   };
 };
 
@@ -78,7 +103,7 @@ const mapSignup = (state) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error,
+    error: state.authReducer.error,
   };
 };
 
@@ -89,7 +114,9 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      dispatch(auth(email, password, formName));
+      const firstName = evt.target.firstName.value;
+      const lastName = evt.target.lastName.value;
+      dispatch(auth(email, password, firstName, lastName, formName));
     },
   };
 };
