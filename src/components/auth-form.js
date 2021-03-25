@@ -7,32 +7,21 @@ import { auth } from '../store/index';
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const { name, displayName, handleSubmit, error } = props;
+  const { signup, error } = props;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  const handleEmailInput = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordInput = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleFirstNameInput = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameInput = (e) => {
-    setLastName(e.target.value);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    signup(email, password, firstName, lastName);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -40,22 +29,27 @@ const AuthForm = (props) => {
           <input
             name="firstName"
             type="text"
-            // consider refactoring to make this an anonymous arrow function
-            onChange={handleFirstNameInput}
+            onChange={(event) => {
+              setFirstName(event.target.value);
+            }}
             value={firstName}
             placeholder="Your First Name"
           />
           <input
             name="lastName"
             type="text"
-            onChange={handleLastNameInput}
+            onChange={(event) => {
+              setLastName(event.target.value);
+            }}
             value={lastName}
             placeholder="Your Last Name"
           />
           <input
             name="email"
             type="text"
-            onChange={handleEmailInput}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
             value={email}
             placeholder="Your Email"
           />
@@ -67,19 +61,21 @@ const AuthForm = (props) => {
           <input
             name="password"
             type="password"
-            onChange={handlePasswordInput}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
             value={password}
             placeholder="Your Password"
           />
         </div>
         <div>
           <button type="submit" disabled={!email || !password}>
-            {displayName}
+            {'Sign Up'}
           </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a href="/auth/google">Sign Up with Google</a>
     </div>
   );
 };
@@ -109,14 +105,8 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault();
-      const formName = evt.target.name;
-      const email = evt.target.email.value;
-      const password = evt.target.password.value;
-      const firstName = evt.target.firstName.value;
-      const lastName = evt.target.lastName.value;
-      dispatch(auth(email, password, firstName, lastName, formName));
+    signup: (email, password, firstName, lastName) => {
+      dispatch(auth(email, password, firstName, lastName));
     },
   };
 };
@@ -128,9 +118,6 @@ export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
  * PROP TYPES
  */
 AuthForm.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object,
 };
 
