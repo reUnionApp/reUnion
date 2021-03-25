@@ -26,7 +26,7 @@ export const me = () => async (dispatch) => {
   }
 };
 
-export const auth = (email, password, firstName, lastName) => async (
+export const signup = (email, password, firstName, lastName) => async (
   dispatch
 ) => {
   let res;

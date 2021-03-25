@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { auth } from '../store/index';
+import { signup } from '../store/index';
 
 /**
  * COMPONENT
  */
-const AuthForm = (props) => {
+const SignUpForm = (props) => {
   const { signup, error } = props;
 
   const [email, setEmail] = useState('');
@@ -86,14 +86,6 @@ const AuthForm = (props) => {
   );
 };
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-
 const mapSignup = (state) => {
   return {
     name: 'signup',
@@ -105,18 +97,18 @@ const mapSignup = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     signup: (email, password, firstName, lastName) => {
-      dispatch(auth(email, password, firstName, lastName));
+      dispatch(signup(email, password, firstName, lastName));
     },
   };
 };
 
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
+export const Signup = connect(mapSignup, mapDispatch)(SignUpForm);
 
 /**
  * PROP TYPES
  */
-AuthForm.propTypes = {
+SignUpForm.propTypes = {
   error: PropTypes.object,
 };
 
-export default AuthForm;
+export default SignUpForm;
