@@ -48,6 +48,24 @@ export const auth = (email, password, firstName, lastName) => async (
   }
 };
 
+export const login = (email, password) => async (dispatch) => {
+  let res;
+  try {
+    res = await axios.post(`/auth/login`, {
+      email,
+      password,
+    });
+  } catch (authError) {
+    return dispatch(getUser({ error: authError }));
+  }
+  try {
+    dispatch(getUser(res.data));
+    history.push('/home');
+  } catch (dispatchOrHistoryErr) {
+    console.error(dispatchOrHistoryErr);
+  }
+};
+
 export const logout = () => async (dispatch) => {
   try {
     await axios.post('/auth/logout');

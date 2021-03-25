@@ -23,8 +23,8 @@ const AuthForm = (props) => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">
-            <small>Email</small>
+          <label htmlFor="firstName">
+            <small>First Name</small>
           </label>
           <input
             name="firstName"
@@ -35,6 +35,9 @@ const AuthForm = (props) => {
             value={firstName}
             placeholder="Your First Name"
           />
+          <label htmlFor="lastName">
+            <small>Last Name</small>
+          </label>
           <input
             name="lastName"
             type="text"
@@ -44,6 +47,9 @@ const AuthForm = (props) => {
             value={lastName}
             placeholder="Your Last Name"
           />
+          <label htmlFor="email">
+            <small>Email</small>
+          </label>
           <input
             name="email"
             type="text"
@@ -87,13 +93,6 @@ const AuthForm = (props) => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-const mapLogin = (state) => {
-  return {
-    name: 'login',
-    displayName: 'Login',
-    error: state.authReducer.error,
-  };
-};
 
 const mapSignup = (state) => {
   return {
@@ -111,7 +110,6 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
 
 /**
