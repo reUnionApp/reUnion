@@ -4,8 +4,28 @@
   "start_url": "index.html",
   "icons": [
     {
-      "src": "./assets/reUnion_Logo.png",
+      "src": "./assets/reUnion_Logo_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/reUnion_Logo_384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/reUnion_Logo_576.png",
+      "sizes": "576x576",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/reUnion_Logo_674.png",
       "sizes": "674x674",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/reUnion_Logo_768.png",
+      "sizes": "768x768",
       "type": "image/png"
     }
   ],
