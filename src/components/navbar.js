@@ -32,9 +32,6 @@ const Navbar = ({ handleLogout, isLoggedIn, firstName }) => (
         </div>
       ) : (
         <div>
-          <Link to="/login">
-            <strong>Guest</strong>
-          </Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
         </div>
