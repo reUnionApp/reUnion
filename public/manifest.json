@@ -1,7 +1,7 @@
 {
   "name": "reUnion",
   "short_name": "rU",
-  "start_url": "index.html",
+  "start_url": "/index.html",
   "icons": [
     {
       "src": "./assets/reUnion_Logo_192.png",
@@ -31,5 +31,6 @@
   ],
   "background_color": "#3E4EB8",
   "display": "standalone",
-  "theme_color": "#2E3AA1"
+  "theme_color": "#2E3AA1",
+  "orientation": "portrait-primary"
 }

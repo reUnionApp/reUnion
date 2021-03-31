@@ -1,33 +1,22 @@
-let CACHE_NAME = "my-site-cache-v1";
-const urlsToCache = ["/", "/index.html"];
-self.addEventListener("install", function (event) {
-  // Perform install steps
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      console.log("Opened cache");
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+// let CACHE_NAME = 'reunion';
+// const urlsToCache = [
+//   '/',
+//   '/index.html',
+//   '/src/styles/reUnion_Logo.png',
+//   '/src/styles/reUnion_Title.png',
+// ];
+// self.addEventListener('install', (installEvent) => {
+//   installEvent.waitUntil(
+//     caches.open(CACHE_NAME).then((cache) => {
+//       cache.addAll(urlsToCache);
+//     })
+//   );
+// });
 
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
-    })
-  );
-});
-
-self.addEventListener("install", function (event) {
-  // Perform install steps
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      console.log("Opened cache");
-      return cache.addAll(urlsToCache);
-    })
-  );
-  self.skipWaiting();
-});
+// self.addEventListener('fetch', (fetchEvent) => {
+//   fetchEvent.respondWith(
+//     caches.match(fetchEvent.request).then((res) => {
+//       return res || fetch(fetchEvent.request);
+//     })
+//   );
+// });
