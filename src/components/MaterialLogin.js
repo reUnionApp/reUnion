@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { login } from "../store/index";
+import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,16 +14,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import logo from "../styles/reUnion_Logo.png";
 
-/**
- * COMPONENT
- */
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="http://localhost:3000/">
-        reUnion
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -54,17 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = (props) => {
+export default function SignIn() {
   const classes = useStyles();
-  const { login, error } = props;
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    login(email, password);
-  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -138,71 +122,5 @@ const LoginForm = (props) => {
         <Copyright />
       </Box>
     </Container>
-    // <div>
-    //   <form onSubmit={handleSubmit}>
-    //     <div>
-    //       <label htmlFor="email">
-    //         <small>Email</small>
-    //       </label>
-    //       <input
-    //         name="email"
-    //         type="text"
-    //         onChange={(event) => {
-    //           setEmail(event.target.value);
-    //         }}
-    //         value={email}
-    //         placeholder="Your Email"
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="password">
-    //         <small>Password</small>
-    //       </label>
-    //       <input
-    //         name="password"
-    //         type="password"
-    //         onChange={(event) => {
-    //           setPassword(event.target.value);
-    //         }}
-    //         value={password}
-    //         placeholder="Your Password"
-    //       />
-    //     </div>
-    //     <div>
-    //       <button type="submit" disabled={!email || !password}>
-    //         {"Log In"}
-    //       </button>
-    //     </div>
-    //     {error && error.response && <div> {error.response.data} </div>}
-    //   </form>
-    //   <a href="/auth/google">Log In with Google</a>
-    // </div>
   );
-};
-
-const mapLogin = (state) => {
-  return {
-    name: "login",
-    displayName: "Login",
-    error: state.authReducer.error,
-  };
-};
-
-const mapDispatch = (dispatch) => {
-  return {
-    login: (email, password) => {
-      dispatch(login(email, password));
-    },
-  };
-};
-
-export const Login = connect(mapLogin, mapDispatch)(LoginForm);
-
-/**
- * PROP TYPES
- */
-LoginForm.propTypes = {
-  error: PropTypes.object,
-};
-
-export default LoginForm;
+}
