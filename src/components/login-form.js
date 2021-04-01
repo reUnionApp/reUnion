@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../store/index";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -11,7 +10,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -138,45 +136,6 @@ const LoginForm = (props) => {
         <Copyright />
       </Box>
     </Container>
-    // <div>
-    //   <form onSubmit={handleSubmit}>
-    //     <div>
-    //       <label htmlFor="email">
-    //         <small>Email</small>
-    //       </label>
-    //       <input
-    //         name="email"
-    //         type="text"
-    //         onChange={(event) => {
-    //           setEmail(event.target.value);
-    //         }}
-    //         value={email}
-    //         placeholder="Your Email"
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="password">
-    //         <small>Password</small>
-    //       </label>
-    //       <input
-    //         name="password"
-    //         type="password"
-    //         onChange={(event) => {
-    //           setPassword(event.target.value);
-    //         }}
-    //         value={password}
-    //         placeholder="Your Password"
-    //       />
-    //     </div>
-    //     <div>
-    //       <button type="submit" disabled={!email || !password}>
-    //         {"Log In"}
-    //       </button>
-    //     </div>
-    //     {error && error.response && <div> {error.response.data} </div>}
-    //   </form>
-    //   <a href="/auth/google">Log In with Google</a>
-    // </div>
   );
 };
 
