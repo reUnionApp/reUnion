@@ -58,7 +58,7 @@ export const updateEvent = (event) => async (dispatch) => {
   }
 };
 
-export const removeEvent = (id) => (dispatch) => {
+export const removeEvent = (id) => async (dispatch) => {
   try {
     const { data } = await axios.delete(`/api/events/${id}`);
     dispatch(_removeEvent(data));
