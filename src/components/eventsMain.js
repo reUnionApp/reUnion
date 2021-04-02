@@ -1,6 +1,7 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
+import { getEvent, createEvent, updateEvent, removeEvent } from '../store'
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -37,4 +38,16 @@ const EventsMain = () => {
   );
 };
 
-export default EventsMain;
+const mapState = (state) => ({
+  event: state.eventReducer.event,
+  user: state.authReducer.user
+});
+
+const mapDispatch = (dispatch) => ({
+  getEvent: (id) => dispatch(getEvent(id)),
+  createEvent: (event) => dispatch(createEvent(event)),
+  updateEvent: (event) => dispatch(updateEvent(event)),
+  removeEvent: (id) => dispatch(removeEvent(id)),
+});
+
+export default connect(mapState, mapDispatch)(EventsMain);
