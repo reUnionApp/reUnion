@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
 import { getEvent, createEvent, updateEvent, removeEvent } from '../store';
@@ -42,9 +42,16 @@ const EventsMain = (props) => {
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
 
-  const handleChange = function (event) {
+  const handleChange = function (event, hook) {
     event.preventDefault();
-    setEventName(event.target.eventName)
+    hook(event.target.value);
+    console.log(eventName)
+  }
+
+  const handleDropDown = async function (event) {
+    event.preventDefault();
+    setEventType(event.target.value);
+    await console.log('eventType---->', eventType);
   }
 
   return (
@@ -57,15 +64,17 @@ const EventsMain = (props) => {
               type="text"
               name="eventName"
               placeholder="Event Name"
-              value="eventName"
-              onChange={handleChange}
+              value={eventName}
+              onChange={(event) => {
+                handleChange(event, setEventName)
+              }}
             ></input>
           </SwiperSlide>
           <SwiperSlide>
-            <select>
-              <option value="classReunion">Class Reunion</option>
+            <select onChange={handleDropDown} value={eventType}>
+              <option selected value='classReunion'>Class Reunion</option>
               <option value="familyReunion">Family Reunion</option>
-              <option selected value="anniversaryParty">Anniversary Party</option>
+              <option value="anniversaryParty">Anniversary Party</option>
               <option value="babyShower">Baby Shower</option>
               <option value="otherGathering">Other Gathering</option>
             </select>
