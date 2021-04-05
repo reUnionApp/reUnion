@@ -13,6 +13,30 @@ import DateTimePicker from 'react-datetime-picker';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const EventsMain = (props) => {
@@ -26,6 +50,11 @@ const EventsMain = (props) => {
   const [eventEndDate, setEventEndDate] = useState(new Date());
   const [eventStartTime, setEventStartTime] = useState('');
   const [eventEndTime, setEventEndTime] = useState('');
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date('2014-08-18T21:11:54')
+  );
+
+  const classes = useStyles();
 
   const handleChange = function (event, hook) {
     event.preventDefault();
@@ -33,9 +62,13 @@ const EventsMain = (props) => {
     console.log(event.target.value);
   };
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   useEffect(() => {
-    console.log(eventStartDate);
-  }, [eventStartDate]);
+    console.log(selectedDate);
+  }, [selectedDate]);
 
   return (
     <div>
@@ -114,7 +147,49 @@ const EventsMain = (props) => {
             ></input>
           </SwiperSlide>
           <SwiperSlide>
-            <DateTimePicker
+            {/* <form className={classes.container} noValidate>
+              <TextField
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                defaultValue="2017-05-24T10:30"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </form> */}
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid container justify="space-around">
+                <KeyboardDatePicker
+                  margin="normal"
+                  id="date-picker-dialog"
+                  label="Date picker dialog"
+                  format="MM/dd/yyyy"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />
+                <KeyboardTimePicker
+                  margin="normal"
+                  id="time-picker"
+                  label="Time picker"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+            {/* <DateTimePicker
               value={eventStartDate}
               onChange={setEventStartDate}
             />
@@ -124,7 +199,7 @@ const EventsMain = (props) => {
               name="startDate"
               placeholder="Enter the start date of your event"
               value={eventStartDate.toLocaleDateString()}
-            ></input>
+            ></input> */}
           </SwiperSlide>
           <SwiperSlide>
             <Calendar value={eventEndDate} onChange={setEventEndDate} />
