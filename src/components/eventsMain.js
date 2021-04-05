@@ -8,6 +8,11 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
+import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
+
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const EventsMain = (props) => {
@@ -17,8 +22,8 @@ const EventsMain = (props) => {
   const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [eventLocation, setEventLocation] = useState('');
-  const [eventStartDate, setEventStartDate] = useState('');
-  const [eventEndDate, setEventEndDate] = useState('');
+  const [eventStartDate, setEventStartDate] = useState(new Date());
+  const [eventEndDate, setEventEndDate] = useState(new Date());
   const [eventStartTime, setEventStartTime] = useState('');
   const [eventEndTime, setEventEndTime] = useState('');
 
@@ -29,8 +34,8 @@ const EventsMain = (props) => {
   };
 
   useEffect(() => {
-    console.log(eventType);
-  }, [eventType]);
+    console.log(eventStartDate);
+  }, [eventStartDate]);
 
   return (
     <div>
@@ -55,9 +60,7 @@ const EventsMain = (props) => {
               }}
               value={eventType}
             >
-              <option selected value="classReunion">
-                Class Reunion
-              </option>
+              <option value="classReunion">Class Reunion</option>
               <option value="familyReunion">Family Reunion</option>
               <option value="anniversaryParty">Anniversary Party</option>
               <option value="babyShower">Baby Shower</option>
@@ -111,19 +114,26 @@ const EventsMain = (props) => {
             ></input>
           </SwiperSlide>
           <SwiperSlide>
+            <DateTimePicker
+              value={eventStartDate}
+              onChange={setEventStartDate}
+            />
+            <label htmlFor="startDate">Start Date: </label>
             <input
               type="text"
               name="startDate"
               placeholder="Enter the start date of your event"
-              value="startDate"
+              value={eventStartDate.toLocaleDateString()}
             ></input>
           </SwiperSlide>
           <SwiperSlide>
+            <Calendar value={eventEndDate} onChange={setEventEndDate} />
+            <label htmlFor="endDate">End Date: </label>
             <input
               type="text"
               name="endDate"
               placeholder="Enter the end date of your event"
-              value="endDate"
+              value={eventEndDate.toLocaleDateString()}
             ></input>
           </SwiperSlide>
           <SwiperSlide>
