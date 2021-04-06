@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
-import { getEvent, createEvent, updateEvent, removeEvent } from "../store";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
+import { getEvent, createEvent, updateEvent, removeEvent } from '../store';
+import { connect } from 'react-redux';
 
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
 
-import Calendar from "react-calendar";
-import DateTimePicker from "react-datetime-picker";
-import "react-calendar/dist/Calendar.css";
-import "react-clock/dist/Clock.css";
+import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
 
-import "date-fns";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from "@material-ui/pickers";
+} from '@material-ui/pickers';
 
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -39,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 const EventsMain = (props) => {
-  const [eventName, setEventName] = useState("");
-  const [eventType, setEventType] = useState("");
-  const [eventOwner, setEventOwner] = useState("");
-  const [eventCoordinator, setEventCoordinator] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
-  const [eventLocation, setEventLocation] = useState("");
+  const [eventName, setEventName] = useState('');
+  const [eventType, setEventType] = useState('');
+  const [eventOwner, setEventOwner] = useState('');
+  const [eventCoordinator, setEventCoordinator] = useState('');
+  const [eventDescription, setEventDescription] = useState('');
+  const [eventLocation, setEventLocation] = useState('');
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   // const [eventStartDateTime, setEventStartDateTime] = useState(
@@ -159,7 +159,7 @@ const EventsMain = (props) => {
                     handleDateTimeChange(event, setEventStartDateTime);
                   }}
                   KeyboardButtonProps={{
-                    "aria-label": "change date",
+                    'aria-label': 'change date',
                   }}
                 />
                 <KeyboardTimePicker
@@ -171,7 +171,7 @@ const EventsMain = (props) => {
                     handleDateTimeChange(event, setEventStartDateTime);
                   }}
                   KeyboardButtonProps={{
-                    "aria-label": "change time",
+                    'aria-label': 'change time',
                   }}
                 />
               </Grid>
@@ -190,7 +190,7 @@ const EventsMain = (props) => {
                     handleDateTimeChange(event, setEventEndDateTime);
                   }}
                   KeyboardButtonProps={{
-                    "aria-label": "change date",
+                    'aria-label': 'change date',
                   }}
                 />
                 <KeyboardTimePicker
@@ -202,27 +202,11 @@ const EventsMain = (props) => {
                     handleDateTimeChange(event, setEventEndDateTime);
                   }}
                   KeyboardButtonProps={{
-                    "aria-label": "change time",
+                    'aria-label': 'change time',
                   }}
                 />
               </Grid>
             </MuiPickersUtilsProvider>
-          </SwiperSlide>
-          <SwiperSlide>
-            <input
-              type="text"
-              name="startTime"
-              placeholder="Enter the start time of your event"
-              value="startTime"
-            ></input>
-          </SwiperSlide>
-          <SwiperSlide>
-            <input
-              type="text"
-              name="endTime"
-              placeholder="Enter the end time of your event"
-              value="endTime"
-            ></input>
           </SwiperSlide>
         </Swiper>
       </form>
