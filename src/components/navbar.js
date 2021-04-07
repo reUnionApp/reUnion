@@ -7,7 +7,7 @@ import title from '../styles/reUnion_Title.png';
 
 const Navbar = ({ handleLogout, isLoggedIn, firstName }) => (
   <div>
-    <img style={{ width: '25%' }} src={title} alt="reUnion logo" />
+    <img style={{ width: '10%' }} src={title} alt="reUnion logo" />
     <nav>
       {isLoggedIn ? (
         <div>
