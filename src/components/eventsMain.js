@@ -70,9 +70,68 @@ const EventsMain = (props) => {
     hook(event);
   };
 
+  const dateFormat = (date) => {
+    let dateObj = date;
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+
+    return month + '/' + day + '/' + year;
+  };
+
+  const submitEventForm = function () {
+    let startDate = dateFormat(eventStartDateTime);
+    let endDate = dateFormat(eventEndDateTime);
+    let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    let endTime = eventEndDateTime.toLocaleTimeString('en-US', {
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    let test = {
+      eventName: eventName,
+      eventType: eventType,
+      owner: eventOwner,
+      coordinator: eventCoordinator,
+      description: eventDescription,
+      location: eventLocation.label,
+      startDate: startDate,
+      endDate: endDate,
+      startTime: startTime,
+      endTime: endTime,
+    };
+
+    console.log(test);
+  };
+
   useEffect(() => {
-    console.log(eventLocation);
-  }, [eventLocation]);
+    console.log(
+      eventName,
+      eventType,
+      eventOwner,
+      eventCoordinator,
+      eventDescription,
+      eventLocation,
+      'START',
+      eventStartDateTime,
+      'END',
+      eventEndDateTime
+    );
+  }, [
+    eventName,
+    eventType,
+    eventOwner,
+    eventCoordinator,
+    eventDescription,
+    eventLocation,
+    eventStartDateTime,
+    eventEndDateTime,
+  ]);
 
   return (
     <div>
@@ -134,8 +193,8 @@ const EventsMain = (props) => {
           </SwiperSlide>
           <SwiperSlide>
             <textarea
-              rows="6"
-              cols="50"
+              // rows="6"
+              // cols="50"
               type="textarea"
               name="description"
               placeholder="Enter description of your event"
@@ -146,7 +205,7 @@ const EventsMain = (props) => {
             ></textarea>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="swiper-no-swiping">
+            <div className="swiper-no-swiping" style={{ width: '50vw' }}>
               <GooglePlacesAutocomplete
                 apiKey={process.env.REACT_APP_GOOGLE}
                 selectProps={{
@@ -231,7 +290,13 @@ const EventsMain = (props) => {
         </Swiper>
       </form>
 
-      <button>Get Started</button>
+      <button
+        onClick={() => {
+          submitEventForm();
+        }}
+      >
+        Get Started
+      </button>
     </div>
   );
 };
