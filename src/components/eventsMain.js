@@ -25,6 +25,10 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+// import dotenv from 'dotenv';
+// dotenv.config();
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -67,8 +71,8 @@ const EventsMain = (props) => {
   };
 
   useEffect(() => {
-    console.log(eventStartDateTime, eventEndDateTime);
-  }, [eventStartDateTime, eventEndDateTime]);
+    console.log(eventLocation);
+  }, [eventLocation]);
 
   return (
     <div>
@@ -136,7 +140,17 @@ const EventsMain = (props) => {
             ></textarea>
           </SwiperSlide>
           <SwiperSlide>
-            <input
+            <div className="swiper-no-swiping">
+              <GooglePlacesAutocomplete
+                apiKey={process.env.REACT_APP_GOOGLE}
+                selectProps={{
+                  eventLocation,
+                  onChange: setEventLocation,
+                }}
+              />
+            </div>
+
+            {/* <input
               type="text"
               name="location"
               placeholder="Enter the location of your event"
@@ -144,7 +158,7 @@ const EventsMain = (props) => {
               onChange={(event) => {
                 handleChange(event, setEventLocation);
               }}
-            ></input>
+            ></input> */}
           </SwiperSlide>
           <SwiperSlide>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -210,6 +224,7 @@ const EventsMain = (props) => {
           </SwiperSlide>
         </Swiper>
       </form>
+
       <button>Get Started</button>
     </div>
   );
