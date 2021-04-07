@@ -93,11 +93,11 @@ const EventsMain = (props) => {
       minute: '2-digit',
     });
 
-    let test = {
+    return {
       eventName: eventName,
-      eventType: eventType,
+      eventType: [eventType],
       owner: eventOwner,
-      coordinator: eventCoordinator,
+      coordinator: [eventCoordinator],
       description: eventDescription,
       location: eventLocation.label,
       startDate: startDate,
@@ -105,8 +105,6 @@ const EventsMain = (props) => {
       startTime: startTime,
       endTime: endTime,
     };
-
-    console.log(test);
   };
 
   useEffect(() => {
@@ -162,11 +160,11 @@ const EventsMain = (props) => {
               }}
               value={eventType}
             >
-              <option value="classReunion">Class Reunion</option>
-              <option value="familyReunion">Family Reunion</option>
-              <option value="anniversaryParty">Anniversary Party</option>
-              <option value="babyShower">Baby Shower</option>
-              <option value="otherGathering">Other Gathering</option>
+              <option value="class reunion">Class Reunion</option>
+              <option value="family reunion">Family Reunion</option>
+              <option value="anniversary party">Anniversary Party</option>
+              <option value="baby shower">Baby Shower</option>
+              <option value="other gathering">Other Gathering</option>
             </select>
           </SwiperSlide>
           <SwiperSlide>
@@ -292,7 +290,8 @@ const EventsMain = (props) => {
 
       <button
         onClick={() => {
-          submitEventForm();
+          const event = submitEventForm();
+          props.createEvent(event);
         }}
       >
         Get Started
