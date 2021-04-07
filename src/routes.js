@@ -33,7 +33,7 @@ class Routes extends Component {
 
         {isAdmin && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
+            {/* Routes placed here are only available as as admin */}
           </Switch>
         )}
         {isLoggedIn && (

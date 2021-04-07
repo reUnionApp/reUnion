@@ -78,7 +78,13 @@ const EventsMain = (props) => {
     <div>
       <h1>Plan Your First Event</h1>
       <form>
-        <Swiper effect="fade" spaceBetween={0} slidesPerView={1} navigation>
+        <Swiper
+          effect="fade"
+          spaceBetween={0}
+          slidesPerView={1}
+          navigation
+          style={{ height: '70vh' }}
+        >
           <SwiperSlide>
             <input
               type="text"
