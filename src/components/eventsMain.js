@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
 import { getEvent, createEvent, updateEvent, removeEvent } from '../store';
 import { connect } from 'react-redux';
+import history from '../history';
 
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -29,6 +30,8 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
+import { eventConfirmation } from './eventConfirmation';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -51,19 +54,13 @@ const EventsMain = (props) => {
   const [eventLocation, setEventLocation] = useState('');
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
-  // const [eventStartDateTime, setEventStartDateTime] = useState(
-  //   new Date(eventStartDate).setHours()
-  // );
-  // const [eventEndDateTime, setEventEndDateTime] = useState("");
-  // const [selectedDate, setSelectedDate] = React.useState(
-  //   new Date("2014-08-18T21:11:54")
+  const [eventData, setEventData] = useState({});
 
   const classes = useStyles();
 
   const handleChange = function (event, hook) {
     event.preventDefault();
     hook(event.target.value);
-    // console.log(event.target.value);
   };
 
   const handleDateTimeChange = (event, hook) => {
@@ -106,6 +103,12 @@ const EventsMain = (props) => {
       endTime: endTime,
     };
   };
+
+  // const displayEvent = () => {
+  //   for (const [key, value] of Object.entries(eventData)) {
+  //     return key, value
+  //   }
+  // }
 
   useEffect(() => {
     console.log(
@@ -285,17 +288,44 @@ const EventsMain = (props) => {
               </Grid>
             </MuiPickersUtilsProvider>
           </SwiperSlide>
+          <SwiperSlide>
+            <h1>Event Confirmation</h1>
+            <ul>eventName: {eventName}</ul>
+            <ul>eventType: {eventType}</ul>
+            <ul>owner: {eventOwner}</ul>
+            <ul>coordinator: {eventCoordinator}</ul>
+            <ul>description: {eventDescription}</ul>
+            <ul>location: {eventLocation.label}</ul>
+            <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
+            <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
+            <ul>
+              startTime:{' '}
+              {eventStartDateTime.toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </ul>
+            <ul>
+              endTime:{' '}
+              {eventEndDateTime.toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </ul>
+            <button
+              onClick={() => {
+                const event = submitEventForm();
+                setEventData(event);
+                props.createEvent(event);
+              }}
+            >
+              Create Event
+            </button>
+          </SwiperSlide>
         </Swiper>
       </form>
-
-      <button
-        onClick={() => {
-          const event = submitEventForm();
-          props.createEvent(event);
-        }}
-      >
-        Get Started
-      </button>
     </div>
   );
 };

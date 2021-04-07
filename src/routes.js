@@ -10,6 +10,7 @@ import {
   Navbar,
   Hamburger,
   EventsMain,
+  EventConfirmation,
 } from './components';
 
 import { me } from './store';
@@ -42,6 +43,11 @@ class Routes extends Component {
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route exact path="/eventsMain" component={EventsMain} />
+              <Route
+                exact
+                path="/eventConfirmation"
+                component={EventConfirmation}
+              />
             </Switch>
             <Navbar />
           </>
