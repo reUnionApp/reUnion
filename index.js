@@ -1,15 +1,16 @@
-const path = require("path");
-const express = require("express");
-const morgan = require("morgan");
-const compression = require("compression");
-const session = require("express-session");
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const passport = require("passport");
-const db = require("./server/db");
+const path = require('path');
+const express = require('express');
+const morgan = require('morgan');
+const compression = require('compression');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const passport = require('passport');
+const db = require('./server/db');
 const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
 const app = express();
-const { User } = require("./server/db/models");
+const { User } = require('./server/db/models');
+require('dotenv').config();
 module.exports = app;
 
 /**
@@ -37,7 +38,7 @@ passport.deserializeUser(async (id, done) => {
 
 const createApp = () => {
   // logging middleware
-  app.use(morgan("dev"));
+  app.use(morgan('dev'));
 
   // body parsing middleware
   app.use(express.json());
@@ -49,7 +50,7 @@ const createApp = () => {
   // session middleware with passport
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || "my best friend is Cody",
+      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
       saveUninitialized: false,
@@ -59,16 +60,16 @@ const createApp = () => {
   app.use(passport.session());
 
   // auth and api routes
-  app.use("/auth", require("./server/auth"));
-  app.use("/api", require("./server/api"));
+  app.use('/auth', require('./server/auth'));
+  app.use('/api', require('./server/api'));
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, 'public')));
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
-      const err = new Error("Not found");
+      const err = new Error('Not found');
       err.status = 404;
       next(err);
     } else {
@@ -77,15 +78,15 @@ const createApp = () => {
   });
 
   // sends index.html
-  app.use("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+  app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
 
   // error handling endware
   app.use((err, req, res, next) => {
     console.error(err);
     console.error(err.stack);
-    res.status(err.status || 500).send(err.message || "Internal server error.");
+    res.status(err.status || 500).send(err.message || 'Internal server error.');
   });
 };
 
