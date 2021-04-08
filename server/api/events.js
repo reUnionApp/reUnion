@@ -3,14 +3,14 @@ const adminsOnly = require('../auth/adminsOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
-const { Event, Activity } = require('../db/models');
+const { Event, Activity, User } = require('../db/models');
 module.exports = router;
 
 // All Events: GET /api/events
 // adminsOnly
 router.get('/', async (req, res, next) => {
   try {
-    const events = await Event.findAll();
+    const events = await Event.findAll({ include: User });
     res.status(200).json(events);
   } catch (error) {
     next(error);
