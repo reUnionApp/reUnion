@@ -9,8 +9,9 @@ import {
   LandingPage,
   Navbar,
   Hamburger,
-  EventsMain,
+  CreateEvent,
   EventConfirmation,
+  MyEvents
 } from './components';
 
 import { me } from './store';
@@ -42,12 +43,13 @@ class Routes extends Component {
             <Hamburger />
             <Switch>
               {/* Routes placed here are only available after logging in */}
-              <Route exact path="/eventsMain" component={EventsMain} />
+              <Route exact path="/createEvent" component={CreateEvent} />
               <Route
                 exact
                 path="/eventConfirmation"
                 component={EventConfirmation}
               />
+              <Route exact path='/myEvents' component={MyEvents} />
             </Switch>
             <Navbar />
           </>

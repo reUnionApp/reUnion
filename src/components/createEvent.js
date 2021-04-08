@@ -28,7 +28,7 @@ import TextField from '@material-ui/core/TextField';
 
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 // import dotenv from 'dotenv';
-// dotenv.config();
+//dotenv.config();
 
 import { eventConfirmation } from './eventConfirmation';
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 SwiperCore.use([Navigation, Pagination, A11y]);
-const EventsMain = (props) => {
+const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
   const [eventType, setEventType] = useState('');
   const [eventOwner, setEventOwner] = useState('');
@@ -342,4 +342,4 @@ const mapDispatch = (dispatch) => ({
   removeEvent: (id) => dispatch(removeEvent(id)),
 });
 
-export default connect(mapState, mapDispatch)(EventsMain);
+export default connect(mapState, mapDispatch)(CreateEvent);

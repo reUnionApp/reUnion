@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../db/models');
+const { User, Event, UserEvent } = require('../db/models');
 const adminsOnly = require('../auth/adminsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
@@ -48,12 +48,10 @@ router.get('/:userID', async (req, res, next) => {
         'specialRequests',
         'isAdmin',
       ],
-      // include: [
-      //   {
-      //     model: Order,
-      //     include: [{ model: Product, through: OrderProduct }],
-      //   },
-      // ],
+      include:
+      {
+        model: Event,
+      },
     });
     if (!user) {
       res.sendStatus(404).end();
