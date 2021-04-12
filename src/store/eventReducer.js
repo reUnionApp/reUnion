@@ -5,6 +5,7 @@ const GET_EVENT = 'GET_EVENT';
 const CREATE_EVENT = 'CREATE_EVENT';
 const REMOVE_EVENT = 'REMOVE_EVENT';
 const UPDATE_EVENT = 'UPDATE_EVENT';
+const SET_EVENT_OWNER = 'SET_EVENT_OWNER';
 
 
 // Action Creators
@@ -27,7 +28,6 @@ const _removeEvent = (event) => ({
   type: REMOVE_EVENT,
   event
 })
-
 
 // Thunk
 export const getEvent = (id) => async (dispatch) => {
@@ -67,7 +67,6 @@ export const removeEvent = (id) => async (dispatch) => {
   }
 };
 
-
 const defaultEvent = {};
 
 // Reducer
@@ -76,6 +75,7 @@ export default function (state = defaultEvent, action) {
     case GET_EVENT:
       return action.event;
     case CREATE_EVENT:
+      console.log('action.event----->', action.event)
       return action.event;
     case UPDATE_EVENT:
       return action.event;
@@ -85,4 +85,3 @@ export default function (state = defaultEvent, action) {
       return state;
   }
 }
-
