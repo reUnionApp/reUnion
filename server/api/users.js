@@ -62,6 +62,26 @@ router.get('/:userID', async (req, res, next) => {
   }
 });
 
+// Single User's Events: GET /api/users/:userId/events
+// userOrAdminOnly
+router.get('/:userID/events', async (req, res, next) => {
+  const id = req.params.userID;
+  try {
+    const user = await User.findByPk(id, {
+      include:
+      {
+        model: Event,
+      },
+    });
+    if (!user) {
+      res.sendStatus(404).end();
+    }
+    res.json(user.Events);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Single User: DELETE /api/users/:userID
 // adminsOnly
 router.delete('/:userID', async (req, res, next) => {
