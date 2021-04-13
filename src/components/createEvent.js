@@ -107,29 +107,9 @@ const CreateEvent = (props) => {
     };
   };
 
-  useEffect(() => {
-    console.log(
-      eventName,
-      eventType,
-      eventOwner,
-      eventCoordinator,
-      eventDescription,
-      eventLocation,
-      'START',
-      eventStartDateTime,
-      'END',
-      eventEndDateTime
-    );
-  }, [
-    eventName,
-    eventType,
-    eventOwner,
-    eventCoordinator,
-    eventDescription,
-    eventLocation,
-    eventStartDateTime,
-    eventEndDateTime,
-  ]);
+  // useEffect(() => {
+  //   props.createEvent(eventData);
+  // }, [eventData]);
 
   console.log('props', props);
 

@@ -11,6 +11,7 @@ import {
   Hamburger,
   CreateEvent,
   MyEvents,
+  SingleEvent,
 } from './components';
 
 import { me } from './store';
@@ -33,6 +34,7 @@ class Routes extends Component {
               <Route exact path="/" component={MyEvents} />
               <Route exact path="/createEvent" component={CreateEvent} />
               <Route exact path="/myEvents" component={MyEvents} />
+              <Route exact path="/singleEvent" component={SingleEvent} />
               <Route component={MyEvents} />
             </Switch>
             <Navbar />

@@ -21,6 +21,8 @@ const middleware = composeWithDevTools(
 );
 const store = createStore(reducer, middleware);
 
+// console.log('STORE------->', store.getState());
+
 export default store;
 export * from './authReducer';
 export * from './eventReducer';

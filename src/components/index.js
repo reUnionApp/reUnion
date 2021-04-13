@@ -6,3 +6,4 @@ export { default as LandingPage } from './landingPage';
 export { default as Hamburger } from './hamburger';
 export { default as CreateEvent } from './createEvent';
 export { default as MyEvents } from './myEvents';
+export { default as SingleEvent } from './singleEvent';
