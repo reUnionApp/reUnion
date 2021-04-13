@@ -12,15 +12,15 @@ const defaultUser = {};
 
 // Action Creators
 
-const getUser = (user) => ({ type: GET_USER, user });
-const removeUser = () => ({ type: REMOVE_USER });
+const _getUser = (user) => ({ type: GET_USER, user });
+const _removeUser = () => ({ type: REMOVE_USER });
 
 // Thunk Creators
 
 export const me = () => async (dispatch) => {
   try {
     const res = await axios.get('/auth/me');
-    dispatch(getUser(res.data || defaultUser));
+    dispatch(_getUser(res.data || defaultUser));
   } catch (error) {
     console.error(error);
   }
@@ -38,10 +38,10 @@ export const signup = (email, password, firstName, lastName) => async (
       lastName,
     });
   } catch (authError) {
-    return dispatch(getUser({ error: authError }));
+    return dispatch(_getUser({ error: authError }));
   }
   try {
-    dispatch(getUser(res.data));
+    dispatch(_getUser(res.data));
     history.push('/home');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
@@ -56,10 +56,10 @@ export const login = (email, password) => async (dispatch) => {
       password,
     });
   } catch (authError) {
-    return dispatch(getUser({ error: authError }));
+    return dispatch(_getUser({ error: authError }));
   }
   try {
-    dispatch(getUser(res.data));
+    dispatch(_getUser(res.data));
     history.push('/home');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
@@ -69,7 +69,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await axios.post('/auth/logout');
-    dispatch(removeUser());
+    dispatch(_removeUser());
     history.push('/login');
   } catch (error) {
     console.error(error);
