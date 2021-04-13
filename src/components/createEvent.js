@@ -108,7 +108,18 @@ const CreateEvent = (props) => {
   };
 
   // useEffect(() => {
-  //   props.createEvent(eventData);
+  //   props.createEvent({
+  //     eventName: 'TEST',
+  //     eventType: ['baby shower'],
+  //     owner: 'TEST',
+  //     coordinator: ['TEST'],
+  //     description: 'TEST',
+  //     location: 'NYC, NY, USA',
+  //     startDate: '2021-04-13',
+  //     endDate: '2021-04-13',
+  //     startTime: '06:57 PM',
+  //     endTime: '06:57 PM',
+  //   });
   // }, [eventData]);
 
   console.log('props', props);
@@ -267,10 +278,23 @@ const CreateEvent = (props) => {
               })}
             </ul>
             <button
-              onClick={() => {
+              onClick={(click) => {
+                click.preventDefault();
                 const event = submitEventForm();
                 setEventData(event);
                 props.createEvent(event);
+                // props.createEvent({
+                //   eventName: 'TEST',
+                //   eventType: ['baby shower'],
+                //   owner: 'TEST',
+                //   coordinator: ['TEST'],
+                //   description: 'TEST',
+                //   location: 'NYC, NY, USA',
+                //   startDate: '2021-04-13',
+                //   endDate: '2021-04-13',
+                //   startTime: '06:57 PM',
+                //   endTime: '06:57 PM',
+                // });
               }}
             >
               Create Event
