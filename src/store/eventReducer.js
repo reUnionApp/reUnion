@@ -7,32 +7,30 @@ const REMOVE_EVENT = 'REMOVE_EVENT';
 const UPDATE_EVENT = 'UPDATE_EVENT';
 const SET_EVENT_OWNER = 'SET_EVENT_OWNER';
 
-
 // Action Creators
 const _getEvent = (event) => ({
   type: GET_EVENT,
-  event
+  event,
 });
 
 const _createEvent = (event) => ({
   type: CREATE_EVENT,
-  event
-})
+  event,
+});
 
 const _updateEvent = (event) => ({
   type: UPDATE_EVENT,
-  event
-})
+  event,
+});
 
 const _removeEvent = (event) => ({
   type: REMOVE_EVENT,
-  event
-})
+  event,
+});
 
 // Thunk
 export const getEvent = (id) => async (dispatch) => {
   try {
-
     const { data } = await axios.get(`/api/events/${id}`);
     dispatch(_getEvent(data));
   } catch (error) {
@@ -43,6 +41,7 @@ export const getEvent = (id) => async (dispatch) => {
 export const createEvent = (event) => async (dispatch) => {
   try {
     const { data } = await axios.post(`/api/events`, event);
+    console.log('data------>', data);
     dispatch(_createEvent(data));
   } catch (error) {
     console.error(error);
@@ -75,7 +74,7 @@ export default function (state = defaultEvent, action) {
     case GET_EVENT:
       return action.event;
     case CREATE_EVENT:
-      console.log('action.event----->', action.event)
+      console.log('action.event----->', action.event);
       return action.event;
     case UPDATE_EVENT:
       return action.event;

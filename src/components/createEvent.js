@@ -77,8 +77,8 @@ const CreateEvent = (props) => {
   };
 
   const submitEventForm = function () {
-    let startDate = dateFormat(eventStartDateTime);
-    let endDate = dateFormat(eventEndDateTime);
+    let startDate = new Date(eventStartDateTime);
+    let endDate = new Date(eventEndDateTime);
     let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
       hour12: true,
       hour: '2-digit',
@@ -134,7 +134,7 @@ const CreateEvent = (props) => {
     eventEndDateTime,
   ]);
 
-  console.log('props', props)
+  console.log('props', props);
 
   return (
     <div>
