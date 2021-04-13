@@ -1,19 +1,16 @@
+//React/Redux
 import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
 import { getEvent, createEvent, updateEvent, removeEvent } from '../store';
 import { connect } from 'react-redux';
-import history from '../history';
 
+//Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
-import Calendar from 'react-calendar';
-import DateTimePicker from 'react-datetime-picker';
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
-
+// MaterialUI
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -22,16 +19,21 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+// react calendar and clock
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
+
+// react google places autocomplete
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-// import dotenv from 'dotenv';
-//dotenv.config();
 
-import { eventConfirmation } from './eventConfirmation';
+// .env config
+import dotenv from 'dotenv';
+dotenv.config();
 
+// MaterialUI Styling
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 SwiperCore.use([Navigation, Pagination, A11y]);
+
 const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
   const [eventType, setEventType] = useState('');
@@ -104,35 +107,9 @@ const CreateEvent = (props) => {
     };
   };
 
-  // const displayEvent = () => {
-  //   for (const [key, value] of Object.entries(eventData)) {
-  //     return key, value
-  //   }
-  // }
-
-  useEffect(() => {
-    console.log(
-      eventName,
-      eventType,
-      eventOwner,
-      eventCoordinator,
-      eventDescription,
-      eventLocation,
-      'START',
-      eventStartDateTime,
-      'END',
-      eventEndDateTime
-    );
-  }, [
-    eventName,
-    eventType,
-    eventOwner,
-    eventCoordinator,
-    eventDescription,
-    eventLocation,
-    eventStartDateTime,
-    eventEndDateTime,
-  ]);
+  // useEffect(() => {
+  //   props.createEvent(eventData);
+  // }, [eventData]);
 
   console.log('props', props);
 
@@ -239,17 +216,6 @@ const CreateEvent = (props) => {
               />
             </div>
           </SwiperSlide>
-          {/* <SwiperSlide>
-            <input
-              type="text"
-              name="eventOwner"
-              placeholder="Event Owner's Name"
-              value={eventOwner}
-              onChange={(event) => {
-                handleChange(event, setEventOwner);
-              }}
-            ></input>
-          </SwiperSlide> */}
           <SwiperSlide>
             <input
               type="text"

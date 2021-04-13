@@ -49,7 +49,7 @@ router.delete('/:eventID', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newEvent = await Event.create(req.body);
-    console.log(newEvent)
+    console.log('BACKEND----->', newEvent);
     res.status(201).json(newEvent);
   } catch (error) {
     next(error);

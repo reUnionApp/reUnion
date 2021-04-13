@@ -5,7 +5,6 @@ const GET_EVENT = 'GET_EVENT';
 const CREATE_EVENT = 'CREATE_EVENT';
 const REMOVE_EVENT = 'REMOVE_EVENT';
 const UPDATE_EVENT = 'UPDATE_EVENT';
-const SET_EVENT_OWNER = 'SET_EVENT_OWNER';
 
 // Action Creators
 const _getEvent = (event) => ({
@@ -31,6 +30,7 @@ const _removeEvent = (event) => ({
 // Thunk
 export const getEvent = (id) => async (dispatch) => {
   try {
+    console.log('ARE YOU WORKING getEvent?');
     const { data } = await axios.get(`/api/events/${id}`);
     dispatch(_getEvent(data));
   } catch (error) {
@@ -40,6 +40,7 @@ export const getEvent = (id) => async (dispatch) => {
 
 export const createEvent = (event) => async (dispatch) => {
   try {
+    console.log('ARE YOU WORKING createEvent?');
     const { data } = await axios.post(`/api/events`, event);
     console.log('data------>', data);
     dispatch(_createEvent(data));

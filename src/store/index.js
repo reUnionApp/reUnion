@@ -4,16 +4,28 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import authReducer from './authReducer';
 import eventReducer from './eventReducer';
-import eventsReducer from './eventsReducer';
+import allEventsReducer from './allEventsReducer';
+import activityReducer from './activityReducer';
+import allActivitiesReducer from './allActivitiesReducer';
 
-const reducer = combineReducers({ authReducer, eventReducer, eventsReducer });
+const reducer = combineReducers({
+  authReducer,
+  eventReducer,
+  allEventsReducer,
+  activityReducer,
+  allActivitiesReducer,
+});
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
 const store = createStore(reducer, middleware);
 
+// console.log('STORE------->', store.getState());
+
 export default store;
 export * from './authReducer';
 export * from './eventReducer';
-export * from './eventsReducer';
+export * from './allEventsReducer';
+export * from './activityReducer';
+export * from './allActivitiesReducer';
