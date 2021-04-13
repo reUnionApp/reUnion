@@ -2,7 +2,6 @@ import axios from 'axios';
 
 // Action Types
 const GET_ACTIVITIES = 'GET_ACTIVITIES';
-const GET_USER_ACTIVITIES = 'GET_USER_ACTIVITIES';
 
 // Action Creators
 const _getActivities = (activities) => ({
@@ -25,8 +24,8 @@ const defaultState = [];
 // Reducer
 export default function (state = defaultState, action) {
   switch (action.type) {
-    case GET_EVENTS:
-      return action.events;
+    case GET_ACTIVITIES:
+      return action.activities;
     default:
       return state;
   }

@@ -14,6 +14,7 @@ import {
 } from './components';
 
 import { me } from './store';
+import myEvents from './components/myEvents';
 
 class Routes extends Component {
   componentDidMount() {
@@ -30,24 +31,22 @@ class Routes extends Component {
           <>
             <Hamburger />
             <Switch>
-              <Route exact path="/" component={MyEvents} />
+              <Route exact path="/" component={myEvents} />
               <Route exact path="/createEvent" component={CreateEvent} />
               <Route exact path="/myEvents" component={MyEvents} />
-              <Route component={MyEvents} />
+              <Route component={Login} />
             </Switch>
             <Navbar />
           </>
         ) : (
           <>
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/landingPage" component={LandingPage} />
-              <Route component={Login} />
-            </Switch>
+            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/landingPage" component={LandingPage} />
           </>
         )}
+        <Route component={Login} />
       </Switch>
     );
   }

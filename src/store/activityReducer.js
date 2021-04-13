@@ -32,7 +32,7 @@ export const getActivity = (eventId, activity) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.get(
-      `/api/events/${eventId}/activities/${activityId}`
+      `/api/events/${eventId}/activities/${activity.id}`
     );
     dispatch(_getActivity(data));
   } catch (error) {
@@ -57,7 +57,7 @@ export const updateActivity = (eventId, activity) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.put(
-      `/api/events/${eventId}/activities/${activityId}`,
+      `/api/events/${eventId}/activities/${activity}`,
       activity
     );
     dispatch(_updateActivity(data));
@@ -70,7 +70,7 @@ export const removeActivity = (eventId, activity) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.delete(
-      `/api/events/${eventId}/activities/${activityId}`
+      `/api/events/${eventId}/activities/${activity.id}`
     );
     dispatch(_removeActivity(data));
   } catch (error) {

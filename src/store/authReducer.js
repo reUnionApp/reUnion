@@ -60,7 +60,7 @@ export const login = (email, password) => async (dispatch) => {
   }
   try {
     dispatch(_getUser(res.data));
-    history.push('/home');
+    history.push('/myEvents');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }

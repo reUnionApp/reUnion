@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getUserEvents } from '../store';
+import { Link } from 'react-router-dom';
 import history from '../history';
 
 const MyEvents = (props) => {
@@ -20,6 +21,7 @@ const MyEvents = (props) => {
             return <li key={event.id}>{event.eventName}</li>;
           })}
       </ul>
+      <Link to="/createEvent">Create Event</Link>
     </div>
   );
 };
