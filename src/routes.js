@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Login,
   Signup,
@@ -12,9 +12,9 @@ import {
   CreateEvent,
   MyEvents,
   SingleEvent,
-} from './components';
+} from "./components";
 
-import { me } from './store';
+import { me } from "./store";
 
 class Routes extends Component {
   componentDidMount() {
@@ -34,7 +34,7 @@ class Routes extends Component {
               <Route exact path="/" component={MyEvents} />
               <Route exact path="/createEvent" component={CreateEvent} />
               <Route exact path="/myEvents" component={MyEvents} />
-              <Route exact path="/singleEvent" component={SingleEvent} />
+              <Route exact path="/myEvents/:eventId" component={SingleEvent} />
               <Route component={MyEvents} />
             </Switch>
             <Navbar />
