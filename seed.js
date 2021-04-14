@@ -40,6 +40,7 @@ async function seed() {
           eventName: faker.lorem.words(4),
           eventType: [faker.random.arrayElement(eTypes)],
           owner: faker.name.findName(),
+          ownerId: id,
           coordinator: [`${faker.name.findName()}`],
           description: faker.lorem.words(8),
           location: faker.name.jobArea(),

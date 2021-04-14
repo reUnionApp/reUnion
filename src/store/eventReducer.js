@@ -75,7 +75,6 @@ export default function (state = defaultEvent, action) {
     case GET_EVENT:
       return action.event;
     case CREATE_EVENT:
-      console.log('action.event----->', action.event);
       return action.event;
     case UPDATE_EVENT:
       return action.event;
