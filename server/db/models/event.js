@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Event = db.define(
-  "Events",
+  'Events',
   {
     eventName: {
       type: Sequelize.TEXT,
@@ -16,11 +16,11 @@ const Event = db.define(
       type: Sequelize.ARRAY(
         Sequelize.ENUM({
           values: [
-            "class reunion",
-            "family reunion",
-            "anniversary party",
-            "baby shower",
-            "other gathering",
+            'class reunion',
+            'family reunion',
+            'anniversary party',
+            'baby shower',
+            'other gathering',
           ],
         })
       ),
@@ -28,6 +28,13 @@ const Event = db.define(
     },
     owner: {
       type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    ownerId: {
+      type: Sequelize.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,

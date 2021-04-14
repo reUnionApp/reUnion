@@ -79,7 +79,9 @@ const CreateEvent = (props) => {
     return month + '/' + day + '/' + year;
   };
 
-  const submitEventForm = function () {
+  const submitEventForm = function (click) {
+    click.preventDefault(); // disable this after production
+
     let startDate = new Date(eventStartDateTime);
     let endDate = new Date(eventEndDateTime);
     let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
@@ -93,10 +95,11 @@ const CreateEvent = (props) => {
       minute: '2-digit',
     });
 
-    return {
+    let event = {
       eventName: eventName,
       eventType: [eventType],
       owner: eventOwner,
+      ownerId: props.user.id,
       coordinator: [eventCoordinator],
       description: eventDescription,
       location: eventLocation.label,
@@ -105,6 +108,9 @@ const CreateEvent = (props) => {
       startTime: startTime,
       endTime: endTime,
     };
+
+    setEventData(event);
+    props.createEvent(event);
   };
 
   // useEffect(() => {
@@ -228,6 +234,7 @@ const CreateEvent = (props) => {
             </div>
           </SwiperSlide>
           <SwiperSlide>
+            {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
             <input
               type="text"
               name="coordinators"
@@ -279,22 +286,7 @@ const CreateEvent = (props) => {
             </ul>
             <button
               onClick={(click) => {
-                click.preventDefault();
-                const event = submitEventForm();
-                setEventData(event);
-                props.createEvent(event);
-                // props.createEvent({
-                //   eventName: 'TEST',
-                //   eventType: ['baby shower'],
-                //   owner: 'TEST',
-                //   coordinator: ['TEST'],
-                //   description: 'TEST',
-                //   location: 'NYC, NY, USA',
-                //   startDate: '2021-04-13',
-                //   endDate: '2021-04-13',
-                //   startTime: '06:57 PM',
-                //   endTime: '06:57 PM',
-                // });
+                submitEventForm(click);
               }}
             >
               Create Event
