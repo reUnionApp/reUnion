@@ -41,7 +41,7 @@ export const getEvent = (id) => async (dispatch) => {
 export const createEvent = (event) => async (dispatch) => {
   try {
     console.log('ARE YOU WORKING createEvent?');
-    const { data } = await axios.post(`/api/events`, event);
+    const { data } = await axios.post('/api/events', event);
     console.log('data------>', data);
     dispatch(_createEvent(data));
   } catch (error) {
