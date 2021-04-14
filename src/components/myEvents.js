@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getUserEvents } from '../store';
-import { Link } from 'react-router-dom';
-import history from '../history';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { getUserEvents } from "../store";
+import { Link } from "react-router-dom";
+import history from "../history";
 
 const MyEvents = (props) => {
-  console.log('props in myEvents', props);
-  console.log('props.userEvent', props.userEvents);
+  console.log("props in myEvents", props);
+  console.log("props.userEvent", props.userEvents);
   const id = props.user.id;
   useEffect(() => {
     props.getUserEvents(id);
@@ -18,7 +18,13 @@ const MyEvents = (props) => {
       <ul>
         {props.userEvents &&
           props.userEvents.map((event) => {
-            return <li key={event.id}>{event.eventName}</li>;
+            return (
+              <div key={event.id}>
+                <Link to={`/myEvents/${event.id}`}>
+                  <li>{event.eventName}</li>
+                </Link>
+              </div>
+            );
           })}
       </ul>
       <Link to="/createEvent">Create Event</Link>

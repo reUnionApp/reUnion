@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getEvent } from '../store';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { getEvent } from "../store";
+import { Link } from "react-router-dom";
 
 const SingleEvent = (props) => {
-  console.log('props in myEvents', props);
-  console.log('props.userEvent', props.userEvents);
+  console.log("PROPS IN SINGLE EVENT", props);
   const id = props.user.id;
   useEffect(() => {
-    props.getEvent(1);
+    props.getEvent(props.match.params.eventId);
   }, []);
 
   return (
@@ -29,6 +28,7 @@ const SingleEvent = (props) => {
 
 const mapState = (state) => ({
   user: state.authReducer,
+  userEvents: state.allEventsReducer.userEvents,
   singleEvent: state.eventReducer,
 });
 
