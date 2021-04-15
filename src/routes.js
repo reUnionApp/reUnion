@@ -14,6 +14,7 @@ import {
   SingleEvent,
   AllActivities,
   SingleActivity,
+  CreateActivity,
 } from './components';
 
 import { me } from './store';
@@ -42,6 +43,11 @@ class Routes extends Component {
                 exact
                 path="/myEvents/:eventId/activities"
                 component={AllActivities}
+              />
+              <Route
+                exact
+                path="/myEvents/:eventId/createActivity"
+                component={CreateActivity}
               />
               <Route exact path="/myEvents/:eventId" component={SingleEvent} />
               <Route exact path="/myEvents" component={MyEvents} />
