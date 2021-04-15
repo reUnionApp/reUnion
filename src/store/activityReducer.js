@@ -28,11 +28,11 @@ const _removeActivity = (activity) => ({
 });
 
 // Thunk
-export const getActivity = (eventId, activity) => async (dispatch) => {
+export const getActivity = (eventId, activityId) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.get(
-      `/api/events/${eventId}/activities/${activity.id}`
+      `/api/events/${eventId}/activities/${activityId}`
     );
     dispatch(_getActivity(data));
   } catch (error) {
@@ -57,7 +57,7 @@ export const updateActivity = (eventId, activity) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.put(
-      `/api/events/${eventId}/activities/${activity}`,
+      `/api/events/${eventId}/activities/${activity.id}`,
       activity
     );
     dispatch(_updateActivity(data));
@@ -66,11 +66,11 @@ export const updateActivity = (eventId, activity) => async (dispatch) => {
   }
 };
 
-export const removeActivity = (eventId, activity) => async (dispatch) => {
+export const removeActivity = (eventId, activityId) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.delete(
-      `/api/events/${eventId}/activities/${activity.id}`
+      `/api/events/${eventId}/activities/${activityId}`
     );
     dispatch(_removeActivity(data));
   } catch (error) {

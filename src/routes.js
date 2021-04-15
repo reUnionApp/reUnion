@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch } from "react-router-dom";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Login,
   Signup,
@@ -13,10 +13,11 @@ import {
   MyEvents,
   SingleEvent,
   AllActivities,
-  SingleActivity
-} from "./components";
+  SingleActivity,
+  CreateActivity,
+} from './components';
 
-import { me } from "./store";
+import { me } from './store';
 
 class Routes extends Component {
   componentDidMount() {
@@ -33,12 +34,25 @@ class Routes extends Component {
           <>
             <Hamburger />
             <Switch>
-              <Route exact path="/" component={MyEvents} />
-              <Route exact path="/createEvent" component={CreateEvent} />
-              <Route exact path="/myEvents" component={MyEvents} />
+              <Route
+                exact
+                path="/myEvents/:eventId/activities/:activityId"
+                component={SingleActivity}
+              />
+              <Route
+                exact
+                path="/myEvents/:eventId/activities"
+                component={AllActivities}
+              />
+              <Route
+                exact
+                path="/myEvents/:eventId/createActivity"
+                component={CreateActivity}
+              />
               <Route exact path="/myEvents/:eventId" component={SingleEvent} />
-              <Route exact path="/myEvents/:eventId/activities" component={AllActivities}/>
-              {/* <Route exact path="/myEvents/:eventId/activities/:activityId" component={SingleActivity}/> */}
+              <Route exact path="/myEvents" component={MyEvents} />
+              <Route exact path="/createEvent" component={CreateEvent} />
+              <Route exact path="/" component={MyEvents} />
             </Switch>
             <Navbar />
           </>
