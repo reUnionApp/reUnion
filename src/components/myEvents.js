@@ -14,7 +14,10 @@ const MyEvents = (props) => {
 
   return (
     <div>
-      <h2>You have {props.userEvents.length} events</h2>
+      <h2>
+        You have {props.userEvents.length}{" "}
+        {props.userEvents.length > 1 ? "events" : "event"}
+      </h2>
       <ul>
         {props.userEvents &&
           props.userEvents.map((event) => {
