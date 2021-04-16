@@ -1,0 +1,36 @@
+.flex {
+  display: flex;
+}
+.aItemsC {
+  align-items: center;
+}
+.jContentC {
+  justify-content: center;
+}
+.column {
+  flex-direction: column;
+}
+.button {
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  min-width: 50px;
+  min-height: 20px;
+  transition-duration: 0.3s;
+}
+.button:active {
+  transform: scale(0.97);
+}
+.teal-black {
+  background-color: #38c1d3;
+  color: black;
+}
+.pink-black {
+  background-color: #e40065;
+  color: black;
+}
+.yellow-black {
+  background-color: #ffc300;
+  color: black;
+}
