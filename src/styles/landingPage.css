@@ -1,3 +1,10 @@
+html {
+  margin: 0px;
+}
+body {
+  margin: 0px;
+}
+
 .flex {
   display: flex;
 }
@@ -33,4 +40,54 @@
 .yellow-black {
   background-color: #ffc300;
   color: black;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swiper-container {
+  display: flex;
+  justify-content: baseline;
+  height: 50%;
+}
+.swiper-wrapper {
+  display: flex;
+  height: 60vh;
+  width: 100vw;
+  margin-top: 20vh;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.swiper-button-next {
+  margin-top: 10vh;
+  color: #38c1d3;
+}
+.swiper-button-prev {
+  margin-top: 10vh;
+  color: #38c1d3;
+}
+
+.button-container {
+  width: 100vw;
+  margin: 36px 0px 0px 0px;
+}
+
+.openSans {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.titleClass {
+  margin: 0 0 100px 0;
+  justify-self: flex-start;
+  font-size: 50px;
 }
