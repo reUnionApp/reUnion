@@ -42,6 +42,8 @@ export const getActivity = (eventId, activityId) => async (dispatch) => {
 
 export const createActivity = (eventId, activity) => async (dispatch) => {
   try {
+    console.log('eventId---->', eventId);
+    console.log('activity---->', activity)
     const { data } = await axios.post(
       `/api/events/${eventId}/activities`,
       activity

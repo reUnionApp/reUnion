@@ -68,6 +68,7 @@ router.delete("/:eventID/activities/:activityID", async (req, res, next) => {
 
 router.post("/:eventID/activities", async (req, res, next) => {
   try {
+    console.log('req.body------->>>>>>', req.body)
     const event = req.params.eventID;
     const newActivity = await Activity.create({
       ...req.body,

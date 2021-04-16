@@ -104,8 +104,11 @@ const CreateActivity = (props) => {
       endTime: endTime,
     };
 
+    const eventId = props.match.params.eventId;
+
+    console.log('activity------->', activity);
     setActivityData(activity);
-    props.createActivity(activity);
+    props.createActivity(eventId, activity);
   };
 
   // useEffect(() => {
@@ -124,6 +127,7 @@ const CreateActivity = (props) => {
   // }, [eventData]);
 
   console.log('props', props);
+  console.log('activity name', activityName)
 
   return (
     <div>
@@ -271,7 +275,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getEvent: (id) => dispatch(getEvent(id)),
-  createActivity: (activity) => dispatch(createActivity(activity)),
+  createActivity: (eventId, activity) => dispatch(createActivity(eventId, activity)),
 });
 
 export default connect(mapState, mapDispatch)(CreateActivity);
