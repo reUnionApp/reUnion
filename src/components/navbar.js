@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
-import title from '../styles/reUnion_Title.png';
 
 const Navbar = ({ handleLogout, isLoggedIn, firstName }) => (
   <div>
-    <img style={{ width: '10%' }} src={title} alt="reUnion logo" />
     <nav>
       {isLoggedIn ? (
         <div>
