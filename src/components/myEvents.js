@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import history from "../history";
 import "../styles/myEvents.css";
 
+const colors = {
+  1: "teal",
+  2: "pink",
+  3: "yellow",
+};
+
 const MyEvents = (props) => {
   console.log("props in myEvents", props);
   console.log("props.userEvent", props.userEvents);
@@ -12,18 +18,19 @@ const MyEvents = (props) => {
   useEffect(() => {
     props.getUserEvents(id);
   }, []);
-
+  let count = 0;
   return (
-    <div className="flex aItemsC column" style={{ backgroundColor: "yellow" }}>
+    <div className="flex aItemsC column">
       <h2>
         You have {props.userEvents.length}{" "}
         {props.userEvents.length > 1 ? "events" : "event"}
       </h2>
       {props.userEvents &&
-        props.userEvents.map((event) => {
+        props.userEvents.map((event, idx) => {
+          count === 3 ? (count = 1) : ++count;
           return (
             <div
-              className="flex column aItemsC jContentC eventBox"
+              className={`flex column aItemsC jContentC eventBox ${colors[count]}`}
               key={event.id}
             >
               <Link to={`/myEvents/${event.id}`}>

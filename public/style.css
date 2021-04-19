@@ -36,3 +36,13 @@ body {
   color: black;
   font-family: "Open Sans", sans-serif;
 }
+
+.teal {
+  background-color: #38c1d3;
+}
+.pink {
+  background-color: #e40065;
+}
+.yellow {
+  background-color: #ffc300;
+}
