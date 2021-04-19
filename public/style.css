@@ -1,0 +1,32 @@
+html {
+  margin: 0px;
+}
+body {
+  margin: 0px;
+}
+
+.flex {
+  display: flex;
+}
+.aItemsC {
+  align-items: center;
+}
+.jContentC {
+  justify-content: center;
+}
+.column {
+  flex-direction: column;
+}
+
+.test {
+  background-color: coral;
+}
+
+.fullHeight {
+  height: 100vh;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgba(0, 255, 255, 0.192);
+}
