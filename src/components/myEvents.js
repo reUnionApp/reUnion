@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getUserEvents } from "../store";
 import { Link } from "react-router-dom";
 import history from "../history";
+import "../styles/myEvents.css";
 
 const MyEvents = (props) => {
   console.log("props in myEvents", props);
@@ -13,23 +14,24 @@ const MyEvents = (props) => {
   }, []);
 
   return (
-    <div>
+    <div className="flex aItemsC column" style={{ backgroundColor: "yellow" }}>
       <h2>
         You have {props.userEvents.length}{" "}
         {props.userEvents.length > 1 ? "events" : "event"}
       </h2>
-      <ul>
-        {props.userEvents &&
-          props.userEvents.map((event) => {
-            return (
-              <div key={event.id}>
-                <Link to={`/myEvents/${event.id}`}>
-                  <li>{event.eventName}</li>
-                </Link>
-              </div>
-            );
-          })}
-      </ul>
+      {props.userEvents &&
+        props.userEvents.map((event) => {
+          return (
+            <div
+              className="flex column aItemsC jContentC eventBox"
+              key={event.id}
+            >
+              <Link to={`/myEvents/${event.id}`}>
+                <h3>{event.eventName}</h3>
+              </Link>
+            </div>
+          );
+        })}
       <Link to="/createEvent">Create Event</Link>
     </div>
   );
