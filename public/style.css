@@ -30,3 +30,19 @@ body {
   justify-content: space-between;
   background-color: rgba(0, 255, 255, 0.192);
 }
+
+* {
+  text-decoration: none;
+  color: black;
+  font-family: "Open Sans", sans-serif;
+}
+
+.teal {
+  background-color: #38c1d3;
+}
+.pink {
+  background-color: #e40065;
+}
+.yellow {
+  background-color: #ffc300;
+}
