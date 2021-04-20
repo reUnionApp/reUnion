@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getEvent, getActivities } from "../store";
+import { getEvent, getActivities, removeActivity } from "../store";
 import { Link } from "react-router-dom";
 
 const SingleEvent = (props) => {
   console.log("PROPS IN SINGLE EVENT", props);
   const id = props.user.id;
+  const eventId = props.match.params.eventId;
+
+  const deleteSelectedActivity = async (eventId, activityId) => {
+    await props.removeActivity(eventId, activityId);
+    await props.getActivities(eventId);
+  }
+
   useEffect(() => {
-    props.getEvent(props.match.params.eventId);
+    props.getEvent(eventId);
     props.getActivities(props.match.params.eventId)
   }, []);
 
@@ -26,9 +33,11 @@ const SingleEvent = (props) => {
       <div>
         <h2>{props.singleEvent.eventName}'s Activities</h2>
         {props.allActivities.map((activity) => {
-          return (<Link to={`/myevents/${activity.EventId}/activities/${activity.id}`} key={activity.id}>{activity.activityName}</Link>)
+          return (<div><h4><Link to={`/myevents/${activity.EventId}/activities/${activity.id}`} key={activity.id}>{activity.activityName}</Link></h4>
+            <button onClick={() => deleteSelectedActivity(eventId, activity.id)}>Delete</button></div>)
         })}
       </div>
+      <Link to={`/myEvents/${props.singleEvent.id}/createActivity`}>Create Activity</Link>
     </div>
   );
 };
@@ -42,7 +51,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getEvent: (eventId) => dispatch(getEvent(eventId)),
-  getActivities: (eventId) => dispatch(getActivities(eventId))
+  getActivities: (eventId) => dispatch(getActivities(eventId)),
+  removeActivity: (eventId, activityId) => dispatch(removeActivity(eventId, activityId))
 });
 
 export default connect(mapState, mapDispatch)(SingleEvent);
