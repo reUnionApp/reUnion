@@ -15,6 +15,7 @@ import {
   AllActivities,
   SingleActivity,
   CreateActivity,
+  AllUsers
 } from './components';
 
 import { me } from './store';
@@ -34,6 +35,7 @@ class Routes extends Component {
           <>
             <Hamburger />
             <Switch>
+            <Route exact path="/users" component={AllUsers} />
               <Route
                 exact
                 path="/myEvents/:eventId/activities/:activityId"
