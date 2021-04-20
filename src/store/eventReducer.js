@@ -44,6 +44,7 @@ export const createEvent = (event) => async (dispatch) => {
     const { data } = await axios.post('/api/events', event);
     console.log('data------>', data);
     dispatch(_createEvent(data));
+    return data.id
   } catch (error) {
     console.error(error);
   }

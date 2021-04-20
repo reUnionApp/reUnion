@@ -31,12 +31,13 @@ export default DropMenu;
 
 const DropMenuBar = styled.div`
   transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+  backdrop-filter: blur(5px);
   display: flex;
   flex-flow: column nowrap;
   position: fixed;
   height: 100vh;
   width: 100vw;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.75);
   transition: transform 0.3s ease-in-out;
 `;

@@ -26,7 +26,7 @@ const MyEvents = (props) => {
         {props.userEvents.length > 1 ? "events" : "event"}
       </h2>
       {props.userEvents &&
-        props.userEvents.map((event, idx) => {
+        props.userEvents.map((event) => {
           count === 3 ? (count = 1) : ++count;
           return (
             <div
