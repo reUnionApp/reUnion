@@ -35,7 +35,8 @@
   justify-content: baseline;
   height: 50%;
 }
-.swiper-wrapper {
+
+.landing-wrapper {
   display: flex;
   height: 60vh;
   width: 100vw;
@@ -50,11 +51,11 @@
 }
 
 .swiper-button-next {
-  margin-top: 10vh;
+  /* margin-top: 10vh; */
   color: #38c1d3;
 }
 .swiper-button-prev {
-  margin-top: 10vh;
+  /* margin-top: 10vh; */
   color: #38c1d3;
 }
 

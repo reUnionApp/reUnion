@@ -79,7 +79,7 @@ const CreateEvent = (props) => {
     return month + '/' + day + '/' + year;
   };
 
-  const submitEventForm = function (click) {
+  const submitEventForm = async function (click) {
     click.preventDefault(); // disable this after production
 
     let startDate = new Date(eventStartDateTime);
@@ -110,7 +110,12 @@ const CreateEvent = (props) => {
     };
 
     setEventData(event);
-    props.createEvent(event);
+    const resultId = await props.createEvent(event);
+
+    props.history.push(`/myEvents/${resultId}`)
+
+
+
   };
 
   // useEffect(() => {
@@ -139,159 +144,161 @@ const CreateEvent = (props) => {
           spaceBetween={0}
           slidesPerView={1}
           navigation
-          style={{ height: '70vh' }}
+          style={{ height: '70vh', backgroundColor: 'red', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}
         >
-          <SwiperSlide>
-            <select
-              onChange={(event) => {
-                handleChange(event, setEventType);
-              }}
-              value={eventType}
-            >
-              <option value="class reunion">Class Reunion</option>
-              <option value="family reunion">Family Reunion</option>
-              <option value="anniversary party">Anniversary Party</option>
-              <option value="baby shower">Baby Shower</option>
-              <option value="other gathering">Other Gathering</option>
-            </select>
-          </SwiperSlide>
-          <SwiperSlide>
-            <input
-              type="text"
-              name="eventName"
-              placeholder="Event Name"
-              value={eventName}
-              onChange={(event) => {
-                handleChange(event, setEventName);
-              }}
-            ></input>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="Date picker dialog"
-                  format="MM/dd/yyyy"
-                  value={eventStartDateTime}
-                  onChange={(event) => {
-                    handleDateTimeChange(event, setEventStartDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={eventStartDateTime}
-                  onChange={(event) => {
-                    handleDateTimeChange(event, setEventStartDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="Date picker dialog"
-                  format="MM/dd/yyyy"
-                  value={eventEndDateTime}
-                  onChange={(event) => {
-                    handleDateTimeChange(event, setEventEndDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={eventEndDateTime}
-                  onChange={(event) => {
-                    handleDateTimeChange(event, setEventEndDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-            <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-              <GooglePlacesAutocomplete
-                apiKey={process.env.REACT_APP_GOOGLE}
-                selectProps={{
-                  eventLocation,
-                  onChange: setEventLocation,
+          <div>
+            <SwiperSlide>
+              <select
+                onChange={(event) => {
+                  handleChange(event, setEventType);
                 }}
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
-            <input
-              type="text"
-              name="coordinators"
-              placeholder="Enter coordinators' names here"
-              value={eventCoordinator}
-              onChange={(event) => {
-                handleChange(event, setEventCoordinator);
-              }}
-            ></input>
-          </SwiperSlide>
-          <SwiperSlide>
-            <textarea
-              // rows="6"
-              // cols="50"
-              type="textarea"
-              name="description"
-              placeholder="Enter description of your event"
-              value={eventDescription}
-              onChange={(event) => {
-                handleChange(event, setEventDescription);
-              }}
-            ></textarea>
-          </SwiperSlide>
-          <SwiperSlide>
-            <h1>Event Confirmation</h1>
-            <ul>eventName: {eventName}</ul>
-            <ul>eventType: {eventType}</ul>
-            <ul>owner: {eventOwner}</ul>
-            <ul>coordinator: {eventCoordinator}</ul>
-            <ul>description: {eventDescription}</ul>
-            <ul>location: {eventLocation.label}</ul>
-            <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
-            <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
-            <ul>
-              startTime:{' '}
-              {eventStartDateTime.toLocaleTimeString('en-US', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </ul>
-            <ul>
-              endTime:{' '}
-              {eventEndDateTime.toLocaleTimeString('en-US', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </ul>
-            <button
-              onClick={(click) => {
-                submitEventForm(click);
-              }}
-            >
-              Create Event
+                value={eventType}
+              >
+                <option value="class reunion">Class Reunion</option>
+                <option value="family reunion">Family Reunion</option>
+                <option value="anniversary party">Anniversary Party</option>
+                <option value="baby shower">Baby Shower</option>
+                <option value="other gathering">Other Gathering</option>
+              </select>
+            </SwiperSlide>
+            <SwiperSlide>
+              <input
+                type="text"
+                name="eventName"
+                placeholder="Event Name"
+                value={eventName}
+                onChange={(event) => {
+                  handleChange(event, setEventName);
+                }}
+              ></input>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Date picker dialog"
+                    format="MM/dd/yyyy"
+                    value={eventStartDateTime}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventStartDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    label="Time picker"
+                    value={eventStartDateTime}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventStartDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change time',
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Date picker dialog"
+                    format="MM/dd/yyyy"
+                    value={eventEndDateTime}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventEndDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    label="Time picker"
+                    value={eventEndDateTime}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventEndDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change time',
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+              <div className="swiper-no-swiping" style={{ width: '50vw' }}>
+                <GooglePlacesAutocomplete
+                  apiKey={process.env.REACT_APP_GOOGLE}
+                  selectProps={{
+                    eventLocation,
+                    onChange: setEventLocation,
+                  }}
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
+              <input
+                type="text"
+                name="coordinators"
+                placeholder="Enter coordinators' names here"
+                value={eventCoordinator}
+                onChange={(event) => {
+                  handleChange(event, setEventCoordinator);
+                }}
+              ></input>
+            </SwiperSlide>
+            <SwiperSlide>
+              <textarea
+                // rows="6"
+                // cols="50"
+                type="textarea"
+                name="description"
+                placeholder="Enter description of your event"
+                value={eventDescription}
+                onChange={(event) => {
+                  handleChange(event, setEventDescription);
+                }}
+              ></textarea>
+            </SwiperSlide>
+            <SwiperSlide style={{ marginTop: 0, paddingBottom: '30px', backgroundColor: 'green' }}>
+              <h1>Event Confirmation</h1>
+              <ul>eventName: {eventName}</ul>
+              <ul>eventType: {eventType}</ul>
+              <ul>owner: {eventOwner}</ul>
+              <ul>coordinator: {eventCoordinator}</ul>
+              <ul>description: {eventDescription}</ul>
+              <ul>location: {eventLocation.label}</ul>
+              <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
+              <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
+              <ul>
+                startTime:{' '}
+                {eventStartDateTime.toLocaleTimeString('en-US', {
+                  hour12: true,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </ul>
+              <ul>
+                endTime:{' '}
+                {eventEndDateTime.toLocaleTimeString('en-US', {
+                  hour12: true,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </ul>
+              <button
+                onClick={(click) => {
+                  submitEventForm(click);
+                }}
+              >
+                Create Event
             </button>
-          </SwiperSlide>
+            </SwiperSlide>
+          </div>
         </Swiper>
       </form>
     </div>

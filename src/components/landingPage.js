@@ -15,11 +15,12 @@ const LandingPage = () => {
     <div
       // className="flex column jContentC aItemsC"
       style={{
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <div>
         <Swiper
+          className='landing-wrapper'
           effect="fade"
           spaceBetween={0}
           slidesPerView={1}
@@ -35,7 +36,7 @@ const LandingPage = () => {
                 id="title-img"
               />
               <img
-                style={{ maxWidth: '200px', margin: '50px 0px 0px 0px' }}
+                style={{ maxWidth: '200px', margin: '100px 0px 0px 0px' }}
                 src="reUnion_Logo.png"
                 alt="reUnion logo"
                 id="logo-img"

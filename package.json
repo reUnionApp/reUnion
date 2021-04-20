@@ -75,6 +75,7 @@
   },
   "devDependencies": {
     "@iconify-icons/cil": "^1.1.0",
+    "@iconify-icons/mdi": "^1.1.14",
     "@iconify/react": "^1.1.4",
     "compression": "^1.7.4",
     "morgan": "^1.10.0",

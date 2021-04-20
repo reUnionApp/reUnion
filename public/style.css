@@ -18,8 +18,8 @@ body {
   flex-direction: column;
 }
 
-.test {
-  background-color: coral;
+.jContentFS {
+  justify-content: flex-start;
 }
 
 .fullHeight {
