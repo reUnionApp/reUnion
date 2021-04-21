@@ -40,7 +40,6 @@ export const getEvent = (id) => async (dispatch) => {
 
 export const createEvent = (event) => async (dispatch) => {
   try {
-    console.log('ARE YOU WORKING createEvent?');
     const { data } = await axios.post('/api/events', event);
     dispatch(_createEvent(data));
     return data.id
@@ -49,10 +48,13 @@ export const createEvent = (event) => async (dispatch) => {
   }
 };
 
-export const updateEvent = (event) => async (dispatch) => {
+export const updateEvent = (eventId, event) => async (dispatch) => {
   try {
-    const { data } = await axios.put(`/api/events/${event.id}`, event);
+    console.log('event id in thunk---->', eventId);
+    const { data } = await axios.put(`/api/events/${eventId}`, event);
+    console.log('data in thunk---->', data)
     dispatch(_updateEvent(data));
+    return data.id
   } catch (error) {
     console.error(error);
   }

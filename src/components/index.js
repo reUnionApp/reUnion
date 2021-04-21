@@ -11,3 +11,4 @@ export { default as AllActivities } from "./allActivities";
 export { default as SingleActivity } from "./singleActivity";
 export { default as CreateActivity } from "./createActivity";
 export { default as AllUsers } from "./allUsers";
+export { default as UpdateEvent } from './updateEvent';
