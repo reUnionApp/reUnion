@@ -1,9 +1,11 @@
 import React from "react";
+import { logout } from "../store";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "../styles/dropMenu.css";
 
-const DropMenu = ({ open, setOpen }) => {
+const DropMenu = ({ open, setOpen, handleLogout }) => {
   return (
     <DropMenuBar
       open={open}
@@ -14,20 +16,35 @@ const DropMenu = ({ open, setOpen }) => {
       <Link className="dropMenuLink" to="/myEvents">
         Events
       </Link>
-      <Link className="dropMenuLink" to="/">
+      <Link className="dropMenuLink" to="/profile">
         Profile
       </Link>
-      <Link className="dropMenuLink" to="/">
+      <Link className="dropMenuLink" to="/updateProfile">
         Account Settings
       </Link>
-      <Link className="dropMenuLink" to="/">
+      <a className="dropMenuLink" href="#" onClick={handleLogout}>
         Logout
-      </Link>
+      </a>
     </DropMenuBar>
   );
 };
 
-export default DropMenu;
+const mapState = (state) => {
+  return {
+    firstName: state.authReducer.firstName,
+    isLoggedIn: !!state.authReducer.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    handleLogout() {
+      dispatch(logout());
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(DropMenu);
 
 const DropMenuBar = styled.div`
   transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
