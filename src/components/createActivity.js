@@ -106,9 +106,9 @@ const CreateActivity = (props) => {
 
     const eventId = props.match.params.eventId;
 
-    console.log('activity------->', activity);
-    setActivityData(activity);
-    props.createActivity(eventId, activity);
+    const resultId = props.createActivity(eventId, activity);
+
+    props.history.push(`/myEvents/${eventId}/activities/${resultId}`)
   };
 
   // useEffect(() => {
