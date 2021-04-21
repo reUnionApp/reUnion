@@ -36,6 +36,11 @@ router.get("/:eventID", async function (req, res, next) {
 // adminsOnly
 router.delete("/:eventID", async (req, res, next) => {
   try {
+    await Activity.destroy({
+      where: {
+        EventId: req.params.eventID
+      }
+    })
     const event = await Event.findByPk(req.params.eventID);
     await event.destroy();
     res.status(200).json(event);

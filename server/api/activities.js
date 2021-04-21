@@ -68,7 +68,7 @@ router.delete("/:eventID/activities/:activityID", async (req, res, next) => {
 
 router.post("/:eventID/activities", async (req, res, next) => {
   try {
-    console.log('req.body------->>>>>>', req.body)
+    console.log("req.body------->>>>>>", req.body);
     const event = req.params.eventID;
     const newActivity = await Activity.create({
       ...req.body,
@@ -103,6 +103,20 @@ router.put("/:eventID/activities/:activityID", async (req, res, next) => {
       await thisActivity.update(req.body);
       res.json(thisActivity);
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE ALL activities by NOT event
+router.delete("/:eventID/activities", async (req, res, next) => {
+  try {
+     await Activity.destroy({
+      where: {
+        EventId: req.params.eventId,
+      },
+    });
+    res.redirect("/:eventID");
   } catch (error) {
     next(error);
   }
