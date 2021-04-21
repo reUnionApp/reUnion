@@ -22,6 +22,10 @@ body {
   justify-content: flex-start;
 }
 
+.jContentSB {
+  justify-content: space-between;
+}
+
 .fullHeight {
   height: 100vh;
   margin: 0px;
@@ -31,10 +35,14 @@ body {
   background-color: rgba(0, 255, 255, 0.192);
 }
 
+.w100 {
+  width: 100%;
+}
+
 * {
   text-decoration: none;
   color: black;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .teal {
@@ -45,4 +53,22 @@ body {
 }
 .yellow {
   background-color: #ffc300;
+}
+
+.button {
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  min-width: 50px;
+  min-height: 20px;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.button:active {
+  transform: scale(0.97);
 }
