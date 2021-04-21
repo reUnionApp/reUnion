@@ -32,7 +32,9 @@ const SingleActivity = (props) => {
       <ul>{props.eventActivities.endDate}</ul>
       <ul>{props.eventActivities.startTime}</ul>
       <ul>{props.eventActivities.endTime}</ul>
+      <button><Link to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}>Update</Link></button>
       <button onClick={() => deleteSelectedActivity(eventId, props.eventActivities.id)}>Delete</button>
+
     </div>
   );
 };

@@ -102,8 +102,6 @@ const UpdateEvent = (props) => {
 
     setEventData(event);
 
-    console.log()
-
     const resultId = await props.updateEvent(props.match.params.eventId, event);
 
     props.history.push(`/myEvents/${resultId}`)

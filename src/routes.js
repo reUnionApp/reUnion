@@ -16,9 +16,11 @@ import {
   AllActivities,
   SingleActivity,
   CreateActivity,
+  UpdateActivity,
   AllUsers,
   Profile,
   UpdateProfile,
+
 } from './components';
 
 import { me } from './store';
@@ -39,6 +41,11 @@ class Routes extends Component {
             <Hamburger />
             <Switch>
               <Route exact path="/users" component={AllUsers} />
+              <Route
+                exact
+                path="/myEvents/:eventId/activities/:activityId/update"
+                component={UpdateActivity}
+              />
               <Route
                 exact
                 path="/myEvents/:eventId/activities/:activityId"

@@ -53,14 +53,15 @@ export const createActivity = (eventId, activity) => async (dispatch) => {
   }
 };
 
-export const updateActivity = (eventId, activity) => async (dispatch) => {
+export const updateActivity = (eventId, activityId, activity) => async (dispatch) => {
   try {
     // need to get activityId from activity
     const { data } = await axios.put(
-      `/api/events/${eventId}/activities/${activity.id}`,
+      `/api/events/${eventId}/activities/${activityId}`,
       activity
     );
     dispatch(_updateActivity(data));
+    return data.id
   } catch (error) {
     console.error(error);
   }

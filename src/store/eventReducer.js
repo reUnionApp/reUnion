@@ -50,9 +50,7 @@ export const createEvent = (event) => async (dispatch) => {
 
 export const updateEvent = (eventId, event) => async (dispatch) => {
   try {
-    console.log('event id in thunk---->', eventId);
     const { data } = await axios.put(`/api/events/${eventId}`, event);
-    console.log('data in thunk---->', data)
     dispatch(_updateEvent(data));
     return data.id
   } catch (error) {
