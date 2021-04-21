@@ -13,3 +13,4 @@ export { default as CreateActivity } from './createActivity';
 export { default as AllUsers } from './allUsers';
 export { default as Profile } from './profile';
 export { default as UpdateProfile } from './updateProfile';
+export { default as UpdateEvent } from './updateEvent';
