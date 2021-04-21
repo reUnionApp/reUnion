@@ -44,6 +44,7 @@ const MyEvents = (props) => {
               <Link to={`/myEvents/${event.id}`}>
                 <h3>{event.eventName}</h3>
               </Link>
+              <button><Link to={`/myEvents/${event.id}/update`}>Update</Link></button>
               <button onClick={() => deleteSelectedEvent(event.id)}>Delete</button>
             </div>
           );

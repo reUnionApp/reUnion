@@ -12,6 +12,7 @@ import {
   CreateEvent,
   MyEvents,
   SingleEvent,
+  UpdateEvent,
   AllActivities,
   SingleActivity,
   CreateActivity,
@@ -35,7 +36,7 @@ class Routes extends Component {
           <>
             <Hamburger />
             <Switch>
-            <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users" component={AllUsers} />
               <Route
                 exact
                 path="/myEvents/:eventId/activities/:activityId"
@@ -51,6 +52,7 @@ class Routes extends Component {
                 path="/myEvents/:eventId/createActivity"
                 component={CreateActivity}
               />
+              <Route exact path="/myEvents/:eventId/update" component={UpdateEvent} />
               <Route exact path="/myEvents/:eventId" component={SingleEvent} />
               <Route exact path="/myEvents" component={MyEvents} />
               <Route exact path="/createEvent" component={CreateEvent} />
@@ -59,16 +61,16 @@ class Routes extends Component {
             <Navbar />
           </>
         ) : (
-          <>
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/landingPage" component={LandingPage} />
-              <Route component={Login} />
-            </Switch>
-          </>
-        )}
+            <>
+              <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/landingPage" component={LandingPage} />
+                <Route component={Login} />
+              </Switch>
+            </>
+          )}
       </Switch>
     );
   }

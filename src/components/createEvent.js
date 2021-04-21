@@ -1,6 +1,6 @@
 //React/Redux
 import React, { useState, useEffect } from 'react';
-import { getEvent, createEvent, updateEvent, removeEvent } from '../store';
+import { getEvent, createEvent } from '../store';
 import { connect } from 'react-redux';
 
 //Swiper
@@ -313,8 +313,6 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   getEvent: (id) => dispatch(getEvent(id)),
   createEvent: (event) => dispatch(createEvent(event)),
-  updateEvent: (event) => dispatch(updateEvent(event)),
-  removeEvent: (id) => dispatch(removeEvent(id)),
 });
 
 export default connect(mapState, mapDispatch)(CreateEvent);
