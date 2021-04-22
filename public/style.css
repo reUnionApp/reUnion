@@ -11,6 +11,9 @@ body {
 .aItemsC {
   align-items: center;
 }
+.aItemsFS {
+  align-items: flex-start;
+}
 .jContentC {
   justify-content: center;
 }

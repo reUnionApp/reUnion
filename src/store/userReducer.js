@@ -36,6 +36,7 @@ export const getUser = (userId) => async (dispatch) => {
 
 export const updateUser = (user) => async (dispatch) => {
   try {
+    console.log('from user reducer, USER--->', user);
     const { data } = await axios.put(`/api/users/${user.id}`, user);
     dispatch(_updateUser(data));
   } catch (error) {
