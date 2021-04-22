@@ -52,6 +52,21 @@ const UpdateEvent = (props) => {
 
   const classes = useStyles();
 
+  useEffect(() => {
+    props.getEvent(props.match.params.eventId);
+  }, [])
+
+  useEffect(() => {
+    setEventName(props.event.eventName);
+    setEventType(props.event.eventType);
+    setEventCoordinator(props.event.eventCoordinator);
+    setEventDescription(props.event.eventDescription);
+    setEventLocation(props.event.eventLocation);
+    setEventStartDateTime(props.event.eventStartDateTime);
+    setEventEndDateTime(props.event.eventEndDateTime);
+  }, [props]);
+
+
   const handleChange = function (event, hook) {
     event.preventDefault();
     hook(event.target.value);
@@ -107,9 +122,7 @@ const UpdateEvent = (props) => {
     props.history.push(`/myEvents/${resultId}`)
   };
 
-  useEffect(() => {
-    props.getEvent(props.match.params.eventId);
-  }, [])
+
 
   // useEffect(() => {
   //   props.createEvent({
@@ -148,7 +161,6 @@ const UpdateEvent = (props) => {
           <input
             type="text"
             name="eventName"
-            placeholder="Event Name"
             value={eventName}
             onChange={(event) => {
               handleChange(event, setEventName);

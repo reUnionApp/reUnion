@@ -25,7 +25,9 @@ const MyEvents = (props) => {
   useEffect(() => {
     props.getUserEvents(userId);
   }, []);
+
   let count = 0;
+
   return (
     <div className="flex aItemsC column">
       <h2>
@@ -41,6 +43,7 @@ const MyEvents = (props) => {
               className={`flex column aItemsC jContentC eventBox ${colors[count]}`}
               key={event.id}
             >
+              {props.user.id === event.ownerId && (<div>Host</div>)}
               <Link to={`/myEvents/${event.id}`}>
                 <h3>{event.eventName}</h3>
               </Link>
