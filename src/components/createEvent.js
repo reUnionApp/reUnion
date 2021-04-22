@@ -50,7 +50,7 @@ SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
-  const [eventType, setEventType] = useState('');
+  const [eventType, setEventType] = useState('class reunion');
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
   const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
@@ -153,7 +153,9 @@ const CreateEvent = (props) => {
                   handleChange(event, setEventType);
                 }}
                 value={eventType}
+              // defaultValue={eventType}
               >
+                {/* <option>Select event type</option> */}
                 <option value="class reunion">Class Reunion</option>
                 <option value="family reunion">Family Reunion</option>
                 <option value="anniversary party">Anniversary Party</option>
