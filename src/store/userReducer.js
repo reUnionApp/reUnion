@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-const GET_USER = 'GET_USER';
-const UPDATE_USER = 'UPDATE_USER';
-const DELETE_USER = 'DELETE_USER';
+const GET_USER = "GET_USER";
+const UPDATE_USER = "UPDATE_USER";
+const DELETE_USER = "DELETE_USER";
 
 const _getUser = (user) => {
   return {
@@ -27,6 +27,7 @@ const _deleteUser = (user) => {
 
 export const getUser = (userId) => async (dispatch) => {
   try {
+    console.log("GET USER HAS FIREEEEED");
     const { data } = await axios.get(`/api/users/${userId}`);
     dispatch(_getUser(data));
   } catch (error) {
@@ -36,7 +37,7 @@ export const getUser = (userId) => async (dispatch) => {
 
 export const updateUser = (user) => async (dispatch) => {
   try {
-    console.log('from user reducer, USER--->', user);
+    console.log("from user reducer, USER--->", user);
     const { data } = await axios.put(`/api/users/${user.id}`, user);
     dispatch(_updateUser(data));
   } catch (error) {

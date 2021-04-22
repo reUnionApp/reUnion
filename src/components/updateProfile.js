@@ -1,65 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getUser, deleteUser, updateUser } from '../store';
-import { Link } from 'react-router-dom';
-import history from '../history';
-import '../styles/updateProfile.css';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { getUser, deleteUser, updateUser } from "../store";
+import { Link } from "react-router-dom";
+import history from "../history";
+import "../styles/updateProfile.css";
 
 const UpdateProfile = (props) => {
   if (props.user.specialRequests === null) {
-    props.user.specialRequests = '';
+    props.user.specialRequests = "";
   }
 
-  props.user.dietaryRestrictions = props.user.dietaryRestrictions[0];
+  if (props.user.dietaryRestrictions === null) {
+    props.user.dietaryRestrictions = "";
+  }
+  if (Array.isArray(props.user.dietaryRestrictions)) {
+    props.user.dietaryRestrictions = props.user.dietaryRestrictions[0];
+  }
 
   if (props.user.alias === null) {
-    props.user.alias = '';
+    props.user.alias = "";
   }
-  console.log('props.user --->', props.user);
+  console.log("props.user --->", props.user);
 
   const [user, updateUser] = useState({ ...props.user });
 
-  const [diet, updateDiet] = useState(props.user.dietaryRestrictions);
+  // const [diet, updateDiet] = useState(props.user.dietaryRestrictions);
 
   const handleChange = (e) => {
     updateUser({ ...user, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('email--->', e.target.email.value);
-    console.log('diet --->', e.target.dietaryRestrictions.value);
-    console.log('special R --->', e.target.specialRequests.value);
-    console.log('nickname--->', e.target.alias.value);
-
+    // e.preventDefault();
     props.updateUser(user);
+    props.history.push("/profile");
   };
-
-  console.log('user state', user);
-
-  console.log(
-    'user.dietaryRestrictions--->',
-    user.dietaryRestrictions === 'gluten free'
-  );
-
-  let test = 'gluten free';
-  let stateDiet = user.dietaryRestrictions;
-
-  console.log('test--->', test);
-  console.log('stateDiet--->', stateDiet);
-  console.log(test === stateDiet);
-
-  console.log('new diet state --->', diet);
 
   return (
     <>
       <hr />
       <div className="w100 flex jContentSB aItemsC">
         <h1
-          style={{ marginLeft: '15px' }}
+          style={{ marginLeft: "15px" }}
         >{`Update ${props.user.firstName}'s Profile`}</h1>
         <button
-          style={{ marginRight: '15px' }}
+          style={{ marginRight: "15px" }}
           type="button"
           className="button updateProfile pink"
         >
@@ -68,7 +53,7 @@ const UpdateProfile = (props) => {
       </div>
       <form
         className="flex column aItemsFS"
-        style={{ margin: '36px 0px 36px 36px' }}
+        style={{ margin: "36px 0px 36px 36px" }}
         onSubmit={handleSubmit}
       >
         <div className="formLabInp">
@@ -91,7 +76,7 @@ const UpdateProfile = (props) => {
           <select
             id="dietaryRestrictions"
             className="formInput"
-            value="Svetlana"
+            value={user.dietaryRestrictions}
             onChange={handleChange}
           >
             <option value="none">none</option>
@@ -133,7 +118,7 @@ const UpdateProfile = (props) => {
         <button
           type="submit"
           className="button teal"
-          style={{ margin: '36px 0px 0px 0px' }}
+          style={{ margin: "36px 0px 0px 0px" }}
         >
           Update Profile
         </button>
@@ -143,7 +128,7 @@ const UpdateProfile = (props) => {
 };
 
 const mapState = (state) => ({
-  user: state.authReducer,
+  user: state.userReducer,
   userEvents: state.allEventsReducer.userEvents,
 });
 
