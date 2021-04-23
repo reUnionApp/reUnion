@@ -61,29 +61,15 @@ const Event = db.define(
         notEmpty: true,
       },
     },
-    startDate: {
-      type: Sequelize.DATEONLY,
+    startDateTime: {
+      type: Sequelize.DATE,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    endDate: {
-      type: Sequelize.DATEONLY,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    startTime: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    endTime: {
-      type: Sequelize.STRING,
+    endDateTime: {
+      type: Sequelize.DATE,
       allowNull: false,
       validate: {
         notEmpty: true,

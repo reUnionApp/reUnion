@@ -82,18 +82,18 @@ const CreateEvent = (props) => {
   const submitEventForm = async function (click) {
     click.preventDefault(); // disable this after production
 
-    let startDate = new Date(eventStartDateTime);
-    let endDate = new Date(eventEndDateTime);
-    let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    let endTime = eventEndDateTime.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+    // let startDate = new Date(eventStartDateTime);
+    // let endDate = new Date(eventEndDateTime);
+    // let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
+    //   hour12: true,
+    //   hour: '2-digit',
+    //   minute: '2-digit',
+    // });
+    // let endTime = eventEndDateTime.toLocaleTimeString('en-US', {
+    //   hour12: true,
+    //   hour: '2-digit',
+    //   minute: '2-digit',
+    // });
 
     let event = {
       eventName: eventName,
@@ -103,19 +103,14 @@ const CreateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location: eventLocation.label,
-      startDate: startDate,
-      endDate: endDate,
-      startTime: startTime,
-      endTime: endTime,
+      startDateTime: eventStartDateTime,
+      endDateTime: eventEndDateTime,
     };
 
     setEventData(event);
     const resultId = await props.createEvent(event);
 
-    props.history.push(`/myEvents/${resultId}`)
-
-
-
+    props.history.push(`/myEvents/${resultId}`);
   };
 
   // useEffect(() => {
@@ -144,7 +139,14 @@ const CreateEvent = (props) => {
           spaceBetween={0}
           slidesPerView={1}
           navigation
-          style={{ height: '70vh', backgroundColor: 'red', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}
+          style={{
+            height: '70vh',
+            backgroundColor: 'red',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+          }}
         >
           <div>
             <SwiperSlide>
@@ -153,7 +155,7 @@ const CreateEvent = (props) => {
                   handleChange(event, setEventType);
                 }}
                 value={eventType}
-              // defaultValue={eventType}
+                // defaultValue={eventType}
               >
                 {/* <option>Select event type</option> */}
                 <option value="class reunion">Class Reunion</option>
@@ -266,7 +268,13 @@ const CreateEvent = (props) => {
                 }}
               ></textarea>
             </SwiperSlide>
-            <SwiperSlide style={{ marginTop: 0, paddingBottom: '30px', backgroundColor: 'green' }}>
+            <SwiperSlide
+              style={{
+                marginTop: 0,
+                paddingBottom: '30px',
+                backgroundColor: 'green',
+              }}
+            >
               <h1>Event Confirmation</h1>
               <ul>eventName: {eventName}</ul>
               <ul>eventType: {eventType}</ul>
@@ -298,7 +306,7 @@ const CreateEvent = (props) => {
                 }}
               >
                 Create Event
-            </button>
+              </button>
             </SwiperSlide>
           </div>
         </Swiper>
