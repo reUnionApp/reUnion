@@ -49,6 +49,22 @@ const UpdateActivity = (props) => {
 
   const classes = useStyles();
 
+  useEffect(() => {
+    props.getEvent(props.match.params.eventId);
+    props.getActivity(
+      props.match.params.eventId,
+      props.match.params.activityId
+    );
+  }, []);
+
+  useEffect(() => {
+    setActivityName(props.activity.activityName);
+    setActivityDescription(props.activity.description);
+    setActivityLocation(props.activity.location);
+    setActivityStartDateTime(props.activity.startDateTime);
+    setActivityEndDateTime(props.activity.endDateTime);
+  }, [props]);
+
   const handleChange = function (activity, hook) {
     activity.preventDefault();
     hook(activity.target.value);
@@ -98,15 +114,7 @@ const UpdateActivity = (props) => {
 
     props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
-
-  useEffect(() => {
-    props.getEvent(props.match.params.eventId);
-    props.getActivity(
-      props.match.params.eventId,
-      props.match.params.activityId
-    );
-  }, []);
-
+  console.log('updateActivity PROPS ------>', props);
   return (
     <div>
       <h1>Update {props.activity.activityName}:</h1>
