@@ -13,14 +13,14 @@ SwiperCore.use([Navigation, Pagination, A11y]);
 const LandingPage = () => {
   return (
     <div
-      // className="flex column jContentC aItemsC"
+      className="flex column jContentC aItemsC"
       style={{
-        height: '100vh'
+        height: '100vh',
       }}
     >
       <div>
         <Swiper
-          className='landing-wrapper'
+          className="landing-wrapper"
           effect="fade"
           spaceBetween={0}
           slidesPerView={1}

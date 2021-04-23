@@ -44,10 +44,8 @@ async function seed() {
           coordinator: [`${faker.name.findName()}`],
           description: faker.lorem.words(8),
           location: faker.name.jobArea(),
-          startDate: Date.now(),
-          endDate: tomorrow,
-          startTime: '07:00 AM',
-          endTime: '05:00 PM',
+          startDateTime: Date.now(),
+          endDateTime: tomorrow,
         })
       );
     }
@@ -62,10 +60,8 @@ async function seed() {
           activityName: faker.lorem.words(3),
           description: faker.lorem.words(8),
           location: faker.name.jobArea(),
-          startDate: Date.now(),
-          endDate: tomorrow,
-          startTime: '07:00 AM',
-          endTime: '05:00 PM',
+          startDateTime: Date.now(),
+          endDateTime: tomorrow,
         })
       );
     }

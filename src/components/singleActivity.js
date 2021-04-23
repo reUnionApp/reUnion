@@ -4,13 +4,12 @@ import { getActivity, getEvent, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 
 const SingleActivity = (props) => {
-  console.log('PROPS IN SINGLE ACTIVITY', props);
   const id = props.user.id;
   const eventId = props.match.params.eventId;
 
   const deleteSelectedActivity = async (eventId, activityId) => {
     await props.removeActivity(eventId, activityId);
-  }
+  };
 
   useEffect(() => {
     props.getEvent(props.match.params.eventId);
@@ -20,6 +19,15 @@ const SingleActivity = (props) => {
     );
   }, []);
 
+  const dateFormat = (date) => {
+    let dateObj = date;
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+
+    return month + '/' + day + '/' + year;
+  };
+
   return (
     <div>
       <div style={{ margin: '0px 25px' }}>
@@ -28,13 +36,42 @@ const SingleActivity = (props) => {
       </div>
       <ul>{props.eventActivities.description}</ul>
       <ul>{props.eventActivities.location}</ul>
-      <ul>{props.eventActivities.startDate}</ul>
-      <ul>{props.eventActivities.endDate}</ul>
-      <ul>{props.eventActivities.startTime}</ul>
-      <ul>{props.eventActivities.endTime}</ul>
-      <button><Link to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}>Update</Link></button>
-      <button onClick={() => deleteSelectedActivity(eventId, props.eventActivities.id)}>Delete</button>
-
+      <ul>{dateFormat(new Date(props.eventActivities.startDateTime))}</ul>
+      <ul>{dateFormat(new Date(props.eventActivities.endDateTime))}</ul>
+      <ul>
+        {new Date(props.eventActivities.startDateTime).toLocaleTimeString(
+          'en-US',
+          {
+            hour12: true,
+            hour: '2-digit',
+            minute: '2-digit',
+          }
+        )}
+      </ul>
+      <ul>
+        {new Date(props.eventActivities.endDateTime).toLocaleTimeString(
+          'en-US',
+          {
+            hour12: true,
+            hour: '2-digit',
+            minute: '2-digit',
+          }
+        )}
+      </ul>
+      <button>
+        <Link
+          to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
+        >
+          Update
+        </Link>
+      </button>
+      <button
+        onClick={() =>
+          deleteSelectedActivity(eventId, props.eventActivities.id)
+        }
+      >
+        Delete
+      </button>
     </div>
   );
 };
@@ -49,7 +86,8 @@ const mapDispatch = (dispatch) => ({
   getEvent: (id) => dispatch(getEvent(id)),
   getActivity: (eventId, activityId) =>
     dispatch(getActivity(eventId, activityId)),
-  removeActivity: (eventId, activityId) => dispatch(removeActivity(eventId, activityId))
+  removeActivity: (eventId, activityId) =>
+    dispatch(removeActivity(eventId, activityId)),
 });
 
 export default connect(mapState, mapDispatch)(SingleActivity);

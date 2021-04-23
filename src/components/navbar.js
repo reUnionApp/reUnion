@@ -3,28 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import '../styles/navbar.css';
 
 const Navbar = ({ handleLogout, isLoggedIn, firstName }) => (
   <div>
     <nav>
-      {isLoggedIn ? (
-        <div>
-          <strong>Hello, {firstName}!</strong>
-          <Link to="/profile">My Profile</Link>
-          <Link to="/myEvents">My Events</Link>
-          <a href="#" onClick={handleLogout}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          <Link to="/home">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+      <div className="flex w100 jContentSA navbar">
+        <strong>Hello, {firstName}!</strong>
+        <Link to="/profile">My Profile</Link>
+        <Link to="/myEvents">My Events</Link>
+        <a href="#" onClick={handleLogout}>
+          Logout
+        </a>
+      </div>
     </nav>
-    <hr />
   </div>
 );
 

@@ -1,10 +1,10 @@
-import axios from "axios";
-import history from "../history";
+import axios from 'axios';
+import history from '../history';
 
 // Action Types
 
-const GET_USER = "GET_USER";
-const REMOVE_USER = "REMOVE_USER";
+const GET_USER = 'GET_USER';
+const REMOVE_USER = 'REMOVE_USER';
 
 // Initial State
 
@@ -19,8 +19,7 @@ const _removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async (dispatch) => {
   try {
-    console.log("AUTH USER HAS FIREEED");
-    const res = await axios.get("/auth/me");
+    const res = await axios.get('/auth/me');
     dispatch(_getUser(res.data || defaultUser));
   } catch (error) {
     console.error(error);
@@ -43,7 +42,7 @@ export const signup = (email, password, firstName, lastName) => async (
   }
   try {
     dispatch(_getUser(res.data));
-    history.push("/home");
+    history.push('/home');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
@@ -61,7 +60,7 @@ export const login = (email, password) => async (dispatch) => {
   }
   try {
     dispatch(_getUser(res.data));
-    history.push("/myEvents");
+    history.push('/myEvents');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
@@ -69,9 +68,9 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.post("/auth/logout");
+    await axios.post('/auth/logout');
     dispatch(_removeUser());
-    history.push("/login");
+    history.push('/login');
   } catch (error) {
     console.error(error);
   }

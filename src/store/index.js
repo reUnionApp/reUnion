@@ -8,8 +8,7 @@ import allEventsReducer from './allEventsReducer';
 import activityReducer from './activityReducer';
 import allActivitiesReducer from './allActivitiesReducer';
 import userReducer from './userReducer';
-import allUsersReducer from './allUsersReducer'
-
+import allUsersReducer from './allUsersReducer';
 
 const reducer = combineReducers({
   authReducer,
@@ -18,15 +17,13 @@ const reducer = combineReducers({
   activityReducer,
   allActivitiesReducer,
   userReducer,
-  allUsersReducer
+  allUsersReducer,
 });
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
 const store = createStore(reducer, middleware);
-
-console.log('STORE------->', store.getState());
 
 export default store;
 export * from './authReducer';
@@ -35,4 +32,4 @@ export * from './allEventsReducer';
 export * from './activityReducer';
 export * from './allActivitiesReducer';
 export * from './userReducer';
-export * from './allUsersReducer'
+export * from './allUsersReducer';

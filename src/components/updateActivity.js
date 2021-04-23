@@ -39,18 +39,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const UpdateActivity = (props) => {
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
   const [activityLocation, setActivityLocation] = useState('');
-  const [activityStartDateTime, setActivityStartDateTime] = useState(
-    new Date()
-  );
-  const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
+  const [activityStartDateTime, setActivityStartDateTime] = useState('');
+  const [activityEndDateTime, setActivityEndDateTime] = useState('');
   const [activityData, setActivityData] = useState({});
 
   const classes = useStyles();
+
+  useEffect(() => {
+    props.getEvent(props.match.params.eventId);
+    props.getActivity(
+      props.match.params.eventId,
+      props.match.params.activityId
+    );
+  }, []);
+
+  useEffect(() => {
+    setActivityName(props.activity.activityName);
+    setActivityDescription(props.activity.description);
+    setActivityLocation(props.activity.location);
+    setActivityStartDateTime(props.activity.startDateTime);
+    setActivityEndDateTime(props.activity.endDateTime);
+  }, [props]);
 
   const handleChange = function (activity, hook) {
     activity.preventDefault();
@@ -71,147 +84,137 @@ const UpdateActivity = (props) => {
   };
 
   const submitActivityForm = async function (click) {
-    click.preventDefault(); // disable this after production
-
-    let startDate = new Date(activityStartDateTime);
-    let endDate = new Date(activityEndDateTime);
-    let startTime = activityStartDateTime.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    let endTime = activityEndDateTime.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+    click.preventDefault();
 
     let activity = {
       activityName: activityName,
       description: activityDescription,
       location: activityLocation.label,
-      startDate: startDate,
-      endDate: endDate,
-      startTime: startTime,
-      endTime: endTime,
+      startDateTime: activityStartDateTime,
+      endDateTime: activityEndDateTime,
     };
 
     const eventId = props.match.params.eventId;
-    const activityId = props.match.params.activityId
+    const activityId = props.match.params.activityId;
 
     const resultId = await props.updateActivity(eventId, activityId, activity);
 
-    props.history.push(`/myEvents/${eventId}/activities/${resultId}`)
+    props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
-
-  useEffect(() => {
-    props.getEvent(props.match.params.eventId);
-    props.getActivity(
-      props.match.params.eventId,
-      props.match.params.activityId
-    );
-  }, []);
 
   return (
     <div>
       <h1>Update {props.activity.activityName}:</h1>
       <form>
-
-            <input
-              type="text"
-              name="activityName"
-              placeholder="Activity Name"
-              value={activityName}
+        <input
+          type="text"
+          name="activityName"
+          placeholder="Activity Name"
+          value={activityName}
+          onChange={(click) => {
+            handleChange(click, setActivityName);
+          }}
+        ></input>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+            <KeyboardDatePicker
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              inputValue={dateFormat(new Date(activityStartDateTime))}
               onChange={(click) => {
-                handleChange(click, setActivityName);
+                handleDateTimeChange(click, setActivityStartDateTime);
               }}
-            ></input>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="Date picker dialog"
-                  format="MM/dd/yyyy"
-                  value={activityStartDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityStartDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={activityStartDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityStartDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="Date picker dialog"
-                  format="MM/dd/yyyy"
-                  value={activityEndDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityEndDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={activityEndDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityEndDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-            <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-              <GooglePlacesAutocomplete
-                apiKey={process.env.REACT_APP_GOOGLE}
-                selectProps={{
-                  activityLocation,
-                  onChange: setActivityLocation,
-                }}
-              />
-            </div>
-            <textarea
-              // rows="6"
-              // cols="50"
-              type="textarea"
-              name="description"
-              placeholder="Enter description of your activity"
-              value={activityDescription}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+            <KeyboardTimePicker
+              margin="normal"
+              id="time-picker"
+              label="Time picker"
+              inputValue={new Date(activityStartDateTime).toLocaleTimeString(
+                'en-US',
+                {
+                  hour12: true,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                }
+              )}
               onChange={(click) => {
-                handleChange(click, setActivityDescription);
+                handleDateTimeChange(click, setActivityStartDateTime);
               }}
-            ></textarea>
+              KeyboardButtonProps={{
+                'aria-label': 'change time',
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+            <KeyboardDatePicker
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              inputValue={dateFormat(new Date(activityEndDateTime))}
+              onChange={(click) => {
+                handleDateTimeChange(click, setActivityEndDateTime);
+              }}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+            <KeyboardTimePicker
+              margin="normal"
+              id="time-picker"
+              label="Time picker"
+              inputValue={new Date(activityEndDateTime).toLocaleTimeString(
+                'en-US',
+                {
+                  hour12: true,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                }
+              )}
+              onChange={(click) => {
+                handleDateTimeChange(click, setActivityEndDateTime);
+              }}
+              KeyboardButtonProps={{
+                'aria-label': 'change time',
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
+        <div className="swiper-no-swiping" style={{ width: '50vw' }}>
+          <GooglePlacesAutocomplete
+            apiKey={process.env.REACT_APP_GOOGLE}
+            selectProps={{
+              activityLocation,
+              onChange: setActivityLocation,
+            }}
+          />
+        </div>
+        <textarea
+          // rows="6"
+          // cols="50"
+          type="textarea"
+          name="description"
+          placeholder="Enter description of your activity"
+          value={activityDescription}
+          onChange={(click) => {
+            handleChange(click, setActivityDescription);
+          }}
+        ></textarea>
 
-            <button
-              onClick={(click) => {
-                submitActivityForm(click);
-              }}
-            >
-              Update Activity
-            </button>
+        <button
+          onClick={(click) => {
+            submitActivityForm(click);
+          }}
+        >
+          Update Activity
+        </button>
       </form>
     </div>
   );
@@ -225,8 +228,9 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   getEvent: (id) => dispatch(getEvent(id)),
   getActivity: (eventId, activityId) =>
-  dispatch(getActivity(eventId, activityId)),
-  updateActivity: (eventId, activityId, activity) => dispatch(updateActivity(eventId, activityId, activity)),
+    dispatch(getActivity(eventId, activityId)),
+  updateActivity: (eventId, activityId, activity) =>
+    dispatch(updateActivity(eventId, activityId, activity)),
 });
 
 export default connect(mapState, mapDispatch)(UpdateActivity);

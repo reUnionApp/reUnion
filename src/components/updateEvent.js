@@ -24,6 +24,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 // .env config
 import dotenv from 'dotenv';
+import { CompareArrowsOutlined } from '@material-ui/icons';
 dotenv.config();
 
 // MaterialUI Styling
@@ -46,26 +47,25 @@ const UpdateEvent = (props) => {
   const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [eventLocation, setEventLocation] = useState('');
-  const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
-  const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
+  const [eventStartDateTime, setEventStartDateTime] = useState('');
+  const [eventEndDateTime, setEventEndDateTime] = useState('');
   const [eventData, setEventData] = useState({});
 
   const classes = useStyles();
 
   useEffect(() => {
     props.getEvent(props.match.params.eventId);
-  }, [])
+  }, []);
 
   useEffect(() => {
     setEventName(props.event.eventName);
     setEventType(props.event.eventType);
-    setEventCoordinator(props.event.eventCoordinator);
-    setEventDescription(props.event.eventDescription);
-    setEventLocation(props.event.eventLocation);
-    setEventStartDateTime(props.event.eventStartDateTime);
-    setEventEndDateTime(props.event.eventEndDateTime);
+    setEventCoordinator(props.event.coordinator);
+    setEventDescription(props.event.description);
+    setEventLocation(props.event.location);
+    setEventStartDateTime(props.event.startDateTime);
+    setEventEndDateTime(props.event.endDateTime);
   }, [props]);
-
 
   const handleChange = function (event, hook) {
     event.preventDefault();
@@ -86,20 +86,7 @@ const UpdateEvent = (props) => {
   };
 
   const submitEventForm = async function (click) {
-    click.preventDefault(); // disable this after production
-
-    let startDate = new Date(eventStartDateTime);
-    let endDate = new Date(eventEndDateTime);
-    let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    let endTime = eventEndDateTime.toLocaleTimeString('en-US', {
-      hour12: true,
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+    click.preventDefault();
 
     let event = {
       eventName: eventName,
@@ -109,37 +96,16 @@ const UpdateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location: eventLocation.label,
-      startDate: startDate,
-      endDate: endDate,
-      startTime: startTime,
-      endTime: endTime,
+      startDateTime: eventStartDateTime,
+      endDateTime: eventEndDateTime,
     };
 
     setEventData(event);
 
     const resultId = await props.updateEvent(props.match.params.eventId, event);
 
-    props.history.push(`/myEvents/${resultId}`)
+    props.history.push(`/myEvents/${resultId}`);
   };
-
-
-
-  // useEffect(() => {
-  //   props.createEvent({
-  //     eventName: 'TEST',
-  //     eventType: ['baby shower'],
-  //     owner: 'TEST',
-  //     coordinator: ['TEST'],
-  //     description: 'TEST',
-  //     location: 'NYC, NY, USA',
-  //     startDate: '2021-04-13',
-  //     endDate: '2021-04-13',
-  //     startTime: '06:57 PM',
-  //     endTime: '06:57 PM',
-  //   });
-  // }, [eventData]);
-
-  console.log('props in updateEvent', props);
 
   return (
     <div>
@@ -173,7 +139,7 @@ const UpdateEvent = (props) => {
                 id="date-picker-dialog"
                 label="Date picker dialog"
                 format="MM/dd/yyyy"
-                value={eventStartDateTime}
+                inputValue={dateFormat(new Date(eventStartDateTime))}
                 onChange={(event) => {
                   handleDateTimeChange(event, setEventStartDateTime);
                 }}
@@ -185,7 +151,14 @@ const UpdateEvent = (props) => {
                 margin="normal"
                 id="time-picker"
                 label="Time picker"
-                value={eventStartDateTime}
+                inputValue={new Date(eventStartDateTime).toLocaleTimeString(
+                  'en-US',
+                  {
+                    hour12: true,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }
+                )}
                 onChange={(event) => {
                   handleDateTimeChange(event, setEventStartDateTime);
                 }}
@@ -202,7 +175,7 @@ const UpdateEvent = (props) => {
                 id="date-picker-dialog"
                 label="Date picker dialog"
                 format="MM/dd/yyyy"
-                value={eventEndDateTime}
+                inputValue={dateFormat(new Date(eventEndDateTime))}
                 onChange={(event) => {
                   handleDateTimeChange(event, setEventEndDateTime);
                 }}
@@ -214,7 +187,14 @@ const UpdateEvent = (props) => {
                 margin="normal"
                 id="time-picker"
                 label="Time picker"
-                value={eventEndDateTime}
+                inputValue={new Date(eventEndDateTime).toLocaleTimeString(
+                  'en-US',
+                  {
+                    hour12: true,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }
+                )}
                 onChange={(event) => {
                   handleDateTimeChange(event, setEventEndDateTime);
                 }}
@@ -228,7 +208,7 @@ const UpdateEvent = (props) => {
             <GooglePlacesAutocomplete
               apiKey={process.env.REACT_APP_GOOGLE}
               selectProps={{
-                eventLocation,
+                // inputValue: eventLocation,
                 onChange: setEventLocation,
               }}
             />
@@ -260,7 +240,7 @@ const UpdateEvent = (props) => {
             }}
           >
             Update Event
-            </button>
+          </button>
         </div>
       </form>
     </div>
@@ -279,4 +259,3 @@ const mapDispatch = (dispatch) => ({
 });
 
 export default connect(mapState, mapDispatch)(UpdateEvent);
-

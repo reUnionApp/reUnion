@@ -1,6 +1,11 @@
 html {
   margin: 0px;
 }
+
+.App {
+  min-height: 100vh;
+}
+
 body {
   margin: 0px;
 }
@@ -27,6 +32,10 @@ body {
 
 .jContentSB {
   justify-content: space-between;
+}
+
+.jContentSA {
+  justify-content: space-around;
 }
 
 .fullHeight {
