@@ -2,18 +2,18 @@ import axios from 'axios';
 
 // Action Types
 const GET_EVENTS = 'GET_EVENTS';
-const GET_USER_EVENTS = 'GET_USER_EVENTS'
+const GET_USER_EVENTS = 'GET_USER_EVENTS';
 
 // Action Creators
 const _getEvents = (events) => ({
   type: GET_EVENTS,
-  events
+  events,
 });
 
 const _getUserEvents = (userEvents) => ({
   type: GET_USER_EVENTS,
-  userEvents
-})
+  userEvents,
+});
 
 // Thunk
 export const getEvents = () => async (dispatch) => {
@@ -36,8 +36,8 @@ export const getUserEvents = (id) => async (dispatch) => {
 
 const defaultState = {
   events: [],
-  userEvents: []
-}
+  userEvents: [],
+};
 
 // Reducer
 export default function (state = defaultState, action) {
@@ -45,10 +45,8 @@ export default function (state = defaultState, action) {
     case GET_EVENTS:
       return { ...state, events: action.events };
     case GET_USER_EVENTS:
-      console.log('action.userEvents in store', action.userEvents)
       return { ...state, userEvents: action.userEvents };
     default:
       return state;
   }
 }
-

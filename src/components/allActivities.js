@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import history from '../history';
 
 function AllActivities(props) {
-  console.log('activities', props);
   useEffect(() => {
     props.getAllActivities(props.match.params.eventId);
   }, []);

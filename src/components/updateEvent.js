@@ -107,8 +107,6 @@ const UpdateEvent = (props) => {
     props.history.push(`/myEvents/${resultId}`);
   };
 
-  console.log('props in updateEvent', props);
-
   return (
     <div>
       <h1>Update {props.event.eventName}</h1>

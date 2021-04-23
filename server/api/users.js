@@ -107,17 +107,15 @@ router.post('/', async (req, res, next) => {
 // userOrAdminOnly
 router.put('/:userID', async (req, res, next) => {
   const id = req.params.userID;
-  console.log('77777777--->', req.body);
-  console.log('before--->', req.body.specialRequests);
+
   req.body.specialRequests = [req.body.specialRequests];
   req.body.dietaryRestrictions = [req.body.dietaryRestrictions];
-  console.log('after--->', req.body.specialRequests);
+
   try {
     const user = await User.findByPk(id);
     if (!user) {
       res.sendStatus(404);
     } else {
-      console.log('999--->', req.body);
       await user.update(req.body);
       res.status(200).json(user);
     }

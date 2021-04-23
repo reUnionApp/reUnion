@@ -101,7 +101,7 @@ const UpdateActivity = (props) => {
 
     props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
-  console.log('updateActivity PROPS ------>', props);
+
   return (
     <div>
       <h1>Update {props.activity.activityName}:</h1>

@@ -30,7 +30,6 @@ const _removeEvent = (event) => ({
 // Thunk
 export const getEvent = (id) => async (dispatch) => {
   try {
-    console.log('ARE YOU WORKING getEvent?');
     const { data } = await axios.get(`/api/events/${id}`);
     dispatch(_getEvent(data));
   } catch (error) {
@@ -42,7 +41,7 @@ export const createEvent = (event) => async (dispatch) => {
   try {
     const { data } = await axios.post('/api/events', event);
     dispatch(_createEvent(data));
-    return data.id
+    return data.id;
   } catch (error) {
     console.error(error);
   }
@@ -52,7 +51,7 @@ export const updateEvent = (eventId, event) => async (dispatch) => {
   try {
     const { data } = await axios.put(`/api/events/${eventId}`, event);
     dispatch(_updateEvent(data));
-    return data.id
+    return data.id;
   } catch (error) {
     console.error(error);
   }

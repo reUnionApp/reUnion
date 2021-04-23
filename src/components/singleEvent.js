@@ -4,7 +4,6 @@ import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 
 const SingleEvent = (props) => {
-  console.log('PROPS IN SINGLE EVENT', props);
   const id = props.user.id;
   const eventId = props.match.params.eventId;
 

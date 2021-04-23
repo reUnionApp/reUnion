@@ -96,8 +96,6 @@ const CreateActivity = (props) => {
     props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
 
-  console.log('props', props);
-
   return (
     <div>
       <h1>Plan Your First Activity</h1>

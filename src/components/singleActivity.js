@@ -4,7 +4,6 @@ import { getActivity, getEvent, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 
 const SingleActivity = (props) => {
-  console.log('PROPS IN SINGLE ACTIVITY', props);
   const id = props.user.id;
   const eventId = props.match.params.eventId;
 
