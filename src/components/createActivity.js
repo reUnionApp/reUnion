@@ -81,19 +81,6 @@ const CreateActivity = (props) => {
   const submitActivityForm = function (click) {
     // click.preventDefault(); // disable this after production
 
-    // let startDate = new Date(activityStartDateTime);
-    // let endDate = new Date(activityEndDateTime);
-    // let startTime = activityStartDateTime.toLocaleTimeString('en-US', {
-    //   hour12: true,
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
-    // let endTime = activityEndDateTime.toLocaleTimeString('en-US', {
-    //   hour12: true,
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
-
     let activity = {
       activityName: activityName,
       description: activityDescription,
@@ -109,23 +96,7 @@ const CreateActivity = (props) => {
     props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
 
-  // useEffect(() => {
-  //   props.createEvent({
-  //     eventName: 'TEST',
-  //     eventType: ['baby shower'],
-  //     owner: 'TEST',
-  //     coordinator: ['TEST'],
-  //     description: 'TEST',
-  //     location: 'NYC, NY, USA',
-  //     startDate: '2021-04-13',
-  //     endDate: '2021-04-13',
-  //     startTime: '06:57 PM',
-  //     endTime: '06:57 PM',
-  //   });
-  // }, [eventData]);
-
   console.log('props', props);
-  console.log('activity name', activityName);
 
   return (
     <div>

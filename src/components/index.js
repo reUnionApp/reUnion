@@ -1,6 +1,5 @@
 export { Signup } from './signup-form';
 export { Login } from './login-form';
-export { default as Homepage } from './homepage';
 export { default as Navbar } from './navbar';
 export { default as LandingPage } from './landingPage';
 export { default as Hamburger } from './hamburger';
@@ -14,4 +13,4 @@ export { default as AllUsers } from './allUsers';
 export { default as Profile } from './profile';
 export { default as UpdateProfile } from './updateProfile';
 export { default as UpdateEvent } from './updateEvent';
-export {default as UpdateActivity} from './updateActivity'
+export { default as UpdateActivity } from './updateActivity';

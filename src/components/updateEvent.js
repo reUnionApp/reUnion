@@ -86,20 +86,7 @@ const UpdateEvent = (props) => {
   };
 
   const submitEventForm = async function (click) {
-    // click.preventDefault(); // disable this after production
-
-    // let startDate = new Date(eventStartDateTime);
-    // let endDate = new Date(eventEndDateTime);
-    // let startTime = eventStartDateTime.toLocaleTimeString('en-US', {
-    //   hour12: true,
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
-    // let endTime = eventEndDateTime.toLocaleTimeString('en-US', {
-    //   hour12: true,
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
+    click.preventDefault();
 
     let event = {
       eventName: eventName,

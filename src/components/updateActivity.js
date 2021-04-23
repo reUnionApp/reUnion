@@ -84,20 +84,7 @@ const UpdateActivity = (props) => {
   };
 
   const submitActivityForm = async function (click) {
-    // click.preventDefault(); // disable this after production
-
-    // let startDate = new Date(activityStartDateTime);
-    // let endDate = new Date(activityEndDateTime);
-    // let startTime = activityStartDateTime.toLocaleTimeString('en-US', {
-    //   hour12: true,
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
-    // let endTime = activityEndDateTime.toLocaleTimeString('en-US', {
-    //   hour12: true,
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
+    click.preventDefault();
 
     let activity = {
       activityName: activityName,
