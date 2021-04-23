@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getEvent, removeEvent, getActivities, removeActivity } from "../store";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
+import { Link } from 'react-router-dom';
 
 const SingleEvent = (props) => {
-  console.log("PROPS IN SINGLE EVENT", props);
+  console.log('PROPS IN SINGLE EVENT', props);
   const id = props.user.id;
   const eventId = props.match.params.eventId;
 
@@ -23,6 +23,15 @@ const SingleEvent = (props) => {
     props.getActivities(props.match.params.eventId);
   }, []);
 
+  const dateFormat = (date) => {
+    let dateObj = date;
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+
+    return month + '/' + day + '/' + year;
+  };
+
   return (
     <div>
       <ul>{props.singleEvent.eventName}</ul>
@@ -31,10 +40,22 @@ const SingleEvent = (props) => {
       <ul>{props.singleEvent.coordinator}</ul>
       <ul>{props.singleEvent.description}</ul>
       <ul>{props.singleEvent.location}</ul>
-      <ul>{props.singleEvent.startDate}</ul>
-      <ul>{props.singleEvent.endDate}</ul>
-      <ul>{props.singleEvent.startTime}</ul>
-      <ul>{props.singleEvent.endTime}</ul>
+      <ul>{dateFormat(new Date(props.singleEvent.startDateTime))}</ul>
+      <ul>{dateFormat(new Date(props.singleEvent.endDateTime))}</ul>
+      <ul>
+        {new Date(props.singleEvent.startDateTime).toLocaleTimeString('en-US', {
+          hour12: true,
+          hour: '2-digit',
+          minute: '2-digit',
+        })}
+      </ul>
+      <ul>
+        {new Date(props.singleEvent.endDateTime).toLocaleTimeString('en-US', {
+          hour12: true,
+          hour: '2-digit',
+          minute: '2-digit',
+        })}
+      </ul>
       <button onClick={() => deleteSelectedEvent(props.singleEvent.id)}>
         Delete
       </button>
@@ -52,12 +73,12 @@ const SingleEvent = (props) => {
                 </Link>
               </h4>
               <button>
-                  <Link
-                    to={`/myEvents/${activity.EventId}/activities/${activity.id}/update`}
-                  >
-                    Update
-                  </Link>
-                </button>
+                <Link
+                  to={`/myEvents/${activity.EventId}/activities/${activity.id}/update`}
+                >
+                  Update
+                </Link>
+              </button>
               <button
                 onClick={() => deleteSelectedActivity(eventId, activity.id)}
               >

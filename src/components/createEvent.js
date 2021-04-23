@@ -80,7 +80,7 @@ const CreateEvent = (props) => {
   };
 
   const submitEventForm = async function (click) {
-    click.preventDefault(); // disable this after production
+    // click.preventDefault(); // disable this after production
 
     // let startDate = new Date(eventStartDateTime);
     // let endDate = new Date(eventEndDateTime);
