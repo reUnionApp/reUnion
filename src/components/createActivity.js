@@ -139,6 +139,7 @@ const CreateActivity = (props) => {
           slidesPerView={1}
           navigation
           style={{ height: '70vh' }}
+          allowTouchMove={false}
         >
           <SwiperSlide>
             <input
