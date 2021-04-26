@@ -60,7 +60,7 @@ const CreateEvent = (props) => {
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
   const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
+  const [eventLocation, setEventLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
@@ -80,7 +80,7 @@ const CreateEvent = (props) => {
   const onPlaceChanged = () => {
     if (eventLocation !== null) {
       console.log('before getPlace is called--->', eventLocation);
-      setEventLocation(eventLocation.getPlace());
+      setEventLocation(eventLocation);
       console.log('82 event location--->', eventLocation);
       console.log('GMaps Location Obj--->', eventLocation.getPlace());
       let newLat = eventLocation.getPlace().geometry.location.lat();
@@ -122,7 +122,7 @@ const CreateEvent = (props) => {
       ownerId: props.user.id,
       coordinator: [eventCoordinator],
       description: eventDescription,
-      location: eventLocation.formatted_address,
+      location: eventLocation.getPlace().formatted_address,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -294,7 +294,11 @@ const CreateEvent = (props) => {
               <ul>owner: {eventOwner}</ul>
               <ul>coordinator: {eventCoordinator}</ul>
               <ul>description: {eventDescription}</ul>
-              <ul>location: {eventLocation.formatted_address}</ul>
+              <ul>
+                location:{' '}
+                {eventLocation.gm_bindings_ &&
+                  eventLocation.getPlace().formatted_address}
+              </ul>
               <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
               <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
               <ul>
