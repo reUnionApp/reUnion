@@ -29,7 +29,7 @@ const MyEvents = (props) => {
     <div className="flex aItemsC column">
       <h2>
         You have {props.userEvents.length}{' '}
-        {props.userEvents.length > 1 ? 'events' : 'event'}
+        {props.userEvents.length === 1 ? 'event' : 'events'}
       </h2>
       {props.userEvents &&
         props.userEvents.map((event) => {
@@ -52,7 +52,11 @@ const MyEvents = (props) => {
             </div>
           );
         })}
-      <Link to="/createEvent">Create Event</Link>
+      <a href="/createEvent">
+        <button id="createEventLink" type="button" className="button">
+          Create Event
+        </button>
+      </a>
     </div>
   );
 };

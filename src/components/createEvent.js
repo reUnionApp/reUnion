@@ -27,7 +27,8 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 // react google places autocomplete
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+// import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { Autocomplete, LoadScript, GoogleMap } from '@react-google-maps/api';
 
 // .env config
 import dotenv from 'dotenv';
@@ -48,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
+const containerStyle = {
+  width: '400px',
+  height: '400px',
+};
+
 const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
   const [eventType, setEventType] = useState('class reunion');
@@ -58,8 +64,35 @@ const CreateEvent = (props) => {
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
+  const [coordinates, setCoordinates] = useState({
+    lat: 40.73,
+    lng: -73.935,
+  });
 
   const classes = useStyles();
+
+  const onLoad = (input) => {
+    console.log('autocomplete: ', input);
+
+    setEventLocation(input);
+  };
+
+  const onPlaceChanged = () => {
+    if (eventLocation !== null) {
+      console.log('before getPlace is called--->', eventLocation);
+      setEventLocation(eventLocation.getPlace());
+      console.log('82 event location--->', eventLocation);
+      console.log('GMaps Location Obj--->', eventLocation.getPlace());
+      let newLat = eventLocation.getPlace().geometry.location.lat();
+      let newLng = eventLocation.getPlace().geometry.location.lng();
+      setCoordinates({
+        lat: newLat,
+        lng: newLng,
+      });
+    } else {
+      console.log('Autocomplete is not loaded yet!');
+    }
+  };
 
   const handleChange = function (event, hook) {
     event.preventDefault();
@@ -80,7 +113,7 @@ const CreateEvent = (props) => {
   };
 
   const submitEventForm = async function (click) {
-    // click.preventDefault(); // disable this after production
+    click.preventDefault();
 
     let event = {
       eventName: eventName,
@@ -89,7 +122,7 @@ const CreateEvent = (props) => {
       ownerId: props.user.id,
       coordinator: [eventCoordinator],
       description: eventDescription,
-      location: eventLocation.label,
+      location: eventLocation.formatted_address,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -100,9 +133,11 @@ const CreateEvent = (props) => {
     props.history.push(`/myEvents/${resultId}`);
   };
 
+  console.log('eventLocation State ---->', eventLocation);
+
   return (
     <div>
-      <h1>Plan Your First Event</h1>
+      <h1 style={{ margin: '0px 0px 0px 15px' }}>Plan Your First Event</h1>
       <form>
         <Swiper
           effect="fade"
@@ -110,8 +145,14 @@ const CreateEvent = (props) => {
           slidesPerView={1}
           navigation
           allowTouchMove={false}
-          style={{ height: '70vh', backgroundColor: 'red', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}
-
+          style={{
+            height: '70vh',
+            border: '2px solid red',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+          }}
         >
           <div>
             <SwiperSlide>
@@ -199,13 +240,21 @@ const CreateEvent = (props) => {
                 </Grid>
               </MuiPickersUtilsProvider>
               <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-                <GooglePlacesAutocomplete
-                  apiKey={process.env.REACT_APP_GOOGLE}
-                  selectProps={{
-                    eventLocation,
-                    onChange: setEventLocation,
-                  }}
-                />
+                <LoadScript
+                  googleMapsApiKey={process.env.REACT_APP_GOOGLE}
+                  libraries={['places']}
+                >
+                  <GoogleMap
+                    mapContainerStyle={containerStyle}
+                    center={coordinates}
+                    zoom={10}
+                  >
+                    <></>
+                  </GoogleMap>
+                  <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                    <input type="text" />
+                  </Autocomplete>
+                </LoadScript>
               </div>
             </SwiperSlide>
             <SwiperSlide>
@@ -237,7 +286,6 @@ const CreateEvent = (props) => {
               style={{
                 marginTop: 0,
                 paddingBottom: '30px',
-                backgroundColor: 'green',
               }}
             >
               <h1>Event Confirmation</h1>
@@ -246,7 +294,7 @@ const CreateEvent = (props) => {
               <ul>owner: {eventOwner}</ul>
               <ul>coordinator: {eventCoordinator}</ul>
               <ul>description: {eventDescription}</ul>
-              <ul>location: {eventLocation.label}</ul>
+              <ul>location: {eventLocation.formatted_address}</ul>
               <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
               <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
               <ul>

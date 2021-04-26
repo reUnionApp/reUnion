@@ -7,3 +7,7 @@
   text-align: center;
   border-radius: 10px;
 }
+
+#createEventLink {
+  margin: 25px 0px 75px 0px;
+}

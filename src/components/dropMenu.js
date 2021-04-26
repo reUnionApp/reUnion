@@ -1,9 +1,9 @@
-import React from "react";
-import { logout } from "../store";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import "../styles/dropMenu.css";
+import React from 'react';
+import { logout } from '../store';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import '../styles/dropMenu.css';
 
 const DropMenu = ({ open, setOpen, handleLogout }) => {
   return (
@@ -12,8 +12,9 @@ const DropMenu = ({ open, setOpen, handleLogout }) => {
       onClick={() => {
         setOpen(!open);
       }}
+      id="dropMenu"
     >
-      <Link className="dropMenuLink" to="/myEvents">
+      <Link className="dropMenuLink linkSpacer" to="/myEvents">
         Events
       </Link>
       <Link className="dropMenuLink" to="/profile">
@@ -47,7 +48,7 @@ const mapDispatch = (dispatch) => {
 export default connect(mapState, mapDispatch)(DropMenu);
 
 const DropMenuBar = styled.div`
-  transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
+  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
   backdrop-filter: blur(5px);
   display: flex;
   flex-flow: column nowrap;
