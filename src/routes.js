@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {
   Login,
   Signup,
-  Homepage,
   LandingPage,
   Navbar,
   Hamburger,
@@ -20,7 +19,6 @@ import {
   AllUsers,
   Profile,
   UpdateProfile,
-
 } from './components';
 
 import { me } from './store';
@@ -61,7 +59,11 @@ class Routes extends Component {
                 path="/myEvents/:eventId/createActivity"
                 component={CreateActivity}
               />
-              <Route exact path="/myEvents/:eventId/update" component={UpdateEvent} />
+              <Route
+                exact
+                path="/myEvents/:eventId/update"
+                component={UpdateEvent}
+              />
               <Route exact path="/myEvents/:eventId" component={SingleEvent} />
               <Route exact path="/myEvents" component={MyEvents} />
               <Route exact path="/updateprofile" component={UpdateProfile} />
@@ -72,16 +74,16 @@ class Routes extends Component {
             <Navbar />
           </>
         ) : (
-            <>
-              <Switch>
-                <Route exact path="/" component={LandingPage} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/landingPage" component={LandingPage} />
-                <Route component={Login} />
-              </Switch>
-            </>
-          )}
+          <>
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/landingPage" component={LandingPage} />
+              <Route component={Login} />
+            </Switch>
+          </>
+        )}
       </Switch>
     );
   }

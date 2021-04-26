@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Activity = db.define(
-  "Activities",
+  'Activities',
   {
     activityName: {
       type: Sequelize.TEXT,
@@ -17,25 +17,19 @@ const Activity = db.define(
     location: {
       type: Sequelize.TEXT,
     },
-    startDate: {
-      type: Sequelize.DATEONLY,
+    startDateTime: {
+      type: Sequelize.DATE,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    endDate: {
-      type: Sequelize.DATEONLY,
-    },
-    startTime: {
-      type: Sequelize.STRING,
+    endDateTime: {
+      type: Sequelize.DATE,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
-    },
-    endTime: {
-      type: Sequelize.STRING,
     },
   },
   { freezeTableName: true }

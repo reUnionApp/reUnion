@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getUser, deleteUser, updateUser } from "../store";
-import { Link } from "react-router-dom";
-import history from "../history";
-import "../styles/updateProfile.css";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getUser, deleteUser, updateUser } from '../store';
+import { Link } from 'react-router-dom';
+import history from '../history';
+import '../styles/updateProfile.css';
 
 const UpdateProfile = (props) => {
   if (props.user.specialRequests === null) {
-    props.user.specialRequests = "";
+    props.user.specialRequests = '';
   }
 
   if (props.user.dietaryRestrictions === null) {
-    props.user.dietaryRestrictions = "";
+    props.user.dietaryRestrictions = '';
   }
   if (Array.isArray(props.user.dietaryRestrictions)) {
     props.user.dietaryRestrictions = props.user.dietaryRestrictions[0];
   }
 
   if (props.user.alias === null) {
-    props.user.alias = "";
+    props.user.alias = '';
   }
-  console.log("props.user --->", props.user);
 
   const [user, updateUser] = useState({ ...props.user });
 
@@ -33,7 +32,7 @@ const UpdateProfile = (props) => {
   const handleSubmit = (e) => {
     // e.preventDefault();
     props.updateUser(user);
-    props.history.push("/profile");
+    props.history.push('/profile');
   };
 
   return (
@@ -41,10 +40,10 @@ const UpdateProfile = (props) => {
       <hr />
       <div className="w100 flex jContentSB aItemsC">
         <h1
-          style={{ marginLeft: "15px" }}
+          style={{ marginLeft: '15px' }}
         >{`Update ${props.user.firstName}'s Profile`}</h1>
         <button
-          style={{ marginRight: "15px" }}
+          style={{ marginRight: '15px' }}
           type="button"
           className="button updateProfile pink"
         >
@@ -53,7 +52,7 @@ const UpdateProfile = (props) => {
       </div>
       <form
         className="flex column aItemsFS"
-        style={{ margin: "36px 0px 36px 36px" }}
+        style={{ margin: '36px 0px 36px 36px' }}
         onSubmit={handleSubmit}
       >
         <div className="formLabInp">
@@ -118,7 +117,7 @@ const UpdateProfile = (props) => {
         <button
           type="submit"
           className="button teal"
-          style={{ margin: "36px 0px 0px 0px" }}
+          style={{ margin: '36px 0px 0px 0px' }}
         >
           Update Profile
         </button>
