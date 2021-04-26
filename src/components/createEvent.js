@@ -109,14 +109,9 @@ const CreateEvent = (props) => {
           spaceBetween={0}
           slidesPerView={1}
           navigation
-          style={{
-            height: '70vh',
-            backgroundColor: 'red',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-          }}
+          allowTouchMove={false}
+          style={{ height: '70vh', backgroundColor: 'red', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}
+
         >
           <div>
             <SwiperSlide>
