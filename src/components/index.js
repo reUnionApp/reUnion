@@ -14,3 +14,4 @@ export { default as Profile } from './profile';
 export { default as UpdateProfile } from './updateProfile';
 export { default as UpdateEvent } from './updateEvent';
 export { default as UpdateActivity } from './updateActivity';
+export { default as GoogleMapComponent } from './googleMapComponent';

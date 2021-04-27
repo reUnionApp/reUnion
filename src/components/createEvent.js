@@ -29,6 +29,7 @@ import 'react-clock/dist/Clock.css';
 // react google places autocomplete
 // import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Autocomplete, LoadScript, GoogleMap } from '@react-google-maps/api';
+import { GoogleMapComponent } from './index.js';
 
 // .env config
 import dotenv from 'dotenv';
@@ -65,40 +66,8 @@ const CreateEvent = (props) => {
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
   const [eventTextLocation, setEventTextLocation] = useState('');
-  const [count, addCount] = useState(0);
-  const [coordinates, setCoordinates] = useState({
-    lat: 40.73,
-    lng: -73.935,
-  });
 
   const classes = useStyles();
-
-  const onLoad = (input) => {
-    console.log('autocomplete: ', input);
-
-    setEventGoogleLocation(input);
-  };
-
-  const onPlaceChanged = () => {
-    console.log(999, eventGoogleLocation.getPlace());
-    if (eventGoogleLocation !== null) {
-      if (!eventGoogleLocation.getPlace().address_components) {
-        setEventTextLocation(eventGoogleLocation.getPlace().name);
-        return;
-      }
-      setEventGoogleLocation(eventGoogleLocation);
-      let newLat = eventGoogleLocation.getPlace().geometry.location.lat();
-      let newLng = eventGoogleLocation.getPlace().geometry.location.lng();
-      setCoordinates({
-        lat: newLat,
-        lng: newLng,
-      });
-      addCount(count + 1);
-      setEventTextLocation('');
-    } else {
-      console.log('Autocomplete is not loaded yet!');
-    }
-  };
 
   const handleChange = function (event, hook) {
     event.preventDefault();
@@ -254,36 +223,18 @@ const CreateEvent = (props) => {
                   />
                 </Grid>
               </MuiPickersUtilsProvider>
-              <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-                <LoadScript
-                  googleMapsApiKey={process.env.REACT_APP_GOOGLE}
-                  libraries={['places']}
-                >
-                  <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={coordinates}
-                    zoom={count === 0 ? 10 : 18}
-                  >
-                    <></>
-                  </GoogleMap>
-                  <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                    <input type="text" />
-                  </Autocomplete>
-                  <h4>Your event will be held at:</h4>
-                  {eventTextLocation !== '' ? (
-                    <p>{eventTextLocation}</p>
-                  ) : (
-                    <p>
-                      {eventGoogleLocation.gm_bindings_ &&
-                      eventGoogleLocation.getPlace()
-                        ? `${eventGoogleLocation.getPlace().name}, ${
-                            eventGoogleLocation.getPlace().formatted_address
-                          }`
-                        : false}
-                    </p>
-                  )}
-                </LoadScript>
-              </div>
+              <div
+                className="swiper-no-swiping"
+                style={{ width: '50vw' }}
+              ></div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <GoogleMapComponent
+                eventTextLocation={eventTextLocation}
+                setEventTextLocation={setEventTextLocation}
+                eventGoogleLocation={eventGoogleLocation}
+                setEventGoogleLocation={setEventGoogleLocation}
+              />
             </SwiperSlide>
             <SwiperSlide>
               {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
