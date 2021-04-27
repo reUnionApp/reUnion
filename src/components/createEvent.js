@@ -1,45 +1,46 @@
-//React/Redux
-import React, { useState, useEffect } from 'react';
-import { getEvent, createEvent } from '../store';
-import { connect } from 'react-redux';
+// React/Redux
+import React, { useState, useEffect } from "react";
+import { getEvent, createEvent } from "../store";
+import { connect } from "react-redux";
 
-//Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+// React component imports
+import { GoogleMapComponent } from "./index.js";
+
+// CSS imports
+import "../styles/createEvent.css";
+
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
 
 // MaterialUI
-import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+} from "@material-ui/pickers";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
-// react calendar and clock
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
-
-// react google places autocomplete
-// import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { Autocomplete, LoadScript, GoogleMap } from '@react-google-maps/api';
-import { GoogleMapComponent } from './index.js';
+// React calendar and clock
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
 
 // .env config
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 // MaterialUI Styling
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -51,21 +52,21 @@ const useStyles = makeStyles((theme) => ({
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const containerStyle = {
-  width: '400px',
-  height: '400px',
+  width: "400px",
+  height: "400px",
 };
 
 const CreateEvent = (props) => {
-  const [eventName, setEventName] = useState('');
-  const [eventType, setEventType] = useState('class reunion');
+  const [eventName, setEventName] = useState("");
+  const [eventType, setEventType] = useState("class reunion");
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState('');
-  const [eventDescription, setEventDescription] = useState('');
+  const [eventCoordinator, setEventCoordinator] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
-  const [eventTextLocation, setEventTextLocation] = useState('');
+  const [eventTextLocation, setEventTextLocation] = useState("");
 
   const classes = useStyles();
 
@@ -84,12 +85,12 @@ const CreateEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + '/' + day + '/' + year;
+    return month + "/" + day + "/" + year;
   };
 
   const submitEventForm = async function (click) {
     click.preventDefault();
-    console.log('submit form func was fired!!!!!');
+    console.log("submit form func was fired!!!!!");
 
     let event = {
       eventName: eventName,
@@ -99,7 +100,7 @@ const CreateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location:
-        eventTextLocation !== ''
+        eventTextLocation !== ""
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
               eventGoogleLocation.getPlace().formatted_address
@@ -116,11 +117,11 @@ const CreateEvent = (props) => {
 
   return (
     <div>
-      <h1 style={{ margin: '0px 0px 0px 15px' }}>Plan Your First Event</h1>
+      <h1 style={{ margin: "0px 0px 0px 15px" }}>Plan Your First Event</h1>
       <form
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
-          e.key === 'Enter' && e.preventDefault();
+          e.key === "Enter" && e.preventDefault();
         }}
       >
         <Swiper
@@ -130,30 +131,79 @@ const CreateEvent = (props) => {
           navigation
           allowTouchMove={false}
           style={{
-            height: '70vh',
-            border: '2px solid red',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            height: "70vh",
+            border: "2px solid red",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
           }}
         >
           <div>
             <SwiperSlide>
-              <select
+              <div
+                id="radioContainer"
+                className="flex column aItemsC"
                 onChange={(event) => {
                   handleChange(event, setEventType);
                 }}
-                value={eventType}
-                // defaultValue={eventType}
               >
-                {/* <option>Select event type</option> */}
-                <option value="class reunion">Class Reunion</option>
-                <option value="family reunion">Family Reunion</option>
-                <option value="anniversary party">Anniversary Party</option>
-                <option value="baby shower">Baby Shower</option>
-                <option value="other gathering">Other Gathering</option>
-              </select>
+                <input
+                  type="radio"
+                  name="eventType"
+                  id="class-reunion"
+                  value="class reunion"
+                />
+                <label className="pink" htmlFor="class-reunion">
+                  <div className="flex column aItemsC jContentC centeredLabel">
+                    <p className="whiteBtnTextCE">Class Reunion</p>
+                  </div>
+                </label>
+                <input
+                  type="radio"
+                  name="eventType"
+                  id="family-reunion"
+                  value="family reunion"
+                />
+                <label className="pink" htmlFor="family-reunion">
+                  <div className="flex column aItemsC jContentC centeredLabel">
+                    <p className="whiteBtnTextCE">Family Reunion</p>
+                  </div>
+                </label>
+                <input
+                  type="radio"
+                  name="eventType"
+                  id="anniversary-party"
+                  value="anniversary party"
+                />
+                <label className="pink" htmlFor="anniversary-party">
+                  <div className="flex column aItemsC jContentC centeredLabel">
+                    <p className="whiteBtnTextCE">Anniversary Party</p>
+                  </div>
+                </label>
+                <input
+                  type="radio"
+                  name="eventType"
+                  id="baby-shower"
+                  value="baby shower"
+                />
+                <label className="pink" htmlFor="baby-shower">
+                  <div className="flex column aItemsC jContentC centeredLabel">
+                    <p className="whiteBtnTextCE">Baby Shower</p>
+                  </div>
+                </label>
+                <input
+                  type="radio"
+                  name="eventType"
+                  id="other-gathering"
+                  value="other gathering"
+                />
+                <label className="pink" htmlFor="other-gathering">
+                  <div className="flex column aItemsC jContentC centeredLabel">
+                    <p className="whiteBtnTextCE">Other Gathering</p>
+                  </div>
+                </label>
+              </div>
             </SwiperSlide>
             <SwiperSlide>
               <input
@@ -177,7 +227,7 @@ const CreateEvent = (props) => {
                       handleDateTimeChange(event, setEventStartDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date',
+                      "aria-label": "change date",
                     }}
                   />
                   <KeyboardTimePicker
@@ -189,7 +239,7 @@ const CreateEvent = (props) => {
                       handleDateTimeChange(event, setEventStartDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change time',
+                      "aria-label": "change time",
                     }}
                   />
                 </Grid>
@@ -206,7 +256,7 @@ const CreateEvent = (props) => {
                       handleDateTimeChange(event, setEventEndDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date',
+                      "aria-label": "change date",
                     }}
                   />
                   <KeyboardTimePicker
@@ -218,14 +268,14 @@ const CreateEvent = (props) => {
                       handleDateTimeChange(event, setEventEndDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change time',
+                      "aria-label": "change time",
                     }}
                   />
                 </Grid>
               </MuiPickersUtilsProvider>
               <div
                 className="swiper-no-swiping"
-                style={{ width: '50vw' }}
+                style={{ width: "50vw" }}
               ></div>
             </SwiperSlide>
             <SwiperSlide>
@@ -264,7 +314,7 @@ const CreateEvent = (props) => {
             <SwiperSlide
               style={{
                 marginTop: 0,
-                paddingBottom: '30px',
+                paddingBottom: "30px",
               }}
             >
               <h1>Event Confirmation</h1>
@@ -273,11 +323,11 @@ const CreateEvent = (props) => {
               <ul>owner: {eventOwner}</ul>
               <ul>coordinator: {eventCoordinator}</ul>
               <ul>description: {eventDescription}</ul>
-              {eventTextLocation !== '' ? (
+              {eventTextLocation !== "" ? (
                 <ul>location: {eventTextLocation}</ul>
               ) : (
                 <ul>
-                  location:{' '}
+                  location:{" "}
                   {eventGoogleLocation.gm_bindings_ &&
                   eventGoogleLocation.getPlace()
                     ? `${eventGoogleLocation.getPlace().name}, ${
@@ -289,19 +339,19 @@ const CreateEvent = (props) => {
               <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
               <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
               <ul>
-                startTime:{' '}
-                {eventStartDateTime.toLocaleTimeString('en-US', {
+                startTime:{" "}
+                {eventStartDateTime.toLocaleTimeString("en-US", {
                   hour12: true,
-                  hour: '2-digit',
-                  minute: '2-digit',
+                  hour: "2-digit",
+                  minute: "2-digit",
                 })}
               </ul>
               <ul>
-                endTime:{' '}
-                {eventEndDateTime.toLocaleTimeString('en-US', {
+                endTime:{" "}
+                {eventEndDateTime.toLocaleTimeString("en-US", {
                   hour12: true,
-                  hour: '2-digit',
-                  minute: '2-digit',
+                  hour: "2-digit",
+                  minute: "2-digit",
                 })}
               </ul>
               <button type="submit">Create Event</button>
