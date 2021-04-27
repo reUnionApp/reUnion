@@ -60,10 +60,12 @@ const CreateEvent = (props) => {
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
   const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
-  const [eventLocation, setEventLocation] = useState({});
+  const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
+  const [eventTextLocation, setEventTextLocation] = useState('');
+  const [count, addCount] = useState(0);
   const [coordinates, setCoordinates] = useState({
     lat: 40.73,
     lng: -73.935,
@@ -74,21 +76,25 @@ const CreateEvent = (props) => {
   const onLoad = (input) => {
     console.log('autocomplete: ', input);
 
-    setEventLocation(input);
+    setEventGoogleLocation(input);
   };
 
   const onPlaceChanged = () => {
-    if (eventLocation !== null) {
-      console.log('before getPlace is called--->', eventLocation);
-      setEventLocation(eventLocation);
-      console.log('82 event location--->', eventLocation);
-      console.log('GMaps Location Obj--->', eventLocation.getPlace());
-      let newLat = eventLocation.getPlace().geometry.location.lat();
-      let newLng = eventLocation.getPlace().geometry.location.lng();
+    console.log(999, eventGoogleLocation.getPlace());
+    if (eventGoogleLocation !== null) {
+      if (!eventGoogleLocation.getPlace().address_components) {
+        setEventTextLocation(eventGoogleLocation.getPlace().name);
+        return;
+      }
+      setEventGoogleLocation(eventGoogleLocation);
+      let newLat = eventGoogleLocation.getPlace().geometry.location.lat();
+      let newLng = eventGoogleLocation.getPlace().geometry.location.lng();
       setCoordinates({
         lat: newLat,
         lng: newLng,
       });
+      addCount(count + 1);
+      setEventTextLocation('');
     } else {
       console.log('Autocomplete is not loaded yet!');
     }
@@ -114,6 +120,7 @@ const CreateEvent = (props) => {
 
   const submitEventForm = async function (click) {
     click.preventDefault();
+    console.log('submit form func was fired!!!!!');
 
     let event = {
       eventName: eventName,
@@ -122,7 +129,12 @@ const CreateEvent = (props) => {
       ownerId: props.user.id,
       coordinator: [eventCoordinator],
       description: eventDescription,
-      location: eventLocation.getPlace().formatted_address,
+      location:
+        eventTextLocation !== ''
+          ? eventTextLocation
+          : `${eventGoogleLocation.getPlace().name}, ${
+              eventGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -133,12 +145,15 @@ const CreateEvent = (props) => {
     props.history.push(`/myEvents/${resultId}`);
   };
 
-  console.log('eventLocation State ---->', eventLocation);
-
   return (
     <div>
       <h1 style={{ margin: '0px 0px 0px 15px' }}>Plan Your First Event</h1>
-      <form>
+      <form
+        onSubmit={submitEventForm}
+        onKeyPress={(e) => {
+          e.key === 'Enter' && e.preventDefault();
+        }}
+      >
         <Swiper
           effect="fade"
           spaceBetween={0}
@@ -247,13 +262,26 @@ const CreateEvent = (props) => {
                   <GoogleMap
                     mapContainerStyle={containerStyle}
                     center={coordinates}
-                    zoom={10}
+                    zoom={count === 0 ? 10 : 18}
                   >
                     <></>
                   </GoogleMap>
                   <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                     <input type="text" />
                   </Autocomplete>
+                  <h4>Your event will be held at:</h4>
+                  {eventTextLocation !== '' ? (
+                    <p>{eventTextLocation}</p>
+                  ) : (
+                    <p>
+                      {eventGoogleLocation.gm_bindings_ &&
+                      eventGoogleLocation.getPlace()
+                        ? `${eventGoogleLocation.getPlace().name}, ${
+                            eventGoogleLocation.getPlace().formatted_address
+                          }`
+                        : false}
+                    </p>
+                  )}
                 </LoadScript>
               </div>
             </SwiperSlide>
@@ -294,11 +322,19 @@ const CreateEvent = (props) => {
               <ul>owner: {eventOwner}</ul>
               <ul>coordinator: {eventCoordinator}</ul>
               <ul>description: {eventDescription}</ul>
-              <ul>
-                location:{' '}
-                {eventLocation.gm_bindings_ &&
-                  eventLocation.getPlace().formatted_address}
-              </ul>
+              {eventTextLocation !== '' ? (
+                <ul>location: {eventTextLocation}</ul>
+              ) : (
+                <ul>
+                  location:{' '}
+                  {eventGoogleLocation.gm_bindings_ &&
+                  eventGoogleLocation.getPlace()
+                    ? `${eventGoogleLocation.getPlace().name}, ${
+                        eventGoogleLocation.getPlace().formatted_address
+                      }`
+                    : false}
+                </ul>
+              )}
               <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
               <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
               <ul>
@@ -317,13 +353,7 @@ const CreateEvent = (props) => {
                   minute: '2-digit',
                 })}
               </ul>
-              <button
-                onClick={(click) => {
-                  submitEventForm(click);
-                }}
-              >
-                Create Event
-              </button>
+              <button type="submit">Create Event</button>
             </SwiperSlide>
           </div>
         </Swiper>
