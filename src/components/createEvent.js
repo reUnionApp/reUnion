@@ -16,45 +16,11 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
-// MaterialUI
-import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-
-// React calendar and clock
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
-
 // .env config
 import dotenv from 'dotenv';
 dotenv.config();
 
-// MaterialUI Styling
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
-
 SwiperCore.use([Navigation, Pagination, A11y]);
-
-const containerStyle = {
-  width: '400px',
-  height: '400px',
-};
 
 const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
@@ -68,15 +34,8 @@ const CreateEvent = (props) => {
   const [eventData, setEventData] = useState({});
   const [eventTextLocation, setEventTextLocation] = useState('');
 
-  const classes = useStyles();
-
   const handleChange = function (event, hook) {
-    event.preventDefault();
     hook(event.target.value);
-  };
-
-  const handleDateTimeChange = (event, hook) => {
-    hook(event);
   };
 
   const dateFormat = (date) => {
@@ -216,69 +175,12 @@ const CreateEvent = (props) => {
                 }}
               ></input>
               <DateTimePicker
-                eventStartDateTime={eventStartDateTime}
-                setEventStartDateTime={setEventStartDateTime}
-                eventEndDateTime={eventEndDateTime}
-                setEventEndDateTime={setEventEndDateTime}
+                startDateTime={eventStartDateTime}
+                setStartDateTime={setEventStartDateTime}
+                endDateTime={eventEndDateTime}
+                setEndDateTime={setEventEndDateTime}
               />
-              {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="Date picker dialog"
-                    format="MM/dd/yyyy"
-                    value={eventStartDateTime}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventStartDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                  <KeyboardTimePicker
-                    margin="normal"
-                    id="time-picker"
-                    label="Time picker"
-                    value={eventStartDateTime}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventStartDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      "aria-label": "change time",
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="Date picker dialog"
-                    format="MM/dd/yyyy"
-                    value={eventEndDateTime}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventEndDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                  <KeyboardTimePicker
-                    margin="normal"
-                    id="time-picker"
-                    label="Time picker"
-                    value={eventEndDateTime}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventEndDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      "aria-label": "change time",
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider> */}
+
               <div
                 className="swiper-no-swiping"
                 style={{ width: '50vw' }}
@@ -286,10 +188,10 @@ const CreateEvent = (props) => {
             </SwiperSlide>
             <SwiperSlide>
               <GoogleMapComponent
-                eventTextLocation={eventTextLocation}
-                setEventTextLocation={setEventTextLocation}
-                eventGoogleLocation={eventGoogleLocation}
-                setEventGoogleLocation={setEventGoogleLocation}
+                textLocation={eventTextLocation}
+                setTextLocation={setEventTextLocation}
+                googleLocation={eventGoogleLocation}
+                setGoogleLocation={setEventGoogleLocation}
               />
             </SwiperSlide>
             <SwiperSlide>
@@ -306,8 +208,6 @@ const CreateEvent = (props) => {
             </SwiperSlide>
             <SwiperSlide>
               <textarea
-                // rows="6"
-                // cols="50"
                 type="textarea"
                 name="description"
                 placeholder="Enter description of your event"

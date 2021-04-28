@@ -35,10 +35,10 @@ const DateTimePicker = (props) => {
   };
 
   const {
-    eventStartDateTime,
-    setEventStartDateTime,
-    eventEndDateTime,
-    setEventEndDateTime,
+    startDateTime,
+    setStartDateTime,
+    endDateTime,
+    setEndDateTime,
   } = props;
 
   return (
@@ -50,9 +50,9 @@ const DateTimePicker = (props) => {
             id="date-picker-dialog"
             label="Date picker dialog"
             format="MM/dd/yyyy"
-            value={eventStartDateTime}
+            value={startDateTime}
             onChange={(event) => {
-              handleDateTimeChange(event, setEventStartDateTime);
+              handleDateTimeChange(event, setStartDateTime);
             }}
             KeyboardButtonProps={{
               'aria-label': 'change date',
@@ -62,9 +62,9 @@ const DateTimePicker = (props) => {
             margin="normal"
             id="time-picker"
             label="Time picker"
-            value={eventStartDateTime}
+            value={startDateTime}
             onChange={(event) => {
-              handleDateTimeChange(event, setEventStartDateTime);
+              handleDateTimeChange(event, setStartDateTime);
             }}
             KeyboardButtonProps={{
               'aria-label': 'change time',
@@ -79,9 +79,9 @@ const DateTimePicker = (props) => {
             id="date-picker-dialog"
             label="Date picker dialog"
             format="MM/dd/yyyy"
-            value={eventEndDateTime}
+            value={endDateTime}
             onChange={(event) => {
-              handleDateTimeChange(event, setEventEndDateTime);
+              handleDateTimeChange(event, setEndDateTime);
             }}
             KeyboardButtonProps={{
               'aria-label': 'change date',
@@ -91,9 +91,9 @@ const DateTimePicker = (props) => {
             margin="normal"
             id="time-picker"
             label="Time picker"
-            value={eventEndDateTime}
+            value={endDateTime}
             onChange={(event) => {
-              handleDateTimeChange(event, setEventEndDateTime);
+              handleDateTimeChange(event, setEndDateTime);
             }}
             KeyboardButtonProps={{
               'aria-label': 'change time',

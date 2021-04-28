@@ -13,28 +13,35 @@ const GoogleMapComponent = (props) => {
     height: '400px',
   };
 
+  const {
+    textLocation,
+    setTextLocation,
+    googleLocation,
+    setGoogleLocation,
+  } = props;
+
   const onLoad = (input) => {
     console.log('autocomplete: ', input);
 
-    props.setEventGoogleLocation(input);
+    setGoogleLocation(input);
   };
 
   const onPlaceChanged = () => {
-    console.log(999, props.eventGoogleLocation.getPlace());
-    if (props.eventGoogleLocation !== null) {
-      if (!props.eventGoogleLocation.getPlace().address_components) {
-        props.setEventTextLocation(props.eventGoogleLocation.getPlace().name);
+    console.log(999, googleLocation.getPlace());
+    if (googleLocation !== null) {
+      if (!googleLocation.getPlace().address_components) {
+        setTextLocation(googleLocation.getPlace().name);
         return;
       }
-      props.setEventGoogleLocation(props.eventGoogleLocation);
-      let newLat = props.eventGoogleLocation.getPlace().geometry.location.lat();
-      let newLng = props.eventGoogleLocation.getPlace().geometry.location.lng();
+      setGoogleLocation(googleLocation);
+      let newLat = googleLocation.getPlace().geometry.location.lat();
+      let newLng = googleLocation.getPlace().geometry.location.lng();
       setCoordinates({
         lat: newLat,
         lng: newLng,
       });
       addCount(count + 1);
-      props.setEventTextLocation('');
+      setTextLocation('');
     } else {
       console.log('Autocomplete is not loaded yet!');
     }
@@ -56,14 +63,13 @@ const GoogleMapComponent = (props) => {
         <input type="text" />
       </Autocomplete>
       <h4>Your event will be held at:</h4>
-      {props.eventTextLocation !== '' ? (
-        <p>{props.eventTextLocation}</p>
+      {textLocation !== '' ? (
+        <p>{textLocation}</p>
       ) : (
         <p>
-          {props.eventGoogleLocation.gm_bindings_ &&
-          props.eventGoogleLocation.getPlace()
-            ? `${props.eventGoogleLocation.getPlace().name}, ${
-                props.eventGoogleLocation.getPlace().formatted_address
+          {googleLocation.gm_bindings_ && googleLocation.getPlace()
+            ? `${googleLocation.getPlace().name}, ${
+                googleLocation.getPlace().formatted_address
               }`
             : false}
         </p>
