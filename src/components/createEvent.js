@@ -4,7 +4,7 @@ import { getEvent, createEvent } from '../store';
 import { connect } from 'react-redux';
 
 // React component imports
-import { GoogleMapComponent, DateTimePicker } from './index.js';
+import { GoogleMapComponent, DateTimePicker, GuestList } from './index.js';
 
 // CSS imports
 import '../styles/createEvent.css';
@@ -216,6 +216,9 @@ const CreateEvent = (props) => {
                   handleChange(event, setEventDescription);
                 }}
               ></textarea>
+            </SwiperSlide>
+            <SwiperSlide>
+              <GuestList/>
             </SwiperSlide>
             <SwiperSlide
               style={{

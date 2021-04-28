@@ -83,32 +83,11 @@ const User = db.define(
       },
       defaultValue: false,
     },
-    // isOwner: {
-    //   type: Sequelize.BOOLEAN,
-    //   allowNull: false,
-    //   validate: {
-    //     notEmpty: true,
-    //   },
-    //   defaultValue: false,
-    // },
-    // isCoordinator: {
-    //   type: Sequelize.BOOLEAN,
-    //   allowNull: false,
-    //   validate: {
-    //     notEmpty: true,
-    //   },
-    //   defaultValue: false,
-    // },
-    // },
-    // address: {
-    //   type: Sequelize.STRING,
-    // },
-    // paymentInfo: {
-    //   type: Sequelize.STRING,
-    //   // validate: {
-    //   //   isCreditCard: true
-    //   // }
-    // },
+    userType: {
+      type: Sequelize.ENUM ('basic', 'registered'),
+      defaultValue: 'basic',
+      allowNull: false,
+    }
   },
   { freezeTableName: true }
 );

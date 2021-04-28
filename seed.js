@@ -19,6 +19,7 @@ async function seed() {
           lastName: faker.name.lastName(),
           email: faker.internet.email(faker.name.firstName()),
           isAdmin: faker.random.boolean(),
+          userType: 'basic'
         })
       );
     }
