@@ -1,46 +1,46 @@
 // React/Redux
-import React, { useState, useEffect } from "react";
-import { getEvent, createEvent } from "../store";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { getEvent, createEvent } from '../store';
+import { connect } from 'react-redux';
 
 // React component imports
-import { GoogleMapComponent } from "./index.js";
+import { GoogleMapComponent, DateTimePicker } from './index.js';
 
 // CSS imports
-import "../styles/createEvent.css";
+import '../styles/createEvent.css';
 
 // Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
 
 // MaterialUI
-import "date-fns";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from "@material-ui/pickers";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+} from '@material-ui/pickers';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 // React calendar and clock
-import "react-calendar/dist/Calendar.css";
-import "react-clock/dist/Clock.css";
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
 
 // .env config
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
 // MaterialUI Styling
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -52,21 +52,21 @@ const useStyles = makeStyles((theme) => ({
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const containerStyle = {
-  width: "400px",
-  height: "400px",
+  width: '400px',
+  height: '400px',
 };
 
 const CreateEvent = (props) => {
-  const [eventName, setEventName] = useState("");
-  const [eventType, setEventType] = useState("class reunion");
+  const [eventName, setEventName] = useState('');
+  const [eventType, setEventType] = useState('class reunion');
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
+  const [eventCoordinator, setEventCoordinator] = useState('');
+  const [eventDescription, setEventDescription] = useState('');
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
-  const [eventTextLocation, setEventTextLocation] = useState("");
+  const [eventTextLocation, setEventTextLocation] = useState('');
 
   const classes = useStyles();
 
@@ -85,12 +85,12 @@ const CreateEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + "/" + day + "/" + year;
+    return month + '/' + day + '/' + year;
   };
 
   const submitEventForm = async function (click) {
     click.preventDefault();
-    console.log("submit form func was fired!!!!!");
+    console.log('submit form func was fired!!!!!');
 
     let event = {
       eventName: eventName,
@@ -100,7 +100,7 @@ const CreateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location:
-        eventTextLocation !== ""
+        eventTextLocation !== ''
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
               eventGoogleLocation.getPlace().formatted_address
@@ -117,11 +117,11 @@ const CreateEvent = (props) => {
 
   return (
     <div>
-      <h1 style={{ margin: "0px 0px 0px 15px" }}>Plan Your First Event</h1>
+      <h1 style={{ margin: '0px 0px 0px 15px' }}>Plan Your First Event</h1>
       <form
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
-          e.key === "Enter" && e.preventDefault();
+          e.key === 'Enter' && e.preventDefault();
         }}
       >
         <Swiper
@@ -131,12 +131,12 @@ const CreateEvent = (props) => {
           navigation
           allowTouchMove={false}
           style={{
-            height: "70vh",
-            border: "2px solid red",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
+            height: '70vh',
+            border: '2px solid red',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
           }}
         >
           <div>
@@ -215,7 +215,13 @@ const CreateEvent = (props) => {
                   handleChange(event, setEventName);
                 }}
               ></input>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DateTimePicker
+                eventStartDateTime={eventStartDateTime}
+                setEventStartDateTime={setEventStartDateTime}
+                eventEndDateTime={eventEndDateTime}
+                setEventEndDateTime={setEventEndDateTime}
+              />
+              {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
                     margin="normal"
@@ -272,10 +278,10 @@ const CreateEvent = (props) => {
                     }}
                   />
                 </Grid>
-              </MuiPickersUtilsProvider>
+              </MuiPickersUtilsProvider> */}
               <div
                 className="swiper-no-swiping"
-                style={{ width: "50vw" }}
+                style={{ width: '50vw' }}
               ></div>
             </SwiperSlide>
             <SwiperSlide>
@@ -314,7 +320,7 @@ const CreateEvent = (props) => {
             <SwiperSlide
               style={{
                 marginTop: 0,
-                paddingBottom: "30px",
+                paddingBottom: '30px',
               }}
             >
               <h1>Event Confirmation</h1>
@@ -323,11 +329,11 @@ const CreateEvent = (props) => {
               <ul>owner: {eventOwner}</ul>
               <ul>coordinator: {eventCoordinator}</ul>
               <ul>description: {eventDescription}</ul>
-              {eventTextLocation !== "" ? (
+              {eventTextLocation !== '' ? (
                 <ul>location: {eventTextLocation}</ul>
               ) : (
                 <ul>
-                  location:{" "}
+                  location:{' '}
                   {eventGoogleLocation.gm_bindings_ &&
                   eventGoogleLocation.getPlace()
                     ? `${eventGoogleLocation.getPlace().name}, ${
@@ -339,19 +345,19 @@ const CreateEvent = (props) => {
               <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
               <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
               <ul>
-                startTime:{" "}
-                {eventStartDateTime.toLocaleTimeString("en-US", {
+                startTime:{' '}
+                {eventStartDateTime.toLocaleTimeString('en-US', {
                   hour12: true,
-                  hour: "2-digit",
-                  minute: "2-digit",
+                  hour: '2-digit',
+                  minute: '2-digit',
                 })}
               </ul>
               <ul>
-                endTime:{" "}
-                {eventEndDateTime.toLocaleTimeString("en-US", {
+                endTime:{' '}
+                {eventEndDateTime.toLocaleTimeString('en-US', {
                   hour12: true,
-                  hour: "2-digit",
-                  minute: "2-digit",
+                  hour: '2-digit',
+                  minute: '2-digit',
                 })}
               </ul>
               <button type="submit">Create Event</button>
