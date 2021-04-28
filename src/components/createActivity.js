@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { getEvent, createActivity } from '../store';
 import { connect } from 'react-redux';
 
+// React component imports
+import { GoogleMapComponent, DateTimePicker } from './index.js';
+
 //Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
@@ -51,12 +54,13 @@ SwiperCore.use([Navigation, Pagination, A11y]);
 const CreateActivity = (props) => {
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
-  const [activityLocation, setActivityLocation] = useState('');
+  const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
   const [activityStartDateTime, setActivityStartDateTime] = useState(
     new Date()
   );
   const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
   const [activityData, setActivityData] = useState({});
+  const [activityTextLocation, setActivityTextLocation] = useState('');
 
   const classes = useStyles();
 
@@ -84,7 +88,12 @@ const CreateActivity = (props) => {
     let activity = {
       activityName: activityName,
       description: activityDescription,
-      location: activityLocation.label,
+      location:
+        activityTextLocation !== ''
+          ? activityTextLocation
+          : `${activityGoogleLocation.getPlace().name}, ${
+              activityGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -118,78 +127,23 @@ const CreateActivity = (props) => {
                 handleChange(click, setActivityName);
               }}
             ></input>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="Date picker dialog"
-                  format="MM/dd/yyyy"
-                  value={activityStartDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityStartDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={activityStartDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityStartDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="Date picker dialog"
-                  format="MM/dd/yyyy"
-                  value={activityEndDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityEndDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={activityEndDateTime}
-                  onChange={(click) => {
-                    handleDateTimeChange(click, setActivityEndDateTime);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
+            <DateTimePicker
+              startDateTime={activityStartDateTime}
+              setStartDateTime={setActivityStartDateTime}
+              endDateTime={activityEndDateTime}
+              setEndDateTime={setActivityEndDateTime}
+            />
             <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-              <GooglePlacesAutocomplete
-                apiKey={process.env.REACT_APP_GOOGLE}
-                selectProps={{
-                  activityLocation,
-                  onChange: setActivityLocation,
-                }}
+              <GoogleMapComponent
+                textLocation={activityTextLocation}
+                setTextLocation={setActivityTextLocation}
+                googleLocation={activityGoogleLocation}
+                setGoogleLocation={setActivityGoogleLocation}
               />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <textarea
-              // rows="6"
-              // cols="50"
               type="textarea"
               name="description"
               placeholder="Enter description of your activity"
@@ -203,7 +157,19 @@ const CreateActivity = (props) => {
             <h1>Activity Confirmation</h1>
             <ul>activityName: {activityName}</ul>
             <ul>description: {activityDescription}</ul>
-            <ul>location: {activityLocation.label}</ul>
+            {activityTextLocation !== '' ? (
+              <ul>location: {activityTextLocation}</ul>
+            ) : (
+              <ul>
+                location:{' '}
+                {activityGoogleLocation.gm_bindings_ &&
+                activityGoogleLocation.getPlace()
+                  ? `${activityGoogleLocation.getPlace().name}, ${
+                      activityGoogleLocation.getPlace().formatted_address
+                    }`
+                  : false}
+              </ul>
+            )}
             <ul>startDate: {dateFormat(activityStartDateTime)}</ul>
             <ul>endDate: {dateFormat(activityEndDateTime)}</ul>
             <ul>
