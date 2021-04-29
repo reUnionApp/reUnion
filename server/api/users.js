@@ -102,6 +102,16 @@ router.post('/', async (req, res, next) => {
     const endUser = await User.findOne({
       where: { email: req.body.email },
     });
+
+    if (endUser.eventType === 'basic') {
+      endUser.firstName = req.body.firstName;
+      endUser.lastName = req.body.lastName;
+    }
+
+    // await endUser.update(
+    //   { firstName: req.body.firstName, lastName: req.body.lastName },
+    //   { where: { userType: 'basic' }, returning: true }
+    // );
     await endUser.addEvent(req.body.eventId);
     res.status(201).json(endUser);
   } catch (error) {
