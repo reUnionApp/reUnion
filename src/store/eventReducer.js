@@ -5,6 +5,7 @@ const GET_EVENT = 'GET_EVENT';
 const CREATE_EVENT = 'CREATE_EVENT';
 const REMOVE_EVENT = 'REMOVE_EVENT';
 const UPDATE_EVENT = 'UPDATE_EVENT';
+const GET_GUEST_LIST = 'GET_GUEST_LIST';
 
 // Action Creators
 const _getEvent = (event) => ({
@@ -25,6 +26,11 @@ const _updateEvent = (event) => ({
 const _removeEvent = (event) => ({
   type: REMOVE_EVENT,
   event,
+});
+
+const _getGuestList = (guestList) => ({
+  type: GET_GUEST_LIST,
+  guestList,
 });
 
 // Thunk
@@ -66,19 +72,33 @@ export const removeEvent = (id) => async (dispatch) => {
   }
 };
 
-const defaultEvent = {};
+export const getGuestList = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/events/${id}/guestList`);
+    dispatch(_getGuestList(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const defaultState = {
+  event: {},
+  guestList: [],
+};
 
 // Reducer
-export default function (state = defaultEvent, action) {
+export default function (state = defaultState, action) {
   switch (action.type) {
     case GET_EVENT:
-      return action.event;
+      return { ...state, event: action.event };
     case CREATE_EVENT:
-      return action.event;
+      return { ...state, event: action.event };
     case UPDATE_EVENT:
-      return action.event;
+      return { ...state, event: action.event };
     case REMOVE_EVENT:
-      return defaultEvent;
+      return defaultState;
+    case GET_GUEST_LIST:
+      return { ...state, guestList: action.guestList };
     default:
       return state;
   }

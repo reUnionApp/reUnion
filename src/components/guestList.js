@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { addPseudoUser, getGuestList } from '../store';
 
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([]);
-  const addGuest = (e) => {
+
+  useEffect(() => {
+    props.getGuestList(props.match.params.eventId);
+  }, [guestList]);
+
+  const addGuest = async (e) => {
     // e.preventDefault()
     let guest = {
       firstName: e.target.parentNode.firstName.value,
       lastName: e.target.parentNode.lastName.value,
       email: e.target.parentNode.email.value,
+      eventId: props.match.params.eventId,
     };
     setGuestList([...guestList, guest]);
     console.log(guestList);
+    await props.addPseudoUser(guest);
+
     e.target.parentNode.reset();
 
     // console.log(e.target.parentNode.firstName.value)
   };
+  console.log(props);
+  console.log(props.match.params);
+
   return (
     <div>
       <form id="guest-list">
@@ -37,7 +50,7 @@ const GuestList = (props) => {
             <th>Email</th>
           </tr>
 
-          {guestList.map((guest) => {
+          {props.guestList.map((guest) => {
             return (
               <tr>
                 <td>{guest.firstName}</td>
@@ -52,4 +65,14 @@ const GuestList = (props) => {
   );
 };
 
-export default GuestList;
+const mapState = (state) => ({
+  user: state.userReducer,
+  guestList: state.eventReducer.guestList,
+});
+
+const mapDispatch = (dispatch) => ({
+  addPseudoUser: (user) => dispatch(addPseudoUser(user)),
+  getGuestList: (id) => dispatch(getGuestList(id)),
+});
+
+export default connect(mapState, mapDispatch)(GuestList);

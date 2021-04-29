@@ -1,8 +1,16 @@
 import axios from 'axios';
 
+const ADD_PSEUDO_USER = 'ADD_PSEUDO_USER';
 const GET_USER = 'GET_USER';
 const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
+
+const _addPseudoUser = (user) => {
+  return {
+    type: ADD_PSEUDO_USER,
+    user,
+  };
+};
 
 const _getUser = (user) => {
   return {
@@ -23,6 +31,16 @@ const _deleteUser = (user) => {
     type: DELETE_USER,
     user,
   };
+};
+
+export const addPseudoUser = (user) => async (dispatch) => {
+  try {
+    console.log('POST', user);
+    const { data } = await axios.post('/api/users/', user);
+    dispatch(_addPseudoUser(data));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const getUser = (userId) => async (dispatch) => {
@@ -56,6 +74,8 @@ const defaultState = {};
 
 export default function (state = defaultState, action) {
   switch (action.type) {
+    case ADD_PSEUDO_USER:
+      return action.user;
     case GET_USER:
       return action.user;
     case UPDATE_USER:

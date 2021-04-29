@@ -217,9 +217,7 @@ const CreateEvent = (props) => {
                 }}
               ></textarea>
             </SwiperSlide>
-            <SwiperSlide>
-              <GuestList/>
-            </SwiperSlide>
+
             <SwiperSlide
               style={{
                 marginTop: 0,
@@ -273,7 +271,7 @@ const CreateEvent = (props) => {
 };
 
 const mapState = (state) => ({
-  event: state.eventReducer,
+  event: state.eventReducer.event,
   user: state.authReducer,
 });
 

@@ -7,17 +7,17 @@ const User = db.define(
   {
     firstName: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
+      // allowNull: false,
+      // validate: {
+      //   notEmpty: true,
+      // },
     },
     lastName: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
+      // allowNull: false,
+      // validate: {
+      //   notEmpty: true,
+      // },
     },
     alias: {
       type: Sequelize.STRING,
@@ -84,10 +84,10 @@ const User = db.define(
       defaultValue: false,
     },
     userType: {
-      type: Sequelize.ENUM ('basic', 'registered'),
+      type: Sequelize.ENUM('basic', 'registered'),
       defaultValue: 'basic',
       allowNull: false,
-    }
+    },
   },
   { freezeTableName: true }
 );

@@ -4,6 +4,7 @@ const adminsOnly = require('../auth/adminsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
+const { FindInPageOutlined } = require('@material-ui/icons');
 module.exports = router;
 
 // All Users: GET /api/users
@@ -92,17 +93,21 @@ router.delete('/:userID', async (req, res, next) => {
   }
 });
 
-// Single User: POST /api/users/
+// Create Psuedo-User: POST /api/users/
 
 router.post('/', async (req, res, next) => {
   try {
-    const newUser = await User.create(req.body);
-    res.status(201).json(newUser);
+    console.log(req.body);
+    await User.findOrCreate({ where: { email: req.body.email } });
+    const endUser = await User.findOne({
+      where: { email: req.body.email },
+    });
+    await endUser.addEvent(req.body.eventId);
+    res.status(201).json(endUser);
   } catch (error) {
     next(error);
   }
 });
-
 
 // Single User: PUT /api/users/:userID
 // userOrAdminOnly
