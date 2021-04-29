@@ -97,15 +97,20 @@ router.delete('/:userID', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    // **** should we seperate findOrCreate and first try to find the User with email and if they exist .addEvent, if they don't exist create user, update, then addEvent?
     console.log(req.body);
     await User.findOrCreate({ where: { email: req.body.email } });
     const endUser = await User.findOne({
       where: { email: req.body.email },
     });
+    console.log('END USER --------->', endUser.userType);
 
-    if (endUser.eventType === 'basic') {
-      endUser.firstName = req.body.firstName;
-      endUser.lastName = req.body.lastName;
+    if (endUser.userType === 'basic') {
+      await endUser.update(
+        { firstName: req.body.firstName, lastName: req.body.lastName },
+        { where: { userType: 'basic' } }
+      );
+      res.status(201).json(endUser);
     }
 
     // await endUser.update(
@@ -113,7 +118,9 @@ router.post('/', async (req, res, next) => {
     //   { where: { userType: 'basic' }, returning: true }
     // );
     await endUser.addEvent(req.body.eventId);
-    res.status(201).json(endUser);
+
+    // ******* if the user exists we shouldn't send a post request ******
+    // res.status(201).json(endUser);
   } catch (error) {
     next(error);
   }

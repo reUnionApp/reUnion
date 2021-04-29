@@ -52,7 +52,7 @@ const GuestList = (props) => {
 
           {props.guestList.map((guest) => {
             return (
-              <tr>
+              <tr key={guest.email}>
                 <td>{guest.firstName}</td>
                 <td>{guest.lastName}</td>
                 <td>{guest.email}</td>
