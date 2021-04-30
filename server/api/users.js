@@ -97,31 +97,21 @@ router.delete('/:userID', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    // **** should we seperate findOrCreate and first try to find the User with email and if they exist .addEvent, if they don't exist create user, update, then addEvent?
-    console.log(req.body);
-    await User.findOrCreate({ where: { email: req.body.email } });
-    const endUser = await User.findOne({
+    const existingUser = await User.findOne({
       where: { email: req.body.email },
     });
-    console.log('END USER --------->', endUser.userType);
 
-    if (endUser.userType === 'basic') {
-      await endUser.update(
-        { firstName: req.body.firstName, lastName: req.body.lastName },
-        { where: { userType: 'basic' } }
-      );
-      res.status(201).json(endUser);
+    if (existingUser) {
+      // if an existing user is added to an event that they are already part of we need to display an error message saying this email is already on the guestlist.
+      await existingUser.addEvent(req.body.eventId);
+      res.status(201).json(newUser);
+    } else {
+      const newUser = await User.create(req.body);
+      await newUser.addEvent(req.body.eventId);
+      res.status(201).json(newUser);
     }
-
-    // await endUser.update(
-    //   { firstName: req.body.firstName, lastName: req.body.lastName },
-    //   { where: { userType: 'basic' }, returning: true }
-    // );
-    await endUser.addEvent(req.body.eventId);
-
-    // ******* if the user exists we shouldn't send a post request ******
-    // res.status(201).json(endUser);
   } catch (error) {
+    console.error(error);
     next(error);
   }
 });
