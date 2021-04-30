@@ -94,6 +94,7 @@ router.delete('/:userID', async (req, res, next) => {
 });
 
 // Create Psuedo-User: POST /api/users/
+// error appears when we add an existing user, newUser is not defined error appears on guestList page even though the user has been added to the guestList.
 
 router.post('/', async (req, res, next) => {
   try {

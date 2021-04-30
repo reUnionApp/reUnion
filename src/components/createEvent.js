@@ -62,8 +62,8 @@ const CreateEvent = (props) => {
         eventTextLocation !== ''
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
-              eventGoogleLocation.getPlace().formatted_address
-            }`,
+          eventGoogleLocation.getPlace().formatted_address
+          }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -233,16 +233,16 @@ const CreateEvent = (props) => {
               {eventTextLocation !== '' ? (
                 <ul>location: {eventTextLocation}</ul>
               ) : (
-                <ul>
-                  location:{' '}
-                  {eventGoogleLocation.gm_bindings_ &&
-                  eventGoogleLocation.getPlace()
-                    ? `${eventGoogleLocation.getPlace().name}, ${
-                        eventGoogleLocation.getPlace().formatted_address
+                  <ul>
+                    location:{' '}
+                    {eventGoogleLocation.gm_bindings_ &&
+                      eventGoogleLocation.getPlace()
+                      ? `${eventGoogleLocation.getPlace().name}, ${
+                      eventGoogleLocation.getPlace().formatted_address
                       }`
-                    : false}
-                </ul>
-              )}
+                      : false}
+                  </ul>
+                )}
               <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
               <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
               <ul>
@@ -271,7 +271,7 @@ const CreateEvent = (props) => {
 };
 
 const mapState = (state) => ({
-  event: state.eventReducer.event,
+  event: state.eventReducer,
   user: state.authReducer,
 });
 

@@ -102,7 +102,7 @@ const SingleEvent = (props) => {
 const mapState = (state) => ({
   user: state.authReducer,
   userEvents: state.allEventsReducer.userEvents,
-  singleEvent: state.eventReducer.event,
+  singleEvent: state.eventReducer,
   allActivities: state.allActivitiesReducer,
 });
 

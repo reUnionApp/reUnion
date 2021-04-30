@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { addPseudoUser, getGuestList } from '../store';
+import { addPseudoUser, getGuestList, removeGuest } from '../store';
 
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([]);
@@ -29,6 +29,11 @@ const GuestList = (props) => {
   console.log(props);
   console.log(props.match.params);
 
+  const deleteSelectedGuest = async (eventId, guestId) => {
+    await props.removeGuest(eventId, guestId);
+    await props.getGuestList(props.match.params.eventId);
+  }
+
   return (
     <div>
       <form id="guest-list">
@@ -50,14 +55,17 @@ const GuestList = (props) => {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
+            <button >Delete</button>
           </tr>
 
           {props.guestList.map((guest) => {
+            { console.log('guest----->', guest) }
             return (
               <tr key={guest.email}>
                 <td>{guest.firstName}</td>
                 <td>{guest.lastName}</td>
                 <td>{guest.email}</td>
+                <td><button onClick={() => deleteSelectedGuest(props.match.params.eventId, guest)}>X</button></td>
               </tr>
             );
           })}
@@ -69,13 +77,14 @@ const GuestList = (props) => {
 
 const mapState = (state) => ({
   user: state.userReducer,
-  guestList: state.eventReducer.guestList,
+  guestList: state.guestListReducer,
   error: state.userReducer.error,
 });
 
 const mapDispatch = (dispatch) => ({
   addPseudoUser: (user) => dispatch(addPseudoUser(user)),
   getGuestList: (id) => dispatch(getGuestList(id)),
+  removeGuest: (eventId, guestId) => dispatch(removeGuest(eventId, guestId))
 });
 
 export default connect(mapState, mapDispatch)(GuestList);

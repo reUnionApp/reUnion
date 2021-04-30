@@ -248,7 +248,7 @@ const UpdateEvent = (props) => {
 };
 
 const mapState = (state) => ({
-  event: state.eventReducer.event,
+  event: state.eventReducer,
   user: state.authReducer,
 });
 

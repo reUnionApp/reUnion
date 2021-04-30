@@ -6,6 +6,7 @@ router.use('/users', require('./users'));
 // router.use('/events/:eventID/activities', require('./activities'));
 router.use('/events', require('./events'));
 router.use('/events', require('./activities'));
+router.use('/events', require('./guestList'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');
