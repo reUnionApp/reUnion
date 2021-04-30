@@ -4,6 +4,7 @@ import { addPseudoUser, getGuestList } from '../store';
 
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([]);
+  const { error } = props;
 
   useEffect(() => {
     props.getGuestList(props.match.params.eventId);
@@ -18,7 +19,7 @@ const GuestList = (props) => {
       eventId: props.match.params.eventId,
     };
     setGuestList([...guestList, guest]);
-    console.log(guestList);
+
     await props.addPseudoUser(guest);
 
     e.target.parentNode.reset();
@@ -42,6 +43,7 @@ const GuestList = (props) => {
         </button>
         <button type="submit">Send Invites</button>
       </form>
+      {error && error.response ? <div> {error.response.data} </div> : <br />}
       <table>
         <tbody>
           <tr>
@@ -68,6 +70,7 @@ const GuestList = (props) => {
 const mapState = (state) => ({
   user: state.userReducer,
   guestList: state.eventReducer.guestList,
+  error: state.userReducer.error,
 });
 
 const mapDispatch = (dispatch) => ({

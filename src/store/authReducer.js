@@ -42,7 +42,7 @@ export const signup = (email, password, firstName, lastName) => async (
   }
   try {
     dispatch(_getUser(res.data));
-    history.push('/home');
+    history.push('/myEvents');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }

@@ -34,10 +34,15 @@ const _deleteUser = (user) => {
 };
 
 export const addPseudoUser = (user) => async (dispatch) => {
+  let res;
   try {
     console.log('POST', user);
-    const { data } = await axios.post('/api/users/', user);
-    dispatch(_addPseudoUser(data));
+    res = await axios.post('/api/users/', user);
+  } catch (userError) {
+    return dispatch(_addPseudoUser({ error: userError }));
+  }
+  try {
+    dispatch(_addPseudoUser(res.data));
   } catch (error) {
     console.error(error);
   }
