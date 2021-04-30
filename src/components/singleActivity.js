@@ -79,7 +79,7 @@ const SingleActivity = (props) => {
 const mapState = (state) => ({
   user: state.authReducer,
   eventActivities: state.activityReducer,
-  singleEvent: state.eventReducer,
+  singleEvent: state.eventReducer.event,
 });
 
 const mapDispatch = (dispatch) => ({

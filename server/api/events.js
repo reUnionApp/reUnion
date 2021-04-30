@@ -1,14 +1,15 @@
-const router = require("express").Router();
-const adminsOnly = require("../auth/adminsOnly");
-const coordinatorsOnly = require("../auth/coordinatorsOnly");
-const ownersOnly = require("../auth/ownersOnly");
-const userOrAdminOnly = require("../auth/userOrAdminOnly");
-const { Event, Activity, User, UserEvent } = require("../db/models");
+const router = require('express').Router();
+const { default: userEvent } = require('@testing-library/user-event');
+const adminsOnly = require('../auth/adminsOnly');
+const coordinatorsOnly = require('../auth/coordinatorsOnly');
+const ownersOnly = require('../auth/ownersOnly');
+const userOrAdminOnly = require('../auth/userOrAdminOnly');
+const { Event, Activity, User, UserEvent } = require('../db/models');
 module.exports = router;
 
 // All Events: GET /api/events
 // adminsOnly
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const events = await Event.findAll({ include: User });
     res.status(200).json(events);
@@ -19,7 +20,7 @@ router.get("/", async (req, res, next) => {
 
 // Single Event: GET /api/events/:eventID
 // userOrAdminOnly
-router.get("/:eventID", async function (req, res, next) {
+router.get('/:eventID', async function (req, res, next) {
   const id = req.params.eventID;
   try {
     const thisEvent = await Event.findByPk(id);
@@ -32,15 +33,33 @@ router.get("/:eventID", async function (req, res, next) {
   }
 });
 
+// Single Event Guest List: GET /api/events/:eventID/guestList
+// userOrAdminOnly
+router.get('/:eventID/guestList', async function (req, res, next) {
+  const id = req.params.eventID;
+  try {
+    console.log('ID------>', id);
+    const guestList = await User.findAll({
+      include: { model: Event, where: { id: id } },
+    });
+    if (!guestList) {
+      res.sendStatus(404).end();
+    }
+    res.status(200).json(guestList);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Single Event: DELETE /api/events/:eventID
 // adminsOnly
-router.delete("/:eventID", async (req, res, next) => {
+router.delete('/:eventID', async (req, res, next) => {
   try {
     await Activity.destroy({
       where: {
-        EventId: req.params.eventID
-      }
-    })
+        EventId: req.params.eventID,
+      },
+    });
     const event = await Event.findByPk(req.params.eventID);
     await event.destroy();
     res.status(200).json(event);
@@ -51,7 +70,7 @@ router.delete("/:eventID", async (req, res, next) => {
 
 // Single Event: POST /api/events/
 
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const newEvent = await Event.create(req.body);
     res.status(201).json(newEvent);
@@ -67,7 +86,7 @@ router.post("/", async (req, res, next) => {
 // adminsOnly,
 // ownersOnly,
 // coordinatorsOnly,
-router.put("/:eventID", async (req, res, next) => {
+router.put('/:eventID', async (req, res, next) => {
   const id = req.params.eventID;
   try {
     const event = await Event.findByPk(id);

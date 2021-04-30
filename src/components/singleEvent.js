@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
+import { GuestList } from './index';
 
 const SingleEvent = (props) => {
   const id = props.user.id;
@@ -87,6 +88,10 @@ const SingleEvent = (props) => {
           );
         })}
       </div>
+      <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
+        Create You Guest List
+      </Link>
+
       <Link to={`/myEvents/${props.singleEvent.id}/createActivity`}>
         Create Activity
       </Link>
@@ -97,7 +102,7 @@ const SingleEvent = (props) => {
 const mapState = (state) => ({
   user: state.authReducer,
   userEvents: state.allEventsReducer.userEvents,
-  singleEvent: state.eventReducer,
+  singleEvent: state.eventReducer.event,
   allActivities: state.allActivitiesReducer,
 });
 

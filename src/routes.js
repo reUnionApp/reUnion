@@ -19,6 +19,7 @@ import {
   AllUsers,
   Profile,
   UpdateProfile,
+  GuestList,
 } from './components';
 
 import { me } from './store';
@@ -63,6 +64,11 @@ class Routes extends Component {
                 exact
                 path="/myEvents/:eventId/update"
                 component={UpdateEvent}
+              />
+              <Route
+                exact
+                path="/myEvents/:eventId/guestList"
+                component={GuestList}
               />
               <Route exact path="/myEvents/:eventId" component={SingleEvent} />
               <Route exact path="/myEvents" component={MyEvents} />

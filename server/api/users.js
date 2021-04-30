@@ -4,6 +4,7 @@ const adminsOnly = require('../auth/adminsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
+const { FindInPageOutlined } = require('@material-ui/icons');
 module.exports = router;
 
 // All Users: GET /api/users
@@ -92,17 +93,38 @@ router.delete('/:userID', async (req, res, next) => {
   }
 });
 
-// Single User: POST /api/users/
+// Create Psuedo-User: POST /api/users/
 
 router.post('/', async (req, res, next) => {
   try {
-    const newUser = await User.create(req.body);
-    res.status(201).json(newUser);
+    // **** should we seperate findOrCreate and first try to find the User with email and if they exist .addEvent, if they don't exist create user, update, then addEvent?
+    console.log(req.body);
+    await User.findOrCreate({ where: { email: req.body.email } });
+    const endUser = await User.findOne({
+      where: { email: req.body.email },
+    });
+    console.log('END USER --------->', endUser.userType);
+
+    if (endUser.userType === 'basic') {
+      await endUser.update(
+        { firstName: req.body.firstName, lastName: req.body.lastName },
+        { where: { userType: 'basic' } }
+      );
+      res.status(201).json(endUser);
+    }
+
+    // await endUser.update(
+    //   { firstName: req.body.firstName, lastName: req.body.lastName },
+    //   { where: { userType: 'basic' }, returning: true }
+    // );
+    await endUser.addEvent(req.body.eventId);
+
+    // ******* if the user exists we shouldn't send a post request ******
+    // res.status(201).json(endUser);
   } catch (error) {
     next(error);
   }
 });
-
 
 // Single User: PUT /api/users/:userID
 // userOrAdminOnly
