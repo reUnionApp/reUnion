@@ -33,24 +33,6 @@ router.get('/:eventID', async function (req, res, next) {
   }
 });
 
-// Single Event Guest List: GET /api/events/:eventID/guestList
-// userOrAdminOnly
-router.get('/:eventID/guestList', async function (req, res, next) {
-  const id = req.params.eventID;
-  try {
-    console.log('ID------>', id);
-    const guestList = await User.findAll({
-      include: { model: Event, where: { id: id } },
-    });
-    if (!guestList) {
-      res.sendStatus(404).end();
-    }
-    res.status(200).json(guestList);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // Single Event: DELETE /api/events/:eventID
 // adminsOnly
 router.delete('/:eventID', async (req, res, next) => {

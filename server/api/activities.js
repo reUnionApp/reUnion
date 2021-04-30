@@ -6,7 +6,7 @@ const userOrAdminOnly = require('../auth/userOrAdminOnly');
 const { Activity } = require('../db/models');
 module.exports = router;
 
-// All Activities: GET /api/:eventID/activities
+// All Activities: GET /api/events/:eventID/activities
 // adminsOnly
 router.get('/:eventID/activities', async (req, res, next) => {
   try {

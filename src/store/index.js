@@ -9,6 +9,7 @@ import activityReducer from './activityReducer';
 import allActivitiesReducer from './allActivitiesReducer';
 import userReducer from './userReducer';
 import allUsersReducer from './allUsersReducer';
+import guestListReducer from './guestListReducer';
 
 const reducer = combineReducers({
   authReducer,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   allActivitiesReducer,
   userReducer,
   allUsersReducer,
+  guestListReducer,
 });
 
 const middleware = composeWithDevTools(
@@ -33,3 +35,4 @@ export * from './activityReducer';
 export * from './allActivitiesReducer';
 export * from './userReducer';
 export * from './allUsersReducer';
+export * from './guestListReducer';

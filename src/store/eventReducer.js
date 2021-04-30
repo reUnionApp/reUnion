@@ -28,11 +28,6 @@ const _removeEvent = (event) => ({
   event,
 });
 
-const _getGuestList = (guestList) => ({
-  type: GET_GUEST_LIST,
-  guestList,
-});
-
 // Thunk
 export const getEvent = (id) => async (dispatch) => {
   try {
@@ -72,33 +67,19 @@ export const removeEvent = (id) => async (dispatch) => {
   }
 };
 
-export const getGuestList = (id) => async (dispatch) => {
-  try {
-    const { data } = await axios.get(`/api/events/${id}/guestList`);
-    dispatch(_getGuestList(data));
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const defaultState = {
-  event: {},
-  guestList: [],
-};
+const defaultState = {}
 
 // Reducer
 export default function (state = defaultState, action) {
   switch (action.type) {
     case GET_EVENT:
-      return { ...state, event: action.event };
+      return action.event;
     case CREATE_EVENT:
-      return { ...state, event: action.event };
+      return action.event;
     case UPDATE_EVENT:
-      return { ...state, event: action.event };
+      return action.event;
     case REMOVE_EVENT:
       return defaultState;
-    case GET_GUEST_LIST:
-      return { ...state, guestList: action.guestList };
     default:
       return state;
   }
