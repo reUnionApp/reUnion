@@ -111,8 +111,11 @@ router.post('/', async (req, res, next) => {
       res.status(201).json(newUser);
     }
   } catch (error) {
-    console.error(error);
-    next(error);
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      res.status(401).send('Email is already in guest list');
+    } else {
+      next(error);
+    }
   }
 });
 

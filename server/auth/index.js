@@ -25,7 +25,9 @@ router.post('/signup', async (req, res, next) => {
       where: { email: req.body.email },
     });
 
-    if (existingUser) {
+    if (existingUser && existingUser.userType === 'registered') {
+      res.status(401).send('User already exists');
+    } else if (existingUser && existingUser.userType === 'basic') {
       await existingUser.update(req.body);
       await existingUser.update({ userType: 'registered' });
       req.login(existingUser, (err) =>
