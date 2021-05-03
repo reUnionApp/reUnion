@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { addPseudoUser, getGuestList, removeGuest, clearError } from "../store";
+import "../styles/guestList.css";
 
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([props.guests]);
@@ -36,6 +37,15 @@ const GuestList = (props) => {
     props.clearError();
   };
 
+  const toggleEdit = (email) => {
+    const form = document.getElementById(email);
+    if (form.className === "formHide") {
+      form.className = "";
+    } else {
+      form.className = "formHide";
+    }
+  };
+
   error && error.response
     ? console.log("ERROR------->", error.response)
     : console.log("NO ERROR");
@@ -55,30 +65,58 @@ const GuestList = (props) => {
       </form>
       {error && error.response ? <div> {error.response.data} </div> : <br />}
       <table>
-        <tbody>
+        <tbody id="parentTable">
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <button>Delete</button>
           </tr>
-
           {props.guests.map((guest) => {
             return (
-              <tr key={guest.email}>
-                <td>{guest.firstName}</td>
-                <td>{guest.lastName}</td>
-                <td>{guest.email}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      deleteSelectedGuest(props.match.params.eventId, guest)
-                    }
-                  >
-                    X
-                  </button>
-                </td>
-              </tr>
+              <>
+                <tr key={guest.email}>
+                  <td className="flex">
+                    {guest.firstName}
+                    {/* <input /> */}
+                  </td>
+                  <td>
+                    {guest.lastName}
+                    {/* <input /> */}
+                  </td>
+                  <td>
+                    {guest.email}
+                    {/* <input /> */}
+                  </td>
+                  <td>
+                    <button onClick={() => toggleEdit(guest.email)}>
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        deleteSelectedGuest(props.match.params.eventId, guest)
+                      }
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+                <tr id={guest.email} className="formHide">
+                  <td>
+                    <input type="text" placeholder={guest.firstName} />
+                  </td>
+                  <td>
+                    <input type="text" placeholder={guest.lastName} />
+                  </td>
+                  <td>
+                    <input type="email" placeholder={guest.email} />
+                  </td>
+                  <td>
+                    <button>Update</button>
+                  </td>
+                </tr>
+              </>
             );
           })}
         </tbody>
