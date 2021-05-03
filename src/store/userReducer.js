@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
-const ADD_PSEUDO_USER = 'ADD_PSEUDO_USER';
-const GET_USER = 'GET_USER';
-const UPDATE_USER = 'UPDATE_USER';
-const DELETE_USER = 'DELETE_USER';
+const ADD_PSEUDO_USER = "ADD_PSEUDO_USER";
+const GET_USER = "GET_USER";
+const UPDATE_USER = "UPDATE_USER";
+const DELETE_USER = "DELETE_USER";
+const CLEAR_ERROR = "CLEAR_ERROR";
 
 const _addPseudoUser = (user) => {
   return {
@@ -36,8 +37,8 @@ const _deleteUser = (user) => {
 export const addPseudoUser = (user) => async (dispatch) => {
   let res;
   try {
-    console.log('POST', user);
-    res = await axios.post('/api/users/', user);
+    console.log("POST", user);
+    res = await axios.post("/api/users/", user);
   } catch (userError) {
     return dispatch(_addPseudoUser({ error: userError }));
   }
@@ -87,6 +88,8 @@ export default function (state = defaultState, action) {
       return action.user;
     case DELETE_USER:
       return action.user;
+    case CLEAR_ERROR:
+      return { ...state, error: null };
     default:
       return state;
   }
