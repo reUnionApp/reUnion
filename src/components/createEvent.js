@@ -1,38 +1,38 @@
 // React/Redux
-import React, { useState, useEffect } from 'react';
-import { getEvent, createEvent } from '../store';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { getEvent, createEvent } from "../store";
+import { connect } from "react-redux";
 
 // React component imports
-import { GoogleMapComponent, DateTimePicker, GuestList } from './index.js';
+import { GoogleMapComponent, DateTimePicker, GuestList } from "./index.js";
 
 // CSS imports
-import '../styles/createEvent.css';
+import "../styles/createEvent.css";
 
 // Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
 
 // .env config
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateEvent = (props) => {
-  const [eventName, setEventName] = useState('');
-  const [eventType, setEventType] = useState('class reunion');
+  const [eventName, setEventName] = useState("");
+  const [eventType, setEventType] = useState("class reunion");
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState('');
-  const [eventDescription, setEventDescription] = useState('');
+  const [eventCoordinator, setEventCoordinator] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
-  const [eventTextLocation, setEventTextLocation] = useState('');
+  const [eventTextLocation, setEventTextLocation] = useState("");
 
   const handleChange = function (event, hook) {
     hook(event.target.value);
@@ -44,12 +44,12 @@ const CreateEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + '/' + day + '/' + year;
+    return month + "/" + day + "/" + year;
   };
 
   const submitEventForm = async function (click) {
     click.preventDefault();
-    console.log('submit form func was fired!!!!!');
+    console.log("submit form func was fired!!!!!");
 
     let event = {
       eventName: eventName,
@@ -59,11 +59,11 @@ const CreateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location:
-        eventTextLocation !== ''
+        eventTextLocation !== ""
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
-          eventGoogleLocation.getPlace().formatted_address
-          }`,
+              eventGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -76,11 +76,11 @@ const CreateEvent = (props) => {
 
   return (
     <div>
-      <h1 style={{ margin: '0px 0px 0px 15px' }}>Plan Your First Event</h1>
+      <h1 style={{ margin: "0px 0px 0px 15px" }}>Plan Your First Event</h1>
       <form
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
-          e.key === 'Enter' && e.preventDefault();
+          e.key === "Enter" && e.preventDefault();
         }}
       >
         <Swiper
@@ -90,12 +90,12 @@ const CreateEvent = (props) => {
           navigation
           allowTouchMove={false}
           style={{
-            height: '70vh',
-            border: '2px solid red',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            height: "80vh",
+            border: "2px solid red",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
           }}
         >
           <div>
@@ -183,7 +183,7 @@ const CreateEvent = (props) => {
 
               <div
                 className="swiper-no-swiping"
-                style={{ width: '50vw' }}
+                style={{ width: "50vw" }}
               ></div>
             </SwiperSlide>
             <SwiperSlide>
@@ -221,47 +221,49 @@ const CreateEvent = (props) => {
             <SwiperSlide
               style={{
                 marginTop: 0,
-                paddingBottom: '30px',
+                paddingBottom: "30px",
               }}
             >
-              <h1>Event Confirmation</h1>
-              <ul>eventName: {eventName}</ul>
-              <ul>eventType: {eventType}</ul>
-              <ul>owner: {eventOwner}</ul>
-              <ul>coordinator: {eventCoordinator}</ul>
-              <ul>description: {eventDescription}</ul>
-              {eventTextLocation !== '' ? (
-                <ul>location: {eventTextLocation}</ul>
-              ) : (
+              <div id="eventConf" className="flex column aItemsC">
+                <h1>Event Confirmation</h1>
+                <ul>eventName: {eventName}</ul>
+                <ul>eventType: {eventType}</ul>
+                <ul>owner: {eventOwner}</ul>
+                <ul>coordinator: {eventCoordinator}</ul>
+                <ul>description: {eventDescription}</ul>
+                {eventTextLocation !== "" ? (
+                  <ul>location: {eventTextLocation}</ul>
+                ) : (
                   <ul>
-                    location:{' '}
+                    location:{" "}
                     {eventGoogleLocation.gm_bindings_ &&
-                      eventGoogleLocation.getPlace()
+                    eventGoogleLocation.getPlace()
                       ? `${eventGoogleLocation.getPlace().name}, ${
-                      eventGoogleLocation.getPlace().formatted_address
-                      }`
+                          eventGoogleLocation.getPlace().formatted_address
+                        }`
                       : false}
                   </ul>
                 )}
-              <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
-              <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
-              <ul>
-                startTime:{' '}
-                {eventStartDateTime.toLocaleTimeString('en-US', {
-                  hour12: true,
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </ul>
-              <ul>
-                endTime:{' '}
-                {eventEndDateTime.toLocaleTimeString('en-US', {
-                  hour12: true,
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </ul>
-              <button type="submit">Create Event</button>
+                <ul>startDate: {dateFormat(eventStartDateTime)}</ul>
+                <ul>endDate: {dateFormat(eventEndDateTime)}</ul>
+                <ul>
+                  startTime:{" "}
+                  {eventStartDateTime.toLocaleTimeString("en-US", {
+                    hour12: true,
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </ul>
+                <ul>
+                  endTime:{" "}
+                  {eventEndDateTime.toLocaleTimeString("en-US", {
+                    hour12: true,
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </ul>
+                <button type="submit">Create Event</button>
+              </div>
             </SwiperSlide>
           </div>
         </Swiper>
