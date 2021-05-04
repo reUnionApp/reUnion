@@ -132,6 +132,8 @@ router.put("/:userID", async (req, res, next) => {
     const user = await User.findByPk(id);
     if (!user) {
       res.sendStatus(404);
+    } else if (user.dataValues.userType === 'registered') {
+      res.status(401).send("Cannot update registered user");
     } else {
       await user.update(req.body);
       res.status(200).json(user);

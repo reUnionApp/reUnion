@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addPseudoUser, getGuestList, removeGuest, clearError } from "../store";
+import { addPseudoUser, getGuestList, removeGuest, updateUser } from "../store";
 import "../styles/guestList.css";
 
 const GuestList = (props) => {
@@ -46,9 +46,29 @@ const GuestList = (props) => {
     }
   };
 
-  error && error.response
-    ? console.log("ERROR------->", error.response)
-    : console.log("NO ERROR");
+  const handleUpdate = async (event, id) => {
+    const firstName = event.target.parentNode.parentNode.firstChild.firstChild.value;
+    const lastName = event.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value;
+    const email = event.target.parentNode.parentNode.firstChild.nextSibling.nextSibling.firstChild.value;
+
+    const updatedUser = {
+      firstName,
+      lastName,
+      email,
+      id
+    }
+
+    await props.updateUser(updatedUser);
+    await props.getGuestList(props.match.params.eventId);
+    toggleEdit(`guest${id}`);
+  }
+
+  const selectText = (event) => {
+    const input = event.target;
+    input.focus();
+    input.select();
+  }
+
   return (
     <div>
       <form id="guest-list">
@@ -71,55 +91,53 @@ const GuestList = (props) => {
             <th>Last Name</th>
             <th>Email</th>
           </tr>
-          {props.guests.map((guest) => {
-            return (
-              <>
-                <tr key={guest.email}>
-                  <td className="flex">
-                    {guest.firstName}
-                    {/* <input /> */}
-                  </td>
-                  <td>
-                    {guest.lastName}
-                    {/* <input /> */}
-                  </td>
-                  <td>
-                    {guest.email}
-                    {/* <input /> */}
-                  </td>
-                  <td>
-                    <button onClick={() => toggleEdit(guest.email)}>
-                      Edit
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        deleteSelectedGuest(props.match.params.eventId, guest)
-                      }
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-                <tr id={guest.email} className="formHide">
-                  <td>
-                    <input type="text" placeholder={guest.firstName} />
-                  </td>
-                  <td>
-                    <input type="text" placeholder={guest.lastName} />
-                  </td>
-                  <td>
-                    <input type="email" placeholder={guest.email} />
-                  </td>
-                  <td>
-                    <button>Update</button>
-                  </td>
-                </tr>
-              </>
-            );
-          })}
         </tbody>
+        {props.guests.map((guest) => {
+          return (
+            <tbody key={guest.email}>
+              <tr >
+                <td className="flex">
+                  {guest.firstName}
+                </td>
+                <td>
+                  {guest.lastName}
+                </td>
+                <td>
+                  {guest.email}
+                </td>
+                <td>
+                  {guest.userType === 'registered' ? 'Registered User' : <button onClick={() => toggleEdit(`guest${guest.id}`)}>
+                    Edit
+                    </button>}
+
+                </td>
+                <td>
+                  <button
+                    onClick={() =>
+                      deleteSelectedGuest(props.match.params.eventId, guest)
+                    }
+                  >
+                    X
+                    </button>
+                </td>
+              </tr>
+              <tr id={`guest${guest.id}`} className="formHide">
+                <td>
+                  <input type="text" defaultValue={guest.firstName} onClick={(event) => selectText(event)} />
+                </td>
+                <td>
+                  <input type="text" defaultValue={guest.lastName} onClick={(event) => selectText(event)} />
+                </td>
+                <td>
+                  <input type="email" defaultValue={guest.email} onClick={(event) => selectText(event)} />
+                </td>
+                <td>
+                  <button type='button' onClick={(event) => handleUpdate(event, guest.id)}>Update</button>
+                </td>
+              </tr>
+            </tbody>
+          );
+        })}
       </table>
     </div>
   );
@@ -136,6 +154,7 @@ const mapDispatch = (dispatch) => ({
   getGuestList: (id) => dispatch(getGuestList(id)),
   removeGuest: (eventId, guestId) => dispatch(removeGuest(eventId, guestId)),
   clearError: () => dispatch({ type: "CLEAR_ERROR" }),
+  updateUser: (user) => dispatch(updateUser(user))
 });
 
 export default connect(mapState, mapDispatch)(GuestList);
