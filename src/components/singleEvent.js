@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 import { GuestList } from './index';
+import '../styles/singleEvent.css';
 
 const SingleEvent = (props) => {
   const id = props.user.id;
@@ -56,11 +57,16 @@ const SingleEvent = (props) => {
           minute: '2-digit',
         })}
       </ul>
-      <button onClick={() => deleteSelectedEvent(props.singleEvent.id)}>
+      <button
+        className="button deleteSE"
+        onClick={() => deleteSelectedEvent(props.singleEvent.id)}
+      >
         Delete
       </button>
       <div>
-        <h2>{props.singleEvent.eventName}'s Activities</h2>
+        <h2 style={{ textDecoration: 'underline' }}>
+          {props.singleEvent.eventName}'s Activities
+        </h2>
         {props.allActivities.map((activity) => {
           return (
             <div>
@@ -89,10 +95,13 @@ const SingleEvent = (props) => {
         })}
       </div>
       <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
-        Create You Guest List
+        Manage Guest List
       </Link>
 
-      <Link to={`/myEvents/${props.singleEvent.id}/createActivity`}>
+      <Link
+        to={`/myEvents/${props.singleEvent.id}/createActivity`}
+        style={{ margin: '0px 0px 0px 15px' }}
+      >
         Create Activity
       </Link>
     </div>

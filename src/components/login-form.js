@@ -85,7 +85,7 @@ const LoginForm = (props) => {
         <CssBaseline />
         <div className={classes.paper}>
           <img
-            src="reUnion_Logo.png"
+            src="/reUnion_Logo.png"
             style={{ width: '10vw' }}
             alt="reUnion logo"
           />

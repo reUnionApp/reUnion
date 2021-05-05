@@ -8,9 +8,11 @@ const GoogleMapComponent = (props) => {
     lng: -73.935,
   });
 
+  let viewPortWidth = (window.visualViewport.width / 100) * 75;
+
   const containerStyle = {
-    width: '400px',
-    height: '400px',
+    width: `${viewPortWidth}px`,
+    height: `${viewPortWidth}px`,
   };
 
   const {
@@ -48,33 +50,37 @@ const GoogleMapComponent = (props) => {
   };
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_GOOGLE}
-      libraries={['places']}
-    >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={coordinates}
-        zoom={count === 0 ? 10 : 18}
+    <div style={{ margin: '20px 0px' }} className="flex column aItemsC">
+      <LoadScript
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE}
+        libraries={['places']}
       >
-        <></>
-      </GoogleMap>
-      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-        <input type="text" />
-      </Autocomplete>
-      <h4>Your event will be held at:</h4>
-      {textLocation !== '' ? (
-        <p>{textLocation}</p>
-      ) : (
-        <p>
-          {googleLocation.gm_bindings_ && googleLocation.getPlace()
-            ? `${googleLocation.getPlace().name}, ${
-                googleLocation.getPlace().formatted_address
-              }`
-            : false}
-        </p>
-      )}
-    </LoadScript>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={coordinates}
+          zoom={count === 0 ? 10 : 18}
+        >
+          <></>
+        </GoogleMap>
+        <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+          <input type="text" id="mapLocationInput" />
+        </Autocomplete>
+        <h4 style={{ fontSize: '18px', margin: '55px 0px 45px 0px' }}>
+          Your event will be held at:
+        </h4>
+        {textLocation !== '' ? (
+          <p id="finalLocation">{textLocation}</p>
+        ) : (
+          <p>
+            {googleLocation.gm_bindings_ && googleLocation.getPlace()
+              ? `${googleLocation.getPlace().name}, ${
+                  googleLocation.getPlace().formatted_address
+                }`
+              : false}
+          </p>
+        )}
+      </LoadScript>
+    </div>
   );
 };
 
