@@ -51,7 +51,7 @@ const LandingPage = () => {
               <img
                 style={{ maxWidth: '250px' }}
                 src="plan.jpg"
-                alt="plan image"
+                alt="plan art"
               />
             </div>
           </SwiperSlide>
@@ -63,7 +63,7 @@ const LandingPage = () => {
               <img
                 style={{ maxWidth: '250px' }}
                 src="invite.jpg"
-                alt="invite image"
+                alt="invite art"
               />
             </div>
           </SwiperSlide>
@@ -75,7 +75,7 @@ const LandingPage = () => {
               <img
                 style={{ maxWidth: '350px' }}
                 src="reunite.jpg"
-                alt="reunite image"
+                alt="reunite art"
               />
             </div>
           </SwiperSlide>

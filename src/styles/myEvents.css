@@ -10,4 +10,18 @@
 
 #createEventLink {
   margin: 25px 0px 75px 0px;
+  box-shadow: 2px 2px 2px 2px rgb(200, 200, 200);
+}
+
+#createEventLink:active {
+  box-shadow: 1px 1px 1px 1px rgb(200, 200, 200);
+}
+
+.eventButton {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin: 0px 0px 15px 0px;
 }
