@@ -88,3 +88,14 @@ body {
 #dropMenu {
   z-index: 500;
 }
+
+#mapBox {
+  min-width: 250px;
+  min-height: 250px;
+  height: 50vw;
+  width: 50vw;
+}
+
+#burgerBar {
+  position: absolute;
+}

@@ -1,11 +1,11 @@
 .eventBox {
   width: 50%;
-  height: 20vh;
+  min-height: 20vh;
   max-width: 200px;
-  max-height: 200px;
   margin: 10px;
   text-align: center;
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #createEventLink {

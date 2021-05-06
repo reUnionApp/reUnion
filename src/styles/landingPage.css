@@ -21,7 +21,7 @@
 .swiper-container {
   display: flex;
   justify-content: baseline;
-  height: 50%;
+  height: 100%;
 }
 
 .landing-wrapper {
@@ -55,7 +55,7 @@
 }
 
 .openSans {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .titleClass {
