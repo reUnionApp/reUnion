@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { Icon, InlineIcon } from "@iconify/react";
 import hamburgerMenu from "@iconify-icons/cil/hamburger-menu";
 import DropMenu from "./dropMenu";
-import plusIcon from '@iconify-icons/mdi/plus';
-import { Link } from 'react-router-dom';
-
+import plusIcon from "@iconify-icons/mdi/plus";
+import { Link } from "react-router-dom";
 
 const Hamburger = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ display: 'flex', justifyContent: "space-between", width: "100%" }}>
+    <div
+      id="burgerBar"
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        width: "100%",
+      }}
+    >
       <Icon
         style={{
           height: "25px",
@@ -24,12 +30,15 @@ const Hamburger = () => {
         icon={hamburgerMenu}
       />
       <Link to="/createEvent">
-        <Icon style={{
-          height: "25px",
-          width: "25px",
-          margin: "15px",
-          cursor: "pointer",
-        }} icon={plusIcon} />
+        <Icon
+          style={{
+            height: "25px",
+            width: "25px",
+            margin: "15px",
+            cursor: "pointer",
+          }}
+          icon={plusIcon}
+        />
       </Link>
 
       <DropMenu open={open} setOpen={setOpen} />
