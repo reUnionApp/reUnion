@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getActivities } from '../store';
-import { Link } from 'react-router-dom';
-import history from '../history';
+import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
+import {getActivities} from '../store'
+import {Link} from 'react-router-dom'
+import history from '../history'
 
 function AllActivities(props) {
   useEffect(() => {
-    props.getAllActivities(props.match.params.eventId);
-  }, []);
+    props.getAllActivities(props.match.params.eventId)
+  }, [])
   return (
-    <div>
+    <div className="flex column topMargin">
       <h2>
         You have {props.activities.length}{' '}
         {props.activities.length > 1 ? 'activities' : 'activity'}
@@ -25,21 +25,21 @@ function AllActivities(props) {
                   <li>{activity.activityName}</li>
                 </Link>
               </div>
-            );
+            )
           })}
       </ul>
     </div>
-  );
+  )
 }
 
 const mapState = (state) => ({
   user: state.authReducer,
   userEvents: state.allEventsReducer.userEvents,
   activities: state.allActivitiesReducer,
-});
+})
 
 const mapDispatch = (dispatch) => ({
   getAllActivities: (id) => dispatch(getActivities(id)),
-});
+})
 
-export default connect(mapState, mapDispatch)(AllActivities);
+export default connect(mapState, mapDispatch)(AllActivities)

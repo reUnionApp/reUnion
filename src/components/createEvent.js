@@ -1,55 +1,54 @@
 // React/Redux
-import React, { useState, useEffect } from "react";
-import { getEvent, createEvent } from "../store";
-import { connect } from "react-redux";
+import React, {useState, useEffect} from 'react'
+import {getEvent, createEvent} from '../store'
+import {connect} from 'react-redux'
 
 // React component imports
-import { GoogleMapComponent, DateTimePicker, GuestList } from "./index.js";
+import {GoogleMapComponent, DateTimePicker, GuestList} from './index.js'
 
 // CSS imports
-import "../styles/createEvent.css";
+import '../styles/createEvent.css'
 
 // Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
+import {Swiper, SwiperSlide} from 'swiper/react'
+import SwiperCore, {Navigation, Pagination, A11y} from 'swiper'
+import 'swiper/swiper.scss'
+import 'swiper/components/navigation/navigation.scss'
+import 'swiper/components/pagination/pagination.scss'
 
 // .env config
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv from 'dotenv'
+dotenv.config()
 
-SwiperCore.use([Navigation, Pagination, A11y]);
+SwiperCore.use([Navigation, Pagination, A11y])
 
 const CreateEvent = (props) => {
-  const [eventName, setEventName] = useState("");
-  const [eventType, setEventType] = useState("class reunion");
-  const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
-  const [eventGoogleLocation, setEventGoogleLocation] = useState({});
-  const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
-  const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
-  const [eventData, setEventData] = useState({});
-  const [eventTextLocation, setEventTextLocation] = useState("");
+  const [eventName, setEventName] = useState('')
+  const [eventType, setEventType] = useState('class reunion')
+  const [eventOwner, setEventOwner] = useState(props.user.firstName)
+  const [eventCoordinator, setEventCoordinator] = useState('')
+  const [eventDescription, setEventDescription] = useState('')
+  const [eventGoogleLocation, setEventGoogleLocation] = useState({})
+  const [eventStartDateTime, setEventStartDateTime] = useState(new Date())
+  const [eventEndDateTime, setEventEndDateTime] = useState(new Date())
+  const [eventData, setEventData] = useState({})
+  const [eventTextLocation, setEventTextLocation] = useState('')
 
   const handleChange = function (event, hook) {
-    hook(event.target.value);
-  };
+    hook(event.target.value)
+  }
 
   const dateFormat = (date) => {
-    let dateObj = date;
-    let month = dateObj.getUTCMonth() + 1; //months from 1-12
-    let day = dateObj.getUTCDate();
-    let year = dateObj.getUTCFullYear();
+    let dateObj = date
+    let month = dateObj.getUTCMonth() + 1 //months from 1-12
+    let day = dateObj.getUTCDate()
+    let year = dateObj.getUTCFullYear()
 
-    return month + "/" + day + "/" + year;
-  };
+    return month + '/' + day + '/' + year
+  }
 
   const submitEventForm = async function (click) {
-    click.preventDefault();
-    console.log("submit form func was fired!!!!!");
+    click.preventDefault()
 
     let event = {
       eventName: eventName,
@@ -59,30 +58,30 @@ const CreateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location:
-        eventTextLocation !== ""
+        eventTextLocation !== ''
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
-          eventGoogleLocation.getPlace().formatted_address
-          }`,
+              eventGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
-    };
+    }
 
-    setEventData(event);
-    const resultId = await props.createEvent(event);
+    setEventData(event)
+    const resultId = await props.createEvent(event)
 
-    props.history.push(`/myEvents/${resultId}`);
-  };
+    props.history.push(`/myEvents/${resultId}`)
+  }
 
   return (
     <div>
       <div
         style={{
-          margin: "40px 0px 0px 0px",
-          position: "absolute",
-          display: "flex",
-          justifyContent: "center",
-          width: "100vw",
+          margin: '40px 0px 0px 0px',
+          position: 'absolute',
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100vw',
         }}
       >
         <h1>Plan Your First Event</h1>
@@ -91,7 +90,7 @@ const CreateEvent = (props) => {
         id="createEventForm"
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
-          e.key === "Enter" && e.preventDefault();
+          e.key === 'Enter' && e.preventDefault()
         }}
       >
         <Swiper
@@ -101,13 +100,13 @@ const CreateEvent = (props) => {
           navigation
           allowTouchMove={false}
           style={{
-            minHeight: "80vh",
-            bottom: "0",
-            borderTop: "2px solid black",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
+            minHeight: '80vh',
+            bottom: '0',
+            borderTop: '2px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
           }}
         >
           <div>
@@ -115,9 +114,9 @@ const CreateEvent = (props) => {
               <div
                 id="radioContainer"
                 className="flex column aItemsC jContentC"
-                style={{ height: "100%" }}
+                style={{height: '100%'}}
                 onChange={(event) => {
-                  handleChange(event, setEventType);
+                  handleChange(event, setEventType)
                 }}
               >
                 <input
@@ -177,19 +176,19 @@ const CreateEvent = (props) => {
                 </label>
               </div>
             </SwiperSlide>
-            <SwiperSlide style={{ overflow: "scroll" }}>
+            <SwiperSlide style={{overflow: 'scroll'}}>
               <div
                 style={{
-                  minHeight: "100%",
-                  width: "80%",
-                  margin: "130px 0px 55px 0px",
+                  minHeight: '100%',
+                  width: '80%',
+                  margin: '130px 0px 55px 0px',
                 }}
                 className="flex column jContentFS aItemsC"
               >
                 <div
                   style={{
-                    width: "80%",
-                    margin: "0px 0px 36px 0px",
+                    width: '80%',
+                    margin: '0px 0px 36px 0px',
                   }}
                   className="flex column"
                 >
@@ -200,12 +199,12 @@ const CreateEvent = (props) => {
                     className="createEventInput"
                     value={eventName}
                     onChange={(event) => {
-                      handleChange(event, setEventName);
+                      handleChange(event, setEventName)
                     }}
                   ></input>
                   <div
                     className="swiper-no-swiping"
-                    style={{ width: "50vw" }}
+                    style={{width: '50vw'}}
                   ></div>
                   {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
                   {/* vvv consider deleting vvv */}
@@ -216,7 +215,7 @@ const CreateEvent = (props) => {
                     placeholder="Enter coordinators' names here"
                     value={eventCoordinator}
                     onChange={(event) => {
-                      handleChange(event, setEventCoordinator);
+                      handleChange(event, setEventCoordinator)
                     }}
                   ></input>
                 </div>
@@ -227,16 +226,13 @@ const CreateEvent = (props) => {
                   placeholder="Enter description of your event"
                   value={eventDescription}
                   onChange={(event) => {
-                    handleChange(event, setEventDescription);
+                    handleChange(event, setEventDescription)
                   }}
                 ></textarea>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div
-                className="flex column jContentC"
-                style={{ height: "100vh" }}
-              >
+              <div className="flex column jContentC" style={{height: '100vh'}}>
                 <DateTimePicker
                   startDateTime={eventStartDateTime}
                   setStartDateTime={setEventStartDateTime}
@@ -246,8 +242,8 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
 
-            <SwiperSlide style={{ overflow: "scroll" }}>
-              <div style={{ margin: "130px 0px 55px 0px" }}>
+            <SwiperSlide style={{overflow: 'scroll'}}>
+              <div style={{margin: '130px 0px 55px 0px'}}>
                 <GoogleMapComponent
                   textLocation={eventTextLocation}
                   setTextLocation={setEventTextLocation}
@@ -257,7 +253,7 @@ const CreateEvent = (props) => {
                 {console.log('eventGoogleLocation in gMC')}
               </div>
             </SwiperSlide>
-            <SwiperSlide style={{ overflow: "scroll" }}>
+            <SwiperSlide style={{overflow: 'scroll'}}>
               <div id="eventConf" className="flex column aItemsFS">
                 <h1>Event Confirmation</h1>
                 <div className="eventConfLine">
@@ -278,30 +274,30 @@ const CreateEvent = (props) => {
                 </div>
                 <div
                   className="eventConfLine"
-                  style={{ maxWidth: "100%", alignItems: "flex-start" }}
+                  style={{maxWidth: '100%', alignItems: 'flex-start'}}
                 >
                   <p className="eventConfBold">description: </p>
                   <p className="eventConfValue">{eventDescription}</p>
                 </div>
-                {eventTextLocation !== "" ? (
+                {eventTextLocation !== '' ? (
                   <div className="eventConfLine">
                     <p className="eventConfBold">location: </p>
                     <p className="eventConfValue">{eventTextLocation}</p>
                   </div>
                 ) : (
-                    <div className="eventConfLine">
-                      <p className="eventConfBold">location: </p>
-                      {eventGoogleLocation.gm_bindings_ &&
-                        eventGoogleLocation.getPlace() ? (
-                          <p className="eventConfValue">
-                            {eventGoogleLocation.getPlace().name},
-                            {eventGoogleLocation.getPlace().formatted_address}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                    </div>
-                  )}
+                  <div className="eventConfLine">
+                    <p className="eventConfBold">location: </p>
+                    {eventGoogleLocation.gm_bindings_ &&
+                    eventGoogleLocation.getPlace() ? (
+                      <p className="eventConfValue">
+                        {eventGoogleLocation.getPlace().name},
+                        {eventGoogleLocation.getPlace().formatted_address}
+                      </p>
+                    ) : (
+                      false
+                    )}
+                  </div>
+                )}
                 <div className="eventConfLine">
                   <p className="eventConfBold">startDate: </p>
                   <p className="eventConfValue">
@@ -317,20 +313,20 @@ const CreateEvent = (props) => {
                 <div className="eventConfLine">
                   <p className="eventConfBold">startTime: </p>
                   <p className="eventConfValue">
-                    {eventStartDateTime.toLocaleTimeString("en-US", {
+                    {eventStartDateTime.toLocaleTimeString('en-US', {
                       hour12: true,
-                      hour: "2-digit",
-                      minute: "2-digit",
+                      hour: '2-digit',
+                      minute: '2-digit',
                     })}
                   </p>
                 </div>
                 <div className="eventConfLine">
                   <span className="eventConfBold">endTime: </span>
                   <p className="eventConfValue">
-                    {eventEndDateTime.toLocaleTimeString("en-US", {
+                    {eventEndDateTime.toLocaleTimeString('en-US', {
                       hour12: true,
-                      hour: "2-digit",
-                      minute: "2-digit",
+                      hour: '2-digit',
+                      minute: '2-digit',
                     })}
                   </p>
                 </div>
@@ -343,17 +339,17 @@ const CreateEvent = (props) => {
         </Swiper>
       </form>
     </div>
-  );
-};
+  )
+}
 
 const mapState = (state) => ({
   event: state.eventReducer,
   user: state.authReducer,
-});
+})
 
 const mapDispatch = (dispatch) => ({
   getEvent: (id) => dispatch(getEvent(id)),
   createEvent: (event) => dispatch(createEvent(event)),
-});
+})
 
-export default connect(mapState, mapDispatch)(CreateEvent);
+export default connect(mapState, mapDispatch)(CreateEvent)

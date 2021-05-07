@@ -1,51 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getUserEvents, removeEvent } from "../store";
-import { Link } from "react-router-dom";
-import history from "../history";
-import "../styles/myEvents.css";
+import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
+import {getUserEvents, removeEvent} from '../store'
+import {Link} from 'react-router-dom'
+import history from '../history'
+import '../styles/myEvents.css'
 
 const colors = {
-  1: "teal",
-  2: "pink",
-  3: "yellow",
-};
+  1: 'teal',
+  2: 'pink',
+  3: 'yellow',
+}
 
 const MyEvents = (props) => {
-  const userId = props.user.id;
+  const userId = props.user.id
 
   const deleteSelectedEvent = async (eventId) => {
-    await props.removeEvent(eventId);
-    await props.getUserEvents(userId);
-  };
+    await props.removeEvent(eventId)
+    await props.getUserEvents(userId)
+  }
 
   useEffect(() => {
-    props.getUserEvents(userId);
-  }, []);
+    props.getUserEvents(userId)
+  }, [])
 
-  let count = 0;
+  let count = 0
 
   return (
-    <div className="flex aItemsC column">
+    <div className="flex aItemsC column topMargin">
       <h2>
-        You have {props.userEvents.length}{" "}
-        {props.userEvents.length === 1 ? "event" : "events"}
+        You have {props.userEvents.length}{' '}
+        {props.userEvents.length === 1 ? 'event' : 'events'}
       </h2>
       {props.userEvents &&
         props.userEvents.map((event) => {
-          count === 3 ? (count = 1) : ++count;
+          count === 3 ? (count = 1) : ++count
           return (
             <div
               className={`flex column aItemsC jContentC eventBox ${colors[count]}`}
               key={event.id}
             >
               {props.user.id === event.ownerId && (
-                <div style={{ margin: "5px 0px 0px 0px" }}>Host</div>
+                <div style={{margin: '5px 0px 0px 0px'}}>Host</div>
               )}
               <Link to={`/myEvents/${event.id}`}>
-                <h3 style={{ margin: "8px 0px 19px 0px" }}>
-                  {event.eventName}
-                </h3>
+                <h3 style={{margin: '8px 0px 19px 0px'}}>{event.eventName}</h3>
               </Link>
               <button className="eventButton">
                 <Link to={`/myEvents/${event.id}/update`}>Update</Link>
@@ -57,7 +55,7 @@ const MyEvents = (props) => {
                 Delete
               </button>
             </div>
-          );
+          )
         })}
       <a href="/createEvent">
         <button id="createEventLink" type="button" className="button">
@@ -65,17 +63,17 @@ const MyEvents = (props) => {
         </button>
       </a>
     </div>
-  );
-};
+  )
+}
 
 const mapState = (state) => ({
   user: state.authReducer,
   userEvents: state.allEventsReducer.userEvents,
-});
+})
 
 const mapDispatch = (dispatch) => ({
   getUserEvents: (id) => dispatch(getUserEvents(id)),
   removeEvent: (eventId) => dispatch(removeEvent(eventId)),
-});
+})
 
-export default connect(mapState, mapDispatch)(MyEvents);
+export default connect(mapState, mapDispatch)(MyEvents)

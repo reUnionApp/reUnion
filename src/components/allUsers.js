@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getUsers } from '../store';
+import React, {useEffect} from 'react'
+import {connect} from 'react-redux'
+import {getUsers} from '../store'
 
 function AllUsers(props) {
   useEffect(() => {
-    props.getUsers();
-  }, []);
+    props.getUsers()
+  }, [])
   return (
-    <div>
+    <div className="topMargin">
       <h2>All Users:</h2>
       {props.users &&
         props.users.map((user) => {
@@ -17,18 +17,18 @@ function AllUsers(props) {
                 <li>{user.firstName}</li>
               </ul>
             </div>
-          );
+          )
         })}
     </div>
-  );
+  )
 }
 
 const mapState = (state) => ({
   users: state.allUsersReducer,
-});
+})
 
 const mapDispatch = (dispatch) => ({
   getUsers: () => dispatch(getUsers()),
-});
+})
 
-export default connect(mapState, mapDispatch)(AllUsers);
+export default connect(mapState, mapDispatch)(AllUsers)

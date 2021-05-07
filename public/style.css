@@ -10,6 +10,10 @@ body {
   margin: 0px;
 }
 
+.topMargin {
+  margin-top: 40px;
+}
+
 .flex {
   display: flex;
 }
@@ -54,7 +58,7 @@ body {
 * {
   text-decoration: none;
   color: black;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .teal {
@@ -98,4 +102,5 @@ body {
 
 #burgerBar {
   position: absolute;
+  top: 0;
 }
