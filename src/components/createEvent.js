@@ -62,8 +62,8 @@ const CreateEvent = (props) => {
         eventTextLocation !== ""
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
-              eventGoogleLocation.getPlace().formatted_address
-            }`,
+          eventGoogleLocation.getPlace().formatted_address
+          }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -254,6 +254,7 @@ const CreateEvent = (props) => {
                   googleLocation={eventGoogleLocation}
                   setGoogleLocation={setEventGoogleLocation}
                 />
+                {console.log('eventGoogleLocation in gMC')}
               </div>
             </SwiperSlide>
             <SwiperSlide style={{ overflow: "scroll" }}>
@@ -282,27 +283,25 @@ const CreateEvent = (props) => {
                   <p className="eventConfBold">description: </p>
                   <p className="eventConfValue">{eventDescription}</p>
                 </div>
-                {/* BUG: location doesn't seem to be updating on the state */}
-                {console.log(1234566, eventGoogleLocation)}
                 {eventTextLocation !== "" ? (
                   <div className="eventConfLine">
                     <p className="eventConfBold">location: </p>
                     <p className="eventConfValue">{eventTextLocation}</p>
                   </div>
                 ) : (
-                  <div className="eventConfLine">
-                    <p className="eventConfBold">location: </p>
-                    {eventGoogleLocation.gm_bindings_ &&
-                    eventGoogleLocation.getPlace() ? (
-                      <p className="eventConfValue">
-                        `${eventGoogleLocation.getPlace().name}, $
-                        {eventGoogleLocation.getPlace().formatted_address}`
-                      </p>
-                    ) : (
-                      false
-                    )}
-                  </div>
-                )}
+                    <div className="eventConfLine">
+                      <p className="eventConfBold">location: </p>
+                      {eventGoogleLocation.gm_bindings_ &&
+                        eventGoogleLocation.getPlace() ? (
+                          <p className="eventConfValue">
+                            {eventGoogleLocation.getPlace().name},
+                            {eventGoogleLocation.getPlace().formatted_address}
+                          </p>
+                        ) : (
+                          false
+                        )}
+                    </div>
+                  )}
                 <div className="eventConfLine">
                   <p className="eventConfBold">startDate: </p>
                   <p className="eventConfValue">

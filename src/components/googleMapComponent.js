@@ -35,6 +35,8 @@ const GoogleMapComponent = (props) => {
         setTextLocation(googleLocation.getPlace().name);
         return;
       }
+      // We have to force a state change. We should look up a way to force this change without setting googleLocation 3 times
+      setGoogleLocation({});
       setGoogleLocation(googleLocation);
       let newLat = googleLocation.getPlace().geometry.location.lat();
       let newLng = googleLocation.getPlace().geometry.location.lng();
@@ -73,14 +75,14 @@ const GoogleMapComponent = (props) => {
           {textLocation !== "" ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-            <p>
-              {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                ? `${googleLocation.getPlace().name}, ${
-                    googleLocation.getPlace().formatted_address
+              <p>
+                {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                  ? `${googleLocation.getPlace().name}, ${
+                  googleLocation.getPlace().formatted_address
                   }`
-                : false}
-            </p>
-          )}
+                  : false}
+              </p>
+            )}
         </div>
       </LoadScript>
     </div>
