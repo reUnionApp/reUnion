@@ -1,4 +1,16 @@
 .deleteSE {
   background-color: #e400678e;
-  margin: 0px 0px 0px 15px;
+  margin: 15px 0px;
+  width: fit-content;
+  height: fit-content;
+  padding: 15px 45px;
+  align-self: center;
+}
+
+#singleEventContainer {
+  padding: 75px 0px;
+}
+
+#singleEventColumn {
+  width: 70%;
 }

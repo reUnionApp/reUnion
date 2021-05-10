@@ -36,8 +36,7 @@ const UpdateProfile = (props) => {
   };
 
   return (
-    <>
-      <hr />
+    <div style={{ margin: '75px 0px 0px 0px' }}>
       <div className="w100 flex jContentSB aItemsC">
         <h1
           style={{ marginLeft: '15px' }}
@@ -122,7 +121,7 @@ const UpdateProfile = (props) => {
           Update Profile
         </button>
       </form>
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Autocomplete, LoadScript, GoogleMap } from "@react-google-maps/api";
+import React, { useState, useEffect } from 'react';
+import { Autocomplete, LoadScript, GoogleMap } from '@react-google-maps/api';
 
 const GoogleMapComponent = (props) => {
   const [count, addCount] = useState(0);
@@ -11,8 +11,10 @@ const GoogleMapComponent = (props) => {
   // let viewPortWidth = (window.visualViewport.width / 100) * 75;
 
   const containerStyle = {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
+    borderRadius: '5px',
+    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
   };
 
   const {
@@ -23,7 +25,7 @@ const GoogleMapComponent = (props) => {
   } = props;
 
   const onLoad = (input) => {
-    console.log("autocomplete: ", input);
+    console.log('autocomplete: ', input);
 
     setGoogleLocation(input);
   };
@@ -35,7 +37,10 @@ const GoogleMapComponent = (props) => {
         setTextLocation(googleLocation.getPlace().name);
         return;
       }
+      console.log('g state before-->', googleLocation);
+      setGoogleLocation({});
       setGoogleLocation(googleLocation);
+      console.log('g state after-->', googleLocation);
       let newLat = googleLocation.getPlace().geometry.location.lat();
       let newLng = googleLocation.getPlace().geometry.location.lng();
       setCoordinates({
@@ -43,17 +48,17 @@ const GoogleMapComponent = (props) => {
         lng: newLng,
       });
       addCount(count + 1);
-      setTextLocation("");
+      setTextLocation('');
     } else {
-      console.log("Autocomplete is not loaded yet!");
+      console.log('Autocomplete is not loaded yet!');
     }
   };
 
   return (
-    <div style={{ margin: "20px 0px" }} className="flex column aItemsC">
+    <div style={{ margin: '20px 0px' }} className="flex column aItemsC">
       <LoadScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE}
-        libraries={["places"]}
+        libraries={['places']}
       >
         <div id="mapBox">
           <GoogleMap
@@ -66,11 +71,11 @@ const GoogleMapComponent = (props) => {
         <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
           <input type="text" id="mapLocationInput" />
         </Autocomplete>
-        <h4 style={{ fontSize: "18px", margin: "55px 0px 45px 0px" }}>
+        <h4 style={{ fontSize: '18px', margin: '15px 0px 30px 0px' }}>
           Your event will be held at:
         </h4>
-        <div style={{ width: "80%", textAlign: "center" }}>
-          {textLocation !== "" ? (
+        <div style={{ width: '80%', textAlign: 'center' }}>
+          {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
             <p>
