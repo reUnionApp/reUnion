@@ -37,7 +37,7 @@ const GoogleMapComponent = (props) => {
         setTextLocation(googleLocation.getPlace().name);
         return;
       }
-      console.log('g state before-->', googleLocation);
+
       setGoogleLocation({});
       setGoogleLocation(googleLocation);
       console.log('g state after-->', googleLocation);
@@ -78,14 +78,14 @@ const GoogleMapComponent = (props) => {
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-            <p>
-              {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                ? `${googleLocation.getPlace().name}, ${
-                    googleLocation.getPlace().formatted_address
+              <p>
+                {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                  ? `${googleLocation.getPlace().name}, ${
+                  googleLocation.getPlace().formatted_address
                   }`
-                : false}
-            </p>
-          )}
+                  : false}
+              </p>
+            )}
         </div>
       </LoadScript>
     </div>

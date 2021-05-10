@@ -63,8 +63,8 @@ const CreateEvent = (props) => {
         eventTextLocation !== ''
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
-              eventGoogleLocation.getPlace().formatted_address
-            }`,
+          eventGoogleLocation.getPlace().formatted_address
+          }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -287,6 +287,7 @@ const CreateEvent = (props) => {
                   googleLocation={eventGoogleLocation}
                   setGoogleLocation={setEventGoogleLocation}
                 />
+                {console.log('eventGoogleLocation in gMC')}
               </div>
             </SwiperSlide>
             <SwiperSlide style={{ overflow: 'scroll' }}>
@@ -322,6 +323,7 @@ const CreateEvent = (props) => {
                     false
                   )}
                 </div>
+
                 {/* BUG: location doesn't seem to be updating on the state */}
                 {console.log(1111, eventGoogleLocation)}
                 {console.log(
@@ -334,6 +336,7 @@ const CreateEvent = (props) => {
                 )} */}
                 {console.log('eventTEXT--->', eventTextLocation)}
                 {eventTextLocation !== '' ? (
+
                   <div className="eventConfLine">
                     {console.log('STRING')}
                     <p className="eventConfBold">Location: </p>
@@ -342,6 +345,7 @@ const CreateEvent = (props) => {
                     </div>
                   </div>
                 ) : (
+
                   <div className="eventConfLine">
                     <p className="eventConfBold">Location: </p>
                     <div id="eventLocationConf">
@@ -357,6 +361,7 @@ const CreateEvent = (props) => {
                     </div>
                   </div>
                 )}
+
                 <div className="eventConfLine">
                   <p className="eventConfBold">Start Date: </p>
                   <p className="eventConfValue">
