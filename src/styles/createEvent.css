@@ -1,4 +1,4 @@
-#radioContainer input[type="radio"] {
+#radioContainer input[type='radio'] {
   opacity: 0;
   position: fixed;
   width: 0;
@@ -20,7 +20,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-#radioContainer input[type="radio"]:checked + label {
+#radioContainer input[type='radio']:checked + label {
   background-color: #38c1d3;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .whiteBtnTextCE {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -40,7 +40,8 @@
 #eventConf {
   overflow: scroll;
   width: 70%;
-  margin: 130px 0px 55px 0px;
+  padding: 60px 0px 55px 0px;
+  height: 100%;
 }
 
 #eventConf::-webkit-scrollbar {
@@ -71,6 +72,7 @@
   border: 1px solid black;
   text-align: center;
   font-size: 16px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 #finalLocation {
@@ -93,7 +95,7 @@
   margin: 10px 0px;
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
 }
 
@@ -103,4 +105,32 @@
 
 #createEventForm {
   height: 100vh;
+}
+.cEStamp {
+  margin: 75px 305px 0px 0px;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  border: 3px dotted white;
+  z-index: -5;
+}
+
+#descriptionConfContainer {
+  min-width: 75px;
+  max-width: 170px;
+  max-height: 200px;
+  overflow: scroll;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  margin: 0px 0px 0px auto;
+}
+
+#eventLocationConf {
+  max-width: 170px;
+  margin: 0px 0px 0px auto;
+  text-align: end;
 }

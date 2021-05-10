@@ -1,38 +1,39 @@
 // React/Redux
-import React, { useState, useEffect } from "react";
-import { getEvent, createEvent } from "../store";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { getEvent, createEvent } from '../store';
+import { connect } from 'react-redux';
 
 // React component imports
-import { GoogleMapComponent, DateTimePicker, GuestList } from "./index.js";
+import { GoogleMapComponent, DateTimePicker, GuestList } from './index.js';
 
 // CSS imports
-import "../styles/createEvent.css";
+import '../styles/createEvent.css';
 
 // Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
 
 // .env config
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import zIndex from '@material-ui/core/styles/zIndex';
 dotenv.config();
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateEvent = (props) => {
-  const [eventName, setEventName] = useState("");
-  const [eventType, setEventType] = useState("class reunion");
+  const [eventName, setEventName] = useState('');
+  const [eventType, setEventType] = useState('class reunion');
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
+  const [eventCoordinator, setEventCoordinator] = useState('');
+  const [eventDescription, setEventDescription] = useState('');
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
-  const [eventTextLocation, setEventTextLocation] = useState("");
+  const [eventTextLocation, setEventTextLocation] = useState('');
 
   const handleChange = function (event, hook) {
     hook(event.target.value);
@@ -44,12 +45,12 @@ const CreateEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + "/" + day + "/" + year;
+    return month + '/' + day + '/' + year;
   };
 
   const submitEventForm = async function (click) {
     click.preventDefault();
-    console.log("submit form func was fired!!!!!");
+    console.log('submit form func was fired!!!!!');
 
     let event = {
       eventName: eventName,
@@ -59,7 +60,7 @@ const CreateEvent = (props) => {
       coordinator: [eventCoordinator],
       description: eventDescription,
       location:
-        eventTextLocation !== ""
+        eventTextLocation !== ''
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
           eventGoogleLocation.getPlace().formatted_address
@@ -76,22 +77,11 @@ const CreateEvent = (props) => {
 
   return (
     <div>
-      <div
-        style={{
-          margin: "40px 0px 0px 0px",
-          position: "absolute",
-          display: "flex",
-          justifyContent: "center",
-          width: "100vw",
-        }}
-      >
-        <h1>Plan Your First Event</h1>
-      </div>
       <form
         id="createEventForm"
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
-          e.key === "Enter" && e.preventDefault();
+          e.key === 'Enter' && e.preventDefault();
         }}
       >
         <Swiper
@@ -101,21 +91,31 @@ const CreateEvent = (props) => {
           navigation
           allowTouchMove={false}
           style={{
-            minHeight: "80vh",
-            bottom: "0",
-            borderTop: "2px solid black",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
+            minHeight: '80vh',
+            bottom: '0',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
           }}
         >
           <div>
-            <SwiperSlide>
+            <SwiperSlide style={{ overflow: 'scroll' }}>
+              <div className="flex column aItemsC jContentC teal cEStamp">
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '12px',
+                    margin: '0px 5px',
+                  }}
+                >
+                  What type of event?
+                </p>
+              </div>
               <div
                 id="radioContainer"
                 className="flex column aItemsC jContentC"
-                style={{ height: "100%" }}
+                style={{ height: '100%' }}
                 onChange={(event) => {
                   handleChange(event, setEventType);
                 }}
@@ -177,19 +177,30 @@ const CreateEvent = (props) => {
                 </label>
               </div>
             </SwiperSlide>
-            <SwiperSlide style={{ overflow: "scroll" }}>
+            <SwiperSlide>
+              <div className="flex column aItemsC jContentC teal cEStamp">
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '12px',
+                    margin: '0px 5px',
+                  }}
+                >
+                  What's the event about?
+                </p>
+              </div>
               <div
                 style={{
-                  minHeight: "100%",
-                  width: "80%",
-                  margin: "130px 0px 55px 0px",
+                  minHeight: '100%',
+                  width: '80%',
+                  margin: '130px 0px 55px 0px',
                 }}
                 className="flex column jContentFS aItemsC"
               >
                 <div
                   style={{
-                    width: "80%",
-                    margin: "0px 0px 36px 0px",
+                    width: '80%',
+                    margin: '0px 0px 36px 0px',
                   }}
                   className="flex column"
                 >
@@ -205,7 +216,7 @@ const CreateEvent = (props) => {
                   ></input>
                   <div
                     className="swiper-no-swiping"
-                    style={{ width: "50vw" }}
+                    style={{ width: '50vw' }}
                   ></div>
                   {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
                   {/* vvv consider deleting vvv */}
@@ -233,9 +244,20 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide>
+              <div className="flex column aItemsC jContentC teal cEStamp">
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '12px',
+                    margin: '0px 5px',
+                  }}
+                >
+                  When is your event?
+                </p>
+              </div>
               <div
                 className="flex column jContentC"
-                style={{ height: "100vh" }}
+                style={{ height: '100vh' }}
               >
                 <DateTimePicker
                   startDateTime={eventStartDateTime}
@@ -246,8 +268,19 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
 
-            <SwiperSlide style={{ overflow: "scroll" }}>
-              <div style={{ margin: "130px 0px 55px 0px" }}>
+            <SwiperSlide style={{ overflow: 'scroll' }}>
+              <div className="flex column aItemsC jContentC teal cEStamp">
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '12px',
+                    margin: '0px 5px',
+                  }}
+                >
+                  Where is your event?
+                </p>
+              </div>
+              <div style={{ margin: '130px 0px 55px 0px' }}>
                 <GoogleMapComponent
                   textLocation={eventTextLocation}
                   setTextLocation={setEventTextLocation}
@@ -257,80 +290,107 @@ const CreateEvent = (props) => {
                 {console.log('eventGoogleLocation in gMC')}
               </div>
             </SwiperSlide>
-            <SwiperSlide style={{ overflow: "scroll" }}>
+            <SwiperSlide style={{ overflow: 'scroll' }}>
+              {/* <h1>TEST TEST TEST</h1> */}
               <div id="eventConf" className="flex column aItemsFS">
                 <h1>Event Confirmation</h1>
                 <div className="eventConfLine">
-                  <p className="eventConfBold">eventName: </p>
+                  <p className="eventConfBold">Event Name: </p>
                   <p className="eventConfValue">{eventName}</p>
                 </div>
                 <div className="eventConfLine">
-                  <p className="eventConfBold">eventType: </p>
+                  <p className="eventConfBold">Event Type: </p>
                   <p className="eventConfValue">{eventType}</p>
                 </div>
                 <div className="eventConfLine">
-                  <p className="eventConfBold">owner: </p>
+                  <p className="eventConfBold">Host: </p>
                   <p className="eventConfValue">{eventOwner}</p>
                 </div>
                 <div className="eventConfLine">
-                  <p className="eventConfBold">coordinator: </p>
+                  <p className="eventConfBold">Coordinator: </p>
                   <p className="eventConfValue">{eventCoordinator}</p>
                 </div>
                 <div
                   className="eventConfLine"
-                  style={{ maxWidth: "100%", alignItems: "flex-start" }}
+                  style={{ maxWidth: '100%', alignItems: 'flex-start' }}
                 >
-                  <p className="eventConfBold">description: </p>
-                  <p className="eventConfValue">{eventDescription}</p>
+                  <p className="eventConfBold">Description: </p>
+                  {eventDescription.length ? (
+                    <div id="descriptionConfContainer">
+                      <p className="eventConfValue">{eventDescription}</p>
+                    </div>
+                  ) : (
+                    false
+                  )}
                 </div>
-                {eventTextLocation !== "" ? (
+
+                {/* BUG: location doesn't seem to be updating on the state */}
+                {console.log(1111, eventGoogleLocation)}
+                {console.log(
+                  2222,
+                  eventGoogleLocation.gm_bindings_ ? 'true' : 'false'
+                )}
+                {/* {console.log(
+                  3333,
+                  eventGoogleLocation.getPlace() ? 'true' : 'false'
+                )} */}
+                {console.log('eventTEXT--->', eventTextLocation)}
+                {eventTextLocation !== '' ? (
+
                   <div className="eventConfLine">
-                    <p className="eventConfBold">location: </p>
-                    <p className="eventConfValue">{eventTextLocation}</p>
+                    {console.log('STRING')}
+                    <p className="eventConfBold">Location: </p>
+                    <div id="eventLocationConf">
+                      <p className="eventConfValue">{eventTextLocation}</p>
+                    </div>
                   </div>
                 ) : (
-                    <div className="eventConfLine">
-                      <p className="eventConfBold">location: </p>
+
+                  <div className="eventConfLine">
+                    <p className="eventConfBold">Location: </p>
+                    <div id="eventLocationConf">
                       {eventGoogleLocation.gm_bindings_ &&
-                        eventGoogleLocation.getPlace() ? (
-                          <p className="eventConfValue">
-                            {eventGoogleLocation.getPlace().name},
-                            {eventGoogleLocation.getPlace().formatted_address}
-                          </p>
-                        ) : (
-                          false
-                        )}
+                      eventGoogleLocation.getPlace() ? (
+                        <p className="eventConfValue">
+                          {eventGoogleLocation.getPlace().name},
+                          {eventGoogleLocation.getPlace().formatted_address}
+                        </p>
+                      ) : (
+                        false
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
+
                 <div className="eventConfLine">
-                  <p className="eventConfBold">startDate: </p>
+                  <p className="eventConfBold">Start Date: </p>
                   <p className="eventConfValue">
                     {dateFormat(eventStartDateTime)}
                   </p>
                 </div>
                 <div className="eventConfLine">
-                  <p className="eventConfBold">endDate: </p>
+                  <p className="eventConfBold">End Date: </p>
                   <p className="eventConfValue">
                     {dateFormat(eventEndDateTime)}
                   </p>
                 </div>
                 <div className="eventConfLine">
-                  <p className="eventConfBold">startTime: </p>
+                  <p className="eventConfBold">Start Time: </p>
                   <p className="eventConfValue">
-                    {eventStartDateTime.toLocaleTimeString("en-US", {
+                    {eventStartDateTime.toLocaleTimeString('en-US', {
                       hour12: true,
-                      hour: "2-digit",
-                      minute: "2-digit",
+                      hour: '2-digit',
+                      minute: '2-digit',
                     })}
                   </p>
                 </div>
                 <div className="eventConfLine">
-                  <span className="eventConfBold">endTime: </span>
+                  <span className="eventConfBold">End Time: </span>
                   <p className="eventConfValue">
-                    {eventEndDateTime.toLocaleTimeString("en-US", {
+                    {eventEndDateTime.toLocaleTimeString('en-US', {
                       hour12: true,
-                      hour: "2-digit",
-                      minute: "2-digit",
+                      hour: '2-digit',
+                      minute: '2-digit',
                     })}
                   </p>
                 </div>
