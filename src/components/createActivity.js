@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { GoogleMapComponent, DateTimePicker } from './index.js';
 
 // CSS imports
-import '../styles/createEvent.css';
+import '../styles/create.css';
 
 //Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,41 +16,13 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 
-// MaterialUI
-import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-
 // react calendar and clock
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
-// react google places autocomplete
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-
 // .env config
 import dotenv from 'dotenv';
 dotenv.config();
-
-// MaterialUI Styling
-// const useStyles = makeStyles((theme) => ({
-//   container: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//   },
-//   textField: {
-//     marginLeft: theme.spacing(1),
-//     marginRight: theme.spacing(1),
-//     width: 200,
-//   },
-// }));
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
@@ -65,16 +37,10 @@ const CreateActivity = (props) => {
   const [activityData, setActivityData] = useState({});
   const [activityTextLocation, setActivityTextLocation] = useState('');
 
-  // const classes = useStyles();
-
   const handleChange = function (activity, hook) {
     activity.preventDefault();
     hook(activity.target.value);
   };
-
-  // const handleDateTimeChange = (activity, hook) => {
-  //   hook(activity);
-  // };
 
   const dateFormat = (date) => {
     let dateObj = date;
@@ -85,8 +51,8 @@ const CreateActivity = (props) => {
     return month + '/' + day + '/' + year;
   };
 
-  const submitActivityForm = function (click) {
-    // click.preventDefault(); // disable this after production
+  const submitActivityForm = async function (click) {
+    click.preventDefault(); // disable this after production
 
     let activity = {
       activityName: activityName,
@@ -103,7 +69,7 @@ const CreateActivity = (props) => {
 
     const eventId = props.match.params.eventId;
 
-    const resultId = props.createActivity(eventId, activity);
+    const resultId = await props.createActivity(eventId, activity);
 
     props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
@@ -219,12 +185,10 @@ const CreateActivity = (props) => {
           <SwiperSlide style={{ overflow: 'scroll' }}>
             <div id="eventConf" className="flex column aItemsFS">
               <h1>Activity Confirmation</h1>
-              <div className="eventConfLine" style={{ justifyContent: 'flex-start' }}>
+              <div className="eventConfLine">
                 <p className="eventConfBold">Activity Name: </p>
-                <p className="eventConfValue">{activityName}</p>
+                <p className="eventConfValue" style={{ textAlign: 'end' }}>{activityName}</p>
               </div>
-              {/* <ul>activityName: {activityName}</ul> */}
-
               <div
                 className="eventConfLine"
                 style={{ maxWidth: '100%', alignItems: 'flex-start' }}
@@ -238,9 +202,6 @@ const CreateActivity = (props) => {
                     false
                   )}
               </div>
-
-              {/* <ul>description: {activityDescription}</ul> */}
-
               {activityTextLocation !== '' ? (
 
                 <div className="eventConfLine">
@@ -266,21 +227,6 @@ const CreateActivity = (props) => {
                     </div>
                   </div>
                 )}
-              {/* {activityTextLocation !== '' ? (
-                <ul>location: {activityTextLocation}</ul>
-              ) : (
-                  <ul>
-                    location:{' '}
-                    {activityGoogleLocation.gm_bindings_ &&
-                      activityGoogleLocation.getPlace()
-                      ? `${activityGoogleLocation.getPlace().name}, ${
-                      activityGoogleLocation.getPlace().formatted_address
-                      }`
-                      : false}
-                  </ul>
-                )} */}
-
-
               <div className="eventConfLine">
                 <p className="eventConfBold">Start Date: </p>
                 <p className="eventConfValue">
@@ -313,24 +259,6 @@ const CreateActivity = (props) => {
                   })}
                 </p>
               </div>
-              {/* <ul>startDate: {dateFormat(activityStartDateTime)}</ul>
-              <ul>endDate: {dateFormat(activityEndDateTime)}</ul>
-              <ul>
-                startTime:{' '}
-                {activityStartDateTime.toLocaleTimeString('en-US', {
-                  hour12: true,
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </ul>
-              <ul>
-                endTime:{' '}
-                {activityEndDateTime.toLocaleTimeString('en-US', {
-                  hour12: true,
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </ul> */}
               <button type="submit" className="button createEventButton">
                 Create Activity
                 </button>

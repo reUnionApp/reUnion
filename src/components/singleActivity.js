@@ -19,6 +19,8 @@ const SingleActivity = (props) => {
     );
   }, []);
 
+  console.log('propssssssss', props)
+
   const dateFormat = (date) => {
     let dateObj = date;
     let month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -79,7 +81,7 @@ const SingleActivity = (props) => {
 const mapState = (state) => ({
   user: state.authReducer,
   eventActivities: state.activityReducer,
-  singleEvent: state.eventReducer.event,
+  singleEvent: state.eventReducer,
 });
 
 const mapDispatch = (dispatch) => ({

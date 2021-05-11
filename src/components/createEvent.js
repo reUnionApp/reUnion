@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { GoogleMapComponent, DateTimePicker, GuestList } from './index.js';
 
 // CSS imports
-import '../styles/createEvent.css';
+import '../styles/create.css';
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
