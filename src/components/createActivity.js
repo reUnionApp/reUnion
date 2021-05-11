@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 // React component imports
 import { GoogleMapComponent, DateTimePicker } from './index.js';
 
+// CSS imports
+import '../styles/createEvent.css';
+
 //Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
@@ -37,17 +40,17 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // MaterialUI Styling
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   container: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//   },
+//   textField: {
+//     marginLeft: theme.spacing(1),
+//     marginRight: theme.spacing(1),
+//     width: 200,
+//   },
+// }));
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
@@ -62,16 +65,16 @@ const CreateActivity = (props) => {
   const [activityData, setActivityData] = useState({});
   const [activityTextLocation, setActivityTextLocation] = useState('');
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const handleChange = function (activity, hook) {
     activity.preventDefault();
     hook(activity.target.value);
   };
 
-  const handleDateTimeChange = (activity, hook) => {
-    hook(activity);
-  };
+  // const handleDateTimeChange = (activity, hook) => {
+  //   hook(activity);
+  // };
 
   const dateFormat = (date) => {
     let dateObj = date;
@@ -92,8 +95,8 @@ const CreateActivity = (props) => {
         activityTextLocation !== ''
           ? activityTextLocation
           : `${activityGoogleLocation.getPlace().name}, ${
-              activityGoogleLocation.getPlace().formatted_address
-            }`,
+          activityGoogleLocation.getPlace().formatted_address
+          }`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -107,33 +110,104 @@ const CreateActivity = (props) => {
 
   return (
     <div>
-      <h1>Plan Your First Activity</h1>
-      <form>
+      <form
+        id="createEventForm"
+        onSubmit={submitActivityForm}
+        onKeyPress={(e) => {
+          e.key === 'Enter' && e.preventDefault();
+        }}>
         <Swiper
           effect="fade"
           spaceBetween={0}
           slidesPerView={1}
           navigation
-          style={{ height: '70vh' }}
           allowTouchMove={false}
+          style={{
+            minHeight: '80vh',
+            bottom: '0',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+          }}
         >
           <SwiperSlide>
-            <input
-              type="text"
-              name="activityName"
-              placeholder="Activity Name"
-              value={activityName}
-              onChange={(click) => {
-                handleChange(click, setActivityName);
+            <div className="flex column aItemsC jContentC teal cEStamp">
+              <p
+                style={{
+                  textAlign: 'center',
+                  fontSize: '12px',
+                  margin: '0px 5px',
+                }}
+              >
+                What's the activity about?
+                </p>
+            </div>
+            <div
+              style={{
+                minHeight: '100%',
+                width: '80%',
               }}
-            ></input>
-            <DateTimePicker
-              startDateTime={activityStartDateTime}
-              setStartDateTime={setActivityStartDateTime}
-              endDateTime={activityEndDateTime}
-              setEndDateTime={setActivityEndDateTime}
-            />
-            <div className="swiper-no-swiping" style={{ width: '50vw' }}>
+              className="flex column jContentC aItemsC">
+              <input
+                type="text"
+                name="activityName"
+                placeholder="Activity Name"
+                value={activityName}
+                onChange={(click) => {
+                  handleChange(click, setActivityName);
+                }}
+                style={{ marginBottom: '30px' }}
+              ></input>
+              <textarea
+                type="textarea"
+                name="description"
+                className="createEventTextArea"
+                placeholder="Enter description of your activity"
+                value={activityDescription}
+                onChange={(click) => {
+                  handleChange(click, setActivityDescription);
+                }}
+              ></textarea>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="flex column aItemsC jContentC teal cEStamp">
+              <p
+                style={{
+                  textAlign: 'center',
+                  fontSize: '12px',
+                  margin: '0px 5px',
+                }}
+              >
+                When is this activity?
+                </p>
+            </div>
+            <div
+              className="flex column jContentC"
+              style={{ height: '100vh' }}
+            >
+              <DateTimePicker
+                startDateTime={activityStartDateTime}
+                setStartDateTime={setActivityStartDateTime}
+                endDateTime={activityEndDateTime}
+                setEndDateTime={setActivityEndDateTime}
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide style={{ overflow: 'scroll' }}>
+            <div className="flex column aItemsC jContentC teal cEStamp">
+              <p
+                style={{
+                  textAlign: 'center',
+                  fontSize: '12px',
+                  margin: '0px 5px',
+                }}
+              >
+                Where is this activity?
+                </p>
+            </div>
+            <div style={{ margin: '130px 0px 55px 0px' }}>
               <GoogleMapComponent
                 textLocation={activityTextLocation}
                 setTextLocation={setActivityTextLocation}
@@ -142,59 +216,125 @@ const CreateActivity = (props) => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide>
-            <textarea
-              type="textarea"
-              name="description"
-              placeholder="Enter description of your activity"
-              value={activityDescription}
-              onChange={(click) => {
-                handleChange(click, setActivityDescription);
-              }}
-            ></textarea>
-          </SwiperSlide>
-          <SwiperSlide>
-            <h1>Activity Confirmation</h1>
-            <ul>activityName: {activityName}</ul>
-            <ul>description: {activityDescription}</ul>
-            {activityTextLocation !== '' ? (
-              <ul>location: {activityTextLocation}</ul>
-            ) : (
-              <ul>
-                location:{' '}
-                {activityGoogleLocation.gm_bindings_ &&
-                activityGoogleLocation.getPlace()
-                  ? `${activityGoogleLocation.getPlace().name}, ${
+          <SwiperSlide style={{ overflow: 'scroll' }}>
+            <div id="eventConf" className="flex column aItemsFS">
+              <h1>Activity Confirmation</h1>
+              <div className="eventConfLine" style={{ justifyContent: 'flex-start' }}>
+                <p className="eventConfBold">Activity Name: </p>
+                <p className="eventConfValue">{activityName}</p>
+              </div>
+              {/* <ul>activityName: {activityName}</ul> */}
+
+              <div
+                className="eventConfLine"
+                style={{ maxWidth: '100%', alignItems: 'flex-start' }}
+              >
+                <p className="eventConfBold">Description: </p>
+                {activityDescription.length ? (
+                  <div id="descriptionConfContainer">
+                    <p className="eventConfValue">{activityDescription}</p>
+                  </div>
+                ) : (
+                    false
+                  )}
+              </div>
+
+              {/* <ul>description: {activityDescription}</ul> */}
+
+              {activityTextLocation !== '' ? (
+
+                <div className="eventConfLine">
+                  <p className="eventConfBold">Location: </p>
+                  <div id="eventLocationConf">
+                    <p className="eventConfValue">{activityTextLocation}</p>
+                  </div>
+                </div>
+              ) : (
+
+                  <div className="eventConfLine">
+                    <p className="eventConfBold">Location: </p>
+                    <div id="eventLocationConf">
+                      {activityGoogleLocation.gm_bindings_ &&
+                        activityGoogleLocation.getPlace() ? (
+                          <p className="eventConfValue">
+                            {activityGoogleLocation.getPlace().name},
+                            {activityGoogleLocation.getPlace().formatted_address}
+                          </p>
+                        ) : (
+                          false
+                        )}
+                    </div>
+                  </div>
+                )}
+              {/* {activityTextLocation !== '' ? (
+                <ul>location: {activityTextLocation}</ul>
+              ) : (
+                  <ul>
+                    location:{' '}
+                    {activityGoogleLocation.gm_bindings_ &&
+                      activityGoogleLocation.getPlace()
+                      ? `${activityGoogleLocation.getPlace().name}, ${
                       activityGoogleLocation.getPlace().formatted_address
-                    }`
-                  : false}
+                      }`
+                      : false}
+                  </ul>
+                )} */}
+
+
+              <div className="eventConfLine">
+                <p className="eventConfBold">Start Date: </p>
+                <p className="eventConfValue">
+                  {dateFormat(activityStartDateTime)}
+                </p>
+              </div>
+              <div className="eventConfLine">
+                <p className="eventConfBold">End Date: </p>
+                <p className="eventConfValue">
+                  {dateFormat(activityEndDateTime)}
+                </p>
+              </div>
+              <div className="eventConfLine">
+                <p className="eventConfBold">Start Time: </p>
+                <p className="eventConfValue">
+                  {activityStartDateTime.toLocaleTimeString('en-US', {
+                    hour12: true,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </p>
+              </div>
+              <div className="eventConfLine">
+                <span className="eventConfBold">End Time: </span>
+                <p className="eventConfValue">
+                  {activityEndDateTime.toLocaleTimeString('en-US', {
+                    hour12: true,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </p>
+              </div>
+              {/* <ul>startDate: {dateFormat(activityStartDateTime)}</ul>
+              <ul>endDate: {dateFormat(activityEndDateTime)}</ul>
+              <ul>
+                startTime:{' '}
+                {activityStartDateTime.toLocaleTimeString('en-US', {
+                  hour12: true,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
               </ul>
-            )}
-            <ul>startDate: {dateFormat(activityStartDateTime)}</ul>
-            <ul>endDate: {dateFormat(activityEndDateTime)}</ul>
-            <ul>
-              startTime:{' '}
-              {activityStartDateTime.toLocaleTimeString('en-US', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </ul>
-            <ul>
-              endTime:{' '}
-              {activityEndDateTime.toLocaleTimeString('en-US', {
-                hour12: true,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </ul>
-            <button
-              onClick={(click) => {
-                submitActivityForm(click);
-              }}
-            >
-              Create Activity
-            </button>
+              <ul>
+                endTime:{' '}
+                {activityEndDateTime.toLocaleTimeString('en-US', {
+                  hour12: true,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </ul> */}
+              <button type="submit" className="button createEventButton">
+                Create Activity
+                </button>
+            </div>
           </SwiperSlide>
         </Swiper>
       </form>

@@ -287,11 +287,9 @@ const CreateEvent = (props) => {
                   googleLocation={eventGoogleLocation}
                   setGoogleLocation={setEventGoogleLocation}
                 />
-                {console.log('eventGoogleLocation in gMC')}
               </div>
             </SwiperSlide>
             <SwiperSlide style={{ overflow: 'scroll' }}>
-              {/* <h1>TEST TEST TEST</h1> */}
               <div id="eventConf" className="flex column aItemsFS">
                 <h1>Event Confirmation</h1>
                 <div className="eventConfLine">
@@ -320,25 +318,12 @@ const CreateEvent = (props) => {
                       <p className="eventConfValue">{eventDescription}</p>
                     </div>
                   ) : (
-                    false
-                  )}
+                      false
+                    )}
                 </div>
-
-                {/* BUG: location doesn't seem to be updating on the state */}
-                {console.log(1111, eventGoogleLocation)}
-                {console.log(
-                  2222,
-                  eventGoogleLocation.gm_bindings_ ? 'true' : 'false'
-                )}
-                {/* {console.log(
-                  3333,
-                  eventGoogleLocation.getPlace() ? 'true' : 'false'
-                )} */}
-                {console.log('eventTEXT--->', eventTextLocation)}
                 {eventTextLocation !== '' ? (
 
                   <div className="eventConfLine">
-                    {console.log('STRING')}
                     <p className="eventConfBold">Location: </p>
                     <div id="eventLocationConf">
                       <p className="eventConfValue">{eventTextLocation}</p>
@@ -346,21 +331,21 @@ const CreateEvent = (props) => {
                   </div>
                 ) : (
 
-                  <div className="eventConfLine">
-                    <p className="eventConfBold">Location: </p>
-                    <div id="eventLocationConf">
-                      {eventGoogleLocation.gm_bindings_ &&
-                      eventGoogleLocation.getPlace() ? (
-                        <p className="eventConfValue">
-                          {eventGoogleLocation.getPlace().name},
-                          {eventGoogleLocation.getPlace().formatted_address}
-                        </p>
-                      ) : (
-                        false
-                      )}
+                    <div className="eventConfLine">
+                      <p className="eventConfBold">Location: </p>
+                      <div id="eventLocationConf">
+                        {eventGoogleLocation.gm_bindings_ &&
+                          eventGoogleLocation.getPlace() ? (
+                            <p className="eventConfValue">
+                              {eventGoogleLocation.getPlace().name},
+                              {eventGoogleLocation.getPlace().formatted_address}
+                            </p>
+                          ) : (
+                            false
+                          )}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 <div className="eventConfLine">
                   <p className="eventConfBold">Start Date: </p>
