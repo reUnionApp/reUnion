@@ -14,3 +14,16 @@
 #singleEventColumn {
   width: 70%;
 }
+
+#activitiesContainer {
+  width: 100%;
+}
+
+.singleActivityRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0px;
+  padding: 0px 15px 15px 15px;
+  border-bottom: 1px solid black;
+}
