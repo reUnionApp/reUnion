@@ -290,7 +290,7 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide style={{ overflow: 'scroll' }}>
-              <div id="conf" className="flex column aItemsFS">
+              <div className=" layout flex column aItemsFS">
                 <h1>Event Confirmation</h1>
                 <div className="confLine">
                   <p className="confBold">Event Name: </p>

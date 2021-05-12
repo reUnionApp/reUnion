@@ -21,7 +21,7 @@
 }
 
 #radioContainer input[type='radio']:checked + label {
-  background-color: #38c1d3;
+  background-color: #d37638;
 }
 
 .centeredLabel {
@@ -37,14 +37,14 @@
   font-weight: bold;
 }
 
-#conf {
+.layout {
   overflow: scroll;
   width: 70%;
   padding: 60px 0px 55px 0px;
   height: 100%;
 }
 
-#conf::-webkit-scrollbar {
+.layout::-webkit-scrollbar {
   display: none;
 }
 
