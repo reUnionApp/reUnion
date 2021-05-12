@@ -57,7 +57,7 @@ const DateTimePicker = (props) => {
           <KeyboardDatePicker
             margin="normal"
             id="date-picker-dialog"
-            label="Select start date"
+            label="Start Date"
             format="MM/dd/yyyy"
             value={startDateTime}
             onChange={(event) => {
@@ -70,7 +70,7 @@ const DateTimePicker = (props) => {
           <KeyboardTimePicker
             margin="normal"
             id="time-picker"
-            label="Select start time"
+            label="Start Time"
             value={startDateTime}
             onChange={(event) => {
               handleDateTimeChange(event, setStartDateTime);
@@ -86,7 +86,7 @@ const DateTimePicker = (props) => {
           <KeyboardDatePicker
             margin="normal"
             id="date-picker-dialog"
-            label="Select end date"
+            label="End Date"
             format="MM/dd/yyyy"
             value={endDateTime}
             onChange={(event) => {
@@ -99,7 +99,7 @@ const DateTimePicker = (props) => {
           <KeyboardTimePicker
             margin="normal"
             id="time-picker"
-            label="Select end time"
+            label="End Time"
             value={endDateTime}
             onChange={(event) => {
               handleDateTimeChange(event, setEndDateTime);

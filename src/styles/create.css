@@ -134,3 +134,12 @@
   margin: 0px 0px 0px auto;
   text-align: end;
 }
+
+.boldLabel {
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+.marginBottom {
+  margin-bottom: 10px;
+}
