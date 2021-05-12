@@ -31,7 +31,7 @@ const SingleEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + "/" + day + "/" + year;
+    return month + '/' + day + '/' + year;
   };
 
   const {
@@ -50,79 +50,77 @@ const SingleEvent = (props) => {
       <div id="singleEventColumn" className="flex column">
         <h1
           style={{
-            alignSelf: "center",
-            textDecoration: "underline",
-            textAlign: "center",
-            margin: "19px 0px 25px 0px",
+            alignSelf: 'center',
+            textDecoration: 'underline',
+            textAlign: 'center',
+            margin: '19px 0px 25px 0px',
           }}
         >
           {eventName}
         </h1>
-        <div className="eventConfLine">
-          <p className="eventConfBold">Event Type: </p>
-          <p className="eventConfValue">{eventType}</p>
+        <div className="confLine">
+          <p className="confBold">Event Type: </p>
+          <p className="confValue">{eventType}</p>
         </div>
-        <div className="eventConfLine">
-          <p className="eventConfBold">Host: </p>
-          <p className="eventConfValue">{owner}</p>
+        <div className="confLine">
+          <p className="confBold">Host: </p>
+          <p className="confValue">{owner}</p>
         </div>
-        <div className="eventConfLine">
-          <p className="eventConfBold">Coordinator: </p>
-          <p className="eventConfValue">{coordinator}</p>
+        <div className="confLine">
+          <p className="confBold">Coordinator: </p>
+          <p className="confValue">{coordinator}</p>
         </div>
         <div
-          className="eventConfLine"
-          style={{ maxWidth: "100%", alignItems: "flex-start" }}
+          className="confLine"
+          style={{ maxWidth: '100%', alignItems: 'flex-start' }}
         >
-          <p className="eventConfBold">Description: </p>
+          <p className="confBold">Description: </p>
           <div id="descriptionConfContainer">
-            <p className="eventConfValue">{description}</p>
+            <p className="confValue">{description}</p>
           </div>
         </div>
-        <div className="eventConfLine">
-          <p className="eventConfBold">Location: </p>
-          <div id="eventLocationConf">
-            <p className="eventConfValue">{location}</p>
+        <div className="confLine">
+          <p className="confBold">Location: </p>
+          <div id="locationConf">
+            <p className="confValue">{location}</p>
           </div>
         </div>
-        <div className="eventConfLine">
-          <p className="eventConfBold">Start Date: </p>
-          <p className="eventConfValue">
-            {dateFormat(new Date(startDateTime))}
-          </p>
+        <div className="confLine">
+          <p className="confBold">Start Date: </p>
+          <p className="confValue">{dateFormat(new Date(startDateTime))}</p>
         </div>
-        <div className="eventConfLine">
-          <p className="eventConfBold">End Date: </p>
-          <p className="eventConfValue">{dateFormat(new Date(endDateTime))}</p>
+        <div className="confLine">
+          <p className="confBold">End Date: </p>
+          <p className="confValue">{dateFormat(new Date(endDateTime))}</p>
         </div>
-        <div className="eventConfLine">
-          <p className="eventConfBold">Start Time: </p>
-          <p className="eventConfValue">
-            {new Date(startDateTime).toLocaleTimeString("en-US", {
+        <div className="confLine">
+          <p className="confBold">Start Time: </p>
+          <p className="confValue">
+            {new Date(startDateTime).toLocaleTimeString('en-US', {
               hour12: true,
-              hour: "2-digit",
-              minute: "2-digit",
+              hour: '2-digit',
+              minute: '2-digit',
             })}
           </p>
         </div>
-        <div className="eventConfLine">
-          <span className="eventConfBold">End Time: </span>
-          <p className="eventConfValue">
-            {new Date(endDateTime).toLocaleTimeString("en-US", {
+        <div className="confLine">
+          <span className="confBold">End Time: </span>
+          <p className="confValue">
+            {new Date(endDateTime).toLocaleTimeString('en-US', {
               hour12: true,
-              hour: "2-digit",
-              minute: "2-digit",
+              hour: '2-digit',
+              minute: '2-digit',
             })}
           </p>
         </div>
-        <div className="flex jContentSA" style={{ margin: "36px 0px" }}>
+        <div className="flex jContentSA" style={{ margin: '36px 0px' }}>
           <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
             <button
               className="button"
               style={{
-                backgroundColor: "#38c1d38c",
-                width: "130px",
-                height: "60px",
+                backgroundColor: '#38c1d38c',
+                width: '130px',
+                height: '60px',
               }}
             >
               Manage Guest List
@@ -131,14 +129,14 @@ const SingleEvent = (props) => {
 
           <Link
             to={`/myEvents/${props.singleEvent.id}/createActivity`}
-            style={{ margin: "0px 0px 0px 15px" }}
+            style={{ margin: '0px 0px 0px 15px' }}
           >
             <button
               className="button"
               style={{
-                backgroundColor: "#ffc4008c",
-                width: "130px",
-                height: "60px",
+                backgroundColor: '#ffc4008c',
+                width: '130px',
+                height: '60px',
               }}
             >
               Create Activity
@@ -148,12 +146,12 @@ const SingleEvent = (props) => {
         <div className="flex column aItemsC">
           <h2
             style={{
-              alignSelf: "center",
-              textDecoration: "underline",
-              textAlign: "center",
-              margin: "19px 0px 0px 0px",
-              padding: "0px 0px 25px 0px",
-              borderBottom: "1px solid black",
+              alignSelf: 'center',
+              textDecoration: 'underline',
+              textAlign: 'center',
+              margin: '19px 0px 0px 0px',
+              padding: '0px 0px 25px 0px',
+              borderBottom: '1px solid black',
             }}
           >
             {props.singleEvent.eventName}'s Activities
@@ -163,7 +161,7 @@ const SingleEvent = (props) => {
               props.allActivities.map((activity, idx) => {
                 return (
                   <div className="singleActivityRow" key={idx}>
-                    <h4 style={{ fontSize: "16px" }}>
+                    <h4 style={{ fontSize: '16px' }}>
                       <Link
                         to={`/myevents/${activity.EventId}/activities/${activity.id}`}
                         key={activity.id}
@@ -175,9 +173,9 @@ const SingleEvent = (props) => {
                       <button
                         className="button"
                         style={{
-                          margin: "0px 0px 15px 0px",
-                          padding: "5px 15px",
-                          backgroundColor: "#38c1d38c",
+                          margin: '0px 0px 15px 0px',
+                          padding: '5px 15px',
+                          backgroundColor: '#38c1d38c',
                         }}
                       >
                         <Link
@@ -189,8 +187,8 @@ const SingleEvent = (props) => {
                       <button
                         className="button"
                         style={{
-                          padding: "5px 15px",
-                          backgroundColor: "#e400678e",
+                          padding: '5px 15px',
+                          backgroundColor: '#e400678e',
                         }}
                         onClick={() =>
                           deleteSelectedActivity(eventId, activity.id)
@@ -203,8 +201,8 @@ const SingleEvent = (props) => {
                 );
               })
             ) : (
-                <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
-              )}
+              <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
+            )}
           </div>
 
           <button

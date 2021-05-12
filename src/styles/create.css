@@ -37,18 +37,18 @@
   font-weight: bold;
 }
 
-#eventConf {
+#conf {
   overflow: scroll;
   width: 70%;
   padding: 60px 0px 55px 0px;
   height: 100%;
 }
 
-#eventConf::-webkit-scrollbar {
+#conf::-webkit-scrollbar {
   display: none;
 }
 
-.createEventInput {
+.createInput {
   padding: 10px 15px;
   border-radius: 5px;
   outline: none;
@@ -56,7 +56,7 @@
   margin: 15px 0px;
 }
 
-.createEventTextArea {
+.createTextArea {
   width: 80%;
   height: 300px;
   border-radius: 5px;
@@ -79,19 +79,19 @@
   font-size: 15px;
 }
 
-.createEventButton {
+.createButton {
   align-self: center;
   margin: 30px 0px;
   background-color: #ffc4008c;
   box-shadow: 2px 2px 2px rgb(220, 220, 220);
 }
-.eventConfBold {
+.confBold {
   font-size: 16px;
   font-weight: bolder;
   margin: 0px 30px 0px 0px;
 }
 
-.eventConfLine {
+.confLine {
   margin: 10px 0px;
   width: 100%;
   display: flex;
@@ -99,11 +99,11 @@
   justify-content: flex-start;
 }
 
-.eventConfValue {
+.confValue {
   margin: 0px 0px 0px auto;
 }
 
-#createEventForm {
+#createForm {
   height: 100vh;
 }
 .cEStamp {
@@ -129,7 +129,7 @@
   margin: 0px 0px 0px auto;
 }
 
-#eventLocationConf {
+#locationConf {
   max-width: 170px;
   margin: 0px 0px 0px auto;
   text-align: end;

@@ -63,8 +63,8 @@ const CreateEvent = (props) => {
         eventTextLocation !== ''
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().name}, ${
-          eventGoogleLocation.getPlace().formatted_address
-          }`,
+              eventGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -78,7 +78,7 @@ const CreateEvent = (props) => {
   return (
     <div>
       <form
-        id="createEventForm"
+        id="createForm"
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
           e.key === 'Enter' && e.preventDefault();
@@ -208,7 +208,7 @@ const CreateEvent = (props) => {
                     type="text"
                     name="eventName"
                     placeholder="Event Name"
-                    className="createEventInput"
+                    className="createInput"
                     value={eventName}
                     onChange={(event) => {
                       handleChange(event, setEventName);
@@ -223,7 +223,7 @@ const CreateEvent = (props) => {
                   <input
                     type="text"
                     name="coordinators"
-                    className="createEventInput"
+                    className="createInput"
                     placeholder="Enter coordinators' names here"
                     value={eventCoordinator}
                     onChange={(event) => {
@@ -234,7 +234,7 @@ const CreateEvent = (props) => {
                 <textarea
                   type="textarea"
                   name="description"
-                  className="createEventTextArea"
+                  className="createTextArea"
                   placeholder="Enter description of your event"
                   value={eventDescription}
                   onChange={(event) => {
@@ -290,78 +290,72 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide style={{ overflow: 'scroll' }}>
-              <div id="eventConf" className="flex column aItemsFS">
+              <div id="conf" className="flex column aItemsFS">
                 <h1>Event Confirmation</h1>
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Event Name: </p>
-                  <p className="eventConfValue">{eventName}</p>
+                <div className="confLine">
+                  <p className="confBold">Event Name: </p>
+                  <p className="confValue">{eventName}</p>
                 </div>
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Event Type: </p>
-                  <p className="eventConfValue">{eventType}</p>
+                <div className="confLine">
+                  <p className="confBold">Event Type: </p>
+                  <p className="confValue">{eventType}</p>
                 </div>
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Host: </p>
-                  <p className="eventConfValue">{eventOwner}</p>
+                <div className="confLine">
+                  <p className="confBold">Host: </p>
+                  <p className="confValue">{eventOwner}</p>
                 </div>
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Coordinator: </p>
-                  <p className="eventConfValue">{eventCoordinator}</p>
+                <div className="confLine">
+                  <p className="confBold">Coordinator: </p>
+                  <p className="confValue">{eventCoordinator}</p>
                 </div>
                 <div
-                  className="eventConfLine"
+                  className="confLine"
                   style={{ maxWidth: '100%', alignItems: 'flex-start' }}
                 >
-                  <p className="eventConfBold">Description: </p>
+                  <p className="confBold">Description: </p>
                   {eventDescription.length ? (
                     <div id="descriptionConfContainer">
-                      <p className="eventConfValue">{eventDescription}</p>
+                      <p className="confValue">{eventDescription}</p>
                     </div>
                   ) : (
-                      false
-                    )}
+                    false
+                  )}
                 </div>
                 {eventTextLocation !== '' ? (
-
-                  <div className="eventConfLine">
-                    <p className="eventConfBold">Location: </p>
-                    <div id="eventLocationConf">
-                      <p className="eventConfValue">{eventTextLocation}</p>
+                  <div className="confLine">
+                    <p className="confBold">Location: </p>
+                    <div id="locationConf">
+                      <p className="confValue">{eventTextLocation}</p>
                     </div>
                   </div>
                 ) : (
-
-                    <div className="eventConfLine">
-                      <p className="eventConfBold">Location: </p>
-                      <div id="eventLocationConf">
-                        {eventGoogleLocation.gm_bindings_ &&
-                          eventGoogleLocation.getPlace() ? (
-                            <p className="eventConfValue">
-                              {eventGoogleLocation.getPlace().name},
-                              {eventGoogleLocation.getPlace().formatted_address}
-                            </p>
-                          ) : (
-                            false
-                          )}
-                      </div>
+                  <div className="confLine">
+                    <p className="confBold">Location: </p>
+                    <div id="locationConf">
+                      {eventGoogleLocation.gm_bindings_ &&
+                      eventGoogleLocation.getPlace() ? (
+                        <p className="confValue">
+                          {eventGoogleLocation.getPlace().name},
+                          {eventGoogleLocation.getPlace().formatted_address}
+                        </p>
+                      ) : (
+                        false
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Start Date: </p>
-                  <p className="eventConfValue">
-                    {dateFormat(eventStartDateTime)}
-                  </p>
+                <div className="confLine">
+                  <p className="confBold">Start Date: </p>
+                  <p className="confValue">{dateFormat(eventStartDateTime)}</p>
                 </div>
-                <div className="eventConfLine">
-                  <p className="eventConfBold">End Date: </p>
-                  <p className="eventConfValue">
-                    {dateFormat(eventEndDateTime)}
-                  </p>
+                <div className="confLine">
+                  <p className="confBold">End Date: </p>
+                  <p className="confValue">{dateFormat(eventEndDateTime)}</p>
                 </div>
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Start Time: </p>
-                  <p className="eventConfValue">
+                <div className="confLine">
+                  <p className="confBold">Start Time: </p>
+                  <p className="confValue">
                     {eventStartDateTime.toLocaleTimeString('en-US', {
                       hour12: true,
                       hour: '2-digit',
@@ -369,9 +363,9 @@ const CreateEvent = (props) => {
                     })}
                   </p>
                 </div>
-                <div className="eventConfLine">
-                  <span className="eventConfBold">End Time: </span>
-                  <p className="eventConfValue">
+                <div className="confLine">
+                  <span className="confBold">End Time: </span>
+                  <p className="confValue">
                     {eventEndDateTime.toLocaleTimeString('en-US', {
                       hour12: true,
                       hour: '2-digit',
@@ -379,7 +373,7 @@ const CreateEvent = (props) => {
                     })}
                   </p>
                 </div>
-                <button type="submit" className="button createEventButton">
+                <button type="submit" className="button createButton">
                   Create Event
                 </button>
               </div>
