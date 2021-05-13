@@ -1,7 +1,10 @@
 //React/Redux
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getEvent, updateEvent, removeEvent } from '../store';
 import { connect } from 'react-redux';
+
+// CSS imports
+import '../styles/create.css';
 
 // MaterialUI
 import 'date-fns';
@@ -19,8 +22,14 @@ import TextField from '@material-ui/core/TextField';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
-// react google places autocomplete
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+// React component imports
+
+import {
+  Autocomplete,
+  StandaloneSearchBox,
+  LoadScript,
+  GoogleMap,
+} from '@react-google-maps/api';
 
 // .env config
 import dotenv from 'dotenv';
@@ -50,6 +59,9 @@ const UpdateEvent = (props) => {
   const [eventStartDateTime, setEventStartDateTime] = useState('');
   const [eventEndDateTime, setEventEndDateTime] = useState('');
   const [eventData, setEventData] = useState({});
+  const [googleLocation, setGoogleLocation] = useState({});
+  const [textLocation, setTextLocation] = useState('');
+  const locationUpdate = useRef(false);
 
   const classes = useStyles();
 
@@ -90,12 +102,19 @@ const UpdateEvent = (props) => {
 
     let event = {
       eventName: eventName,
-      eventType: [eventType],
+      eventType: eventType,
       owner: eventOwner,
       ownerId: props.user.id,
-      coordinator: [eventCoordinator],
+      coordinator: eventCoordinator,
       description: eventDescription,
-      location: eventLocation.label,
+      location:
+        locationUpdate.current === true
+          ? googleLocation.getPlace().formatted_address
+            ? `${googleLocation.getPlace().name}, ${
+                googleLocation.getPlace().formatted_address
+              }`
+            : `${googleLocation.getPlace().name}`
+          : eventLocation,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -107,142 +126,191 @@ const UpdateEvent = (props) => {
     props.history.push(`/myEvents/${resultId}`);
   };
 
+  const onLoad = (input) => {
+    console.log('autocomplete: ', input);
+
+    setGoogleLocation(input);
+  };
+
+  const onPlaceChanged = () => {
+    console.log(999, googleLocation.getPlace());
+    if (googleLocation !== null) {
+      if (!googleLocation.getPlace().address_components) {
+        console.log('here');
+        console.log(
+          'googleLocation.getPlace().name',
+          googleLocation.getPlace().name
+        );
+        setTextLocation(googleLocation.getPlace().name);
+        locationUpdate.current = true;
+        return;
+      }
+
+      setGoogleLocation({});
+      setGoogleLocation(googleLocation);
+      console.log('g state after-->', googleLocation);
+      setTextLocation('');
+      locationUpdate.current = true;
+    } else {
+      console.log('Autocomplete is not loaded yet!');
+    }
+  };
+
   return (
-    <div>
-      <h1>Update {props.event.eventName}</h1>
-      <form>
-        <div>
-          <select
-            onChange={(event) => {
-              handleChange(event, setEventType);
-            }}
-            value={eventType}
-          >
-            <option value="class reunion">Class Reunion</option>
-            <option value="family reunion">Family Reunion</option>
-            <option value="anniversary party">Anniversary Party</option>
-            <option value="baby shower">Baby Shower</option>
-            <option value="other gathering">Other Gathering</option>
-          </select>
-          <input
-            type="text"
-            name="eventName"
-            value={eventName}
-            onChange={(event) => {
-              handleChange(event, setEventName);
-            }}
-          ></input>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                inputValue={dateFormat(new Date(eventStartDateTime))}
+    <div
+      className="flex column jContentC aItemsC "
+      // style={{ marginTop: '50px' }}
+    >
+      <div className="flex column layout jContentC aItemsC">
+        <h1>Update {props.event.eventName}</h1>
+        <form
+          id="createForm"
+          onSubmit={submitEventForm}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && e.preventDefault();
+          }}
+        >
+          <div className="flex column">
+            <div className="boldLabel flex jContentSB marginBottom">
+              Event Type:
+              <select
+                style={{ width: '50%' }}
                 onChange={(event) => {
-                  handleDateTimeChange(event, setEventStartDateTime);
+                  handleChange(event, setEventType);
                 }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-              <KeyboardTimePicker
-                margin="normal"
-                id="time-picker"
-                label="Time picker"
-                inputValue={new Date(eventStartDateTime).toLocaleTimeString(
-                  'en-US',
-                  {
-                    hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }
-                )}
+                value={eventType}
+              >
+                <option value="class reunion">Class Reunion</option>
+                <option value="family reunion">Family Reunion</option>
+                <option value="anniversary party">Anniversary Party</option>
+                <option value="baby shower">Baby Shower</option>
+                <option value="other gathering">Other Gathering</option>
+              </select>
+            </div>
+            <div className="boldLabel flex jContentSB marginBottom">
+              Event Name:
+              <input
+                style={{ width: '50%' }}
+                type="text"
+                name="eventName"
+                value={eventName}
                 onChange={(event) => {
-                  handleDateTimeChange(event, setEventStartDateTime);
+                  handleChange(event, setEventName);
                 }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                inputValue={dateFormat(new Date(eventEndDateTime))}
-                onChange={(event) => {
-                  handleDateTimeChange(event, setEventEndDateTime);
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-              <KeyboardTimePicker
-                margin="normal"
-                id="time-picker"
-                label="Time picker"
-                inputValue={new Date(eventEndDateTime).toLocaleTimeString(
-                  'en-US',
-                  {
-                    hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }
-                )}
-                onChange={(event) => {
-                  handleDateTimeChange(event, setEventEndDateTime);
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
-          <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-            <GooglePlacesAutocomplete
-              apiKey={process.env.REACT_APP_GOOGLE}
-              selectProps={{
-                // inputValue: eventLocation,
-                onChange: setEventLocation,
+              ></input>
+            </div>
+            <div className="marginBottom">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Start Date"
+                    format="MM/dd/yyyy"
+                    inputValue={dateFormat(new Date(eventStartDateTime))}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventStartDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    label="Start Time"
+                    inputValue={new Date(eventStartDateTime).toLocaleTimeString(
+                      'en-US',
+                      {
+                        hour12: true,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }
+                    )}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventStartDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change time',
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="End Date"
+                    format="MM/dd/yyyy"
+                    inputValue={dateFormat(new Date(eventEndDateTime))}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventEndDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    label="End Time"
+                    inputValue={new Date(eventEndDateTime).toLocaleTimeString(
+                      'en-US',
+                      {
+                        hour12: true,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }
+                    )}
+                    onChange={(event) => {
+                      handleDateTimeChange(event, setEventEndDateTime);
+                    }}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change time',
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </div>
+
+            <div className="boldLabel flex jContentSB marginBottom" style={{}}>
+              Location:
+              <LoadScript
+                googleMapsApiKey={process.env.REACT_APP_GOOGLE}
+                libraries={['places']}
+              >
+                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                  <input type="text" defaultValue={eventLocation} />
+                </Autocomplete>
+              </LoadScript>
+            </div>
+
+            {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
+            <input
+              type="text"
+              name="coordinators"
+              placeholder="Enter coordinators' names here"
+              value={eventCoordinator}
+              onChange={(event) => {
+                handleChange(event, setEventCoordinator);
               }}
-            />
+            ></input>
+            <textarea
+              type="textarea"
+              name="description"
+              placeholder="Enter description of your event"
+              value={eventDescription}
+              onChange={(event) => {
+                handleChange(event, setEventDescription);
+              }}
+            ></textarea>
+            <button type="submit" className="button createButton">
+              Update Event
+            </button>
           </div>
-          {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
-          <input
-            type="text"
-            name="coordinators"
-            placeholder="Enter coordinators' names here"
-            value={eventCoordinator}
-            onChange={(event) => {
-              handleChange(event, setEventCoordinator);
-            }}
-          ></input>
-          <textarea
-            // rows="6"
-            // cols="50"
-            type="textarea"
-            name="description"
-            placeholder="Enter description of your event"
-            value={eventDescription}
-            onChange={(event) => {
-              handleChange(event, setEventDescription);
-            }}
-          ></textarea>
-          <button
-            onClick={(click) => {
-              submitEventForm(click);
-            }}
-          >
-            Update Event
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

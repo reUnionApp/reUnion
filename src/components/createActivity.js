@@ -61,8 +61,8 @@ const CreateActivity = (props) => {
         activityTextLocation !== ''
           ? activityTextLocation
           : `${activityGoogleLocation.getPlace().name}, ${
-          activityGoogleLocation.getPlace().formatted_address
-          }`,
+              activityGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -77,11 +77,12 @@ const CreateActivity = (props) => {
   return (
     <div>
       <form
-        id="createEventForm"
+        id="createForm"
         onSubmit={submitActivityForm}
         onKeyPress={(e) => {
           e.key === 'Enter' && e.preventDefault();
-        }}>
+        }}
+      >
         <Swiper
           effect="fade"
           spaceBetween={0}
@@ -107,14 +108,15 @@ const CreateActivity = (props) => {
                 }}
               >
                 What's the activity about?
-                </p>
+              </p>
             </div>
             <div
               style={{
                 minHeight: '100%',
                 width: '80%',
               }}
-              className="flex column jContentC aItemsC">
+              className="flex column jContentC aItemsC"
+            >
               <input
                 type="text"
                 name="activityName"
@@ -128,7 +130,7 @@ const CreateActivity = (props) => {
               <textarea
                 type="textarea"
                 name="description"
-                className="createEventTextArea"
+                className="createTextArea"
                 placeholder="Enter description of your activity"
                 value={activityDescription}
                 onChange={(click) => {
@@ -147,12 +149,9 @@ const CreateActivity = (props) => {
                 }}
               >
                 When is this activity?
-                </p>
+              </p>
             </div>
-            <div
-              className="flex column jContentC"
-              style={{ height: '100vh' }}
-            >
+            <div className="flex column jContentC" style={{ height: '100vh' }}>
               <DateTimePicker
                 startDateTime={activityStartDateTime}
                 setStartDateTime={setActivityStartDateTime}
@@ -171,7 +170,7 @@ const CreateActivity = (props) => {
                 }}
               >
                 Where is this activity?
-                </p>
+              </p>
             </div>
             <div style={{ margin: '130px 0px 55px 0px' }}>
               <GoogleMapComponent
@@ -183,65 +182,61 @@ const CreateActivity = (props) => {
             </div>
           </SwiperSlide>
           <SwiperSlide style={{ overflow: 'scroll' }}>
-            <div id="eventConf" className="flex column aItemsFS">
+            <div id="conf" className="flex column aItemsFS">
               <h1>Activity Confirmation</h1>
-              <div className="eventConfLine">
-                <p className="eventConfBold">Activity Name: </p>
-                <p className="eventConfValue" style={{ textAlign: 'end' }}>{activityName}</p>
+              <div className="confLine">
+                <p className="confBold">Activity Name: </p>
+                <p className="confValue" style={{ textAlign: 'end' }}>
+                  {activityName}
+                </p>
               </div>
               <div
-                className="eventConfLine"
+                className="confLine"
                 style={{ maxWidth: '100%', alignItems: 'flex-start' }}
               >
-                <p className="eventConfBold">Description: </p>
+                <p className="confBold">Description: </p>
                 {activityDescription.length ? (
                   <div id="descriptionConfContainer">
-                    <p className="eventConfValue">{activityDescription}</p>
+                    <p className="confValue">{activityDescription}</p>
                   </div>
                 ) : (
-                    false
-                  )}
+                  false
+                )}
               </div>
               {activityTextLocation !== '' ? (
-
-                <div className="eventConfLine">
-                  <p className="eventConfBold">Location: </p>
-                  <div id="eventLocationConf">
-                    <p className="eventConfValue">{activityTextLocation}</p>
+                <div className="confLine">
+                  <p className="confBold">Location: </p>
+                  <div id="locationConf">
+                    <p className="confValue">{activityTextLocation}</p>
                   </div>
                 </div>
               ) : (
-
-                  <div className="eventConfLine">
-                    <p className="eventConfBold">Location: </p>
-                    <div id="eventLocationConf">
-                      {activityGoogleLocation.gm_bindings_ &&
-                        activityGoogleLocation.getPlace() ? (
-                          <p className="eventConfValue">
-                            {activityGoogleLocation.getPlace().name},
-                            {activityGoogleLocation.getPlace().formatted_address}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                    </div>
+                <div className="confLine">
+                  <p className="confBold">Location: </p>
+                  <div id="locationConf">
+                    {activityGoogleLocation.gm_bindings_ &&
+                    activityGoogleLocation.getPlace() ? (
+                      <p className="confValue">
+                        {activityGoogleLocation.getPlace().name},
+                        {activityGoogleLocation.getPlace().formatted_address}
+                      </p>
+                    ) : (
+                      false
+                    )}
                   </div>
-                )}
-              <div className="eventConfLine">
-                <p className="eventConfBold">Start Date: </p>
-                <p className="eventConfValue">
-                  {dateFormat(activityStartDateTime)}
-                </p>
+                </div>
+              )}
+              <div className="confLine">
+                <p className="confBold">Start Date: </p>
+                <p className="confValue">{dateFormat(activityStartDateTime)}</p>
               </div>
-              <div className="eventConfLine">
-                <p className="eventConfBold">End Date: </p>
-                <p className="eventConfValue">
-                  {dateFormat(activityEndDateTime)}
-                </p>
+              <div className="confLine">
+                <p className="confBold">End Date: </p>
+                <p className="confValue">{dateFormat(activityEndDateTime)}</p>
               </div>
-              <div className="eventConfLine">
-                <p className="eventConfBold">Start Time: </p>
-                <p className="eventConfValue">
+              <div className="confLine">
+                <p className="confBold">Start Time: </p>
+                <p className="confValue">
                   {activityStartDateTime.toLocaleTimeString('en-US', {
                     hour12: true,
                     hour: '2-digit',
@@ -249,9 +244,9 @@ const CreateActivity = (props) => {
                   })}
                 </p>
               </div>
-              <div className="eventConfLine">
-                <span className="eventConfBold">End Time: </span>
-                <p className="eventConfValue">
+              <div className="confLine">
+                <span className="confBold">End Time: </span>
+                <p className="confValue">
                   {activityEndDateTime.toLocaleTimeString('en-US', {
                     hour12: true,
                     hour: '2-digit',
@@ -259,9 +254,9 @@ const CreateActivity = (props) => {
                   })}
                 </p>
               </div>
-              <button type="submit" className="button createEventButton">
+              <button type="submit" className="button createButton">
                 Create Activity
-                </button>
+              </button>
             </div>
           </SwiperSlide>
         </Swiper>
