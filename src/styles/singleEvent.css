@@ -1,5 +1,4 @@
-.deleteSE {
-  background-color: #e400678e;
+.bottomSE {
   margin: 15px 0px;
   width: fit-content;
   height: fit-content;
@@ -17,6 +16,10 @@
 
 #activitiesContainer {
   width: 100%;
+}
+
+.SEActivityWrapper {
+  width: 100px;
 }
 
 .singleActivityRow {
