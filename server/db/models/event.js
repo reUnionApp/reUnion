@@ -12,18 +12,22 @@ const Event = db.define(
         notEmpty: true,
       },
     },
+    // eventType: {
+    //   type: Sequelize.TEXT(
+    //     Sequelize.ENUM({
+    //       values: [
+    //         'class reunion',
+    //         'family reunion',
+    //         'anniversary party',
+    //         'baby shower',
+    //         'other gathering',
+    //       ],
+    //     })
+    //   ),
+    //   allowNull: false,
+    // },
     eventType: {
-      type: Sequelize.ARRAY(
-        Sequelize.ENUM({
-          values: [
-            'class reunion',
-            'family reunion',
-            'anniversary party',
-            'baby shower',
-            'other gathering',
-          ],
-        })
-      ),
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     owner: {
@@ -40,13 +44,13 @@ const Event = db.define(
         notEmpty: true,
       },
     },
-    coordinator: {
-      type: Sequelize.ARRAY(
-        Sequelize.TEXT({
-          values: [],
-        })
-      ),
-    },
+    // coordinator: {
+    //   type: Sequelize.ARRAY(
+    //     Sequelize.TEXT({
+    //       values: [],
+    //     })
+    //   ),
+    // },
     description: {
       type: Sequelize.TEXT,
       allowNull: false,

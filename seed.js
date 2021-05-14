@@ -19,7 +19,7 @@ async function seed() {
           lastName: faker.name.lastName(),
           email: faker.internet.email(faker.name.firstName()),
           isAdmin: faker.random.boolean(),
-          userType: 'basic'
+          userType: 'basic',
         })
       );
     }
@@ -39,10 +39,10 @@ async function seed() {
       events.push(
         Event.create({
           eventName: faker.lorem.words(4),
-          eventType: [faker.random.arrayElement(eTypes)],
+          eventType: faker.random.arrayElement(eTypes),
           owner: faker.name.findName(),
           ownerId: id,
-          coordinator: [`${faker.name.findName()}`],
+          // coordinator: [`${faker.name.findName()}`],
           description: faker.lorem.words(8),
           location: faker.name.jobArea(),
           startDateTime: Date.now(),
