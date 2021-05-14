@@ -17,3 +17,4 @@ export { default as UpdateActivity } from './updateActivity';
 export { default as GoogleMapComponent } from './googleMapComponent';
 export { default as DateTimePicker } from './dateTimePicker';
 export { default as GuestList } from './guestList';
+export { default as Animation } from './animation';
