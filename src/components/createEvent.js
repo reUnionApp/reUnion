@@ -62,9 +62,7 @@ const CreateEvent = (props) => {
       location:
         eventTextLocation !== ''
           ? eventTextLocation
-          : `${eventGoogleLocation.getPlace().name}, ${
-              eventGoogleLocation.getPlace().formatted_address
-            }`,
+          : `${eventGoogleLocation.getPlace().formatted_address}`,
       startDateTime: eventStartDateTime,
       endDateTime: eventEndDateTime,
     };
@@ -321,19 +319,18 @@ const CreateEvent = (props) => {
                 </div>
                 {eventTextLocation !== '' ? (
                   <div className="confLine">
-                    <p className="confBold">Location: </p>
+                    <p className="confBold">Address: </p>
                     <div id="locationConf">
                       <p className="confValue">{eventTextLocation}</p>
                     </div>
                   </div>
                 ) : (
                   <div className="confLine">
-                    <p className="confBold">Location: </p>
+                    <p className="confBold">Address: </p>
                     <div id="locationConf">
                       {eventGoogleLocation.gm_bindings_ &&
                       eventGoogleLocation.getPlace() ? (
                         <p className="confValue">
-                          {eventGoogleLocation.getPlace().name},
                           {eventGoogleLocation.getPlace().formatted_address}
                         </p>
                       ) : (

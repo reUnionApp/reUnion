@@ -72,20 +72,18 @@ const GoogleMapComponent = (props) => {
           <input type="text" id="mapLocationInput" />
         </Autocomplete>
         <h4 style={{ fontSize: '18px', margin: '15px 0px 30px 0px' }}>
-          Your event will be held at:
+          Event Address:
         </h4>
         <div style={{ width: '80%', textAlign: 'center' }}>
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-              <p>
-                {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                  ? `${googleLocation.getPlace().name}, ${
-                  googleLocation.getPlace().formatted_address
-                  }`
-                  : false}
-              </p>
-            )}
+            <p>
+              {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                ? `${googleLocation.getPlace().formatted_address}`
+                : false}
+            </p>
+          )}
         </div>
       </LoadScript>
     </div>

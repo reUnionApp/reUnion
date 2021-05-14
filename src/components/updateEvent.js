@@ -114,9 +114,7 @@ const UpdateEvent = (props) => {
       location:
         locationUpdate.current === true
           ? googleLocation.getPlace().formatted_address
-            ? `${googleLocation.getPlace().name}, ${
-                googleLocation.getPlace().formatted_address
-              }`
+            ? `${googleLocation.getPlace().formatted_address}`
             : `${googleLocation.getPlace().name}`
           : eventLocation,
       startDateTime: eventStartDateTime,
@@ -277,7 +275,7 @@ const UpdateEvent = (props) => {
                 </Grid>
               </MuiPickersUtilsProvider>
             </div> */}
-            <div className="marginBottom" style={{}}>
+            <div className="marginBottom flex column">
               <DateTimePicker
                 startDateTime={eventStartDateTime}
                 setStartDateTime={setEventStartDateTime}
@@ -286,7 +284,7 @@ const UpdateEvent = (props) => {
               />
             </div>
             <div className="boldLabel flex jContentSB marginBottom" style={{}}>
-              Location:
+              Address:
               <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE}
                 libraries={['places']}
