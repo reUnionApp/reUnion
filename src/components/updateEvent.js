@@ -1,26 +1,26 @@
 //React/Redux
-import React, { useState, useEffect, useRef } from 'react';
-import { getEvent, updateEvent, removeEvent } from '../store';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import { getEvent, updateEvent, removeEvent } from "../store";
+import { connect } from "react-redux";
 
 // CSS imports
-import '../styles/create.css';
+import "../styles/create.css";
 
 // MaterialUI
-import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+} from "@material-ui/pickers";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
 // react calendar and clock
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
 
 // React component imports
 
@@ -29,18 +29,18 @@ import {
   StandaloneSearchBox,
   LoadScript,
   GoogleMap,
-} from '@react-google-maps/api';
+} from "@react-google-maps/api";
 
 // .env config
-import dotenv from 'dotenv';
-import { CompareArrowsOutlined } from '@material-ui/icons';
+import dotenv from "dotenv";
+import { CompareArrowsOutlined } from "@material-ui/icons";
 dotenv.config();
 
 // MaterialUI Styling
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -50,17 +50,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UpdateEvent = (props) => {
-  const [eventName, setEventName] = useState('');
-  const [eventType, setEventType] = useState('');
+  const [eventName, setEventName] = useState("");
+  const [eventType, setEventType] = useState("");
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState('');
-  const [eventDescription, setEventDescription] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
-  const [eventStartDateTime, setEventStartDateTime] = useState('');
-  const [eventEndDateTime, setEventEndDateTime] = useState('');
+  const [eventCoordinator, setEventCoordinator] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
+  const [eventStartDateTime, setEventStartDateTime] = useState("");
+  const [eventEndDateTime, setEventEndDateTime] = useState("");
   const [eventData, setEventData] = useState({});
   const [googleLocation, setGoogleLocation] = useState({});
-  const [textLocation, setTextLocation] = useState('');
+  const [textLocation, setTextLocation] = useState("");
   const locationUpdate = useRef(false);
 
   const classes = useStyles();
@@ -94,7 +94,7 @@ const UpdateEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + '/' + day + '/' + year;
+    return month + "/" + day + "/" + year;
   };
 
   const submitEventForm = async function (click) {
@@ -102,10 +102,10 @@ const UpdateEvent = (props) => {
 
     let event = {
       eventName: eventName,
-      eventType: eventType,
+      eventType: [eventType],
       owner: eventOwner,
       ownerId: props.user.id,
-      coordinator: eventCoordinator,
+      coordinator: [eventCoordinator],
       description: eventDescription,
       location:
         locationUpdate.current === true
@@ -127,7 +127,7 @@ const UpdateEvent = (props) => {
   };
 
   const onLoad = (input) => {
-    console.log('autocomplete: ', input);
+    console.log("autocomplete: ", input);
 
     setGoogleLocation(input);
   };
@@ -136,9 +136,9 @@ const UpdateEvent = (props) => {
     console.log(999, googleLocation.getPlace());
     if (googleLocation !== null) {
       if (!googleLocation.getPlace().address_components) {
-        console.log('here');
+        console.log("here");
         console.log(
-          'googleLocation.getPlace().name',
+          "googleLocation.getPlace().name",
           googleLocation.getPlace().name
         );
         setTextLocation(googleLocation.getPlace().name);
@@ -148,11 +148,11 @@ const UpdateEvent = (props) => {
 
       setGoogleLocation({});
       setGoogleLocation(googleLocation);
-      console.log('g state after-->', googleLocation);
-      setTextLocation('');
+      console.log("g state after-->", googleLocation);
+      setTextLocation("");
       locationUpdate.current = true;
     } else {
-      console.log('Autocomplete is not loaded yet!');
+      console.log("Autocomplete is not loaded yet!");
     }
   };
 
@@ -167,14 +167,14 @@ const UpdateEvent = (props) => {
           id="createForm"
           onSubmit={submitEventForm}
           onKeyPress={(e) => {
-            e.key === 'Enter' && e.preventDefault();
+            e.key === "Enter" && e.preventDefault();
           }}
         >
           <div className="flex column">
             <div className="boldLabel flex jContentSB marginBottom">
               Event Type:
               <select
-                style={{ width: '50%' }}
+                style={{ width: "50%" }}
                 onChange={(event) => {
                   handleChange(event, setEventType);
                 }}
@@ -190,7 +190,7 @@ const UpdateEvent = (props) => {
             <div className="boldLabel flex jContentSB marginBottom">
               Event Name:
               <input
-                style={{ width: '50%' }}
+                style={{ width: "50%" }}
                 type="text"
                 name="eventName"
                 value={eventName}
@@ -212,7 +212,7 @@ const UpdateEvent = (props) => {
                       handleDateTimeChange(event, setEventStartDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date',
+                      "aria-label": "change date",
                     }}
                   />
                   <KeyboardTimePicker
@@ -220,18 +220,18 @@ const UpdateEvent = (props) => {
                     id="time-picker"
                     label="Start Time"
                     inputValue={new Date(eventStartDateTime).toLocaleTimeString(
-                      'en-US',
+                      "en-US",
                       {
                         hour12: true,
-                        hour: '2-digit',
-                        minute: '2-digit',
+                        hour: "2-digit",
+                        minute: "2-digit",
                       }
                     )}
                     onChange={(event) => {
                       handleDateTimeChange(event, setEventStartDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change time',
+                      "aria-label": "change time",
                     }}
                   />
                 </Grid>
@@ -248,7 +248,7 @@ const UpdateEvent = (props) => {
                       handleDateTimeChange(event, setEventEndDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date',
+                      "aria-label": "change date",
                     }}
                   />
                   <KeyboardTimePicker
@@ -256,18 +256,18 @@ const UpdateEvent = (props) => {
                     id="time-picker"
                     label="End Time"
                     inputValue={new Date(eventEndDateTime).toLocaleTimeString(
-                      'en-US',
+                      "en-US",
                       {
                         hour12: true,
-                        hour: '2-digit',
-                        minute: '2-digit',
+                        hour: "2-digit",
+                        minute: "2-digit",
                       }
                     )}
                     onChange={(event) => {
                       handleDateTimeChange(event, setEventEndDateTime);
                     }}
                     KeyboardButtonProps={{
-                      'aria-label': 'change time',
+                      "aria-label": "change time",
                     }}
                   />
                 </Grid>
@@ -278,7 +278,7 @@ const UpdateEvent = (props) => {
               Location:
               <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE}
-                libraries={['places']}
+                libraries={["places"]}
               >
                 <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                   <input type="text" defaultValue={eventLocation} />
