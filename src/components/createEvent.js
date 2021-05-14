@@ -27,7 +27,7 @@ const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
   const [eventType, setEventType] = useState('class reunion');
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  const [eventCoordinator, setEventCoordinator] = useState('');
+  // const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
@@ -54,10 +54,10 @@ const CreateEvent = (props) => {
 
     let event = {
       eventName: eventName,
-      eventType: [eventType],
+      eventType: eventType,
       owner: eventOwner,
       ownerId: props.user.id,
-      coordinator: [eventCoordinator],
+      // coordinator: [eventCoordinator],
       description: eventDescription,
       location:
         eventTextLocation !== ''
@@ -218,9 +218,7 @@ const CreateEvent = (props) => {
                     className="swiper-no-swiping"
                     style={{ width: '50vw' }}
                   ></div>
-                  {/* CHANGE COORDINATOR TEXTBOX TO LIST that populates on enter and then a confirm button to add to array */}
-                  {/* vvv consider deleting vvv */}
-                  <input
+                  {/* <input
                     type="text"
                     name="coordinators"
                     className="createInput"
@@ -229,7 +227,7 @@ const CreateEvent = (props) => {
                     onChange={(event) => {
                       handleChange(event, setEventCoordinator);
                     }}
-                  ></input>
+                  ></input> */}
                 </div>
                 <textarea
                   type="textarea"
@@ -257,7 +255,7 @@ const CreateEvent = (props) => {
               </div>
               <div
                 className="flex column jContentC"
-                style={{ height: '100vh' }}
+                style={{ height: '100vh', width: '60%' }}
               >
                 <DateTimePicker
                   startDateTime={eventStartDateTime}
@@ -304,10 +302,10 @@ const CreateEvent = (props) => {
                   <p className="confBold">Host: </p>
                   <p className="confValue">{eventOwner}</p>
                 </div>
-                <div className="confLine">
+                {/* <div className="confLine">
                   <p className="confBold">Coordinator: </p>
                   <p className="confValue">{eventCoordinator}</p>
-                </div>
+                </div> */}
                 <div
                   className="confLine"
                   style={{ maxWidth: '100%', alignItems: 'flex-start' }}

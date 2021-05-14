@@ -46,7 +46,7 @@ const DateTimePicker = (props) => {
       style={{
         border: '1px solid black',
         borderRadius: '10px',
-        width: '60%',
+        // width: '100%',
         alignSelf: 'center',
         boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
         padding: '10px',
