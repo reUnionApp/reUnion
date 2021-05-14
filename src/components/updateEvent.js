@@ -285,12 +285,18 @@ const UpdateEvent = (props) => {
             </div>
             <div className="boldLabel flex jContentSB marginBottom" style={{}}>
               Address:
+            </div>
+            <div>
               <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE}
                 libraries={['places']}
               >
                 <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                  <input type="text" defaultValue={eventLocation} />
+                  <input
+                    type="text"
+                    defaultValue={eventLocation}
+                    style={{ width: '100%' }}
+                  />
                 </Autocomplete>
               </LoadScript>
             </div>
@@ -304,15 +310,22 @@ const UpdateEvent = (props) => {
                 handleChange(event, setEventCoordinator);
               }}
             ></input> */}
-            <textarea
-              type="textarea"
-              name="description"
-              placeholder="Enter description of your event"
-              value={eventDescription}
-              onChange={(event) => {
-                handleChange(event, setEventDescription);
-              }}
-            ></textarea>
+            <div className="boldLabel flex jContentSB marginBottom">
+              Description:
+            </div>
+            <div style={{ width: '290px' }}>
+              <textarea
+                style={{ overflow: 'hidden', maxWidth: '100%', width: '100%' }}
+                type="textarea"
+                name="description"
+                placeholder="Enter description of your event"
+                value={eventDescription}
+                onChange={(event) => {
+                  handleChange(event, setEventDescription);
+                }}
+              ></textarea>
+            </div>
+
             <button type="submit" className="button createButton">
               Update Event
             </button>
