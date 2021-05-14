@@ -21,7 +21,7 @@
 }
 
 #radioContainer input[type='radio']:checked + label {
-  background-color: #d37638;
+  background-color: #38c1d3;
 }
 
 .centeredLabel {
