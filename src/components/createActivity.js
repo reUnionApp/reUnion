@@ -185,7 +185,7 @@ const CreateActivity = (props) => {
             </div>
           </SwiperSlide>
           <SwiperSlide style={{ overflow: 'scroll' }}>
-            <div id="conf" className="flex column aItemsFS">
+            <div id="conf" className="layout flex column aItemsFS">
               <h1>Activity Confirmation</h1>
               <div className="confLine">
                 <p className="confBold">Activity Name: </p>
