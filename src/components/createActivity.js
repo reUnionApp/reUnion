@@ -151,7 +151,10 @@ const CreateActivity = (props) => {
                 When is this activity?
               </p>
             </div>
-            <div className="flex column jContentC" style={{ height: '100vh' }}>
+            <div
+              className="flex column jContentC"
+              style={{ height: '100vh', width: '60%' }}
+            >
               <DateTimePicker
                 startDateTime={activityStartDateTime}
                 setStartDateTime={setActivityStartDateTime}
