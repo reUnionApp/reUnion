@@ -1,0 +1,119 @@
+#loadingContainer {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: 100vh;
+  /* background-image: linear-gradient(to top right, #fff5d6, #def5f8, #ffd6e9); */
+  background-image: linear-gradient(to top right, #fffaeb, #eefafb, #ffebf4);
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@keyframes loadingSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+#loadingImg {
+  width: 60%;
+  height: auto;
+  animation-name: loadingSpin;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+#loadingTitleContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loadingTitle {
+  margin: 0px 30px 0px 0px;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.493);
+  text-shadow: 1px 0px #38c1d33a;
+}
+
+@keyframes flashTeal {
+  0% {
+    background-color: rgb(215, 215, 215);
+  }
+  50% {
+    background-color: #38c1d3;
+  }
+  100% {
+    background-color: rgb(215, 215, 215);
+  }
+}
+
+@keyframes flashPink {
+  0% {
+    background-color: rgb(215, 215, 215);
+  }
+  50% {
+    background-color: #e40065;
+  }
+  100% {
+    background-color: rgb(215, 215, 215);
+  }
+}
+
+@keyframes flashYellow {
+  0% {
+    background-color: rgb(215, 215, 215);
+  }
+  50% {
+    background-color: #ffc300;
+  }
+  100% {
+    background-color: rgb(215, 215, 215);
+  }
+}
+
+#loadingDot {
+  width: 5px;
+  height: 5px;
+  background-color: rgb(215, 215, 215);
+  align-self: flex-end;
+  margin: 0px 0px 5px 0px;
+  border-radius: 50%;
+  animation-name: flashPink;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
+}
+
+#loadingDot::before,
+#loadingDot::after {
+  position: absolute;
+  content: '';
+  width: 5px;
+  height: 5px;
+  background-color: rgb(215, 215, 215);
+  border-radius: 50%;
+}
+
+#loadingDot::before {
+  transform: translateX(-17px);
+  animation-name: flashTeal;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-duration: 2s;
+}
+
+#loadingDot::after {
+  transform: translateX(17px);
+  animation-name: flashYellow;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-duration: 2s;
+  animation-delay: 1s;
+}

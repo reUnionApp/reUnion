@@ -21,6 +21,7 @@ import {
   UpdateProfile,
   GuestList,
   Animation,
+  Loading,
 } from './components';
 
 import { me } from './store';
