@@ -6,11 +6,11 @@
   align-self: center;
 }
 
-#singleEventContainer {
+.singleContainer {
   padding: 75px 0px;
 }
 
-#singleEventColumn {
+.singleColumn {
   width: 70%;
 }
 

@@ -76,7 +76,7 @@ const CreateEvent = (props) => {
   return (
     <div>
       <form
-        id="createForm"
+        className="createForm"
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
           e.key === 'Enter' && e.preventDefault();
@@ -314,8 +314,8 @@ const CreateEvent = (props) => {
                       <p className="confValue">{eventDescription}</p>
                     </div>
                   ) : (
-                    false
-                  )}
+                      false
+                    )}
                 </div>
                 {eventTextLocation !== '' ? (
                   <div className="confLine">
@@ -325,20 +325,20 @@ const CreateEvent = (props) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="confLine">
-                    <p className="confBold">Address: </p>
-                    <div id="locationConf">
-                      {eventGoogleLocation.gm_bindings_ &&
-                      eventGoogleLocation.getPlace() ? (
-                        <p className="confValue">
-                          {eventGoogleLocation.getPlace().formatted_address}
-                        </p>
-                      ) : (
-                        false
-                      )}
+                    <div className="confLine">
+                      <p className="confBold">Address: </p>
+                      <div id="locationConf">
+                        {eventGoogleLocation.gm_bindings_ &&
+                          eventGoogleLocation.getPlace() ? (
+                            <p className="confValue">
+                              {eventGoogleLocation.getPlace().formatted_address}
+                            </p>
+                          ) : (
+                            false
+                          )}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 <div className="confLine">
                   <p className="confBold">Start Date: </p>

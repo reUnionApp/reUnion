@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 import { GuestList } from './index';
-import '../styles/singleEvent.css';
+import '../styles/single.css';
 import '../styles/create.css';
 
 const SingleEvent = (props) => {
@@ -46,8 +46,8 @@ const SingleEvent = (props) => {
   } = props.singleEvent;
 
   return (
-    <div id="singleEventContainer" className="flex column aItemsC">
-      <div id="singleEventColumn" className="flex column">
+    <div className=" singleContainer flex column aItemsC">
+      <div className=" singleColumn flex column">
         <h1
           style={{
             alignSelf: 'center',
@@ -80,7 +80,7 @@ const SingleEvent = (props) => {
           </div>
         </div>
         <div className="confLine">
-          <p className="confBold">Location: </p>
+          <p className="confBold">Address: </p>
           <div id="locationConf">
             <p className="confValue">{location}</p>
           </div>
@@ -203,8 +203,8 @@ const SingleEvent = (props) => {
                 );
               })
             ) : (
-              <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
-            )}
+                <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
+              )}
           </div>
           <Link to={`/myEvents/${eventId}/update`}>
             <button
