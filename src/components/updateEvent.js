@@ -26,7 +26,6 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 // React component imports
-
 import {
   Autocomplete,
   StandaloneSearchBox,
@@ -161,12 +160,12 @@ const UpdateEvent = (props) => {
   return (
     <div
       className="flex column jContentC aItemsC "
-      // style={{ marginTop: '50px' }}
+    // style={{ marginTop: '50px' }}
     >
-      <div className="flex column layout jContentC aItemsC">
+      <div className="flex column layout jContentC aItemsC" style={{ textAlign: 'center' }}>
         <h1>Update {props.event.eventName}</h1>
         <form
-          id="createForm"
+          className="createForm"
           onSubmit={submitEventForm}
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();
@@ -283,10 +282,10 @@ const UpdateEvent = (props) => {
                 setEndDateTime={setEventEndDateTime}
               />
             </div>
-            <div className="boldLabel flex jContentSB marginBottom" style={{}}>
+            <div className="boldLabel flex jContentSB marginBottom">
               Address:
             </div>
-            <div>
+            <div style={{ marginBottom: '10px' }}>
               <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE}
                 libraries={['places']}
@@ -310,7 +309,7 @@ const UpdateEvent = (props) => {
                 handleChange(event, setEventCoordinator);
               }}
             ></input> */}
-            <div className="boldLabel flex jContentSB marginBottom">
+            <div className="boldLabel flex jContentSB marginBottom" >
               Description:
             </div>
             <div style={{ width: '290px' }}>

@@ -61,8 +61,8 @@ const CreateActivity = (props) => {
         activityTextLocation !== ''
           ? activityTextLocation
           : `${activityGoogleLocation.getPlace().name}, ${
-              activityGoogleLocation.getPlace().formatted_address
-            }`,
+          activityGoogleLocation.getPlace().formatted_address
+          }`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -77,7 +77,7 @@ const CreateActivity = (props) => {
   return (
     <div>
       <form
-        id="createForm"
+        className="createForm"
         onSubmit={submitActivityForm}
         onKeyPress={(e) => {
           e.key === 'Enter' && e.preventDefault();
@@ -203,8 +203,8 @@ const CreateActivity = (props) => {
                     <p className="confValue">{activityDescription}</p>
                   </div>
                 ) : (
-                  false
-                )}
+                    false
+                  )}
               </div>
               {activityTextLocation !== '' ? (
                 <div className="confLine">
@@ -214,21 +214,21 @@ const CreateActivity = (props) => {
                   </div>
                 </div>
               ) : (
-                <div className="confLine">
-                  <p className="confBold">Location: </p>
-                  <div id="locationConf">
-                    {activityGoogleLocation.gm_bindings_ &&
-                    activityGoogleLocation.getPlace() ? (
-                      <p className="confValue">
-                        {activityGoogleLocation.getPlace().name},
-                        {activityGoogleLocation.getPlace().formatted_address}
-                      </p>
-                    ) : (
-                      false
-                    )}
+                  <div className="confLine">
+                    <p className="confBold">Location: </p>
+                    <div id="locationConf">
+                      {activityGoogleLocation.gm_bindings_ &&
+                        activityGoogleLocation.getPlace() ? (
+                          <p className="confValue">
+                            {activityGoogleLocation.getPlace().name},
+                            {activityGoogleLocation.getPlace().formatted_address}
+                          </p>
+                        ) : (
+                          false
+                        )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
               <div className="confLine">
                 <p className="confBold">Start Date: </p>
                 <p className="confValue">{dateFormat(activityStartDateTime)}</p>

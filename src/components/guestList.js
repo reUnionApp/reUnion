@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addPseudoUser, getGuestList, removeGuest, updateUser } from "../store";
+import { addPseudoUser, getGuestList, removeGuest, updateUser, getEvent } from "../store";
 import "../styles/guestList.css";
+import '../styles/create.css';
+import '../styles/single.css';
+import { use } from "passport";
 
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([props.guests]);
@@ -10,6 +13,10 @@ const GuestList = (props) => {
   useEffect(() => {
     props.getGuestList(props.match.params.eventId);
   }, [guestList]);
+
+  useEffect(() => {
+    props.getEvent(props.match.params.eventId);
+  }, [])
 
   const addGuest = async (e) => {
     // e.preventDefault()
@@ -70,75 +77,98 @@ const GuestList = (props) => {
   }
 
   return (
-    <div>
-      <form id="guest-list">
-        <label htmlFor="first-name">First Name:</label>
-        <input type="text" id="firstName" required />
-        <label htmlFor="first-name">Last Name:</label>
-        <input type="text" id="lastName" required />
-        <label htmlFor="first-name">Email:</label>
-        <input type="email" id="email" required />
-        <button type="button" onClick={(e) => addGuest(e)}>
-          Add New Guest
+    <div className="singleContainer flex column aItemsC">
+      <h1 style={{
+        alignSelf: 'center',
+        textDecoration: 'underline',
+        textAlign: 'center',
+        margin: '19px 0px 25px 0px',
+      }}
+      >
+        Guest List for
+        <br></br>
+        {props.singleEvent.eventName}
+      </h1>
+      <div className="singleColumn flex column jContentC aItemsC">
+        <form id="guest-list" className='flex column' style={{ width: '100%' }}>
+          <div className='flex jContentSB marginBottom' >
+            <label
+              style={{ fontWeight: 'bold' }} htmlFor="first-name">First Name:</label>
+            <input type="text" id="firstName" required />
+          </div>
+          <div className='flex jContentSB marginBottom'>
+            <label
+              style={{ fontWeight: 'bold' }} htmlFor="last-name">Last Name:</label>
+            <input type="text" id="lastName" required />
+          </div>
+          <div className='flex jContentSB marginBottom'>
+            <label
+              style={{ fontWeight: 'bold' }} htmlFor="email">Email:</label>
+            <input type="email" id="email" required />
+          </div>
+          <button type="button"
+            className="button createButton" onClick={(e) => addGuest(e)}>
+            Add New Guest
         </button>
-        <button type="submit">Send Invites</button>
-      </form>
-      {error && error.response ? <div> {error.response.data} </div> : <br />}
-      <table>
-        <tbody id="parentTable">
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-          </tr>
-        </tbody>
-        {props.guests.map((guest) => {
-          return (
-            <tbody key={guest.email}>
-              <tr >
-                <td className="flex">
-                  {guest.firstName}
-                </td>
-                <td>
-                  {guest.lastName}
-                </td>
-                <td>
-                  {guest.email}
-                </td>
-                <td>
-                  {guest.userType === 'registered' ? 'Registered User' : <button onClick={() => toggleEdit(`guest${guest.id}`)}>
-                    Edit
+        </form>
+        {error && error.response ? <div> {error.response.data} </div> : <br />}
+        <table>
+          <tbody id="parentTable">
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </tbody>
+          {props.guests.map((guest) => {
+            return (
+              <tbody key={guest.email}>
+                <tr >
+                  <td className="flex">
+                    {guest.firstName}
+                  </td>
+                  <td>
+                    {guest.lastName}
+                  </td>
+                  <td>
+                    {guest.email}
+                  </td>
+                  <td>
+                    {guest.userType === 'registered' ? 'Registered User' : <button onClick={() => toggleEdit(`guest${guest.id}`)}>
+                      Edit
                     </button>}
 
-                </td>
-                <td>
-                  <button
-                    onClick={() =>
-                      deleteSelectedGuest(props.match.params.eventId, guest)
-                    }
-                  >
-                    X
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        deleteSelectedGuest(props.match.params.eventId, guest)
+                      }
+                    >
+                      X
                     </button>
-                </td>
-              </tr>
-              <tr id={`guest${guest.id}`} className="formHide">
-                <td>
-                  <input type="text" defaultValue={guest.firstName} onClick={(event) => selectText(event)} />
-                </td>
-                <td>
-                  <input type="text" defaultValue={guest.lastName} onClick={(event) => selectText(event)} />
-                </td>
-                <td>
-                  <input type="email" defaultValue={guest.email} onClick={(event) => selectText(event)} />
-                </td>
-                <td>
-                  <button type='button' onClick={(event) => handleUpdate(event, guest.id)}>Update</button>
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </table>
+                  </td>
+                </tr>
+                <tr id={`guest${guest.id}`} className="formHide">
+                  <td>
+                    <input type="text" defaultValue={guest.firstName} onClick={(event) => selectText(event)} />
+                  </td>
+                  <td>
+                    <input type="text" defaultValue={guest.lastName} onClick={(event) => selectText(event)} />
+                  </td>
+                  <td>
+                    <input type="email" defaultValue={guest.email} onClick={(event) => selectText(event)} />
+                  </td>
+                  <td>
+                    <button type='button' onClick={(event) => handleUpdate(event, guest.id)}>Update</button>
+                  </td>
+                </tr>
+              </tbody>
+            );
+          })}
+        </table>
+        <button type="submit" className="button createButton" style={{ backgroundColor: '#e400678e' }}>Send Invites</button>
+      </div>
     </div>
   );
 };
@@ -147,6 +177,7 @@ const mapState = (state) => ({
   user: state.userReducer,
   guests: state.guestListReducer,
   error: state.userReducer.error,
+  singleEvent: state.eventReducer,
 });
 
 const mapDispatch = (dispatch) => ({
@@ -154,7 +185,8 @@ const mapDispatch = (dispatch) => ({
   getGuestList: (id) => dispatch(getGuestList(id)),
   removeGuest: (eventId, guestId) => dispatch(removeGuest(eventId, guestId)),
   clearError: () => dispatch({ type: "CLEAR_ERROR" }),
-  updateUser: (user) => dispatch(updateUser(user))
+  updateUser: (user) => dispatch(updateUser(user)),
+  getEvent: (id) => dispatch(getEvent(id)),
 });
 
 export default connect(mapState, mapDispatch)(GuestList);
