@@ -5,6 +5,22 @@
   background-color: rgba(255, 255, 255, 0.753);
   backdrop-filter: blur(7px);
   z-index: 100;
+  align-items: flex-start;
+}
+
+#navLogo {
+  width: auto;
+  height: 25px;
+  margin: 16px 22px 0px 0px;
+  transition-duration: 0.25s;
+}
+
+.navLogoFull {
+  opacity: 1;
+}
+
+.navLogoFade {
+  opacity: 0.5;
 }
 
 #circleBurger {
