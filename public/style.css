@@ -56,6 +56,7 @@ body {
   text-decoration: none;
   color: black;
   font-family: 'Open Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .teal {
@@ -66,6 +67,16 @@ body {
 }
 .yellow {
   background-color: #ffc300;
+}
+
+.tealFade {
+  background-color: #38c1d3a4;
+}
+.pinkFade {
+  background-color: #e40067a4;
+}
+.yellowFade {
+  background-color: #ffc400a4;
 }
 
 .button {
@@ -81,13 +92,14 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .button:active {
   transform: scale(0.97);
 }
 
 #dropMenu {
-  z-index: 500;
+  z-index: 50;
 }
 
 #mapBox {
@@ -97,11 +109,34 @@ body {
   width: 50vw;
 }
 
-#burgerBar {
-  position: fixed;
-  top: 0;
-  border-bottom: 2px solid black;
-  background-color: rgba(255, 255, 255, 0.883);
-  backdrop-filter: blur(2px);
-  z-index: 100;
+.darkenOff {
+  transform: translateY(100%);
+}
+
+.darkenOn {
+  transform: translateY(0%);
+}
+
+.background1Up {
+  background-image: linear-gradient(to top right, #fff5d6, #def5f8);
+}
+
+.background2Up {
+  background-image: linear-gradient(to top right, #def5f8, #ffebf4);
+}
+
+.background3Up {
+  background-image: linear-gradient(to top right, #ffebf4, #fff5d6);
+}
+
+.background1Down {
+  background-image: linear-gradient(to bottom right, #fff5d6, #def5f8);
+}
+
+.background2Down {
+  background-image: linear-gradient(to bottom right, #def5f8, #ffebf4);
+}
+
+.background3Down {
+  background-image: linear-gradient(to bottom right, #ffebf4, #fff5d6);
 }

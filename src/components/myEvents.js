@@ -6,9 +6,9 @@ import history from '../history';
 import '../styles/myEvents.css';
 
 const colors = {
-  1: 'teal',
-  2: 'pink',
-  3: 'yellow',
+  1: 'tealFade',
+  2: 'pinkFade',
+  3: 'yellowFade',
 };
 
 const MyEvents = (props) => {
@@ -26,7 +26,11 @@ const MyEvents = (props) => {
   let count = 0;
 
   return (
-    <div className="flex aItemsC column" style={{ padding: '60px 0px' }}>
+    <div
+      className="flex aItemsC column background1Up"
+      style={{ padding: '75px 0px 60px 0px' }}
+      id="myEventsContainer"
+    >
       <h2>
         You have {props.userEvents.length}{' '}
         {props.userEvents.length === 1 ? 'event' : 'events'}
