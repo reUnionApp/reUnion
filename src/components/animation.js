@@ -8,11 +8,10 @@ const Animation = () => {
     container.addEventListener('animationend', function (e) {
       if (e.target.id === 'animationContainer') {
         container.classList.add('animationEnd');
+        localStorage.setItem('animationPlayed', 'true');
       }
     });
   }, []);
-
-  localStorage.setItem('animationPlayed', 'true');
 
   return (
     <div id="animationContainer" className="flex column aItemsC jContentC">

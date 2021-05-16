@@ -3,6 +3,7 @@ import { logout } from '../store';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { toggleBurger } from './navbarTop';
 import '../styles/dropMenu.css';
 
 const DropMenu = ({ open, setOpen, handleLogout }) => {
@@ -11,21 +12,24 @@ const DropMenu = ({ open, setOpen, handleLogout }) => {
       open={open}
       onClick={() => {
         setOpen(!open);
+        toggleBurger();
       }}
-      id="dropMenu"
     >
-      <Link className="dropMenuLink linkSpacer" to="/myEvents">
-        Events
-      </Link>
-      <Link className="dropMenuLink" to="/profile">
-        Profile
-      </Link>
-      <Link className="dropMenuLink" to="/updateProfile">
-        Account Settings
-      </Link>
-      <a className="dropMenuLink" href="#" onClick={handleLogout}>
-        Logout
-      </a>
+      <div id="dropMenuLeft">
+        <Link className="dropMenuLink linkSpacer" to="/myEvents">
+          Events
+        </Link>
+        <Link className="dropMenuLink" to="/profile">
+          Profile
+        </Link>
+        <Link className="dropMenuLink" to="/updateProfile">
+          Account Settings
+        </Link>
+        <a className="dropMenuLink" href="#" onClick={handleLogout}>
+          Logout
+        </a>
+      </div>
+      <div id="dropMenuRight"></div>
     </DropMenuBar>
   );
 };
@@ -49,13 +53,11 @@ export default connect(mapState, mapDispatch)(DropMenu);
 
 const DropMenuBar = styled.div`
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  backdrop-filter: blur(5px);
   display: flex;
-  flex-flow: column nowrap;
   position: fixed;
   height: 100vh;
   width: 100vw;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.75);
-  transition: transform 0.3s ease-in-out;
+  z-index: 99;
+  background-color: transparent;
+  transition: transform 0.4s ease-in;
 `;

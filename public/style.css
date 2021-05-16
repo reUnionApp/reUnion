@@ -68,6 +68,16 @@ body {
   background-color: #ffc300;
 }
 
+.tealFade {
+  background-color: #38c1d3a4;
+}
+.pinkFade {
+  background-color: #e40067a4;
+}
+.yellowFade {
+  background-color: #ffc400a4;
+}
+
 .button {
   outline: none;
   border: none;
@@ -87,7 +97,7 @@ body {
 }
 
 #dropMenu {
-  z-index: 500;
+  z-index: 50;
 }
 
 #mapBox {
@@ -97,11 +107,10 @@ body {
   width: 50vw;
 }
 
-#burgerBar {
-  position: fixed;
-  top: 0;
-  border-bottom: 2px solid black;
-  background-color: rgba(255, 255, 255, 0.883);
-  backdrop-filter: blur(2px);
-  z-index: 100;
+.darkenOff {
+  transform: translateY(100%);
+}
+
+.darkenOn {
+  transform: translateY(0%);
 }

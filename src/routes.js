@@ -7,7 +7,7 @@ import {
   Signup,
   LandingPage,
   Navbar,
-  Hamburger,
+  NavbarTop,
   CreateEvent,
   MyEvents,
   SingleEvent,
@@ -22,6 +22,7 @@ import {
   GuestList,
   Animation,
   Loading,
+  Darken,
 } from './components';
 
 import { me } from './store';
@@ -43,7 +44,8 @@ class Routes extends Component {
         <Switch>
           {isLoggedIn ? (
             <>
-              <Hamburger />
+              <NavbarTop />
+              <Darken />
               <Switch>
                 <Route exact path="/users" component={AllUsers} />
                 <Route
