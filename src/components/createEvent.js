@@ -98,7 +98,10 @@ const CreateEvent = (props) => {
           }}
         >
           <div>
-            <SwiperSlide style={{ overflow: 'scroll' }}>
+            <SwiperSlide
+              style={{ overflow: 'scroll' }}
+              className="background3Up"
+            >
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
@@ -124,7 +127,7 @@ const CreateEvent = (props) => {
                   id="class-reunion"
                   value="class reunion"
                 />
-                <label className="pink" htmlFor="class-reunion">
+                <label htmlFor="class-reunion">
                   <div className="flex column aItemsC jContentC centeredLabel">
                     <p className="whiteBtnTextCE">Class Reunion</p>
                   </div>
@@ -135,7 +138,7 @@ const CreateEvent = (props) => {
                   id="family-reunion"
                   value="family reunion"
                 />
-                <label className="pink" htmlFor="family-reunion">
+                <label htmlFor="family-reunion">
                   <div className="flex column aItemsC jContentC centeredLabel">
                     <p className="whiteBtnTextCE">Family Reunion</p>
                   </div>
@@ -146,7 +149,7 @@ const CreateEvent = (props) => {
                   id="anniversary-party"
                   value="anniversary party"
                 />
-                <label className="pink" htmlFor="anniversary-party">
+                <label htmlFor="anniversary-party">
                   <div className="flex column aItemsC jContentC centeredLabel">
                     <p className="whiteBtnTextCE">Anniversary Party</p>
                   </div>
@@ -157,7 +160,7 @@ const CreateEvent = (props) => {
                   id="baby-shower"
                   value="baby shower"
                 />
-                <label className="pink" htmlFor="baby-shower">
+                <label htmlFor="baby-shower">
                   <div className="flex column aItemsC jContentC centeredLabel">
                     <p className="whiteBtnTextCE">Baby Shower</p>
                   </div>
@@ -168,14 +171,14 @@ const CreateEvent = (props) => {
                   id="other-gathering"
                   value="other gathering"
                 />
-                <label className="pink" htmlFor="other-gathering">
+                <label htmlFor="other-gathering">
                   <div className="flex column aItemsC jContentC centeredLabel">
                     <p className="whiteBtnTextCE">Other Gathering</p>
                   </div>
                 </label>
               </div>
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="background1Down">
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
@@ -239,7 +242,7 @@ const CreateEvent = (props) => {
                 ></textarea>
               </div>
             </SwiperSlide>
-            <SwiperSlide>
+            <SwiperSlide className="background2Up">
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
@@ -264,7 +267,10 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
 
-            <SwiperSlide style={{ overflow: 'scroll' }}>
+            <SwiperSlide
+              style={{ overflow: 'scroll' }}
+              className="background3Down"
+            >
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
@@ -285,7 +291,10 @@ const CreateEvent = (props) => {
                 />
               </div>
             </SwiperSlide>
-            <SwiperSlide style={{ overflow: 'scroll' }}>
+            <SwiperSlide
+              style={{ overflow: 'scroll' }}
+              className="background1Up"
+            >
               <div className=" layout flex column aItemsFS">
                 <h1>Event Confirmation</h1>
                 <div className="confLine">

@@ -56,6 +56,7 @@ body {
   text-decoration: none;
   color: black;
   font-family: 'Open Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .teal {
@@ -91,6 +92,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .button:active {
   transform: scale(0.97);
@@ -113,4 +115,28 @@ body {
 
 .darkenOn {
   transform: translateY(0%);
+}
+
+.background1Up {
+  background-image: linear-gradient(to top right, #fff5d6, #def5f8);
+}
+
+.background2Up {
+  background-image: linear-gradient(to top right, #def5f8, #ffebf4);
+}
+
+.background3Up {
+  background-image: linear-gradient(to top right, #ffebf4, #fff5d6);
+}
+
+.background1Down {
+  background-image: linear-gradient(to bottom right, #fff5d6, #def5f8);
+}
+
+.background2Down {
+  background-image: linear-gradient(to bottom right, #def5f8, #ffebf4);
+}
+
+.background3Down {
+  background-image: linear-gradient(to bottom right, #ffebf4, #fff5d6);
 }

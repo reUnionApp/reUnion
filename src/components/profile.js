@@ -14,10 +14,7 @@ const Profile = (props) => {
     props.getUser(props.user.id);
   }, []);
   return (
-    <div
-      id="profileContainer"
-      style={{ margin: '75px 0px 0px 0px', minHeight: '70vw' }}
-    >
+    <div id="profileContainer" className="background2Up">
       <div className="w100 flex jContentSB aItemsC">
         <h1
           style={{ marginLeft: '15px' }}

@@ -52,6 +52,7 @@
   justify-content: center;
   cursor: pointer;
   margin: 16px 28px 0px 0px;
+  outline: none;
 }
 
 #plusButton {
@@ -59,6 +60,7 @@
   height: 25px;
   border-radius: 10px;
   transition-duration: 0.25s;
+  outline: none;
 }
 
 #plusButton::after {
@@ -69,6 +71,7 @@
   transform: rotate(90deg);
   background-color: inherit;
   transition-duration: 0.25s;
+  outline: none;
 }
 
 .plusButtonOn {

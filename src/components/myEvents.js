@@ -27,7 +27,7 @@ const MyEvents = (props) => {
 
   return (
     <div
-      className="flex aItemsC column"
+      className="flex aItemsC column background1Up"
       style={{ padding: '75px 0px 60px 0px' }}
       id="myEventsContainer"
     >
