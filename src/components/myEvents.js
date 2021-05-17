@@ -31,6 +31,7 @@ const MyEvents = (props) => {
       style={{ padding: '75px 0px 60px 0px' }}
       id="myEventsContainer"
     >
+      <h2>test</h2>
       <h2>
         You have {props.userEvents.length}{' '}
         {props.userEvents.length === 1 ? 'event' : 'events'}

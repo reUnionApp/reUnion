@@ -146,9 +146,6 @@ router.put('/:userID', async (req, res, next) => {
 
   try {
     const user = await User.findByPk(id);
-    console.log('REQQQQQQ', req.session.passport.user);
-    console.log('compare idddd', id);
-    console.log('reqqqq bodyyyy', req.body)
     if (!user) {
       res.sendStatus(404);
     } else if (user.dataValues.userType === 'registered' && req.session.passport.user != id) {
