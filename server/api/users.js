@@ -141,14 +141,17 @@ router.post('/', async (req, res, next) => {
 router.put('/:userID', async (req, res, next) => {
   const id = req.params.userID;
 
-  req.body.specialRequests = [req.body.specialRequests];
-  req.body.dietaryRestrictions = [req.body.dietaryRestrictions];
+  // req.body.specialRequests = req.body.specialRequests;
+  // req.body.dietaryRestrictions = req.body.dietaryRestrictions;
 
   try {
     const user = await User.findByPk(id);
+    console.log('REQQQQQQ', req.session.passport.user);
+    console.log('compare idddd', id);
+    console.log('reqqqq bodyyyy', req.body)
     if (!user) {
       res.sendStatus(404);
-    } else if (user.dataValues.userType === 'registered') {
+    } else if (user.dataValues.userType === 'registered' && req.session.passport.user != id) {
       res.status(401).send('Cannot update registered user');
     } else {
       await user.update(req.body);

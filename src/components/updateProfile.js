@@ -6,32 +6,34 @@ import history from '../history';
 import '../styles/updateProfile.css';
 
 const UpdateProfile = (props) => {
-  if (props.user.specialRequests === null) {
-    props.user.specialRequests = '';
+  const authUser = props.auth;
+  if (props.auth.specialRequests === null) {
+    props.auth.specialRequests = '';
   }
 
-  if (props.user.dietaryRestrictions === null) {
-    props.user.dietaryRestrictions = '';
+  if (props.auth.dietaryRestrictions === null) {
+    props.auth.dietaryRestrictions = '';
   }
-  if (Array.isArray(props.user.dietaryRestrictions)) {
-    props.user.dietaryRestrictions = props.user.dietaryRestrictions[0];
-  }
-
-  if (props.user.alias === null) {
-    props.user.alias = '';
+  if (Array.isArray(props.auth.dietaryRestrictions)) {
+    props.auth.dietaryRestrictions = props.auth.dietaryRestrictions[0];
   }
 
-  const [user, updateUser] = useState({ ...props.user });
+  if (props.auth.alias === null) {
+    props.auth.alias = '';
+  }
 
-  // const [diet, updateDiet] = useState(props.user.dietaryRestrictions);
+  const [userState, updateUserState] = useState({ ...props.auth });
+
+  // const [diet, updateDiet] = useState(props.auth.dietaryRestrictions);
 
   const handleChange = (e) => {
-    updateUser({ ...user, [e.target.id]: e.target.value });
+    updateUserState({ ...userState, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-    props.updateUser(user);
+    console.log('userstatttteee', userState);
+    props.updateUser(userState);
     props.history.push('/profile');
   };
 
@@ -40,7 +42,7 @@ const UpdateProfile = (props) => {
       <div className="w100 flex jContentSB aItemsC">
         <h1
           style={{ marginLeft: '15px' }}
-        >{`Update ${props.user.firstName}'s Profile`}</h1>
+        >{`Update ${props.auth.firstName}'s Profile`}</h1>
         <button
           style={{ marginRight: '15px' }}
           type="button"
@@ -63,7 +65,7 @@ const UpdateProfile = (props) => {
             id="email"
             placeholder="enter email..."
             className="formInput"
-            value={user.email}
+            value={userState.email}
             onChange={handleChange}
           />
         </div>
@@ -74,7 +76,7 @@ const UpdateProfile = (props) => {
           <select
             id="dietaryRestrictions"
             className="formInput"
-            value={user.dietaryRestrictions}
+            value={userState.dietaryRestrictions}
             onChange={handleChange}
           >
             <option value="none">none</option>
@@ -96,7 +98,7 @@ const UpdateProfile = (props) => {
             type="text"
             placeholder="Enter Special Requests"
             className="formInput"
-            value={user.specialRequests}
+            value={userState.specialRequests}
             onChange={handleChange}
           />
         </div>
@@ -109,7 +111,7 @@ const UpdateProfile = (props) => {
             type="text"
             placeholder="Enter a Nickname"
             className="formInput"
-            value={user.alias}
+            value={userState.alias}
             onChange={handleChange}
           />
         </div>
@@ -126,7 +128,8 @@ const UpdateProfile = (props) => {
 };
 
 const mapState = (state) => ({
-  user: state.userReducer,
+  auth: state.authReducer,
+  // user: state.userReducer,
   userEvents: state.allEventsReducer.userEvents,
 });
 

@@ -33,7 +33,7 @@ function AllActivities(props) {
 }
 
 const mapState = (state) => ({
-  user: state.authReducer,
+  auth: state.authReducer,
   userEvents: state.allEventsReducer.userEvents,
   activities: state.allActivitiesReducer,
 });

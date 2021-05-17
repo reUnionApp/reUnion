@@ -27,7 +27,7 @@ const Event = db.define(
     //   allowNull: false,
     // },
     eventType: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     owner: {
