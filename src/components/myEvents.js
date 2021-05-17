@@ -12,7 +12,7 @@ const colors = {
 };
 
 const MyEvents = (props) => {
-  const userId = props.user.id;
+  const userId = props.auth.id;
 
   const deleteSelectedEvent = async (eventId) => {
     await props.removeEvent(eventId);
@@ -31,6 +31,7 @@ const MyEvents = (props) => {
       style={{ padding: '75px 0px 60px 0px' }}
       id="myEventsContainer"
     >
+      <h2>test</h2>
       <h2>
         You have {props.userEvents.length}{' '}
         {props.userEvents.length === 1 ? 'event' : 'events'}
@@ -43,7 +44,7 @@ const MyEvents = (props) => {
               className={`flex column aItemsC jContentC eventBox ${colors[count]}`}
               key={event.id}
             >
-              {props.user.id === event.ownerId && (
+              {props.auth.id === event.ownerId && (
                 <div style={{ margin: '5px 0px 0px 0px' }}>Host</div>
               )}
               <Link to={`/myEvents/${event.id}`}>
@@ -73,7 +74,7 @@ const MyEvents = (props) => {
 };
 
 const mapState = (state) => ({
-  user: state.authReducer,
+  auth: state.authReducer,
   userEvents: state.allEventsReducer.userEvents,
 });
 

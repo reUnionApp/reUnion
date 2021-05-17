@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getUser, deleteUser } from '../store';
+import { getUser, deleteUser, me } from '../store';
 import { Link } from 'react-router-dom';
 import history from '../history';
 import '../styles/profile.css';
@@ -9,16 +9,16 @@ const Profile = (props) => {
   const goToUpdateProfile = () => {
     props.history.push('/updateprofile');
   };
-  // props.getUser(props.login.id);
+  // props.getUser(props.auth.id);
   useEffect(() => {
-    props.getUser(props.user.id);
+    props.me();
   }, []);
   return (
     <div id="profileContainer" className="background2Up">
       <div className="w100 flex jContentSB aItemsC">
         <h1
           style={{ marginLeft: '15px' }}
-        >{`${props.user.firstName}'s Profile`}</h1>
+        >{`${props.auth.firstName}'s Profile`}</h1>
         <button
           style={{ marginRight: '15px' }}
           type="button"
@@ -30,23 +30,23 @@ const Profile = (props) => {
       </div>
       <div style={{ margin: '36px 0px 36px 36px' }}>
         <h4>
-          Email: <span className="light">{props.user.email}</span>
+          Email: <span className="light">{props.auth.email}</span>
         </h4>
         <h4>
           Dietary Restrictions:{' '}
-          {props.user.dietaryRestrictions ? (
-            <span className="light">{props.user.dietaryRestrictions}</span>
+          {props.auth.dietaryRestrictions ? (
+            <span className="light">{props.auth.dietaryRestrictions}</span>
           ) : (
-            <span className="light">None</span>
-          )}
+              <span className="light">None</span>
+            )}
         </h4>
         <h4>
           Special Requests:{' '}
-          {props.user.specialRequests ? (
-            <span className="light">{props.user.specialRequests}</span>
+          {props.auth.specialRequests ? (
+            <span className="light">{props.auth.specialRequests}</span>
           ) : (
-            <span className="light">None</span>
-          )}
+              <span className="light">None</span>
+            )}
         </h4>
       </div>
     </div>
@@ -54,12 +54,13 @@ const Profile = (props) => {
 };
 
 const mapState = (state) => ({
-  login: state.authReducer,
+  auth: state.authReducer,
   user: state.userReducer,
   userEvents: state.allEventsReducer.userEvents,
 });
 
 const mapDispatch = (dispatch) => ({
+  me: () => dispatch(me()),
   getUser: (userId) => dispatch(getUser(userId)),
   deleteUser: (userId) => dispatch(deleteUser(userId)),
 });

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const UpdateEvent = (props) => {
   const [eventName, setEventName] = useState('');
   const [eventType, setEventType] = useState('');
-  const [eventOwner, setEventOwner] = useState(props.user.firstName);
+  const [eventOwner, setEventOwner] = useState(props.auth.firstName);
   // const [eventCoordinator, setEventCoordinator] = useState("");
   const [eventDescription, setEventDescription] = useState('');
   const [eventLocation, setEventLocation] = useState('');
@@ -107,7 +107,7 @@ const UpdateEvent = (props) => {
       eventName: eventName,
       eventType: eventType,
       owner: eventOwner,
-      ownerId: props.user.id,
+      ownerId: props.auth.id,
       // coordinator: [eventCoordinator],
       description: eventDescription,
       location:
@@ -337,7 +337,7 @@ const UpdateEvent = (props) => {
 
 const mapState = (state) => ({
   event: state.eventReducer,
-  user: state.authReducer,
+  auth: state.authReducer,
 });
 
 const mapDispatch = (dispatch) => ({

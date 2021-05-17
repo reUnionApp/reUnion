@@ -3,8 +3,8 @@ import history from '../history';
 
 // Action Types
 
-const GET_USER = 'GET_USER';
-const REMOVE_USER = 'REMOVE_USER';
+const GET_AUTHUSER = 'GET_AUTHUSER';
+const REMOVE_AUTHUSER = 'REMOVE_AUTHUSER';
 
 // Initial State
 
@@ -12,15 +12,15 @@ const defaultUser = {};
 
 // Action Creators
 
-const _getUser = (user) => ({ type: GET_USER, user });
-const _removeUser = () => ({ type: REMOVE_USER });
+const _getAuthUser = (user) => ({ type: GET_AUTHUSER, user });
+const _removeAuthUser = () => ({ type: REMOVE_AUTHUSER });
 
 // Thunk Creators
 
 export const me = () => async (dispatch) => {
   try {
     const res = await axios.get('/auth/me');
-    dispatch(_getUser(res.data || defaultUser));
+    dispatch(_getAuthUser(res.data || defaultUser));
   } catch (error) {
     console.error(error);
   }
@@ -38,10 +38,10 @@ export const signup = (email, password, firstName, lastName) => async (
       lastName,
     });
   } catch (authError) {
-    return dispatch(_getUser({ error: authError }));
+    return dispatch(_getAuthUser({ error: authError }));
   }
   try {
-    dispatch(_getUser(res.data));
+    dispatch(_getAuthUser(res.data));
     history.push('/myEvents');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
@@ -56,10 +56,10 @@ export const login = (email, password) => async (dispatch) => {
       password,
     });
   } catch (authError) {
-    return dispatch(_getUser({ error: authError }));
+    return dispatch(_getAuthUser({ error: authError }));
   }
   try {
-    dispatch(_getUser(res.data));
+    dispatch(_getAuthUser(res.data));
     history.push('/myEvents');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
@@ -69,7 +69,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await axios.post('/auth/logout');
-    dispatch(_removeUser());
+    dispatch(_removeAuthUser());
     history.push('/login');
   } catch (error) {
     console.error(error);
@@ -80,9 +80,9 @@ export const logout = () => async (dispatch) => {
 
 export default function (state = defaultUser, action) {
   switch (action.type) {
-    case GET_USER:
+    case GET_AUTHUSER:
       return action.user;
-    case REMOVE_USER:
+    case REMOVE_AUTHUSER:
       return defaultUser;
     default:
       return state;

@@ -270,7 +270,7 @@ const CreateActivity = (props) => {
 
 const mapState = (state) => ({
   activity: state.activityReducer,
-  user: state.authReducer,
+  auth: state.authReducer,
 });
 
 const mapDispatch = (dispatch) => ({

@@ -52,28 +52,31 @@ const User = db.define(
       type: Sequelize.STRING,
     },
     dietaryRestrictions: {
-      type: Sequelize.ARRAY(
-        Sequelize.ENUM({
-          values: [
-            'none',
-            'gluten free',
-            'vegan',
-            'vegetarian',
-            'no seafood',
-            'peanut allergy',
-            'kosher',
-            'halal',
-            // {
-            //   other: {
-            //     type: Sequelize.STRING,
-            //   },
-            // },
-          ],
-        })
-      ),
+      type: Sequelize.STRING
     },
+    // dietaryRestrictions: {
+    //   type: Sequelize.ARRAY(
+    //     Sequelize.ENUM({
+    //       values: [
+    //         'none',
+    //         'gluten free',
+    //         'vegan',
+    //         'vegetarian',
+    //         'no seafood',
+    //         'peanut allergy',
+    //         'kosher',
+    //         'halal',
+    //         // {
+    //         //   other: {
+    //         //     type: Sequelize.STRING,
+    //         //   },
+    //         // },
+    //       ],
+    //     })
+    //   ),
+    // },
     specialRequests: {
-      type: Sequelize.ARRAY(Sequelize.TEXT),
+      type: Sequelize.STRING,
     },
     isAdmin: {
       type: Sequelize.BOOLEAN,

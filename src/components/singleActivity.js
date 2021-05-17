@@ -6,7 +6,7 @@ import '../styles/create.css';
 import '../styles/single.css';
 
 const SingleActivity = (props) => {
-  const id = props.user.id;
+  const id = props.auth.id;
   const eventId = props.match.params.eventId;
 
   const deleteSelectedActivity = async (eventId, activityId) => {
@@ -143,7 +143,7 @@ const SingleActivity = (props) => {
 };
 
 const mapState = (state) => ({
-  user: state.authReducer,
+  auth: state.authReducer,
   eventActivities: state.activityReducer,
   singleEvent: state.eventReducer,
 });
