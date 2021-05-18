@@ -113,7 +113,7 @@ const GuestList = (props) => {
         </button>
         </form>
         {error && error.response ? <div> {error.response.data} </div> : <br />}
-        <table style={{ backgroundColor: 'mediumseagreen' }}>
+        <table className='guestListTable'>
           <tbody id="parentTable">
             <tr>
               <th>First Name</th>
