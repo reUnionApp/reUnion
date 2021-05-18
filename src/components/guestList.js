@@ -44,10 +44,12 @@ const GuestList = (props) => {
     props.clearError();
   };
 
-  const toggleEdit = (email) => {
-    const form = document.getElementById(email);
+  const toggleEdit = (guestId) => {
+    const form = document.getElementById(guestId);
+    console.log('forrrrrmmmm', form);
+    console.log(form.className === 'formHide');
     if (form.className === "formHide") {
-      form.className = "";
+      form.className = "formShow";
     } else {
       form.className = "formHide";
     }
@@ -64,10 +66,9 @@ const GuestList = (props) => {
       email,
       id
     }
-
+    toggleEdit(`guest${id}`);
     await props.updateUser(updatedUser);
     await props.getGuestList(props.match.params.eventId);
-    toggleEdit(`guest${id}`);
   }
 
   const selectText = (event) => {
@@ -112,7 +113,7 @@ const GuestList = (props) => {
         </button>
         </form>
         {error && error.response ? <div> {error.response.data} </div> : <br />}
-        <table>
+        <table style={{ backgroundColor: 'mediumseagreen' }}>
           <tbody id="parentTable">
             <tr>
               <th>First Name</th>
