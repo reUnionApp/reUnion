@@ -6,8 +6,15 @@ import '../styles/create.css';
 import '../styles/single.css';
 import { use } from "passport";
 
+const colors = {
+  1: 'tealFade',
+  2: 'pinkFade',
+  3: 'yellowFade',
+};
+
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([props.guests]);
+  const [editPerson, setEditPerson] = useState(-1);
   let { error } = props;
 
   useEffect(() => {
@@ -16,7 +23,9 @@ const GuestList = (props) => {
 
   useEffect(() => {
     props.getEvent(props.match.params.eventId);
-  }, [])
+  }, []);
+
+  let count = 0;
 
   const addGuest = async (e) => {
     // e.preventDefault()
@@ -77,6 +86,14 @@ const GuestList = (props) => {
     input.select();
   }
 
+  const selectGuest = (e, guestId) => {
+    if (editPerson === guestId) {
+      setEditPerson(-1)
+    } else {
+      setEditPerson(guestId);
+    }
+  }
+
   return (
     <div className="singleContainer flex column aItemsC">
       <h1 style={{
@@ -113,7 +130,75 @@ const GuestList = (props) => {
         </button>
         </form>
         {error && error.response ? <div> {error.response.data} </div> : <br />}
-        <table className='guestListTable'>
+        <div id='guestListContainer'>
+          {props.guests &&
+            props.guests.map((guest) => {
+              console.log(guest)
+              count === 3 ? (count = 1) : ++count;
+              return (
+                <>
+                  <div
+                    onClick={(e) => selectGuest(e, guest.id)}
+                    className={`flex column aItemsC jContentC guestBox ${colors[count]}`}
+                    key={guest.id}
+                  >
+                    <h3 style={{ margin: '0px' }}>
+                      {guest.firstName} {guest.lastName}
+                    </h3>
+                    {guest.id === editPerson && (
+                      <div className='flex column expandedCard'>
+                        {guest.email.length >= 20 ? (
+                          <div className='flex column'>
+                            <p className='expandedCardRowL' style={{ alignSelf: 'flex-start' }}>Email:</p>
+                            <div className='longEmail flex column aItemsFS'>
+                              <p className='expandedCardRowAlt'>{guest.email}</p>
+                            </div>
+                          </div>
+                        ) :
+                          (
+                            <div className='expandedCardRow'>
+                              <p className='expandedCardRowL'>Email:</p>
+                              <p className='expandedCardRowR'>{guest.email}</p>
+                            </div>
+                          )}
+                        {guest.alias && (
+                          <div className='expandedCardRow'>
+                            <p className='expandedCardRowL'>Nickname:</p>
+                            <p className='expandedCardRowR'>{guest.alias}</p>
+                          </div>
+                        )}
+                        {guest.dietaryRestrictions && (
+                          <div className='expandedCardRow'>
+                            <p className='expandedCardRowL'>Dietary Restrictions:</p>
+                            <p className='expandedCardRowR'>{guest.dietaryRestrictions}</p>
+                          </div>
+                        )}
+                        {guest.specialRequests && (
+                          <>
+                            {guest.specialRequests.length >= 20 ? (
+                              <div className='flex column' style={{ margin: '10px 0 0 0' }}>
+                                <p className='expandedCardRowL' style={{ alignSelf: 'flex-start' }}>Special Requests:</p>
+                                <div className='longText flex column aItemsFS'>
+                                  <p className='expandedCardRowAlt'>{guest.specialRequests}</p>
+                                </div>
+                              </div>
+                            ) :
+                              (
+                                <div className='expandedCardRow'>
+                                  <p className='expandedCardRowL'>Special Requests:</p>
+                                  <p className='expandedCardRowR'>{guest.specialRequests}</p>
+                                </div>
+                              )}
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </>
+              );
+            })}
+        </div>
+        {/* <table className='guestListTable'>
           <tbody id="parentTable">
             <tr>
               <th>First Name</th>
@@ -167,7 +252,7 @@ const GuestList = (props) => {
               </tbody>
             );
           })}
-        </table>
+        </table> */}
         <button type="submit" className="button createButton" style={{ backgroundColor: '#e400678e' }}>Send Invites</button>
       </div>
     </div>
