@@ -8,3 +8,73 @@ background-color: white;
 border: 1px solid red;
 transform: translate(-5px, -30px);
 }
+
+#guestListContainer {
+  width: 100%;
+  height: 50%;
+  max-height: 400px;
+  overflow: scroll;
+  border: 1px solid black;
+  padding: 0px 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.guestBox {
+  width: 100%;
+  padding: 20px 0px;
+  margin: 15px 0px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.expandedCard  {
+  margin: 10px 0 0 0;
+  width: 100%;
+}
+
+.expandedCardRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 0 0;
+}
+
+.longEmail {
+  overflow: scroll;
+  width: 93%;
+  margin: 0 0 0 10px;
+  padding: 0;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.longText {
+  width: 93%;
+  text-align: start;
+  margin: 0 0 0 10px;
+}
+
+.longEmail::-webkit-scrollbar {
+    width: 5px;
+    height: 0px; /* If value is 0px, the horizontal bar will disappear but still works*/
+}
+
+.expandedCardRowL {
+  font-weight: bold;
+  margin: 0 0 0 10px;
+}
+
+.expandedCardRowR {
+  margin: 0 10px 0 0;
+  max-width: 60%;
+  text-align: end;
+}
+
+.expandedCardRowAlt {
+  margin: 0;
+  width: 100%;
+}
+
+
