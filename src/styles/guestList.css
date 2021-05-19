@@ -3,10 +3,10 @@
 }
 
 .formShow {
-position: absolute;
-background-color: white;
-border: 1px solid red;
-transform: translate(-5px, -30px);
+  position: absolute;
+  background-color: white;
+  border: 1px solid red;
+  transform: translate(-5px, -30px);
 }
 
 #guestListContainer {
@@ -29,15 +29,17 @@ transform: translate(-5px, -30px);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.expandedCard  {
-  margin: 10px 0 0 0;
+.expandedCard {
+  margin: 0;
   width: 100%;
 }
 
 .expandedCardRow {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  /* justify-content: space-between; */
   margin: 10px 0 0 0;
 }
 
@@ -57,24 +59,22 @@ transform: translate(-5px, -30px);
 }
 
 .longEmail::-webkit-scrollbar {
-    width: 5px;
-    height: 0px; /* If value is 0px, the horizontal bar will disappear but still works*/
+  width: 5px;
+  height: 0px; /* If value is 0px, the horizontal bar will disappear but still works*/
 }
 
 .expandedCardRowL {
   font-weight: bold;
-  margin: 0 0 0 10px;
+  margin: 0 10px 0 10px;
 }
 
 .expandedCardRowR {
-  margin: 0 10px 0 0;
-  max-width: 60%;
-  text-align: end;
+  margin: 0 10px 0 10px;
+  /* max-width: 60%; */
+  /* text-align: end; */
 }
 
 .expandedCardRowAlt {
   margin: 0;
   width: 100%;
 }
-
-
