@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addPseudoUser, getGuestList, removeGuest, updateUser, getEvent } from "../store";
+import {
+  addPseudoUser,
+  getGuestList,
+  removeGuest,
+  updateUser,
+  getEvent,
+} from "../store";
 import "../styles/guestList.css";
-import '../styles/create.css';
-import '../styles/single.css';
+import "../styles/create.css";
+import "../styles/single.css";
 import { use } from "passport";
 
 const colors = {
-  1: 'tealFade',
-  2: 'pinkFade',
-  3: 'yellowFade',
+  1: "tealFade",
+  2: "pinkFade",
+  3: "yellowFade",
 };
 
 const GuestList = (props) => {
@@ -55,8 +61,8 @@ const GuestList = (props) => {
 
   const toggleEdit = (guestId) => {
     const form = document.getElementById(guestId);
-    console.log('forrrrrmmmm', form);
-    console.log(form.className === 'formHide');
+    console.log("forrrrrmmmm", form);
+    console.log(form.className === "formHide");
     if (form.className === "formHide") {
       form.className = "formShow";
     } else {
@@ -65,75 +71,87 @@ const GuestList = (props) => {
   };
 
   const handleUpdate = async (event, id) => {
-    const firstName = event.target.parentNode.parentNode.firstChild.firstChild.value;
-    const lastName = event.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value;
-    const email = event.target.parentNode.parentNode.firstChild.nextSibling.nextSibling.firstChild.value;
+    const firstName =
+      event.target.parentNode.parentNode.firstChild.firstChild.value;
+    const lastName =
+      event.target.parentNode.parentNode.firstChild.nextSibling.firstChild
+        .value;
+    const email =
+      event.target.parentNode.parentNode.firstChild.nextSibling.nextSibling
+        .firstChild.value;
 
     const updatedUser = {
       firstName,
       lastName,
       email,
-      id
-    }
+      id,
+    };
     toggleEdit(`guest${id}`);
     await props.updateUser(updatedUser);
     await props.getGuestList(props.match.params.eventId);
-  }
+  };
 
   const selectText = (event) => {
     const input = event.target;
     input.focus();
     input.select();
-  }
+  };
 
   const selectGuest = (e, guestId) => {
     if (editPerson === guestId) {
-      setEditPerson(-1)
+      setEditPerson(-1);
     } else {
       setEditPerson(guestId);
     }
-  }
+  };
 
   return (
     <div className="singleContainer flex column aItemsC">
-      <h1 style={{
-        alignSelf: 'center',
-        textDecoration: 'underline',
-        textAlign: 'center',
-        margin: '19px 0px 25px 0px',
-      }}
+      <h1
+        style={{
+          alignSelf: "center",
+          textDecoration: "underline",
+          textAlign: "center",
+          margin: "19px 0px 25px 0px",
+        }}
       >
         Guest List for
         <br></br>
         {props.singleEvent.eventName}
       </h1>
       <div className="singleColumn flex column jContentC aItemsC">
-        <form id="guest-list" className='flex column' style={{ width: '100%' }}>
-          <div className='flex jContentSB marginBottom' >
-            <label
-              style={{ fontWeight: 'bold' }} htmlFor="first-name">First Name:</label>
+        <form id="guest-list" className="flex column" style={{ width: "100%" }}>
+          <div className="flex jContentSB marginBottom">
+            <label style={{ fontWeight: "bold" }} htmlFor="first-name">
+              First Name:
+            </label>
             <input type="text" id="firstName" required />
           </div>
-          <div className='flex jContentSB marginBottom'>
-            <label
-              style={{ fontWeight: 'bold' }} htmlFor="last-name">Last Name:</label>
+          <div className="flex jContentSB marginBottom">
+            <label style={{ fontWeight: "bold" }} htmlFor="last-name">
+              Last Name:
+            </label>
             <input type="text" id="lastName" required />
           </div>
-          <div className='flex jContentSB marginBottom'>
-            <label
-              style={{ fontWeight: 'bold' }} htmlFor="email">Email:</label>
+          <div className="flex jContentSB marginBottom">
+            <label style={{ fontWeight: "bold" }} htmlFor="email">
+              Email:
+            </label>
             <input type="email" id="email" required />
           </div>
-          <button type="button"
-            className="button createButton" onClick={(e) => addGuest(e)}>
+          <button
+            type="button"
+            className="button createButton"
+            onClick={(e) => addGuest(e)}
+          >
             Add New Guest
-        </button>
+          </button>
         </form>
         {error && error.response ? <div> {error.response.data} </div> : <br />}
-        <div id='guestListContainer'>
+        <div id="guestListContainer">
           {props.guests &&
             props.guests.map((guest) => {
-              console.log(guest)
+              console.log(guest);
               count === 3 ? (count = 1) : ++count;
               return (
                 <>
@@ -142,55 +160,102 @@ const GuestList = (props) => {
                     className={`flex column aItemsC jContentC guestBox ${colors[count]}`}
                     key={guest.id}
                   >
-                    <h3 style={{ margin: '0px' }}>
+                    <h3 style={{ margin: "0px" }}>
                       {guest.firstName} {guest.lastName}
                     </h3>
                     {guest.id === editPerson && (
-                      <div className='flex column expandedCard'>
-                        {guest.email.length >= 20 ? (
-                          <div className='flex column'>
-                            <p className='expandedCardRowL' style={{ alignSelf: 'flex-start' }}>Email:</p>
-                            <div className='longEmail flex column aItemsFS'>
-                              <p className='expandedCardRowAlt'>{guest.email}</p>
+                      <div className="flex column expandedCard">
+                        <div className="expandedCardRow">
+                          <p className="expandedCardRowL">Email:</p>
+                          {guest.email.length >= 20 ? (
+                            <div className="longEmail flex column aItemsFS">
+                              <p className="expandedCardRowAlt">
+                                {guest.email}
+                              </p>
                             </div>
-                          </div>
-                        ) :
-                          (
-                            <div className='expandedCardRow'>
-                              <p className='expandedCardRowL'>Email:</p>
-                              <p className='expandedCardRowR'>{guest.email}</p>
-                            </div>
+                          ) : (
+                            <p className="expandedCardRowR">{guest.email}</p>
                           )}
+                        </div>
                         {guest.alias && (
-                          <div className='expandedCardRow'>
-                            <p className='expandedCardRowL'>Nickname:</p>
-                            <p className='expandedCardRowR'>{guest.alias}</p>
+                          <div className="expandedCardRow">
+                            <p className="expandedCardRowL">Nickname:</p>
+                            <p className="expandedCardRowR">{guest.alias}</p>
                           </div>
                         )}
                         {guest.dietaryRestrictions && (
-                          <div className='expandedCardRow'>
-                            <p className='expandedCardRowL'>Dietary Restrictions:</p>
-                            <p className='expandedCardRowR'>{guest.dietaryRestrictions}</p>
+                          <div className="expandedCardRow">
+                            <p className="expandedCardRowL">
+                              Dietary Restrictions:
+                            </p>
+                            <p className="expandedCardRowR">
+                              {guest.dietaryRestrictions}
+                            </p>
                           </div>
                         )}
                         {guest.specialRequests && (
                           <>
                             {guest.specialRequests.length >= 20 ? (
-                              <div className='flex column' style={{ margin: '10px 0 0 0' }}>
-                                <p className='expandedCardRowL' style={{ alignSelf: 'flex-start' }}>Special Requests:</p>
-                                <div className='longText flex column aItemsFS'>
-                                  <p className='expandedCardRowAlt'>{guest.specialRequests}</p>
+                              <div
+                                className="flex column"
+                                style={{ margin: "10px 0 0 0" }}
+                              >
+                                <p
+                                  className="expandedCardRowL"
+                                  style={{ alignSelf: "flex-start" }}
+                                >
+                                  Special Requests:
+                                </p>
+                                <div className="longText flex column aItemsFS">
+                                  <p className="expandedCardRowAlt">
+                                    {guest.specialRequests}
+                                  </p>
                                 </div>
                               </div>
-                            ) :
-                              (
-                                <div className='expandedCardRow'>
-                                  <p className='expandedCardRowL'>Special Requests:</p>
-                                  <p className='expandedCardRowR'>{guest.specialRequests}</p>
-                                </div>
-                              )}
+                            ) : (
+                              <div className="expandedCardRow">
+                                <p className="expandedCardRowL">
+                                  Special Requests:
+                                </p>
+                                <p className="expandedCardRowR">
+                                  {guest.specialRequests}
+                                </p>
+                              </div>
+                            )}
                           </>
                         )}
+                        <div
+                          className="flex jContentSA"
+                          style={{ margin: "36px 0px", alignItems: "baseline" }}
+                        >
+                          {guest.userType === "registered" ? (
+                            "Registered User"
+                          ) : (
+                            <button
+                              className="button"
+                              onClick={() => toggleEdit(`guest${guest.id}`)}
+                            >
+                              Edit
+                            </button>
+                          )}
+                          <button
+                            className="button"
+                            style={{
+                              color: "red",
+                              fontSize: "16px",
+                              fontWeight: "bold",
+                              border: "solid red 2px",
+                            }}
+                            onClick={() =>
+                              deleteSelectedGuest(
+                                props.match.params.eventId,
+                                guest
+                              )
+                            }
+                          >
+                            X
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -198,62 +263,13 @@ const GuestList = (props) => {
               );
             })}
         </div>
-        {/* <table className='guestListTable'>
-          <tbody id="parentTable">
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-            </tr>
-          </tbody>
-          {props.guests.map((guest) => {
-            return (
-              <tbody key={guest.email}>
-                <tr >
-                  <td className="flex">
-                    {guest.firstName}
-                  </td>
-                  <td>
-                    {guest.lastName}
-                  </td>
-                  <td>
-                    {guest.email}
-                  </td>
-                  <td>
-                    {guest.userType === 'registered' ? 'Registered User' : <button onClick={() => toggleEdit(`guest${guest.id}`)}>
-                      Edit
-                    </button>}
-
-                  </td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        deleteSelectedGuest(props.match.params.eventId, guest)
-                      }
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-                <tr id={`guest${guest.id}`} className="formHide">
-                  <td>
-                    <input type="text" defaultValue={guest.firstName} onClick={(event) => selectText(event)} />
-                  </td>
-                  <td>
-                    <input type="text" defaultValue={guest.lastName} onClick={(event) => selectText(event)} />
-                  </td>
-                  <td>
-                    <input type="email" defaultValue={guest.email} onClick={(event) => selectText(event)} />
-                  </td>
-                  <td>
-                    <button type='button' onClick={(event) => handleUpdate(event, guest.id)}>Update</button>
-                  </td>
-                </tr>
-              </tbody>
-            );
-          })}
-        </table> */}
-        <button type="submit" className="button createButton" style={{ backgroundColor: '#e400678e' }}>Send Invites</button>
+        <button
+          type="submit"
+          className="button createButton"
+          style={{ backgroundColor: "#e400678e" }}
+        >
+          Send Invites
+        </button>
       </div>
     </div>
   );
