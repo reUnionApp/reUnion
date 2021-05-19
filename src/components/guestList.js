@@ -169,10 +169,7 @@ const GuestList = (props) => {
                           <p className="expandedCardRowL">Email:</p>
                           {guest.email.length >= 20 ? (
                             <div className="longEmail flex column aItemsFS">
-                              <p
-                                className="expandedCardRowAlt"
-                                // style={{ alignSelf: "flex-start" }}
-                              >
+                              <p className="expandedCardRowAlt">
                                 {guest.email}
                               </p>
                             </div>
@@ -227,6 +224,38 @@ const GuestList = (props) => {
                             )}
                           </>
                         )}
+                        <div
+                          className="flex jContentSA"
+                          style={{ margin: "36px 0px", alignItems: "baseline" }}
+                        >
+                          {guest.userType === "registered" ? (
+                            "Registered User"
+                          ) : (
+                            <button
+                              className="button"
+                              onClick={() => toggleEdit(`guest${guest.id}`)}
+                            >
+                              Edit
+                            </button>
+                          )}
+                          <button
+                            className="button"
+                            style={{
+                              color: "red",
+                              fontSize: "16px",
+                              fontWeight: "bold",
+                              border: "solid red 2px",
+                            }}
+                            onClick={() =>
+                              deleteSelectedGuest(
+                                props.match.params.eventId,
+                                guest
+                              )
+                            }
+                          >
+                            X
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
