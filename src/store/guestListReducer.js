@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Action Types
 const GET_GUEST_LIST = 'GET_GUEST_LIST';
-const REMOVE_GUEST = 'REMOVE_GUEST'
+const REMOVE_GUEST = 'REMOVE_GUEST';
 
 // Action Creators
 const _getGuestList = (guestList) => ({
@@ -27,14 +27,17 @@ export const getGuestList = (id) => async (dispatch) => {
 
 export const removeGuest = (eventId, guestId) => async (dispatch) => {
   try {
-    const { data } = await axios.put(`/api/events/${eventId}/guestList`, guestId);
+    console.log('from thunk-->', eventId, guestId);
+    const { data } = await axios.put(`/api/events/${eventId}/guestList`, {
+      guestId,
+    });
     dispatch(_removeGuest(data));
   } catch (error) {
     console.error(error);
   }
 };
 
-const defaultState = []
+const defaultState = [];
 
 // Reducer
 export default function (state = defaultState, action) {

@@ -24,13 +24,14 @@ router.get('/:eventID/guestList', async function (req, res, next) {
   }
 });
 
-router.put('/:eventID/guestList/', async function (req, res, next) {
-  const eventId = req.params.eventID;
+router.put('/:eventId/guestList/', async function (req, res, next) {
+  const eventId = Number(req.params.eventId);
   try {
-    const guest = await User.findByPk(req.body.id);
+    const guest = await User.findByPk(req.body.guestId);
+    console.log(777, guest);
     await guest.removeEvent(eventId);
     res.sendStatus(200);
   } catch (error) {
     next(error);
   }
-})
+});
