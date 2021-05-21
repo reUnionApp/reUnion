@@ -1,0 +1,34 @@
+#updateGuestForm {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.87);
+  border-radius: 10px;
+  margin: 0px 0px 50px 0px;
+}
+
+.UGInput {
+  margin: 15px 0px;
+  outline: none;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#UGSubmit {
+  margin: 25px 0px 0px 0px;
+  background-color: #ffc400a4;
+}
+
+.UGLabel {
+  font-weight: bold;
+}
+
+#UGFormDiv {
+  margin: 20px 0px 0px 0px;
+}
+
+#UGDelete {
+  color: white;
+  background-color: rgb(197, 2, 2);
+  margin: 36px 0px 15px 0px;
+  font-weight: bolder;
+}

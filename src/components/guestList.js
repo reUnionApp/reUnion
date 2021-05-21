@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import {
   addPseudoUser,
   getGuestList,
   removeGuest,
   updateUser,
   getEvent,
-} from "../store";
-import "../styles/guestList.css";
-import "../styles/create.css";
-import "../styles/single.css";
-import { use } from "passport";
+} from '../store';
+import '../styles/guestList.css';
+import '../styles/create.css';
+import '../styles/single.css';
+import UpdateGuest from './updateGuest';
+import { use } from 'passport';
 
 const colors = {
-  1: "tealFade",
-  2: "pinkFade",
-  3: "yellowFade",
+  1: 'tealFade',
+  2: 'pinkFade',
+  3: 'yellowFade',
 };
 
 const GuestList = (props) => {
@@ -50,44 +51,21 @@ const GuestList = (props) => {
 
     // console.log(e.target.parentNode.firstName.value)
   };
-  console.log("PROPS", props);
   // console.log(props.match.params);
 
-  const deleteSelectedGuest = async (eventId, guestId) => {
+  const deleteSelectedGuest = async (guestId) => {
+    openClose();
+    const eventId = Number(props.match.params.eventId);
+    console.log('guestId-->', guestId);
+    console.log('eventId-->', eventId);
     await props.removeGuest(eventId, guestId);
-    await props.getGuestList(props.match.params.eventId);
-    props.clearError();
+    await props.getGuestList(eventId);
+    // props.clearError();
   };
 
-  const toggleEdit = (guestId) => {
-    const form = document.getElementById(guestId);
-    console.log("forrrrrmmmm", form);
-    console.log(form.className === "formHide");
-    if (form.className === "formHide") {
-      form.className = "formShow";
-    } else {
-      form.className = "formHide";
-    }
-  };
-
-  const handleUpdate = async (event, id) => {
-    const firstName =
-      event.target.parentNode.parentNode.firstChild.firstChild.value;
-    const lastName =
-      event.target.parentNode.parentNode.firstChild.nextSibling.firstChild
-        .value;
-    const email =
-      event.target.parentNode.parentNode.firstChild.nextSibling.nextSibling
-        .firstChild.value;
-
-    const updatedUser = {
-      firstName,
-      lastName,
-      email,
-      id,
-    };
-    toggleEdit(`guest${id}`);
-    await props.updateUser(updatedUser);
+  const handleUpdate = async (event, updatedInfo) => {
+    openClose();
+    await props.updateUser(updatedInfo);
     await props.getGuestList(props.match.params.eventId);
   };
 
@@ -98,21 +76,49 @@ const GuestList = (props) => {
   };
 
   const selectGuest = (e, guestId) => {
-    if (editPerson === guestId) {
-      setEditPerson(-1);
-    } else {
-      setEditPerson(guestId);
+    if (e.target.className !== 'button') {
+      if (editPerson === guestId) {
+        setEditPerson(-1);
+      } else {
+        setEditPerson(guestId);
+      }
     }
   };
 
+  const UGC = useRef(null);
+
+  const openClose = () => {
+    if (UGC.current.classList.contains('UGCClosed')) {
+      UGC.current.classList.remove('UGCClosed');
+      UGC.current.classList.add('UGCOpen');
+    } else {
+      UGC.current.classList.remove('UGCOpen');
+      UGC.current.classList.add('UGCClosed');
+    }
+  };
+
+  const [guestToUpdate, setGuestToUpdate] = useState({});
+
   return (
-    <div className="singleContainer flex column aItemsC">
+    <div className="singleContainer flex column aItemsC" id="GLMaster">
+      <div
+        id="updateGuestContainer"
+        className="UGCClosed flex column aItemsC"
+        ref={UGC}
+      >
+        <UpdateGuest
+          openClose={openClose}
+          guestInfo={guestToUpdate}
+          handleUpdate={handleUpdate}
+          deleteGuest={deleteSelectedGuest}
+        />
+      </div>
       <h1
         style={{
-          alignSelf: "center",
-          textDecoration: "underline",
-          textAlign: "center",
-          margin: "19px 0px 25px 0px",
+          alignSelf: 'center',
+          textDecoration: 'underline',
+          textAlign: 'center',
+          margin: '19px 0px 25px 0px',
         }}
       >
         Guest List for
@@ -120,21 +126,21 @@ const GuestList = (props) => {
         {props.singleEvent.eventName}
       </h1>
       <div className="singleColumn flex column jContentC aItemsC">
-        <form id="guest-list" className="flex column" style={{ width: "100%" }}>
+        <form id="guest-list" className="flex column" style={{ width: '100%' }}>
           <div className="flex jContentSB marginBottom">
-            <label style={{ fontWeight: "bold" }} htmlFor="first-name">
+            <label style={{ fontWeight: 'bold' }} htmlFor="first-name">
               First Name:
             </label>
             <input type="text" id="firstName" required />
           </div>
           <div className="flex jContentSB marginBottom">
-            <label style={{ fontWeight: "bold" }} htmlFor="last-name">
+            <label style={{ fontWeight: 'bold' }} htmlFor="last-name">
               Last Name:
             </label>
             <input type="text" id="lastName" required />
           </div>
           <div className="flex jContentSB marginBottom">
-            <label style={{ fontWeight: "bold" }} htmlFor="email">
+            <label style={{ fontWeight: 'bold' }} htmlFor="email">
               Email:
             </label>
             <input type="email" id="email" required />
@@ -151,16 +157,14 @@ const GuestList = (props) => {
         <div id="guestListContainer">
           {props.guests &&
             props.guests.map((guest) => {
-              console.log(guest);
               count === 3 ? (count = 1) : ++count;
               return (
-                <>
+                <div key={guest.id}>
                   <div
                     onClick={(e) => selectGuest(e, guest.id)}
                     className={`flex column aItemsC jContentC guestBox ${colors[count]}`}
-                    key={guest.id}
                   >
-                    <h3 style={{ margin: "0px" }}>
+                    <h3 style={{ margin: '0px' }}>
                       {guest.firstName} {guest.lastName}
                     </h3>
                     {guest.id === editPerson && (
@@ -198,11 +202,11 @@ const GuestList = (props) => {
                             {guest.specialRequests.length >= 20 ? (
                               <div
                                 className="flex column"
-                                style={{ margin: "10px 0 0 0" }}
+                                style={{ margin: '10px 0 0 0' }}
                               >
                                 <p
                                   className="expandedCardRowL"
-                                  style={{ alignSelf: "flex-start" }}
+                                  style={{ alignSelf: 'flex-start' }}
                                 >
                                   Special Requests:
                                 </p>
@@ -226,47 +230,42 @@ const GuestList = (props) => {
                         )}
                         <div
                           className="flex jContentSA"
-                          style={{ margin: "36px 0px", alignItems: "baseline" }}
+                          style={{
+                            margin: '25px 0px 0px 0px',
+                            alignItems: 'baseline',
+                          }}
                         >
-                          {guest.userType === "registered" ? (
-                            "Registered User"
+                          {guest.userType === 'registered' ? (
+                            'Registered User'
                           ) : (
                             <button
                               className="button"
-                              onClick={() => toggleEdit(`guest${guest.id}`)}
+                              id="GLUpdateButton"
+                              onClick={() => {
+                                setGuestToUpdate({
+                                  firstName: guest.firstName,
+                                  lastName: guest.lastName,
+                                  email: guest.email,
+                                  id: guest.id,
+                                });
+                                openClose();
+                              }}
                             >
-                              Edit
+                              Update
                             </button>
                           )}
-                          <button
-                            className="button"
-                            style={{
-                              color: "red",
-                              fontSize: "16px",
-                              fontWeight: "bold",
-                              border: "solid red 2px",
-                            }}
-                            onClick={() =>
-                              deleteSelectedGuest(
-                                props.match.params.eventId,
-                                guest
-                              )
-                            }
-                          >
-                            X
-                          </button>
                         </div>
                       </div>
                     )}
                   </div>
-                </>
+                </div>
               );
             })}
         </div>
         <button
           type="submit"
           className="button createButton"
-          style={{ backgroundColor: "#e400678e" }}
+          style={{ backgroundColor: '#e400678e' }}
         >
           Send Invites
         </button>
@@ -286,7 +285,7 @@ const mapDispatch = (dispatch) => ({
   addPseudoUser: (user) => dispatch(addPseudoUser(user)),
   getGuestList: (id) => dispatch(getGuestList(id)),
   removeGuest: (eventId, guestId) => dispatch(removeGuest(eventId, guestId)),
-  clearError: () => dispatch({ type: "CLEAR_ERROR" }),
+  clearError: () => dispatch({ type: 'CLEAR_ERROR' }),
   updateUser: (user) => dispatch(updateUser(user)),
   getEvent: (id) => dispatch(getEvent(id)),
 });
