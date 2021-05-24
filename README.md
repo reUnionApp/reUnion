@@ -1,6 +1,6 @@
 <h1 align="center"><img src="https://user-images.githubusercontent.com/72041242/117198984-aa236980-adb7-11eb-8497-5b6dca9aed93.png" /></h1>
 
-reUnion is an event planning app that allows users to plan and manage their events. Users can sign up for an account, create and event, plan activities, and invite other users to their events.
+reUnion is an event planning app that allows users to plan and manage their events. Users can sign up for an account, create an event, plan activities, and invite other users to their events.
 
 ## Contributors
 
