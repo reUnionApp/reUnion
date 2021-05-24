@@ -1,6 +1,7 @@
-/* #myEventsContainer {
-
-} */
+#myEventsContainer {
+  padding: 75px 0px 60px 0px;
+  min-height: 100vh;
+}
 
 .eventBox {
   width: 50%;
