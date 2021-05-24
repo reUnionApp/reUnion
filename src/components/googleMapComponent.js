@@ -25,13 +25,10 @@ const GoogleMapComponent = (props) => {
   } = props;
 
   const onLoad = (input) => {
-    console.log('autocomplete: ', input);
-
     setGoogleLocation(input);
   };
 
   const onPlaceChanged = () => {
-    console.log(999, googleLocation.getPlace());
     if (googleLocation !== null) {
       if (!googleLocation.getPlace().address_components) {
         setTextLocation(googleLocation.getPlace().name);
@@ -69,7 +66,7 @@ const GoogleMapComponent = (props) => {
         </div>
 
         <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-          <input type="text" id="mapLocationInput" />
+          <input type="text" placeholder='Enter an Address' id="mapLocationInput" />
         </Autocomplete>
         <h4 style={{ fontSize: '18px', margin: '15px 0px 30px 0px' }}>
           Event Address:
@@ -78,12 +75,12 @@ const GoogleMapComponent = (props) => {
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-            <p>
-              {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                ? `${googleLocation.getPlace().formatted_address}`
-                : false}
-            </p>
-          )}
+              <p>
+                {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                  ? `${googleLocation.getPlace().formatted_address}`
+                  : false}
+              </p>
+            )}
         </div>
       </LoadScript>
     </div>

@@ -109,9 +109,15 @@
   margin: 0px 0px 0px auto;
 }
 
+.confValueError {
+  margin: 0px 0px 0px auto;
+  color: red;
+}
+
 .createForm {
   height: 100vh;
 }
+
 .cEStamp {
   margin: 75px 305px 0px 0px;
   position: absolute;
