@@ -1,30 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getUser, deleteUser, updateUser } from '../store';
-import { Link } from 'react-router-dom';
-import history from '../history';
-import '../styles/updateProfile.css';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { getUser, deleteUser, updateUser, me } from "../store";
+import { Link } from "react-router-dom";
+import history from "../history";
+import "../styles/updateProfile.css";
 
 const UpdateProfile = (props) => {
   const authUser = props.auth;
   if (props.auth.specialRequests === null) {
-    props.auth.specialRequests = '';
+    props.auth.specialRequests = "";
   }
 
   if (props.auth.dietaryRestrictions === null) {
-    props.auth.dietaryRestrictions = '';
-  }
-  if (Array.isArray(props.auth.dietaryRestrictions)) {
-    props.auth.dietaryRestrictions = props.auth.dietaryRestrictions[0];
+    props.auth.dietaryRestrictions = "";
   }
 
   if (props.auth.alias === null) {
-    props.auth.alias = '';
+    props.auth.alias = "";
   }
 
   const [userState, updateUserState] = useState({ ...props.auth });
-
-  // const [diet, updateDiet] = useState(props.auth.dietaryRestrictions);
 
   const handleChange = (e) => {
     updateUserState({ ...userState, [e.target.id]: e.target.value });
@@ -32,19 +27,20 @@ const UpdateProfile = (props) => {
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-    console.log('userstatttteee', userState);
+    console.log("userstatttteee", userState);
     props.updateUser(userState);
-    props.history.push('/profile');
+    props.me();
+    props.history.push("/profile");
   };
 
   return (
-    <div style={{ margin: '75px 0px 0px 0px' }}>
+    <div style={{ margin: "75px 0px 0px 0px" }}>
       <div className="w100 flex jContentSB aItemsC">
         <h1
-          style={{ marginLeft: '15px' }}
+          style={{ marginLeft: "15px" }}
         >{`Update ${props.auth.firstName}'s Profile`}</h1>
         <button
-          style={{ marginRight: '15px' }}
+          style={{ marginRight: "15px" }}
           type="button"
           className="button updateProfile pink"
         >
@@ -53,7 +49,7 @@ const UpdateProfile = (props) => {
       </div>
       <form
         className="flex column aItemsFS"
-        style={{ margin: '36px 0px 36px 36px' }}
+        style={{ margin: "36px 0px 36px 36px" }}
         onSubmit={handleSubmit}
       >
         <div className="formLabInp">
@@ -118,7 +114,7 @@ const UpdateProfile = (props) => {
         <button
           type="submit"
           className="button teal"
-          style={{ margin: '36px 0px 0px 0px' }}
+          style={{ margin: "36px 0px 0px 0px" }}
         >
           Update Profile
         </button>
@@ -129,13 +125,12 @@ const UpdateProfile = (props) => {
 
 const mapState = (state) => ({
   auth: state.authReducer,
-  // user: state.userReducer,
-  userEvents: state.allEventsReducer.userEvents,
 });
 
 const mapDispatch = (dispatch) => ({
   deleteUser: (userId) => dispatch(deleteUser(userId)),
   updateUser: (user) => dispatch(updateUser(user)),
+  me: () => dispatch(me()),
 });
 
 export default connect(mapState, mapDispatch)(UpdateProfile);

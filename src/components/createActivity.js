@@ -1,41 +1,41 @@
 //React/Redux
-import React, { useState, useEffect } from 'react';
-import { getEvent, createActivity } from '../store';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { getEvent, createActivity } from "../store";
+import { connect } from "react-redux";
 
 // React component imports
-import { GoogleMapComponent, DateTimePicker } from './index.js';
+import { GoogleMapComponent, DateTimePicker } from "./index.js";
 
 // CSS imports
-import '../styles/create.css';
+import "../styles/create.css";
 
 //Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
 
 // react calendar and clock
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
 
 // .env config
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateActivity = (props) => {
-  const [activityName, setActivityName] = useState('');
-  const [activityDescription, setActivityDescription] = useState('');
+  const [activityName, setActivityName] = useState("");
+  const [activityDescription, setActivityDescription] = useState("");
   const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
   const [activityStartDateTime, setActivityStartDateTime] = useState(
     new Date()
   );
   const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
   const [activityData, setActivityData] = useState({});
-  const [activityTextLocation, setActivityTextLocation] = useState('');
+  const [activityTextLocation, setActivityTextLocation] = useState("");
 
   const handleChange = function (activity, hook) {
     activity.preventDefault();
@@ -48,7 +48,7 @@ const CreateActivity = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + '/' + day + '/' + year;
+    return month + "/" + day + "/" + year;
   };
 
   const submitActivityForm = async function (click) {
@@ -58,11 +58,11 @@ const CreateActivity = (props) => {
       activityName: activityName,
       description: activityDescription,
       location:
-        activityTextLocation !== ''
+        activityTextLocation !== ""
           ? activityTextLocation
           : `${activityGoogleLocation.getPlace().name}, ${
-          activityGoogleLocation.getPlace().formatted_address
-          }`,
+              activityGoogleLocation.getPlace().formatted_address
+            }`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -80,7 +80,7 @@ const CreateActivity = (props) => {
         className="createForm"
         onSubmit={submitActivityForm}
         onKeyPress={(e) => {
-          e.key === 'Enter' && e.preventDefault();
+          e.key === "Enter" && e.preventDefault();
         }}
       >
         <Swiper
@@ -90,21 +90,21 @@ const CreateActivity = (props) => {
           navigation
           allowTouchMove={false}
           style={{
-            minHeight: '80vh',
-            bottom: '0',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            minHeight: "80vh",
+            bottom: "0",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
           }}
         >
-          <SwiperSlide>
+          <SwiperSlide className="background2Down">
             <div className="flex column aItemsC jContentC teal cEStamp">
               <p
                 style={{
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  margin: '0px 5px',
+                  textAlign: "center",
+                  fontSize: "12px",
+                  margin: "0px 5px",
                 }}
               >
                 What's the activity about?
@@ -112,8 +112,8 @@ const CreateActivity = (props) => {
             </div>
             <div
               style={{
-                minHeight: '100%',
-                width: '80%',
+                minHeight: "100%",
+                width: "80%",
               }}
               className="flex column jContentC aItemsC"
             >
@@ -125,7 +125,7 @@ const CreateActivity = (props) => {
                 onChange={(click) => {
                   handleChange(click, setActivityName);
                 }}
-                style={{ marginBottom: '30px' }}
+                style={{ marginBottom: "30px" }}
               ></input>
               <textarea
                 type="textarea"
@@ -139,13 +139,13 @@ const CreateActivity = (props) => {
               ></textarea>
             </div>
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide className="background3Up">
             <div className="flex column aItemsC jContentC teal cEStamp">
               <p
                 style={{
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  margin: '0px 5px',
+                  textAlign: "center",
+                  fontSize: "12px",
+                  margin: "0px 5px",
                 }}
               >
                 When is this activity?
@@ -153,7 +153,7 @@ const CreateActivity = (props) => {
             </div>
             <div
               className="flex column jContentC"
-              style={{ height: '100vh', width: '60%' }}
+              style={{ height: "100vh", width: "60%" }}
             >
               <DateTimePicker
                 startDateTime={activityStartDateTime}
@@ -163,19 +163,22 @@ const CreateActivity = (props) => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide style={{ overflow: 'scroll' }}>
+          <SwiperSlide
+            className="background1Down"
+            style={{ overflow: "scroll" }}
+          >
             <div className="flex column aItemsC jContentC teal cEStamp">
               <p
                 style={{
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  margin: '0px 5px',
+                  textAlign: "center",
+                  fontSize: "12px",
+                  margin: "0px 5px",
                 }}
               >
                 Where is this activity?
               </p>
             </div>
-            <div style={{ margin: '130px 0px 55px 0px' }}>
+            <div style={{ margin: "130px 0px 55px 0px" }}>
               <GoogleMapComponent
                 textLocation={activityTextLocation}
                 setTextLocation={setActivityTextLocation}
@@ -184,18 +187,18 @@ const CreateActivity = (props) => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide style={{ overflow: 'scroll' }}>
+          <SwiperSlide className="background2Up" style={{ overflow: "scroll" }}>
             <div id="conf" className="layout flex column aItemsFS">
               <h1>Activity Confirmation</h1>
               <div className="confLine">
                 <p className="confBold">Activity Name: </p>
-                <p className="confValue" style={{ textAlign: 'end' }}>
+                <p className="confValue" style={{ textAlign: "end" }}>
                   {activityName}
                 </p>
               </div>
               <div
                 className="confLine"
-                style={{ maxWidth: '100%', alignItems: 'flex-start' }}
+                style={{ maxWidth: "100%", alignItems: "flex-start" }}
               >
                 <p className="confBold">Description: </p>
                 {activityDescription.length ? (
@@ -203,10 +206,10 @@ const CreateActivity = (props) => {
                     <p className="confValue">{activityDescription}</p>
                   </div>
                 ) : (
-                    false
-                  )}
+                  false
+                )}
               </div>
-              {activityTextLocation !== '' ? (
+              {activityTextLocation !== "" ? (
                 <div className="confLine">
                   <p className="confBold">Location: </p>
                   <div id="locationConf">
@@ -214,21 +217,21 @@ const CreateActivity = (props) => {
                   </div>
                 </div>
               ) : (
-                  <div className="confLine">
-                    <p className="confBold">Location: </p>
-                    <div id="locationConf">
-                      {activityGoogleLocation.gm_bindings_ &&
-                        activityGoogleLocation.getPlace() ? (
-                          <p className="confValue">
-                            {activityGoogleLocation.getPlace().name},
-                            {activityGoogleLocation.getPlace().formatted_address}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                    </div>
+                <div className="confLine">
+                  <p className="confBold">Location: </p>
+                  <div id="locationConf">
+                    {activityGoogleLocation.gm_bindings_ &&
+                    activityGoogleLocation.getPlace() ? (
+                      <p className="confValue">
+                        {activityGoogleLocation.getPlace().name},
+                        {activityGoogleLocation.getPlace().formatted_address}
+                      </p>
+                    ) : (
+                      false
+                    )}
                   </div>
-                )}
+                </div>
+              )}
               <div className="confLine">
                 <p className="confBold">Start Date: </p>
                 <p className="confValue">{dateFormat(activityStartDateTime)}</p>
@@ -240,20 +243,20 @@ const CreateActivity = (props) => {
               <div className="confLine">
                 <p className="confBold">Start Time: </p>
                 <p className="confValue">
-                  {activityStartDateTime.toLocaleTimeString('en-US', {
+                  {activityStartDateTime.toLocaleTimeString("en-US", {
                     hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </p>
               </div>
               <div className="confLine">
                 <span className="confBold">End Time: </span>
                 <p className="confValue">
-                  {activityEndDateTime.toLocaleTimeString('en-US', {
+                  {activityEndDateTime.toLocaleTimeString("en-US", {
                     hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </p>
               </div>
