@@ -1,5 +1,5 @@
 // React/Redux
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getEvent, createEvent } from '../store';
 import { connect } from 'react-redux';
 
@@ -19,13 +19,14 @@ import 'swiper/components/pagination/pagination.scss';
 // .env config
 import dotenv from 'dotenv';
 import zIndex from '@material-ui/core/styles/zIndex';
+import { useForkRef } from '@material-ui/core';
 dotenv.config();
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
-  const [eventType, setEventType] = useState('class reunion');
+  const [eventType, setEventType] = useState('');
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
   // const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
@@ -34,6 +35,8 @@ const CreateEvent = (props) => {
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
   const [eventTextLocation, setEventTextLocation] = useState('');
+
+  let errorArray = [eventName, eventDescription, eventType];
 
   const handleChange = function (event, hook) {
     hook(event.target.value);
@@ -73,6 +76,11 @@ const CreateEvent = (props) => {
     props.history.push(`/myEvents/${resultId}`);
   };
 
+  const addressError = () => {
+    errorArray.push('');
+    return <p className='confValueError'>NO ADDRESS</p>
+  };
+
   return (
     <div>
       <form
@@ -98,9 +106,73 @@ const CreateEvent = (props) => {
           }}
         >
           <div>
+            <SwiperSlide className="background3Up">
+              <div className="flex column aItemsC jContentC teal cEStamp">
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '12px',
+                    margin: '0px 5px',
+                  }}
+                >
+                  What's the event about?
+                </p>
+              </div>
+              <div
+                style={{
+                  minHeight: '100%',
+                  width: '80%',
+                  margin: '130px 0px 55px 0px',
+                }}
+                className="flex column jContentFS aItemsC"
+              >
+                <div
+                  style={{
+                    width: '80%',
+                    margin: '0px 0px 36px 0px',
+                  }}
+                  className="flex column"
+                >
+                  <input
+                    type="text"
+                    name="eventName"
+                    placeholder="Event Name"
+                    className="createInput"
+                    value={eventName}
+                    onChange={(event) => {
+                      handleChange(event, setEventName);
+                    }}
+                  ></input>
+                  <div
+                    className="swiper-no-swiping"
+                    style={{ width: '50vw' }}
+                  ></div>
+                  {/* <input
+                    type="text"
+                    name="coordinators"
+                    className="createInput"
+                    placeholder="Enter coordinators' names here"
+                    value={eventCoordinator}
+                    onChange={(event) => {
+                      handleChange(event, setEventCoordinator);
+                    }}
+                  ></input> */}
+                </div>
+                <textarea
+                  type="textarea"
+                  name="description"
+                  className="createTextArea"
+                  placeholder="Enter description of your event"
+                  value={eventDescription}
+                  onChange={(event) => {
+                    handleChange(event, setEventDescription);
+                  }}
+                ></textarea>
+              </div>
+            </SwiperSlide>
             <SwiperSlide
               style={{ overflow: 'scroll' }}
-              className="background3Up"
+              className="background1Down"
             >
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
@@ -178,7 +250,10 @@ const CreateEvent = (props) => {
                 </label>
               </div>
             </SwiperSlide>
-            <SwiperSlide className="background1Down">
+            <SwiperSlide
+              style={{ overflow: 'scroll' }}
+              className="background2Up"
+            >
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
@@ -187,62 +262,19 @@ const CreateEvent = (props) => {
                     margin: '0px 5px',
                   }}
                 >
-                  What's the event about?
+                  Where is your event?
                 </p>
               </div>
-              <div
-                style={{
-                  minHeight: '100%',
-                  width: '80%',
-                  margin: '130px 0px 55px 0px',
-                }}
-                className="flex column jContentFS aItemsC"
-              >
-                <div
-                  style={{
-                    width: '80%',
-                    margin: '0px 0px 36px 0px',
-                  }}
-                  className="flex column"
-                >
-                  <input
-                    type="text"
-                    name="eventName"
-                    placeholder="Event Name"
-                    className="createInput"
-                    value={eventName}
-                    onChange={(event) => {
-                      handleChange(event, setEventName);
-                    }}
-                  ></input>
-                  <div
-                    className="swiper-no-swiping"
-                    style={{ width: '50vw' }}
-                  ></div>
-                  {/* <input
-                    type="text"
-                    name="coordinators"
-                    className="createInput"
-                    placeholder="Enter coordinators' names here"
-                    value={eventCoordinator}
-                    onChange={(event) => {
-                      handleChange(event, setEventCoordinator);
-                    }}
-                  ></input> */}
-                </div>
-                <textarea
-                  type="textarea"
-                  name="description"
-                  className="createTextArea"
-                  placeholder="Enter description of your event"
-                  value={eventDescription}
-                  onChange={(event) => {
-                    handleChange(event, setEventDescription);
-                  }}
-                ></textarea>
+              <div style={{ margin: '130px 0px 55px 0px' }}>
+                <GoogleMapComponent
+                  textLocation={eventTextLocation}
+                  setTextLocation={setEventTextLocation}
+                  googleLocation={eventGoogleLocation}
+                  setGoogleLocation={setEventGoogleLocation}
+                />
               </div>
             </SwiperSlide>
-            <SwiperSlide className="background2Up">
+            <SwiperSlide className="background3Down">
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
@@ -266,53 +298,17 @@ const CreateEvent = (props) => {
                 />
               </div>
             </SwiperSlide>
-
-            <SwiperSlide
-              style={{ overflow: 'scroll' }}
-              className="background3Down"
-            >
-              <div className="flex column aItemsC jContentC teal cEStamp">
-                <p
-                  style={{
-                    textAlign: 'center',
-                    fontSize: '12px',
-                    margin: '0px 5px',
-                  }}
-                >
-                  Where is your event?
-                </p>
-              </div>
-              <div style={{ margin: '130px 0px 55px 0px' }}>
-                <GoogleMapComponent
-                  textLocation={eventTextLocation}
-                  setTextLocation={setEventTextLocation}
-                  googleLocation={eventGoogleLocation}
-                  setGoogleLocation={setEventGoogleLocation}
-                />
-              </div>
-            </SwiperSlide>
             <SwiperSlide
               style={{ overflow: 'scroll' }}
               className="background1Up"
             >
-              <div className=" layout flex column aItemsFS">
+              <div className="layout flex column aItemsFS jContentC">
                 <h1>Event Confirmation</h1>
                 <div className="confLine">
                   <p className="confBold">Event Name: </p>
                   <p className="confValue">{eventName}</p>
+                  {eventName === '' && <p className='confValueError'>NO EVENT NAME</p>}
                 </div>
-                <div className="confLine">
-                  <p className="confBold">Event Type: </p>
-                  <p className="confValue">{eventType}</p>
-                </div>
-                <div className="confLine">
-                  <p className="confBold">Host: </p>
-                  <p className="confValue">{eventOwner}</p>
-                </div>
-                {/* <div className="confLine">
-                  <p className="confBold">Coordinator: </p>
-                  <p className="confValue">{eventCoordinator}</p>
-                </div> */}
                 <div
                   className="confLine"
                   style={{ maxWidth: '100%', alignItems: 'flex-start' }}
@@ -323,9 +319,18 @@ const CreateEvent = (props) => {
                       <p className="confValue">{eventDescription}</p>
                     </div>
                   ) : (
-                      false
+                      <p className='confValueError'>NO DESCRIPTION</p>
                     )}
                 </div>
+                <div className="confLine">
+                  <p className="confBold">Event Type: </p>
+                  <p className="confValue">{eventType}</p>
+                  {eventType === '' && <p className='confValueError'>NO EVENT TYPE</p>}
+                </div>
+                {/* <div className="confLine">
+                  <p className="confBold">Coordinator: </p>
+                  <p className="confValue">{eventCoordinator}</p>
+                </div> */}
                 {eventTextLocation !== '' ? (
                   <div className="confLine">
                     <p className="confBold">Address: </p>
@@ -342,13 +347,11 @@ const CreateEvent = (props) => {
                             <p className="confValue">
                               {eventGoogleLocation.getPlace().formatted_address}
                             </p>
-                          ) : (
-                            false
-                          )}
+                          ) : addressError()
+                        }
                       </div>
                     </div>
                   )}
-
                 <div className="confLine">
                   <p className="confBold">Start Date: </p>
                   <p className="confValue">{dateFormat(eventStartDateTime)}</p>
@@ -377,7 +380,11 @@ const CreateEvent = (props) => {
                     })}
                   </p>
                 </div>
-                <button type="submit" className="button createButton">
+                <div className="confLine">
+                  <p className="confBold">Host: </p>
+                  <p className="confValue">{eventOwner}</p>
+                </div>
+                <button type="submit" className="button createButton" disabled={errorArray.includes("")}>
                   Create Event
                 </button>
               </div>
