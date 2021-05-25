@@ -29,13 +29,13 @@ SwiperCore.use([Navigation, Pagination, A11y]);
 const CreateActivity = (props) => {
   const [activityName, setActivityName] = useState("");
   const [activityDescription, setActivityDescription] = useState("");
-  const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
+  let [activityGoogleLocation, setActivityGoogleLocation] = useState({});
   const [activityStartDateTime, setActivityStartDateTime] = useState(
     new Date()
   );
   const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
   const [activityData, setActivityData] = useState({});
-  const [activityTextLocation, setActivityTextLocation] = useState("");
+  let [activityTextLocation, setActivityTextLocation] = useState("");
 
   const handleChange = function (activity, hook) {
     activity.preventDefault();
@@ -57,12 +57,12 @@ const CreateActivity = (props) => {
     let activity = {
       activityName: activityName,
       description: activityDescription,
-      location:
+      location: activityTextLocation === '' ? activityTextLocation = '' : activityGoogleLocation === '' ? activityGoogleLocation = '' :
         activityTextLocation !== ""
           ? activityTextLocation
-          : `${activityGoogleLocation.getPlace().name}, ${
-              activityGoogleLocation.getPlace().formatted_address
-            }`,
+          : ` ${
+          activityGoogleLocation.getPlace().formatted_address
+          }`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -139,30 +139,6 @@ const CreateActivity = (props) => {
               ></textarea>
             </div>
           </SwiperSlide>
-          <SwiperSlide className="background3Up">
-            <div className="flex column aItemsC jContentC teal cEStamp">
-              <p
-                style={{
-                  textAlign: "center",
-                  fontSize: "12px",
-                  margin: "0px 5px",
-                }}
-              >
-                When is this activity?
-              </p>
-            </div>
-            <div
-              className="flex column jContentC"
-              style={{ height: "100vh", width: "60%" }}
-            >
-              <DateTimePicker
-                startDateTime={activityStartDateTime}
-                setStartDateTime={setActivityStartDateTime}
-                endDateTime={activityEndDateTime}
-                setEndDateTime={setActivityEndDateTime}
-              />
-            </div>
-          </SwiperSlide>
           <SwiperSlide
             className="background1Down"
             style={{ overflow: "scroll" }}
@@ -187,14 +163,39 @@ const CreateActivity = (props) => {
               />
             </div>
           </SwiperSlide>
+          <SwiperSlide className="background3Up">
+            <div className="flex column aItemsC jContentC teal cEStamp">
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "12px",
+                  margin: "0px 5px",
+                }}
+              >
+                When is this activity?
+              </p>
+            </div>
+            <div
+              className="flex column jContentC"
+              style={{ height: "100vh", width: "60%" }}
+            >
+              <DateTimePicker
+                startDateTime={activityStartDateTime}
+                setStartDateTime={setActivityStartDateTime}
+                endDateTime={activityEndDateTime}
+                setEndDateTime={setActivityEndDateTime}
+              />
+            </div>
+          </SwiperSlide>
           <SwiperSlide className="background2Up" style={{ overflow: "scroll" }}>
-            <div id="conf" className="layout flex column aItemsFS">
+            <div id="conf" className="layout flex column aItemsFS jContentC">
               <h1>Activity Confirmation</h1>
               <div className="confLine">
                 <p className="confBold">Activity Name: </p>
                 <p className="confValue" style={{ textAlign: "end" }}>
                   {activityName}
                 </p>
+                {activityName === '' && <p className='confValueError'>NO ACTIVITY NAME</p>}
               </div>
               <div
                 className="confLine"
@@ -206,8 +207,8 @@ const CreateActivity = (props) => {
                     <p className="confValue">{activityDescription}</p>
                   </div>
                 ) : (
-                  false
-                )}
+                    false
+                  )}
               </div>
               {activityTextLocation !== "" ? (
                 <div className="confLine">
@@ -217,21 +218,21 @@ const CreateActivity = (props) => {
                   </div>
                 </div>
               ) : (
-                <div className="confLine">
-                  <p className="confBold">Location: </p>
-                  <div id="locationConf">
-                    {activityGoogleLocation.gm_bindings_ &&
-                    activityGoogleLocation.getPlace() ? (
-                      <p className="confValue">
-                        {activityGoogleLocation.getPlace().name},
-                        {activityGoogleLocation.getPlace().formatted_address}
-                      </p>
-                    ) : (
-                      false
-                    )}
+                  <div className="confLine">
+                    <p className="confBold">Location: </p>
+                    <div id="locationConf">
+                      {activityGoogleLocation.gm_bindings_ &&
+                        activityGoogleLocation.getPlace() ? (
+                          <p className="confValue">
+                            {activityGoogleLocation.getPlace().name},
+                            {activityGoogleLocation.getPlace().formatted_address}
+                          </p>
+                        ) : (
+                          false
+                        )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
               <div className="confLine">
                 <p className="confBold">Start Date: </p>
                 <p className="confValue">{dateFormat(activityStartDateTime)}</p>
@@ -260,7 +261,7 @@ const CreateActivity = (props) => {
                   })}
                 </p>
               </div>
-              <button type="submit" className="button createButton">
+              <button type="submit" className="button createButton" disabled={activityName === ''}>
                 Create Activity
               </button>
             </div>

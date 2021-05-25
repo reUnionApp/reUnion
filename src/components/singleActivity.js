@@ -61,9 +61,15 @@ const SingleActivity = (props) => {
           style={{ maxWidth: '100%', alignItems: 'flex-start' }}
         >
           <p className="confBold">Description: </p>
-          <div id="descriptionConfContainer">
+          {console.log(description)}
+          {description && description.length ? (
+            <div id="descriptionConfContainer">
+              <p className="confValue">{description}</p>
+            </div>
+          ) : false}
+          {/* <div id="descriptionConfContainer">
             <p className="confValue">{description}</p>
-          </div>
+          </div> */}
         </div>
         <div className="confLine">
           <p className="confBold">Address: </p>
