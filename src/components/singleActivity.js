@@ -4,6 +4,8 @@ import { getActivity, getEvent, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 import '../styles/create.css';
 import '../styles/single.css';
+import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SingleActivity = (props) => {
   const id = props.auth.id;
@@ -42,16 +44,11 @@ const SingleActivity = (props) => {
 
   return (
     <div className="singleContainer flex column aItemsC">
-      <div className="singleColumn flex column">
-        <h1 style={{
-          alignSelf: 'center',
-          textDecoration: 'underline',
-          textAlign: 'center',
-          margin: '19px 0px 25px 0px',
-        }}
-        >
-          {props.singleEvent.eventName}
+      <div className="singleColumn flex column activityEventTitle">
+        <h1>
+          <Link className='link' to={`/myEvents/${props.singleEvent.id}`}><FontAwesomeIcon className='fontAwesomeLink' icon={faLink} />{props.singleEvent.eventName}</Link>
         </h1>
+
         <div className="confLine">
           <p className="confBold">Activity: </p>
           <p className="confValue" style={{ textAlign: 'end' }}>{activityName}</p>
