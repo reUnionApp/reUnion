@@ -29,13 +29,13 @@ SwiperCore.use([Navigation, Pagination, A11y]);
 const CreateActivity = (props) => {
   const [activityName, setActivityName] = useState("");
   const [activityDescription, setActivityDescription] = useState("");
-  let [activityGoogleLocation, setActivityGoogleLocation] = useState({});
+  const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
   const [activityStartDateTime, setActivityStartDateTime] = useState(
     new Date()
   );
   const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
   const [activityData, setActivityData] = useState({});
-  let [activityTextLocation, setActivityTextLocation] = useState("");
+  const [activityTextLocation, setActivityTextLocation] = useState("");
 
   const handleChange = function (activity, hook) {
     activity.preventDefault();
@@ -57,7 +57,7 @@ const CreateActivity = (props) => {
     let activity = {
       activityName: activityName,
       description: activityDescription,
-      location: activityTextLocation === '' ? activityTextLocation = '' : activityGoogleLocation === '' ? activityGoogleLocation = '' :
+      location: activityTextLocation === '' ? setActivityTextLocation('') : activityGoogleLocation === '' ? setActivityGoogleLocation('') :
         activityTextLocation !== ""
           ? activityTextLocation
           : ` ${
