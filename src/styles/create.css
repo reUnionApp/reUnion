@@ -57,6 +57,7 @@
   margin: 15px 0px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
 }
 
 .createTextArea {
@@ -68,6 +69,7 @@
   padding: 15px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
 }
 
 #mapLocationInput {
@@ -79,6 +81,7 @@
   font-size: 16px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
 }
 
 #finalLocation {
@@ -126,7 +129,7 @@
   border-radius: 50%;
   transform: rotate(-25deg);
   border: 3px dotted white;
-  z-index: -5;
+  z-index: 1;
 }
 
 #descriptionConfContainer {
