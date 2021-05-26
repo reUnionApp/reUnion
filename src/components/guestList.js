@@ -12,6 +12,7 @@ import '../styles/create.css';
 import '../styles/single.css';
 import UpdateGuest from './updateGuest';
 import { use } from 'passport';
+import { CenterFocusStrong } from '@material-ui/icons';
 
 const colors = {
   1: 'tealFade',
@@ -23,6 +24,8 @@ const GuestList = (props) => {
   const [guestList, setGuestList] = useState([props.guests]);
   const [editPerson, setEditPerson] = useState(-1);
   let { error } = props;
+  const [emailError, setEmailError] = useState('');
+  const [inputError, setInputError] = useState('');
 
   useEffect(() => {
     props.getGuestList(props.match.params.eventId);
@@ -36,12 +39,32 @@ const GuestList = (props) => {
 
   const addGuest = async (e) => {
     // e.preventDefault()
+    const incorrectEmail = e.nativeEvent.target.form[2].validity.typeMismatch
+    if (incorrectEmail) {
+      setEmailError('I\'m expecting a valid email address');
+      setInputError("")
+      return;
+    } else {
+      setEmailError('');
+    }
+
     let guest = {
       firstName: e.target.parentNode.firstName.value,
       lastName: e.target.parentNode.lastName.value,
       email: e.target.parentNode.email.value,
       eventId: props.match.params.eventId,
     };
+
+    const errorArray = [guest.firstName, guest.lastName, guest.email];
+
+    if (errorArray.includes('')) {
+      setInputError('Enter a first name, last name and email');
+      setEmailError("");
+      return;
+    } else {
+      setInputError("")
+    }
+
     setGuestList([...guestList, guest]);
 
     await props.addPseudoUser(guest);
@@ -139,11 +162,17 @@ const GuestList = (props) => {
             </label>
             <input type="text" id="lastName" required />
           </div>
+          <div>
+            {emailError && <p style={{ textAlign: 'center', color: 'red' }}>{emailError}</p>}
+          </div>
           <div className="flex jContentSB marginBottom">
             <label style={{ fontWeight: 'bold' }} htmlFor="email">
               Email:
             </label>
             <input type="email" id="email" required />
+          </div>
+          <div>
+            {inputError && <p style={{ textAlign: 'center', color: 'red', margin: '30px 0px 0px 0px' }}>{inputError}</p>}
           </div>
           <button
             type="button"
@@ -178,8 +207,8 @@ const GuestList = (props) => {
                               </p>
                             </div>
                           ) : (
-                            <p className="expandedCardRowR">{guest.email}</p>
-                          )}
+                              <p className="expandedCardRowR">{guest.email}</p>
+                            )}
                         </div>
                         {guest.alias && (
                           <div className="expandedCardRow">
@@ -217,15 +246,15 @@ const GuestList = (props) => {
                                 </div>
                               </div>
                             ) : (
-                              <div className="expandedCardRow">
-                                <p className="expandedCardRowL">
-                                  Special Requests:
+                                <div className="expandedCardRow">
+                                  <p className="expandedCardRowL">
+                                    Special Requests:
                                 </p>
-                                <p className="expandedCardRowR">
-                                  {guest.specialRequests}
-                                </p>
-                              </div>
-                            )}
+                                  <p className="expandedCardRowR">
+                                    {guest.specialRequests}
+                                  </p>
+                                </div>
+                              )}
                           </>
                         )}
                         <div
@@ -238,22 +267,22 @@ const GuestList = (props) => {
                           {guest.userType === 'registered' ? (
                             'Registered User'
                           ) : (
-                            <button
-                              className="button"
-                              id="GLUpdateButton"
-                              onClick={() => {
-                                setGuestToUpdate({
-                                  firstName: guest.firstName,
-                                  lastName: guest.lastName,
-                                  email: guest.email,
-                                  id: guest.id,
-                                });
-                                openClose();
-                              }}
-                            >
-                              Update
-                            </button>
-                          )}
+                              <button
+                                className="button"
+                                id="GLUpdateButton"
+                                onClick={() => {
+                                  setGuestToUpdate({
+                                    firstName: guest.firstName,
+                                    lastName: guest.lastName,
+                                    email: guest.email,
+                                    id: guest.id,
+                                  });
+                                  openClose();
+                                }}
+                              >
+                                Update
+                              </button>
+                            )}
                         </div>
                       </div>
                     )}
