@@ -30,3 +30,25 @@
   padding: 0px 15px 15px 15px;
   border-bottom: 1px solid black;
 }
+
+.activityEventTitle {
+  align-self: center;
+  text-align: center;
+  margin: 19px 0px 25px 0px;
+  text-transform: capitalize;
+}
+
+.link {
+  color: rebeccapurple;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.fontAwesomeLink {
+  transform: scale(.65);
+}
+
+

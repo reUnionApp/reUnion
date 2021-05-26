@@ -51,7 +51,6 @@ const SingleEvent = (props) => {
         <h1
           style={{
             alignSelf: 'center',
-            textDecoration: 'underline',
             textAlign: 'center',
             margin: '19px 0px 25px 0px',
           }}
@@ -147,7 +146,6 @@ const SingleEvent = (props) => {
           <h2
             style={{
               alignSelf: 'center',
-              textDecoration: 'underline',
               textAlign: 'center',
               margin: '19px 0px 0px 0px',
               padding: '0px 0px 25px 0px',

@@ -94,7 +94,7 @@ const CreateEvent = (props) => {
           effect="fade"
           spaceBetween={0}
           slidesPerView={1}
-          navigation
+          navigation={true}
           allowTouchMove={false}
           style={{
             minHeight: '80vh',
@@ -107,7 +107,7 @@ const CreateEvent = (props) => {
         >
           <div>
             <SwiperSlide className="background3Up">
-              <div className="flex column aItemsC jContentC teal cEStamp">
+              <div className="flex column aItemsC jContentC teal cEStamp swiper-slide">
                 <p
                   style={{
                     textAlign: 'center',
@@ -392,7 +392,7 @@ const CreateEvent = (props) => {
           </div>
         </Swiper>
       </form>
-    </div>
+    </div >
   );
 };
 
