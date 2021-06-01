@@ -35,6 +35,7 @@ const CreateEvent = (props) => {
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
   const [eventTextLocation, setEventTextLocation] = useState('');
+  const [eventNameError, setEventNameError] = useState('');
 
   let errorArray = [eventName, eventDescription, eventType];
 
@@ -70,10 +71,18 @@ const CreateEvent = (props) => {
       endDateTime: eventEndDateTime,
     };
 
-    setEventData(event);
-    const resultId = await props.createEvent(event);
+    const createEventAttempt = await props.createEvent(event);
 
-    props.history.push(`/myEvents/${resultId}`);
+    console.log({ createEventAttempt });
+
+    if (createEventAttempt === "Validation error") {
+      setEventNameError('Event name already exists');
+    } else {
+      setEventData(event);
+      // const result = await props.createEvent(event);
+
+      props.history.push(`/myEvents/${createEventAttempt.id}`);
+    }
   };
 
   const addressError = () => {
@@ -139,6 +148,7 @@ const CreateEvent = (props) => {
                     placeholder="Event Name"
                     className="createInput"
                     value={eventName}
+                    pattern="^((?!~).)*$"
                     onChange={(event) => {
                       handleChange(event, setEventName);
                     }}
@@ -384,6 +394,7 @@ const CreateEvent = (props) => {
                   <p className="confBold">Host: </p>
                   <p className="confValue">{eventOwner}</p>
                 </div>
+                {eventNameError && <p className='confValueError'>{eventNameError}</p>}
                 <button type="submit" className="button createButton" disabled={errorArray.includes("")}>
                   Create Event
                 </button>
