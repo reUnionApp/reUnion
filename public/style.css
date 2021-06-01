@@ -20,6 +20,12 @@ body {
 .aItemsFS {
   align-items: flex-start;
 }
+.jContentSE {
+  justify-content: space-evenly;
+}
+.jContentSB {
+  justify-content: space-between;
+}
 .jContentC {
   justify-content: center;
 }
@@ -143,4 +149,13 @@ body {
 
 .background3Down {
   background-image: linear-gradient(to bottom right, #ffebf4, #fff5d6);
+}
+
+input,
+select {
+  border-radius: 10px;
+  border: none;
+  padding: 5px 15px;
+  outline: none;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

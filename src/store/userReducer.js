@@ -60,6 +60,7 @@ export const getUser = (userId) => async (dispatch) => {
 
 export const updateUser = (user) => async (dispatch) => {
   try {
+    console.log('update user thunk hit');
     const { data } = await axios.put(`/api/users/${user.id}`, user);
     dispatch(_updateUser(data));
     return 200;

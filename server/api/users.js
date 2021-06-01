@@ -147,11 +147,13 @@ router.put('/:userID', async (req, res, next) => {
 
   try {
     const user = await User.findByPk(id);
+    console.log('id --->', typeof id);
+    console.log('passport id--->', typeof req.session.passport.user);
     if (!user) {
       res.sendStatus(404);
     } else if (
       user.dataValues.userType === 'registered' &&
-      req.session.passport.user !== id
+      req.session.passport.user !== Number(id)
     ) {
       res.status(401).send('Cannot update registered user');
     } else {
@@ -159,9 +161,12 @@ router.put('/:userID', async (req, res, next) => {
       res.status(200).json(user);
     }
   } catch (error) {
-    console.log(666, error.errors[0].message);
-    if (error.errors[0].message === 'email must be unique') {
-      res.status(401).send('Email is already registered');
+    ç;
+    console.log(666, error);
+    if (error.errors) {
+      if (error.errors[0].message === 'email must be unique') {
+        res.status(401).send('Email is already registered');
+      }
     } else {
       next(error);
     }
