@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/updateGuest.css';
 
 const UpdateGuest = (props) => {
@@ -37,6 +37,7 @@ const UpdateGuest = (props) => {
             id="UGFirstName"
             placeholder="first name"
             defaultValue={props.guestInfo.firstName}
+            required
           />
           <label htmlFor="UGLastName" className="UGLabel">
             Last Name
@@ -47,17 +48,22 @@ const UpdateGuest = (props) => {
             id="UGLastName"
             placeholder="last name"
             defaultValue={props.guestInfo.lastName}
+            required
           />
           <label htmlFor="UGEmail" className="UGLabel">
             Email
           </label>
           <input
-            type="text"
+            type="email"
             className="UGInput"
             id="UGEmail"
             placeholder="email"
             defaultValue={props.guestInfo.email}
+            required
           />
+          {props.updateErrors.length > 0 && (
+            <p className="updateGuestError">{props.updateErrors}</p>
+          )}
         </div>
         <button type="submit" className="button" id="UGSubmit">
           Update Guest

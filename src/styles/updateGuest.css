@@ -32,3 +32,15 @@
   margin: 36px 0px 15px 0px;
   font-weight: bolder;
 }
+
+.updateGuestError {
+  color: rgb(197, 2, 2);
+  margin: 14px auto;
+  font-weight: bold;
+}
+
+#guestListAddError {
+  color: rgb(197, 2, 2);
+  margin: 14px auto 0px auto;
+  font-weight: bold;
+}

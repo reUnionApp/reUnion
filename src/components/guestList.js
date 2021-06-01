@@ -22,6 +22,7 @@ const colors = {
 const GuestList = (props) => {
   const [guestList, setGuestList] = useState([props.guests]);
   const [editPerson, setEditPerson] = useState(-1);
+  const [updateErrors, setUpdateErrors] = useState('');
   let { error } = props;
 
   useEffect(() => {
@@ -35,19 +36,17 @@ const GuestList = (props) => {
   let count = 0;
 
   const addGuest = async (e) => {
-    // e.preventDefault()
+    e.preventDefault();
     let guest = {
-      firstName: e.target.parentNode.firstName.value,
-      lastName: e.target.parentNode.lastName.value,
-      email: e.target.parentNode.email.value,
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      email: e.target.email.value,
       eventId: props.match.params.eventId,
     };
     setGuestList([...guestList, guest]);
 
     await props.addPseudoUser(guest);
     await props.getGuestList(props.match.params.eventId);
-
-    e.target.parentNode.reset();
 
     // console.log(e.target.parentNode.firstName.value)
   };
@@ -64,9 +63,14 @@ const GuestList = (props) => {
   };
 
   const handleUpdate = async (event, updatedInfo) => {
-    openClose();
-    await props.updateUser(updatedInfo);
-    await props.getGuestList(props.match.params.eventId);
+    const updateGuestAttempt = await props.updateUser(updatedInfo);
+    if (updateGuestAttempt === 200) {
+      setUpdateErrors('');
+      openClose();
+      await props.getGuestList(props.match.params.eventId);
+    } else {
+      setUpdateErrors(updateGuestAttempt);
+    }
   };
 
   const selectText = (event) => {
@@ -111,6 +115,7 @@ const GuestList = (props) => {
           guestInfo={guestToUpdate}
           handleUpdate={handleUpdate}
           deleteGuest={deleteSelectedGuest}
+          updateErrors={updateErrors}
         />
       </div>
       <h1
@@ -126,7 +131,12 @@ const GuestList = (props) => {
         {props.singleEvent.eventName}
       </h1>
       <div className="singleColumn flex column jContentC aItemsC">
-        <form id="guest-list" className="flex column" style={{ width: '100%' }}>
+        <form
+          id="guest-list"
+          className="flex column"
+          style={{ width: '100%' }}
+          onSubmit={addGuest}
+        >
           <div className="flex jContentSB marginBottom">
             <label style={{ fontWeight: 'bold' }} htmlFor="first-name">
               First Name:
@@ -145,15 +155,15 @@ const GuestList = (props) => {
             </label>
             <input type="email" id="email" required />
           </div>
-          <button
-            type="button"
-            className="button createButton"
-            onClick={(e) => addGuest(e)}
-          >
+          {error && error.response ? (
+            <p id="guestListAddError"> {error.response.data} </p>
+          ) : (
+            false
+          )}
+          <button type="submit" className="button createButton">
             Add New Guest
           </button>
         </form>
-        {error && error.response ? <div> {error.response.data} </div> : <br />}
         <div id="guestListContainer">
           {props.guests &&
             props.guests.map((guest) => {

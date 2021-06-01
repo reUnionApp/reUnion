@@ -134,7 +134,6 @@ const UpdateEvent = (props) => {
   };
 
   const onPlaceChanged = () => {
-    console.log(999, googleLocation.getPlace());
     if (googleLocation !== null) {
       if (!googleLocation.getPlace().address_components) {
         console.log('here');
@@ -160,9 +159,12 @@ const UpdateEvent = (props) => {
   return (
     <div
       className="flex column jContentC aItemsC "
-    // style={{ marginTop: '50px' }}
+      // style={{ marginTop: '50px' }}
     >
-      <div className="flex column layout jContentC aItemsC" style={{ textAlign: 'center' }}>
+      <div
+        className="flex column layout jContentC aItemsC"
+        style={{ textAlign: 'center' }}
+      >
         <h1>Update {props.event.eventName}</h1>
         <form
           className="createForm"
@@ -309,7 +311,7 @@ const UpdateEvent = (props) => {
                 handleChange(event, setEventCoordinator);
               }}
             ></input> */}
-            <div className="boldLabel flex jContentSB marginBottom" >
+            <div className="boldLabel flex jContentSB marginBottom">
               Description:
             </div>
             <div style={{ width: '290px' }}>
