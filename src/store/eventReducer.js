@@ -32,6 +32,7 @@ const _removeEvent = (event) => ({
 export const getEvent = (id) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/events/${id}`);
+    data.eventName = data.eventName.split('~')[0];
     dispatch(_getEvent(data));
   } catch (error) {
     console.error(error);
@@ -41,10 +42,12 @@ export const getEvent = (id) => async (dispatch) => {
 export const createEvent = (event) => async (dispatch) => {
   try {
     const { data } = await axios.post('/api/events', event);
+    data.eventName = data.eventName.split('~')[0];
     dispatch(_createEvent(data));
-    return data.id;
+    return data;
   } catch (error) {
     console.error(error);
+    return error.response.data;
   }
 };
 
@@ -52,7 +55,7 @@ export const updateEvent = (eventId, event) => async (dispatch) => {
   try {
     const { data } = await axios.put(`/api/events/${eventId}`, event);
     dispatch(_updateEvent(data));
-    return data.id;
+    return data;
   } catch (error) {
     console.error(error);
   }

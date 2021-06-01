@@ -54,6 +54,7 @@ router.delete('/:eventID', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    req.body.eventName = `${req.body.eventName}~${req.body.ownerId}`;
     const newEvent = await Event.create(req.body);
     res.status(201).json(newEvent);
     newEvent.setUsers(req.body.ownerId, { through: { isOwner: true } });
@@ -75,6 +76,7 @@ router.put('/:eventID', async (req, res, next) => {
     if (!event) {
       res.sendStatus(404);
     } else {
+      req.body.eventName = `${req.body.eventName}~${req.body.ownerId}`;
       await event.update(req.body);
       res.status(200).json(event);
     }
