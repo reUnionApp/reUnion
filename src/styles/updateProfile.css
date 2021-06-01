@@ -1,7 +1,52 @@
-.formInput {
+#UPMaster {
+  padding: 75px 0px;
+  height: 100vh;
+}
+
+#UPForm {
+  margin: 10px 0px 36px 0px;
+}
+
+.UPFormInput {
   margin: 0px 0px 0px 20px;
 }
 
 .formLabInp {
-  margin: 10px 0px;
+  margin: 20px 0px 20px 36px;
+  font-size: 16px;
+}
+
+#UPDeleteButton {
+  margin: 0px 25px 0px 0px;
+}
+
+#UPTitle {
+  margin: 0px;
+  text-align: center;
+}
+
+#UPButtonRow {
+  margin: 15px 0px 50px 0px;
+}
+
+#UPBackButton {
+  margin: 0px 0px 0px 25px;
+}
+
+#UPSubmitButton {
+  margin: 36px auto 0px auto;
+}
+
+#UPErrorDiv {
+  margin: 10px 0px 0px 0px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#UPError {
+  color: red;
+  font-size: 16px;
+  margin: 0px;
 }

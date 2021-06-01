@@ -1,55 +1,70 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getUser, deleteUser, updateUser, me } from "../store";
-import { Link } from "react-router-dom";
-import history from "../history";
-import "../styles/updateProfile.css";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getUser, deleteUser, updateUser, me } from '../store';
+import { Link } from 'react-router-dom';
+import history from '../history';
+import '../styles/updateProfile.css';
 
 const UpdateProfile = (props) => {
   const authUser = props.auth;
   if (props.auth.specialRequests === null) {
-    props.auth.specialRequests = "";
+    props.auth.specialRequests = '';
   }
 
   if (props.auth.dietaryRestrictions === null) {
-    props.auth.dietaryRestrictions = "";
+    props.auth.dietaryRestrictions = '';
   }
 
   if (props.auth.alias === null) {
-    props.auth.alias = "";
+    props.auth.alias = '';
   }
 
   const [userState, updateUserState] = useState({ ...props.auth });
+  const [updateUserError, setUpdateUserError] = useState('');
 
   const handleChange = (e) => {
     updateUserState({ ...userState, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
-    console.log("userstatttteee", userState);
-    props.updateUser(userState);
-    props.me();
-    props.history.push("/profile");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const dbResponse = await props.updateUser(userState);
+    if (dbResponse === 200) {
+      setUpdateUserError('');
+      props.me();
+      props.history.push('/profile');
+    } else {
+      setUpdateUserError(dbResponse);
+    }
   };
 
   return (
-    <div style={{ margin: "75px 0px 0px 0px" }}>
-      <div className="w100 flex jContentSB aItemsC">
-        <h1
-          style={{ marginLeft: "15px" }}
-        >{`Update ${props.auth.firstName}'s Profile`}</h1>
+    <div id="UPMaster" className="background3Down">
+      <div className="w100 flex jContentSB" id="UPButtonRow">
+        <Link to="/profile">
+          <button
+            type="button"
+            className="button updateProfile yellowFade"
+            id="UPBackButton"
+          >
+            Back to Profile
+          </button>
+        </Link>
         <button
-          style={{ marginRight: "15px" }}
           type="button"
-          className="button updateProfile pink"
+          className="button updateProfile pinkFade"
+          id="UPDeleteButton"
         >
           Delete Profile
         </button>
       </div>
+      <h1 id="UPTitle">{`Update ${props.auth.firstName}'s Profile`}</h1>
+      <div id="UPErrorDiv">
+        <p id="UPError">{updateUserError}</p>
+      </div>
       <form
         className="flex column aItemsFS"
-        style={{ margin: "36px 0px 36px 36px" }}
+        id="UPForm"
         onSubmit={handleSubmit}
       >
         <div className="formLabInp">
@@ -60,7 +75,7 @@ const UpdateProfile = (props) => {
             type="email"
             id="email"
             placeholder="enter email..."
-            className="formInput"
+            className="UPFormInput"
             value={userState.email}
             onChange={handleChange}
           />
@@ -71,7 +86,7 @@ const UpdateProfile = (props) => {
           </label>
           <select
             id="dietaryRestrictions"
-            className="formInput"
+            className="UPFormInput"
             value={userState.dietaryRestrictions}
             onChange={handleChange}
           >
@@ -93,7 +108,7 @@ const UpdateProfile = (props) => {
             id="specialRequests"
             type="text"
             placeholder="Enter Special Requests"
-            className="formInput"
+            className="UPFormInput"
             value={userState.specialRequests}
             onChange={handleChange}
           />
@@ -106,16 +121,12 @@ const UpdateProfile = (props) => {
             id="alias"
             type="text"
             placeholder="Enter a Nickname"
-            className="formInput"
+            className="UPFormInput"
             value={userState.alias}
             onChange={handleChange}
           />
         </div>
-        <button
-          type="submit"
-          className="button teal"
-          style={{ margin: "36px 0px 0px 0px" }}
-        >
+        <button type="submit" className="button tealFade" id="UPSubmitButton">
           Update Profile
         </button>
       </form>

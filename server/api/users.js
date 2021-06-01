@@ -151,7 +151,7 @@ router.put('/:userID', async (req, res, next) => {
       res.sendStatus(404);
     } else if (
       user.dataValues.userType === 'registered' &&
-      req.session.passport.user !== id
+      req.session.passport.user !== Number(id)
     ) {
       res.status(401).send('Cannot update registered user');
     } else {
@@ -159,9 +159,10 @@ router.put('/:userID', async (req, res, next) => {
       res.status(200).json(user);
     }
   } catch (error) {
-    // console.log(666, error.errors[0].message);
-    if (error.errors[0].message === 'email must be unique') {
-      res.status(401).send('Email is already registered');
+    if (error.errors) {
+      if (error.errors[0].message === 'email must be unique') {
+        res.status(401).send('Email is already registered');
+      }
     } else {
       next(error);
     }
