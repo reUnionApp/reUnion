@@ -61,9 +61,11 @@ const UpdateGuest = (props) => {
             defaultValue={props.guestInfo.email}
             required
           />
-          {props.updateErrors.length > 0 && (
-            <p className="updateGuestError">{props.updateErrors}</p>
-          )}
+          <div id="updateGuestErrorDiv">
+            {props.updateErrors.length > 0 && (
+              <p className="updateGuestError">{props.updateErrors}</p>
+            )}
+          </div>
         </div>
         <button type="submit" className="button" id="UGSubmit">
           Update Guest

@@ -155,12 +155,18 @@ const GuestList = (props) => {
             </label>
             <input type="email" id="email" required />
           </div>
-          {error && error.response ? (
-            <p id="guestListAddError"> {error.response.data} </p>
-          ) : (
-            false
-          )}
-          <button type="submit" className="button createButton">
+          <div id="guestListErrorDiv">
+            {error && error.response ? (
+              <p id="guestListAddError"> {error.response.data} </p>
+            ) : (
+              false
+            )}
+          </div>
+          <button
+            type="submit"
+            id="addNewGuestButton"
+            className="button createButton"
+          >
             Add New Guest
           </button>
         </form>

@@ -104,3 +104,20 @@
 #GLUpdateButton {
   /* margin: 36px 0px 0px 0px; */
 }
+
+#addNewGuestButton {
+  margin: 15px 0px 30px 0px;
+}
+
+#guestListErrorDiv {
+  height: 30px;
+  margin: 0px auto;
+  display: flex;
+  align-items: center;
+}
+
+#guestListAddError {
+  color: rgb(197, 2, 2);
+  font-weight: bold;
+  margin: 0px;
+}
