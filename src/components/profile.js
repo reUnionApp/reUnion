@@ -6,7 +6,6 @@ import history from '../history';
 import '../styles/profile.css';
 
 const Profile = (props) => {
-  console.log(777, props.auth.alias);
   const goToUpdateProfile = () => {
     props.history.push('/updateprofile');
   };

@@ -147,8 +147,6 @@ router.put('/:userID', async (req, res, next) => {
 
   try {
     const user = await User.findByPk(id);
-    console.log('id --->', typeof id);
-    console.log('passport id--->', typeof req.session.passport.user);
     if (!user) {
       res.sendStatus(404);
     } else if (
@@ -161,8 +159,6 @@ router.put('/:userID', async (req, res, next) => {
       res.status(200).json(user);
     }
   } catch (error) {
-    ç;
-    console.log(666, error);
     if (error.errors) {
       if (error.errors[0].message === 'email must be unique') {
         res.status(401).send('Email is already registered');

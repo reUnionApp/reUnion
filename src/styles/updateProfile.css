@@ -4,7 +4,7 @@
 }
 
 #UPForm {
-  margin: 50px 0px 36px 0px;
+  margin: 10px 0px 36px 0px;
 }
 
 .UPFormInput {
@@ -35,4 +35,18 @@
 
 #UPSubmitButton {
   margin: 36px auto 0px auto;
+}
+
+#UPErrorDiv {
+  margin: 10px 0px 0px 0px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#UPError {
+  color: red;
+  font-size: 16px;
+  margin: 0px;
 }

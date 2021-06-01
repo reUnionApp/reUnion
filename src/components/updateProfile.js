@@ -20,20 +20,23 @@ const UpdateProfile = (props) => {
   }
 
   const [userState, updateUserState] = useState({ ...props.auth });
+  const [updateUserError, setUpdateUserError] = useState('');
 
   const handleChange = (e) => {
     updateUserState({ ...userState, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    props.updateUser(userState);
-    props.me();
-    props.history.push('/profile');
+    const dbResponse = await props.updateUser(userState);
+    if (dbResponse === 200) {
+      setUpdateUserError('');
+      props.me();
+      props.history.push('/profile');
+    } else {
+      setUpdateUserError(dbResponse);
+    }
   };
-
-  console.log('user state--->', userState);
-  console.log('userState.alias--->', userState.alias);
 
   return (
     <div id="UPMaster" className="background3Down">
@@ -56,6 +59,9 @@ const UpdateProfile = (props) => {
         </button>
       </div>
       <h1 id="UPTitle">{`Update ${props.auth.firstName}'s Profile`}</h1>
+      <div id="UPErrorDiv">
+        <p id="UPError">{updateUserError}</p>
+      </div>
       <form
         className="flex column aItemsFS"
         id="UPForm"
