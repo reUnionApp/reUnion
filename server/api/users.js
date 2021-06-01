@@ -139,6 +139,7 @@ router.post('/', async (req, res, next) => {
 // Single User: PUT /api/users/:userID
 // userOrAdminOnly
 router.put('/:userID', async (req, res, next) => {
+  console.log('- - - - - - route hit');
   const id = req.params.userID;
 
   // req.body.specialRequests = req.body.specialRequests;
@@ -148,13 +149,21 @@ router.put('/:userID', async (req, res, next) => {
     const user = await User.findByPk(id);
     if (!user) {
       res.sendStatus(404);
-    } else if (user.dataValues.userType === 'registered' && req.session.passport.user != id) {
+    } else if (
+      user.dataValues.userType === 'registered' &&
+      req.session.passport.user !== id
+    ) {
       res.status(401).send('Cannot update registered user');
     } else {
       await user.update(req.body);
       res.status(200).json(user);
     }
   } catch (error) {
-    next(error);
+    console.log(666, error.errors[0].message);
+    if (error.errors[0].message === 'email must be unique') {
+      res.status(401).send('Email must be unique');
+    } else {
+      next(error);
+    }
   }
 });

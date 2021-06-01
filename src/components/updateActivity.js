@@ -1,6 +1,11 @@
 //React/Redux
 import React, { useState, useEffect, useRef } from 'react';
-import { getEvent, getActivity, updateActivity, removeActivity } from '../store';
+import {
+  getEvent,
+  getActivity,
+  updateActivity,
+  removeActivity,
+} from '../store';
 import { connect } from 'react-redux';
 
 // React component imports
@@ -32,7 +37,6 @@ import {
   LoadScript,
   GoogleMap,
 } from '@react-google-maps/api';
-
 
 // .env config
 import dotenv from 'dotenv';
@@ -132,7 +136,6 @@ const UpdateActivity = (props) => {
   };
 
   const onPlaceChanged = () => {
-    console.log(999, googleLocation.getPlace());
     if (googleLocation !== null) {
       if (!googleLocation.getPlace().address_components) {
         console.log('here');
@@ -157,17 +160,22 @@ const UpdateActivity = (props) => {
 
   return (
     <div className="flex column jContentC aItemsC ">
-      <div className="flex column layout jContentC aItemsC" style={{ textAlign: 'center' }}>
+      <div
+        className="flex column layout jContentC aItemsC"
+        style={{ textAlign: 'center' }}
+      >
         <h1>Update {props.activity.activityName}:</h1>
-        <form className="createForm"
+        <form
+          className="createForm"
           onSubmit={submitActivityForm}
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();
-          }}>
+          }}
+        >
           <div className="flex column">
             <div className="boldLabel flex jContentSB marginBottom">
               Activity Name:
-          <input
+              <input
                 style={{ width: '50%' }}
                 type="text"
                 name="activityName"
@@ -285,7 +293,7 @@ const UpdateActivity = (props) => {
             }}
           />
         </div> */}
-            <div className="boldLabel flex jContentSB marginBottom" >
+            <div className="boldLabel flex jContentSB marginBottom">
               Description:
             </div>
             <div style={{ width: '290px' }}>
@@ -300,15 +308,13 @@ const UpdateActivity = (props) => {
                 }}
               ></textarea>
             </div>
-            <button
-              type="submit" className="button createButton"
-            >
+            <button type="submit" className="button createButton">
               Update Activity
-        </button>
+            </button>
           </div>
         </form>
       </div>
-    </div >
+    </div>
   );
 };
 

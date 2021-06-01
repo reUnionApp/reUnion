@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-const ADD_PSEUDO_USER = "ADD_PSEUDO_USER";
-const GET_USER = "GET_USER";
-const UPDATE_USER = "UPDATE_USER";
-const DELETE_USER = "DELETE_USER";
-const CLEAR_ERROR = "CLEAR_ERROR";
+const ADD_PSEUDO_USER = 'ADD_PSEUDO_USER';
+const GET_USER = 'GET_USER';
+const UPDATE_USER = 'UPDATE_USER';
+const DELETE_USER = 'DELETE_USER';
+const CLEAR_ERROR = 'CLEAR_ERROR';
 
 const _addPseudoUser = (user) => {
   return {
@@ -37,8 +37,8 @@ const _deleteUser = (user) => {
 export const addPseudoUser = (user) => async (dispatch) => {
   let res;
   try {
-    console.log("POST", user);
-    res = await axios.post("/api/users/", user);
+    console.log('POST', user);
+    res = await axios.post('/api/users/', user);
   } catch (userError) {
     return dispatch(_addPseudoUser({ error: userError }));
   }
@@ -62,8 +62,10 @@ export const updateUser = (user) => async (dispatch) => {
   try {
     const { data } = await axios.put(`/api/users/${user.id}`, user);
     dispatch(_updateUser(data));
+    return 200;
   } catch (error) {
     console.error(error);
+    return error.response.data;
   }
 };
 
