@@ -159,7 +159,7 @@ router.put('/:userID', async (req, res, next) => {
       res.status(200).json(user);
     }
   } catch (error) {
-    console.log(666, error.errors[0].message);
+    // console.log(666, error.errors[0].message);
     if (error.errors[0].message === 'email must be unique') {
       res.status(401).send('Email is already registered');
     } else {

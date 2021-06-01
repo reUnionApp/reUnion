@@ -159,7 +159,7 @@ const UpdateEvent = (props) => {
   return (
     <div
       className="flex column jContentC aItemsC "
-      // style={{ marginTop: '50px' }}
+    // style={{ marginTop: '50px' }}
     >
       <div
         className="flex column layout jContentC aItemsC"
@@ -326,7 +326,6 @@ const UpdateEvent = (props) => {
                 }}
               ></textarea>
             </div>
-
             <button type="submit" className="button createButton">
               Update Event
             </button>
