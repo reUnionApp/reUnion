@@ -31,9 +31,11 @@ const CreateActivity = (props) => {
   const [activityDescription, setActivityDescription] = useState("");
   const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
   const [activityStartDateTime, setActivityStartDateTime] = useState(
-    new Date()
+    new Date(props.singleEvent.startDateTime)
   );
-  const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
+  const [activityEndDateTime, setActivityEndDateTime] = useState(
+    new Date(props.singleEvent.endDateTime)
+  );
   const [activityData, setActivityData] = useState({});
   const [activityTextLocation, setActivityTextLocation] = useState("");
 
@@ -43,6 +45,9 @@ const CreateActivity = (props) => {
   };
 
   const dateFormat = (date) => {
+    if (!date) {
+      return;
+    }
     let dateObj = date;
     let month = dateObj.getUTCMonth() + 1; //months from 1-12
     let day = dateObj.getUTCDate();
@@ -57,12 +62,14 @@ const CreateActivity = (props) => {
     let activity = {
       activityName: activityName,
       description: activityDescription,
-      location: activityTextLocation === '' ? setActivityTextLocation('') : activityGoogleLocation === '' ? setActivityGoogleLocation('') :
-        activityTextLocation !== ""
+      location:
+        activityTextLocation === ""
+          ? setActivityTextLocation("")
+          : activityGoogleLocation === ""
+          ? setActivityGoogleLocation("")
+          : activityTextLocation !== ""
           ? activityTextLocation
-          : ` ${
-          activityGoogleLocation.getPlace().formatted_address
-          }`,
+          : ` ${activityGoogleLocation.getPlace().formatted_address}`,
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
@@ -195,7 +202,9 @@ const CreateActivity = (props) => {
                 <p className="confValue" style={{ textAlign: "end" }}>
                   {activityName}
                 </p>
-                {activityName === '' && <p className='confValueError'>NO ACTIVITY NAME</p>}
+                {activityName === "" && (
+                  <p className="confValueError">NO ACTIVITY NAME</p>
+                )}
               </div>
               <div
                 className="confLine"
@@ -207,8 +216,8 @@ const CreateActivity = (props) => {
                     <p className="confValue">{activityDescription}</p>
                   </div>
                 ) : (
-                    false
-                  )}
+                  false
+                )}
               </div>
               {activityTextLocation !== "" ? (
                 <div className="confLine">
@@ -218,50 +227,61 @@ const CreateActivity = (props) => {
                   </div>
                 </div>
               ) : (
-                  <div className="confLine">
-                    <p className="confBold">Location: </p>
-                    <div id="locationConf">
-                      {activityGoogleLocation.gm_bindings_ &&
-                        activityGoogleLocation.getPlace() ? (
-                          <p className="confValue">
-                            {activityGoogleLocation.getPlace().name},
-                            {activityGoogleLocation.getPlace().formatted_address}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                    </div>
+                <div className="confLine">
+                  <p className="confBold">Location: </p>
+                  <div id="locationConf">
+                    {activityGoogleLocation.gm_bindings_ &&
+                    activityGoogleLocation.getPlace() ? (
+                      <p className="confValue">
+                        {activityGoogleLocation.getPlace().name},
+                        {activityGoogleLocation.getPlace().formatted_address}
+                      </p>
+                    ) : (
+                      false
+                    )}
                   </div>
-                )}
+                </div>
+              )}
               <div className="confLine">
                 <p className="confBold">Start Date: </p>
-                <p className="confValue">{dateFormat(activityStartDateTime)}</p>
+                <p className="confValue">
+                  {console.log("PROPS.SINGLEEVENT", props.singleEvent)}
+                  {activityStartDateTime && dateFormat(activityStartDateTime)}
+                </p>
               </div>
               <div className="confLine">
                 <p className="confBold">End Date: </p>
-                <p className="confValue">{dateFormat(activityEndDateTime)}</p>
+                <p className="confValue">
+                  {activityEndDateTime && dateFormat(activityEndDateTime)}
+                </p>
               </div>
               <div className="confLine">
                 <p className="confBold">Start Time: </p>
                 <p className="confValue">
-                  {activityStartDateTime.toLocaleTimeString("en-US", {
-                    hour12: true,
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {activityStartDateTime &&
+                    activityStartDateTime.toLocaleTimeString("en-US", {
+                      hour12: true,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                 </p>
               </div>
               <div className="confLine">
                 <span className="confBold">End Time: </span>
                 <p className="confValue">
-                  {activityEndDateTime.toLocaleTimeString("en-US", {
-                    hour12: true,
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {activityEndDateTime &&
+                    activityEndDateTime.toLocaleTimeString("en-US", {
+                      hour12: true,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                 </p>
               </div>
-              <button type="submit" className="button createButton" disabled={activityName === ''}>
+              <button
+                type="submit"
+                className="button createButton"
+                disabled={activityName === ""}
+              >
                 Create Activity
               </button>
             </div>
@@ -275,6 +295,7 @@ const CreateActivity = (props) => {
 const mapState = (state) => ({
   activity: state.activityReducer,
   auth: state.authReducer,
+  singleEvent: state.eventReducer,
 });
 
 const mapDispatch = (dispatch) => ({
