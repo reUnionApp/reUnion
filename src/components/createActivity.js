@@ -31,9 +31,11 @@ const CreateActivity = (props) => {
   const [activityDescription, setActivityDescription] = useState('');
   const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
   const [activityStartDateTime, setActivityStartDateTime] = useState(
-    new Date()
+    new Date(props.singleEvent.startDateTime)
   );
-  const [activityEndDateTime, setActivityEndDateTime] = useState(new Date());
+  const [activityEndDateTime, setActivityEndDateTime] = useState(
+    new Date(props.singleEvent.endDateTime)
+  );
   const [activityData, setActivityData] = useState({});
   const [activityTextLocation, setActivityTextLocation] = useState('');
 
@@ -43,6 +45,9 @@ const CreateActivity = (props) => {
   };
 
   const dateFormat = (date) => {
+    if (!date) {
+      return;
+    }
     let dateObj = date;
     let month = dateObj.getUTCMonth() + 1; //months from 1-12
     let day = dateObj.getUTCDate();
@@ -236,15 +241,20 @@ const CreateActivity = (props) => {
               )}
               <div className="confLine">
                 <p className="confBold">Start Date: </p>
-                <p className="confValue">{dateFormat(activityStartDateTime)}</p>
+                <p className="confValue">
+                  {activityStartDateTime && dateFormat(activityStartDateTime)}
+                </p>
               </div>
               <div className="confLine">
                 <p className="confBold">End Date: </p>
-                <p className="confValue">{dateFormat(activityEndDateTime)}</p>
+                <p className="confValue">
+                  {activityEndDateTime && dateFormat(activityEndDateTime)}
+                </p>
               </div>
               <div className="confLine">
                 <p className="confBold">Start Time: </p>
                 <p className="confValue">
+
                   {activityStartDateTime.toLocaleTimeString('en-US', {
                     hour12: true,
                     hour: '2-digit',
@@ -255,17 +265,33 @@ const CreateActivity = (props) => {
               <div className="confLine">
                 <span className="confBold">End Time: </span>
                 <p className="confValue">
-                  {activityEndDateTime.toLocaleTimeString('en-US', {
-                    hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
+                  {activityEndDateTime &&
+                    activityEndDateTime.toLocaleTimeString("en-US", {
+                      hour12: true,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                 </p>
+              </div>
+              <div>
+                {activityStartDateTime &&
+                activityEndDateTime &&
+                (Date.parse(activityStartDateTime) <
+                  Date.parse(props.singleEvent.startDateTime) ||
+                  Date.parse(activityEndDateTime) >
+                    Date.parse(props.singleEvent.endDateTime)) ? (
+                  <p className="confValueError" style={{ textAlign: "center" }}>
+                    Warning! This activity starts or ends outside of the main
+                    event timeframe
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
               <button
                 type="submit"
                 className="button createButton"
-                disabled={activityName === ''}
+                disabled={activityName === ""}
               >
                 Create Activity
               </button>
@@ -280,6 +306,7 @@ const CreateActivity = (props) => {
 const mapState = (state) => ({
   activity: state.activityReducer,
   auth: state.authReducer,
+  singleEvent: state.eventReducer,
 });
 
 const mapDispatch = (dispatch) => ({

@@ -1,41 +1,41 @@
 // React/Redux
-import React, { useState, useEffect, useRef } from 'react';
-import { getEvent, createEvent } from '../store';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import { getEvent, createEvent } from "../store";
+import { connect } from "react-redux";
 
 // React component imports
-import { GoogleMapComponent, DateTimePicker, GuestList } from './index.js';
+import { GoogleMapComponent, DateTimePicker, GuestList } from "./index.js";
 
 // CSS imports
-import '../styles/create.css';
+import "../styles/create.css";
 
 // Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, A11y } from 'swiper';
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
 
 // .env config
-import dotenv from 'dotenv';
-import zIndex from '@material-ui/core/styles/zIndex';
-import { useForkRef } from '@material-ui/core';
+import dotenv from "dotenv";
+import zIndex from "@material-ui/core/styles/zIndex";
+import { useForkRef } from "@material-ui/core";
 dotenv.config();
 
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateEvent = (props) => {
-  const [eventName, setEventName] = useState('');
-  const [eventType, setEventType] = useState('');
+  const [eventName, setEventName] = useState("");
+  const [eventType, setEventType] = useState("");
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
   // const [eventCoordinator, setEventCoordinator] = useState('');
-  const [eventDescription, setEventDescription] = useState('');
+  const [eventDescription, setEventDescription] = useState("");
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
   const [eventEndDateTime, setEventEndDateTime] = useState(new Date());
   const [eventData, setEventData] = useState({});
-  const [eventTextLocation, setEventTextLocation] = useState('');
-  const [eventNameError, setEventNameError] = useState('');
+  const [eventTextLocation, setEventTextLocation] = useState("");
+  const [eventNameError, setEventNameError] = useState("");
 
   let errorArray = [eventName, eventDescription, eventType];
 
@@ -49,12 +49,12 @@ const CreateEvent = (props) => {
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
 
-    return month + '/' + day + '/' + year;
+    return month + "/" + day + "/" + year;
   };
 
   const submitEventForm = async function (click) {
     click.preventDefault();
-    console.log('submit form func was fired!!!!!');
+    console.log("submit form func was fired!!!!!");
 
     let event = {
       eventName: eventName,
@@ -64,7 +64,7 @@ const CreateEvent = (props) => {
       // coordinator: [eventCoordinator],
       description: eventDescription,
       location:
-        eventTextLocation !== ''
+        eventTextLocation !== ""
           ? eventTextLocation
           : `${eventGoogleLocation.getPlace().formatted_address}`,
       startDateTime: eventStartDateTime,
@@ -74,6 +74,7 @@ const CreateEvent = (props) => {
     const createEventAttempt = await props.createEvent(event);
 
     console.log({ createEventAttempt });
+
 
     if (createEventAttempt === 'Validation error') {
       setEventNameError('Event name already exists');
@@ -87,6 +88,7 @@ const CreateEvent = (props) => {
 
   const addressError = () => {
     errorArray.push('');
+
     return <p className="confValueError">NO ADDRESS</p>;
   };
 
@@ -96,7 +98,7 @@ const CreateEvent = (props) => {
         className="createForm"
         onSubmit={submitEventForm}
         onKeyPress={(e) => {
-          e.key === 'Enter' && e.preventDefault();
+          e.key === "Enter" && e.preventDefault();
         }}
       >
         <Swiper
@@ -106,12 +108,12 @@ const CreateEvent = (props) => {
           navigation={true}
           allowTouchMove={false}
           style={{
-            minHeight: '80vh',
-            bottom: '0',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            minHeight: "80vh",
+            bottom: "0",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
           }}
         >
           <div>
@@ -119,9 +121,9 @@ const CreateEvent = (props) => {
               <div className="flex column aItemsC jContentC teal cEStamp swiper-slide">
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: '12px',
-                    margin: '0px 5px',
+                    textAlign: "center",
+                    fontSize: "12px",
+                    margin: "0px 5px",
                   }}
                 >
                   What's the event about?
@@ -129,16 +131,16 @@ const CreateEvent = (props) => {
               </div>
               <div
                 style={{
-                  minHeight: '100%',
-                  width: '80%',
-                  margin: '130px 0px 55px 0px',
+                  minHeight: "100%",
+                  width: "80%",
+                  margin: "130px 0px 55px 0px",
                 }}
                 className="flex column jContentFS aItemsC"
               >
                 <div
                   style={{
-                    width: '80%',
-                    margin: '0px 0px 36px 0px',
+                    width: "80%",
+                    margin: "0px 0px 36px 0px",
                   }}
                   className="flex column"
                 >
@@ -155,7 +157,7 @@ const CreateEvent = (props) => {
                   ></input>
                   <div
                     className="swiper-no-swiping"
-                    style={{ width: '50vw' }}
+                    style={{ width: "50vw" }}
                   ></div>
                   {/* <input
                     type="text"
@@ -181,15 +183,15 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide
-              style={{ overflow: 'scroll' }}
+              style={{ overflow: "scroll" }}
               className="background1Down"
             >
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: '12px',
-                    margin: '0px 5px',
+                    textAlign: "center",
+                    fontSize: "12px",
+                    margin: "0px 5px",
                   }}
                 >
                   What type of event?
@@ -198,7 +200,7 @@ const CreateEvent = (props) => {
               <div
                 id="radioContainer"
                 className="flex column aItemsC jContentC"
-                style={{ height: '100%' }}
+                style={{ height: "100%" }}
                 onChange={(event) => {
                   handleChange(event, setEventType);
                 }}
@@ -261,21 +263,21 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide
-              style={{ overflow: 'scroll' }}
+              style={{ overflow: "scroll" }}
               className="background2Up"
             >
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: '12px',
-                    margin: '0px 5px',
+                    textAlign: "center",
+                    fontSize: "12px",
+                    margin: "0px 5px",
                   }}
                 >
                   Where is your event?
                 </p>
               </div>
-              <div style={{ margin: '130px 0px 55px 0px' }}>
+              <div style={{ margin: "130px 0px 55px 0px" }}>
                 <GoogleMapComponent
                   textLocation={eventTextLocation}
                   setTextLocation={setEventTextLocation}
@@ -288,9 +290,9 @@ const CreateEvent = (props) => {
               <div className="flex column aItemsC jContentC teal cEStamp">
                 <p
                   style={{
-                    textAlign: 'center',
-                    fontSize: '12px',
-                    margin: '0px 5px',
+                    textAlign: "center",
+                    fontSize: "12px",
+                    margin: "0px 5px",
                   }}
                 >
                   When is your event?
@@ -298,7 +300,7 @@ const CreateEvent = (props) => {
               </div>
               <div
                 className="flex column jContentC"
-                style={{ height: '100vh', width: '60%' }}
+                style={{ height: "100vh", width: "60%" }}
               >
                 <DateTimePicker
                   startDateTime={eventStartDateTime}
@@ -309,10 +311,11 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide
-              style={{ overflow: 'scroll' }}
+              style={{ overflow: "scroll" }}
               className="background1Up"
             >
               <div className="layout flex column aItemsFS jContentC">
+
                 <h1 id="CEEventConfTitle">Event Confirmation</h1>
                 <div id="TildeErrorDiv" className="flex jContentC aItemsC">
                   {eventName.split('').includes('~') && (
@@ -337,7 +340,7 @@ const CreateEvent = (props) => {
                 </div>
                 <div
                   className="confLine"
-                  style={{ maxWidth: '100%', alignItems: 'flex-start' }}
+                  style={{ maxWidth: "100%", alignItems: "flex-start" }}
                 >
                   <p className="confBold">Description: </p>
                   {eventDescription.length ? (
@@ -351,6 +354,7 @@ const CreateEvent = (props) => {
                 <div className="confLine">
                   <p className="confBold">Event Type: </p>
                   <p className="confValue">{eventType}</p>
+
                   {eventType === '' && (
                     <p className="confValueError">NO EVENT TYPE</p>
                   )}
@@ -359,7 +363,7 @@ const CreateEvent = (props) => {
                   <p className="confBold">Coordinator: </p>
                   <p className="confValue">{eventCoordinator}</p>
                 </div> */}
-                {eventTextLocation !== '' ? (
+                {eventTextLocation !== "" ? (
                   <div className="confLine">
                     <p className="confBold">Address: </p>
                     <div id="locationConf">
@@ -392,20 +396,20 @@ const CreateEvent = (props) => {
                 <div className="confLine">
                   <p className="confBold">Start Time: </p>
                   <p className="confValue">
-                    {eventStartDateTime.toLocaleTimeString('en-US', {
+                    {eventStartDateTime.toLocaleTimeString("en-US", {
                       hour12: true,
-                      hour: '2-digit',
-                      minute: '2-digit',
+                      hour: "2-digit",
+                      minute: "2-digit",
                     })}
                   </p>
                 </div>
                 <div className="confLine">
                   <span className="confBold">End Time: </span>
                   <p className="confValue">
-                    {eventEndDateTime.toLocaleTimeString('en-US', {
+                    {eventEndDateTime.toLocaleTimeString("en-US", {
                       hour12: true,
-                      hour: '2-digit',
-                      minute: '2-digit',
+                      hour: "2-digit",
+                      minute: "2-digit",
                     })}
                   </p>
                 </div>
@@ -414,7 +418,17 @@ const CreateEvent = (props) => {
                   <p className="confValue">{eventOwner}</p>
                 </div>
                 {eventNameError && (
-                  <p className="confValueError">{eventNameError}</p>
+                  <p
+                    className="confValueError"
+                    style={{
+                      width: "100%",
+                      margin: "0px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {eventNameError}
+                  </p>
+
                 )}
                 <button
                   type="submit"
