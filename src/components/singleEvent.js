@@ -46,7 +46,7 @@ const SingleEvent = (props) => {
   } = props.singleEvent;
 
   return (
-    <div className=" singleContainer flex column aItemsC">
+    <div className=" singleContainer flex column aItemsC background1Up">
       <div className=" singleColumn flex column">
         <h1
           style={{
@@ -201,8 +201,8 @@ const SingleEvent = (props) => {
                 );
               })
             ) : (
-                <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
-              )}
+              <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
+            )}
           </div>
           <Link to={`/myEvents/${eventId}/update`}>
             <button

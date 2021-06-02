@@ -158,8 +158,8 @@ const UpdateEvent = (props) => {
 
   return (
     <div
-      className="flex column jContentC aItemsC "
-    // style={{ marginTop: '50px' }}
+      className="flex column jContentC aItemsC background3Up"
+      // style={{ marginTop: '50px' }}
     >
       <div
         className="flex column layout jContentC aItemsC"

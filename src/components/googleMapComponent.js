@@ -17,12 +17,8 @@ const GoogleMapComponent = (props) => {
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
   };
 
-  const {
-    textLocation,
-    setTextLocation,
-    googleLocation,
-    setGoogleLocation,
-  } = props;
+  const { textLocation, setTextLocation, googleLocation, setGoogleLocation } =
+    props;
 
   const onLoad = (input) => {
     setGoogleLocation(input);
@@ -37,7 +33,6 @@ const GoogleMapComponent = (props) => {
 
       setGoogleLocation({});
       setGoogleLocation(googleLocation);
-      console.log('g state after-->', googleLocation);
       let newLat = googleLocation.getPlace().geometry.location.lat();
       let newLng = googleLocation.getPlace().geometry.location.lng();
       setCoordinates({
@@ -66,7 +61,11 @@ const GoogleMapComponent = (props) => {
         </div>
 
         <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-          <input type="text" placeholder='Enter an Address' id="mapLocationInput" />
+          <input
+            type="text"
+            placeholder="Enter an Address"
+            id="mapLocationInput"
+          />
         </Autocomplete>
         <h4 style={{ fontSize: '18px', margin: '15px 0px 30px 0px' }}>
           Event Address:
@@ -75,12 +74,12 @@ const GoogleMapComponent = (props) => {
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-              <p>
-                {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                  ? `${googleLocation.getPlace().formatted_address}`
-                  : false}
-              </p>
-            )}
+            <p>
+              {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                ? `${googleLocation.getPlace().formatted_address}`
+                : false}
+            </p>
+          )}
         </div>
       </LoadScript>
     </div>

@@ -75,8 +75,9 @@ const CreateEvent = (props) => {
 
     console.log({ createEventAttempt });
 
-    if (createEventAttempt === "Validation error") {
-      setEventNameError("Event name already exists");
+
+    if (createEventAttempt === 'Validation error') {
+      setEventNameError('Event name already exists');
     } else {
       setEventData(event);
       // const result = await props.createEvent(event);
@@ -86,7 +87,8 @@ const CreateEvent = (props) => {
   };
 
   const addressError = () => {
-    errorArray.push("");
+    errorArray.push('');
+
     return <p className="confValueError">NO ADDRESS</p>;
   };
 
@@ -313,13 +315,26 @@ const CreateEvent = (props) => {
               className="background1Up"
             >
               <div className="layout flex column aItemsFS jContentC">
-                <h1 style={{ width: "100%", textAlign: "center" }}>
-                  Event Confirmation
-                </h1>
+
+                <h1 id="CEEventConfTitle">Event Confirmation</h1>
+                <div id="TildeErrorDiv" className="flex jContentC aItemsC">
+                  {eventName.split('').includes('~') && (
+                    <p style={{ color: 'red' }}>EVENT NAME CAN'T CONTAIN '~'</p>
+                  )}
+                </div>
                 <div className="confLine">
                   <p className="confBold">Event Name: </p>
-                  <p className="confValue">{eventName}</p>
-                  {eventName === "" && (
+                  <p
+                    className="confValue"
+                    style={
+                      eventName.split('').includes('~')
+                        ? { color: 'red' }
+                        : { color: 'black' }
+                    }
+                  >
+                    {eventName}
+                  </p>
+                  {eventName === '' && (
                     <p className="confValueError">NO EVENT NAME</p>
                   )}
                 </div>
@@ -339,7 +354,8 @@ const CreateEvent = (props) => {
                 <div className="confLine">
                   <p className="confBold">Event Type: </p>
                   <p className="confValue">{eventType}</p>
-                  {eventType === "" && (
+
+                  {eventType === '' && (
                     <p className="confValueError">NO EVENT TYPE</p>
                   )}
                 </div>
@@ -412,11 +428,14 @@ const CreateEvent = (props) => {
                   >
                     {eventNameError}
                   </p>
+
                 )}
                 <button
                   type="submit"
                   className="button createButton"
-                  disabled={errorArray.includes("")}
+                  disabled={
+                    errorArray.includes('') || eventName.split('').includes('~')
+                  }
                 >
                   Create Event
                 </button>
