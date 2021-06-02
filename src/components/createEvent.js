@@ -75,7 +75,7 @@ const CreateEvent = (props) => {
 
     console.log({ createEventAttempt });
 
-    if (createEventAttempt === "Validation error") {
+    if (createEventAttempt === 'Validation error') {
       setEventNameError('Event name already exists');
     } else {
       setEventData(event);
@@ -87,7 +87,7 @@ const CreateEvent = (props) => {
 
   const addressError = () => {
     errorArray.push('');
-    return <p className='confValueError'>NO ADDRESS</p>
+    return <p className="confValueError">NO ADDRESS</p>;
   };
 
   return (
@@ -313,11 +313,27 @@ const CreateEvent = (props) => {
               className="background1Up"
             >
               <div className="layout flex column aItemsFS jContentC">
-                <h1>Event Confirmation</h1>
+                <h1 id="CEEventConfTitle">Event Confirmation</h1>
+                <div id="TildeErrorDiv" className="flex jContentC aItemsC">
+                  {eventName.split('').includes('~') && (
+                    <p style={{ color: 'red' }}>EVENT NAME CAN'T CONTAIN '~'</p>
+                  )}
+                </div>
                 <div className="confLine">
                   <p className="confBold">Event Name: </p>
-                  <p className="confValue">{eventName}</p>
-                  {eventName === '' && <p className='confValueError'>NO EVENT NAME</p>}
+                  <p
+                    className="confValue"
+                    style={
+                      eventName.split('').includes('~')
+                        ? { color: 'red' }
+                        : { color: 'black' }
+                    }
+                  >
+                    {eventName}
+                  </p>
+                  {eventName === '' && (
+                    <p className="confValueError">NO EVENT NAME</p>
+                  )}
                 </div>
                 <div
                   className="confLine"
@@ -329,13 +345,15 @@ const CreateEvent = (props) => {
                       <p className="confValue">{eventDescription}</p>
                     </div>
                   ) : (
-                      <p className='confValueError'>NO DESCRIPTION</p>
-                    )}
+                    <p className="confValueError">NO DESCRIPTION</p>
+                  )}
                 </div>
                 <div className="confLine">
                   <p className="confBold">Event Type: </p>
                   <p className="confValue">{eventType}</p>
-                  {eventType === '' && <p className='confValueError'>NO EVENT TYPE</p>}
+                  {eventType === '' && (
+                    <p className="confValueError">NO EVENT TYPE</p>
+                  )}
                 </div>
                 {/* <div className="confLine">
                   <p className="confBold">Coordinator: </p>
@@ -349,19 +367,20 @@ const CreateEvent = (props) => {
                     </div>
                   </div>
                 ) : (
-                    <div className="confLine">
-                      <p className="confBold">Address: </p>
-                      <div id="locationConf">
-                        {eventGoogleLocation.gm_bindings_ &&
-                          eventGoogleLocation.getPlace() ? (
-                            <p className="confValue">
-                              {eventGoogleLocation.getPlace().formatted_address}
-                            </p>
-                          ) : addressError()
-                        }
-                      </div>
+                  <div className="confLine">
+                    <p className="confBold">Address: </p>
+                    <div id="locationConf">
+                      {eventGoogleLocation.gm_bindings_ &&
+                      eventGoogleLocation.getPlace() ? (
+                        <p className="confValue">
+                          {eventGoogleLocation.getPlace().formatted_address}
+                        </p>
+                      ) : (
+                        addressError()
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
                 <div className="confLine">
                   <p className="confBold">Start Date: </p>
                   <p className="confValue">{dateFormat(eventStartDateTime)}</p>
@@ -394,8 +413,16 @@ const CreateEvent = (props) => {
                   <p className="confBold">Host: </p>
                   <p className="confValue">{eventOwner}</p>
                 </div>
-                {eventNameError && <p className='confValueError'>{eventNameError}</p>}
-                <button type="submit" className="button createButton" disabled={errorArray.includes("")}>
+                {eventNameError && (
+                  <p className="confValueError">{eventNameError}</p>
+                )}
+                <button
+                  type="submit"
+                  className="button createButton"
+                  disabled={
+                    errorArray.includes('') || eventName.split('').includes('~')
+                  }
+                >
                   Create Event
                 </button>
               </div>
@@ -403,7 +430,7 @@ const CreateEvent = (props) => {
           </div>
         </Swiper>
       </form>
-    </div >
+    </div>
   );
 };
 

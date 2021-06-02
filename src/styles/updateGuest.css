@@ -13,6 +13,10 @@
   border-radius: 5px;
 }
 
+.UGInput:disabled {
+  opacity: 0.4;
+}
+
 #UGSubmit {
   margin: 25px 0px 0px 0px;
   background-color: #ffc400a4;
@@ -32,6 +36,7 @@
   background-color: rgb(197, 2, 2);
   margin: 36px 0px 15px 0px;
   font-weight: bolder;
+  text-align: center;
 }
 
 #updateGuestErrorDiv {
@@ -45,4 +50,5 @@
   color: rgb(197, 2, 2);
   margin: 0px;
   font-weight: bold;
+  text-align: center;
 }
