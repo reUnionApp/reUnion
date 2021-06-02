@@ -245,7 +245,6 @@ const CreateActivity = (props) => {
               <div className="confLine">
                 <p className="confBold">Start Date: </p>
                 <p className="confValue">
-                  {console.log("PROPS.SINGLEEVENT", props.singleEvent)}
                   {activityStartDateTime && dateFormat(activityStartDateTime)}
                 </p>
               </div>
@@ -276,6 +275,39 @@ const CreateActivity = (props) => {
                       minute: "2-digit",
                     })}
                 </p>
+              </div>
+              <div>
+                {activityStartDateTime &&
+                activityEndDateTime &&
+                (Date.parse(activityStartDateTime) <
+                  Date.parse(props.singleEvent.startDateTime) ||
+                  Date.parse(activityEndDateTime) >
+                    Date.parse(props.singleEvent.endDateTime)) ? (
+                  <p className="confValueError" style={{ textAlign: "center" }}>
+                    Warning! This activity starts or ends outside of the main
+                    event timeframe
+                  </p>
+                ) : (
+                  ""
+                )}
+                {/* {activityStartDateTime &&
+                Date.parse(activityStartDateTime) <
+                  Date.parse(props.singleEvent.startDateTime) ? (
+                  <p className="confValueError">
+                    Warning! This activity starts before the main event
+                  </p>
+                ) : (
+                  ""
+                )}
+                {activityEndDateTime &&
+                Date.parse(activityEndDateTime) >
+                  Date.parse(props.singleEvent.endDateTime) ? (
+                  <p className="confValueError">
+                    Warning! This activity ends after the main event
+                  </p>
+                ) : (
+                  ""
+                )} */}
               </div>
               <button
                 type="submit"
