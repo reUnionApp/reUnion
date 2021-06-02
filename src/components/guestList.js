@@ -104,7 +104,10 @@ const GuestList = (props) => {
   const [guestToUpdate, setGuestToUpdate] = useState({});
 
   return (
-    <div className="singleContainer flex column aItemsC" id="GLMaster">
+    <div
+      className="singleContainer flex column aItemsC background2Down"
+      id="GLMaster"
+    >
       <div
         id="updateGuestContainer"
         className="UGCClosed flex column aItemsC"
@@ -251,25 +254,22 @@ const GuestList = (props) => {
                             alignItems: 'baseline',
                           }}
                         >
-                          {guest.userType === 'registered' ? (
-                            'Registered User'
-                          ) : (
-                            <button
-                              className="button"
-                              id="GLUpdateButton"
-                              onClick={() => {
-                                setGuestToUpdate({
-                                  firstName: guest.firstName,
-                                  lastName: guest.lastName,
-                                  email: guest.email,
-                                  id: guest.id,
-                                });
-                                openClose();
-                              }}
-                            >
-                              Update
-                            </button>
-                          )}
+                          <button
+                            className="button"
+                            id="GLUpdateButton"
+                            onClick={() => {
+                              setGuestToUpdate({
+                                firstName: guest.firstName,
+                                lastName: guest.lastName,
+                                email: guest.email,
+                                id: guest.id,
+                                userType: guest.userType,
+                              });
+                              openClose();
+                            }}
+                          >
+                            Update
+                          </button>
                         </div>
                       </div>
                     )}
