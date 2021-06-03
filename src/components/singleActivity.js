@@ -40,7 +40,10 @@ const SingleActivity = (props) => {
       <div className="singleColumn flex column activityEventTitle">
         <h1>
           <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
-            <FontAwesomeIcon className="fontAwesomeLink" icon={faLink} />
+            <FontAwesomeIcon
+              className="fontAwesomeLink linkIcon"
+              icon={faLink}
+            />
             {props.singleEvent.eventName}
           </Link>
         </h1>
