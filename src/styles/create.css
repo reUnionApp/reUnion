@@ -121,6 +121,10 @@
   height: 100vh;
 }
 
+.updateForm {
+  height: 90vh;
+}
+
 .cEStamp {
   margin: 75px 305px 0px 0px;
   position: absolute;

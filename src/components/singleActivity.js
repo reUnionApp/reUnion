@@ -4,7 +4,7 @@ import { getActivity, getEvent, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 import '../styles/create.css';
 import '../styles/single.css';
-import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SingleActivity = (props) => {
@@ -23,8 +23,6 @@ const SingleActivity = (props) => {
     );
   }, []);
 
-  console.log('propssssssss', props)
-
   const dateFormat = (date) => {
     let dateObj = date;
     let month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -34,24 +32,24 @@ const SingleActivity = (props) => {
     return month + '/' + day + '/' + year;
   };
 
-  const {
-    activityName,
-    description,
-    location,
-    startDateTime,
-    endDateTime
-  } = props.eventActivities;
+  const { activityName, description, location, startDateTime, endDateTime } =
+    props.eventActivities;
 
   return (
-    <div className="singleContainer flex column aItemsC">
+    <div className="singleContainer flex column aItemsC background3Down">
       <div className="singleColumn flex column activityEventTitle">
         <h1>
-          <Link className='link' to={`/myEvents/${props.singleEvent.id}`}><FontAwesomeIcon className='fontAwesomeLink' icon={faLink} />{props.singleEvent.eventName}</Link>
+          <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
+            <FontAwesomeIcon className="fontAwesomeLink" icon={faLink} />
+            {props.singleEvent.eventName}
+          </Link>
         </h1>
 
         <div className="confLine">
           <p className="confBold">Activity: </p>
-          <p className="confValue" style={{ textAlign: 'end' }}>{activityName}</p>
+          <p className="confValue" style={{ textAlign: 'end' }}>
+            {activityName}
+          </p>
         </div>
         <div
           className="confLine"
@@ -63,7 +61,9 @@ const SingleActivity = (props) => {
             <div id="descriptionConfContainer">
               <p className="confValue">{description}</p>
             </div>
-          ) : false}
+          ) : (
+            false
+          )}
           {/* <div id="descriptionConfContainer">
             <p className="confValue">{description}</p>
           </div> */}
@@ -102,18 +102,20 @@ const SingleActivity = (props) => {
             })}
           </p>
         </div>
-        <div className='flex jContentSB' style={{ margin: '20px 0px', }}>
-          <button className="button"
+        <div className="flex jContentSB" style={{ margin: '20px 0px' }}>
+          <button
+            className="button"
             style={{
               width: '130px',
               height: '60px',
               backgroundColor: '#38c1d38c',
-            }}>
+            }}
+          >
             <Link
               to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
             >
               Update Activity
-        </Link>
+            </Link>
           </button>
           <Link
             to={`/myEvents/${props.singleEvent.id}/createActivity`}
@@ -139,7 +141,7 @@ const SingleActivity = (props) => {
           }
         >
           Delete Activity
-      </button>
+        </button>
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getUserEvents, removeEvent } from "../store";
-import { Link } from "react-router-dom";
-import history from "../history";
-import "../styles/myEvents.css";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getUserEvents, removeEvent } from '../store';
+import { Link } from 'react-router-dom';
+import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import history from '../history';
+import '../styles/myEvents.css';
 
 const colors = {
-  1: "tealFade",
-  2: "pinkFade",
-  3: "yellowFade",
+  1: 'tealFade',
+  2: 'pinkFade',
+  3: 'yellowFade',
 };
 
 const MyEvents = (props) => {
@@ -29,8 +31,8 @@ const MyEvents = (props) => {
     <div className="flex aItemsC column background1Up" id="myEventsContainer">
       <h2>test</h2>
       <h2>
-        You have {props.userEvents.length}{" "}
-        {props.userEvents.length === 1 ? "event" : "events"}
+        You have {props.userEvents.length}{' '}
+        {props.userEvents.length === 1 ? 'event' : 'events'}
       </h2>
       {props.userEvents &&
         props.userEvents.map((event) => {
@@ -41,22 +43,34 @@ const MyEvents = (props) => {
               key={event.id}
             >
               {props.auth.id === event.ownerId && (
-                <div style={{ margin: "5px 0px 0px 0px" }}>Host</div>
+                <div style={{ margin: '5px 0px 0px 0px' }}>Host</div>
               )}
               <Link to={`/myEvents/${event.id}`}>
-                <h3 style={{ margin: "8px 0px 19px 0px" }}>
+                <h3 style={{ margin: '8px 0px 19px 0px' }}>
                   {event.eventName}
                 </h3>
               </Link>
-              <button className="eventButton">
-                <Link to={`/myEvents/${event.id}/update`}>Update</Link>
-              </button>
-              <button
-                onClick={() => deleteSelectedEvent(event.id)}
-                className="eventButton"
-              >
-                Delete
-              </button>
+              <div className="flex jContentSB w80">
+                <Link to={`/myEvents/${event.id}/update`}>
+                  <button className="MyEventsIcon">
+                    <FontAwesomeIcon
+                      className="fontAwesomeLink MyEventsIconSVG"
+                      icon={faWrench}
+                      style={{ width: '32px', height: 'auto' }}
+                    />
+                  </button>
+                </Link>
+                <button
+                  onClick={() => deleteSelectedEvent(event.id)}
+                  className="MyEventsIcon"
+                >
+                  <FontAwesomeIcon
+                    className="fontAwesomeLink MyEventsIconSVG"
+                    icon={faTrash}
+                    style={{ width: '30px', height: 'auto' }}
+                  />
+                </button>
+              </div>
             </div>
           );
         })}
