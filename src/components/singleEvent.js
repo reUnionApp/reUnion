@@ -3,8 +3,18 @@ import { connect } from 'react-redux';
 import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
 import { GuestList } from './index';
+import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../styles/single.css';
 import '../styles/create.css';
+
+const colors = {
+  1: 'tealFade',
+  2: 'pinkFade',
+  3: 'yellowFade',
+};
+
+let count = 0;
 
 const SingleEvent = (props) => {
   const id = props.auth.id;
@@ -149,16 +159,19 @@ const SingleEvent = (props) => {
               textAlign: 'center',
               margin: '19px 0px 0px 0px',
               padding: '0px 0px 25px 0px',
-              borderBottom: '1px solid black',
             }}
           >
             {props.singleEvent.eventName}'s Activities
           </h2>
-          <div id="activitiesContainer">
+          <div id="activitiesContainer" className="flex column aItemsC">
             {props.allActivities.length ? (
               props.allActivities.map((activity, idx) => {
+                count === 3 ? (count = 1) : ++count;
                 return (
-                  <div className="singleActivityRow" key={idx}>
+                  <div
+                    className={`singleActivityRow ${colors[count]} flex column aItemsC`}
+                    key={idx}
+                  >
                     <div className="SEActivityWrapper">
                       <h4 style={{ fontSize: '16px', textAlign: 'center' }}>
                         <Link
@@ -169,32 +182,33 @@ const SingleEvent = (props) => {
                         </Link>
                       </h4>
                     </div>
-                    <div className="flex column aItemsC">
-                      <button
-                        className="button"
-                        style={{
-                          margin: '0px 0px 15px 0px',
-                          padding: '5px 15px',
-                          backgroundColor: '#38c1d38c',
-                        }}
+                    <div className="flex jContentSB w100">
+                      <Link
+                        to={`/myEvents/${activity.EventId}/activities/${activity.id}/update`}
                       >
-                        <Link
-                          to={`/myEvents/${activity.EventId}/activities/${activity.id}/update`}
-                        >
-                          Update Activity
-                        </Link>
-                      </button>
+                        <button className="button ALButton">
+                          <FontAwesomeIcon
+                            className="fontAwesomeLink AListIcon"
+                            icon={faWrench}
+                            style={{ width: '32px', height: 'auto' }}
+                          />
+                        </button>
+                      </Link>
                       <button
-                        className="button"
-                        style={{
-                          padding: '5px 15px',
-                          backgroundColor: '#e400678e',
-                        }}
+                        className="button ALButton"
                         onClick={() =>
                           deleteSelectedActivity(eventId, activity.id)
                         }
                       >
-                        Delete Activity
+                        <FontAwesomeIcon
+                          className="fontAwesomeLink AListIcon"
+                          icon={faTrash}
+                          color="lime"
+                          style={{
+                            width: '30px',
+                            height: 'auto',
+                          }}
+                        />
                       </button>
                     </div>
                   </div>

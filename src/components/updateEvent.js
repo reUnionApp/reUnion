@@ -167,7 +167,7 @@ const UpdateEvent = (props) => {
       >
         <h1>Update {props.event.eventName}</h1>
         <form
-          className="createForm"
+          className="updateForm"
           onSubmit={submitEventForm}
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();

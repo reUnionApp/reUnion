@@ -159,14 +159,14 @@ const UpdateActivity = (props) => {
   };
 
   return (
-    <div className="flex column jContentC aItemsC ">
+    <div className="flex column jContentC aItemsC background2Down">
       <div
         className="flex column layout jContentC aItemsC"
         style={{ textAlign: 'center' }}
       >
         <h1>Update {props.activity.activityName}:</h1>
         <form
-          className="createForm"
+          className="updateForm"
           onSubmit={submitActivityForm}
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();
@@ -258,7 +258,10 @@ const UpdateActivity = (props) => {
               />
             </Grid>
           </MuiPickersUtilsProvider> */}
-            <div className="marginBottom flex column">
+            <div
+              className="marginBottom flex column"
+              style={{ margin: '20px 0px 0px 0px' }}
+            >
               <DateTimePicker
                 startDateTime={activityStartDateTime}
                 setStartDateTime={setActivityStartDateTime}
@@ -266,7 +269,10 @@ const UpdateActivity = (props) => {
                 setEndDateTime={setActivityEndDateTime}
               />
             </div>
-            <div className="boldLabel flex jContentSB marginBottom">
+            <div
+              className="boldLabel flex jContentSB marginBottom"
+              style={{ margin: '20px 0px 0px 0px' }}
+            >
               Address:
             </div>
             <div style={{ marginBottom: '10px' }}>
@@ -293,7 +299,10 @@ const UpdateActivity = (props) => {
             }}
           />
         </div> */}
-            <div className="boldLabel flex jContentSB marginBottom">
+            <div
+              className="boldLabel flex jContentSB marginBottom"
+              style={{ margin: '20px 0px 0px 0px' }}
+            >
               Description:
             </div>
             <div style={{ width: '290px' }}>

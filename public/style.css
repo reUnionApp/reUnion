@@ -58,6 +58,18 @@ body {
   width: 100%;
 }
 
+.w90 {
+  width: 90%;
+}
+
+.w80 {
+  width: 80%;
+}
+
+.w75 {
+  width: 75%;
+}
+
 * {
   text-decoration: none;
   color: black;
@@ -152,7 +164,8 @@ body {
 }
 
 input,
-select {
+select,
+textarea {
   border-radius: 10px;
   border: none;
   padding: 5px 15px;
