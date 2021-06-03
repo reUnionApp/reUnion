@@ -4,6 +4,7 @@ const adminsOnly = require('../auth/adminsOnly');
 const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const ownersOnly = require('../auth/ownersOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
+const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 const { Event, Activity, User, UserEvent } = require('../db/models');
 module.exports = router;
 
@@ -24,7 +25,7 @@ router.get('/:eventID/guestList', async function (req, res, next) {
   }
 });
 
-router.put('/:eventId/guestList/', async function (req, res, next) {
+router.put('/:eventId/guestList/', adminOwnerCoordinator, async function (req, res, next) {
   const eventId = Number(req.params.eventId);
   try {
     const guest = await User.findByPk(req.body.guestId);

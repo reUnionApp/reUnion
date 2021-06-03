@@ -10,7 +10,7 @@ module.exports = router;
 // All Users: GET /api/users
 
 //adminsOnly
-router.get('/', async (req, res, next) => {
+router.get('/', adminsOnly, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -35,7 +35,7 @@ router.get('/', async (req, res, next) => {
 
 // Single User: GET /api/users/:userId
 // userOrAdminOnly
-router.get('/:userID', async (req, res, next) => {
+router.get('/:userID', userOrAdminOnly, async (req, res, next) => {
   const id = req.params.userID;
   try {
     const user = await User.findByPk(id, {
@@ -64,7 +64,7 @@ router.get('/:userID', async (req, res, next) => {
 
 // Single User's Events: GET /api/users/:userId/events
 // userOrAdminOnly
-router.get('/:userID/events', async (req, res, next) => {
+router.get('/:userID/events', userOrAdminOnly, async (req, res, next) => {
   const id = req.params.userID;
   try {
     const user = await User.findByPk(id, {
@@ -83,7 +83,7 @@ router.get('/:userID/events', async (req, res, next) => {
 
 // Single User's Single Event: GET /api/users/:userId/events/:eventId
 // userOrAdminOnly
-router.get('/:userId/events/:eventId', async (req, res, next) => {
+router.get('/:userId/events/:eventId', userOrAdminOnly, async (req, res, next) => {
   console.log('our NEW route has been HIT!!!');
   const eventId = req.params.eventId;
   try {
@@ -99,7 +99,7 @@ router.get('/:userId/events/:eventId', async (req, res, next) => {
 
 // Single User: DELETE /api/users/:userID
 // adminsOnly
-router.delete('/:userID', async (req, res, next) => {
+router.delete('/:userID', userOrAdminOnly, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userID);
     await user.destroy();
@@ -138,12 +138,8 @@ router.post('/', async (req, res, next) => {
 
 // Single User: PUT /api/users/:userID
 // userOrAdminOnly
-router.put('/:userID', async (req, res, next) => {
-  console.log('- - - - - - route hit');
+router.put('/:userID', userOrAdminOnly, async (req, res, next) => {
   const id = req.params.userID;
-
-  // req.body.specialRequests = req.body.specialRequests;
-  // req.body.dietaryRestrictions = req.body.dietaryRestrictions;
 
   try {
     const user = await User.findByPk(id);

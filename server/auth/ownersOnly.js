@@ -7,3 +7,8 @@ module.exports = (req, res, next) => {
     next(err);
   }
 };
+
+
+
+// req.user &&
+//   (req.user.isAdmin === true || req.user.userID === +req.params.userID)
