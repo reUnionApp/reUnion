@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
   if (
     req.user &&
-    (req.user.isAdmin === true || req.user.userID === +req.params.userID)
+    (req.user.isAdmin === true || req.user.id === +req.params.userID)
   ) {
     next();
   } else {

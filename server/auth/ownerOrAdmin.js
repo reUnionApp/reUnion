@@ -1,8 +1,10 @@
 const { Event, Activity, User, UserEvent } = require('../db/models');
 
 module.exports = async (req, res, next) => {
-  const eventId = Number(req.params.eventID);
+  const eventId = req.params.eventID;
   const userId = req.user.id;
+
+  console.log({ userId });
 
   const ocCheck = await User.findByPk(userId, {
     include: {
@@ -15,9 +17,7 @@ module.exports = async (req, res, next) => {
 
   const ownerStatus = ocCheck.dataValues.Events[0].UserEvent.dataValues.isOwner;
 
-  const coordinatorStatus = ocCheck.dataValues.Events[0].UserEvent.dataValues.isCoordinator;
-
-  if ((req.user && req.user.isAdmin === true) || ownerStatus || coordinatorStatus) {
+  if ((req.user && req.user.isAdmin === true) || ownerStatus) {
     next();
   } else {
     const err = new Error('Unauthorized access');

@@ -1,15 +1,12 @@
 const router = require('express').Router();
 const { User, Event, UserEvent } = require('../db/models');
 const adminsOnly = require('../auth/adminsOnly');
-const ownersOnly = require('../auth/ownersOnly');
-const coordinatorsOnly = require('../auth/coordinatorsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
 const { FindInPageOutlined } = require('@material-ui/icons');
 module.exports = router;
 
 // All Users: GET /api/users
 
-//adminsOnly
 router.get('/', adminsOnly, async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -34,7 +31,7 @@ router.get('/', adminsOnly, async (req, res, next) => {
 });
 
 // Single User: GET /api/users/:userId
-// userOrAdminOnly
+
 router.get('/:userID', userOrAdminOnly, async (req, res, next) => {
   const id = req.params.userID;
   try {
@@ -63,7 +60,7 @@ router.get('/:userID', userOrAdminOnly, async (req, res, next) => {
 });
 
 // Single User's Events: GET /api/users/:userId/events
-// userOrAdminOnly
+
 router.get('/:userID/events', userOrAdminOnly, async (req, res, next) => {
   const id = req.params.userID;
   try {
@@ -82,7 +79,7 @@ router.get('/:userID/events', userOrAdminOnly, async (req, res, next) => {
 });
 
 // Single User's Single Event: GET /api/users/:userId/events/:eventId
-// userOrAdminOnly
+
 router.get('/:userId/events/:eventId', userOrAdminOnly, async (req, res, next) => {
   console.log('our NEW route has been HIT!!!');
   const eventId = req.params.eventId;
@@ -98,7 +95,7 @@ router.get('/:userId/events/:eventId', userOrAdminOnly, async (req, res, next) =
 });
 
 // Single User: DELETE /api/users/:userID
-// adminsOnly
+
 router.delete('/:userID', userOrAdminOnly, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userID);
@@ -110,7 +107,6 @@ router.delete('/:userID', userOrAdminOnly, async (req, res, next) => {
 });
 
 // Create Psuedo-User: POST /api/users/
-// error appears when we add an existing user, newUser is not defined error appears on guestList page even though the user has been added to the guestList.
 
 router.post('/', async (req, res, next) => {
   try {
@@ -119,7 +115,6 @@ router.post('/', async (req, res, next) => {
     });
 
     if (existingUser) {
-      // if an existing user is added to an event that they are already part of we need to display an error message saying this email is already on the guestlist.
       await existingUser.addEvent(req.body.eventId);
       res.status(201).json(existingUser);
     } else {
@@ -137,7 +132,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // Single User: PUT /api/users/:userID
-// userOrAdminOnly
+
 router.put('/:userID', userOrAdminOnly, async (req, res, next) => {
   const id = req.params.userID;
 

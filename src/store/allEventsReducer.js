@@ -28,7 +28,6 @@ export const getEvents = () => async (dispatch) => {
 export const getUserEvents = (id) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/users/${id}/events`);
-    console.log({ data })
     for (let i = 0; i < data.length; i++) {
       data[i].eventName = data[i].eventName.split('~')[0];
     }
