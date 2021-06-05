@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   addPseudoUser,
@@ -11,6 +12,8 @@ import '../styles/guestList.css';
 import '../styles/create.css';
 import '../styles/single.css';
 import UpdateGuest from './updateGuest';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { use } from 'passport';
 
 const colors = {
@@ -103,6 +106,27 @@ const GuestList = (props) => {
 
   const [guestToUpdate, setGuestToUpdate] = useState({});
 
+  let adminCheck;
+  let ownerCheck;
+  let coordCheck;
+
+  if (props.userEvents) {
+    const eventNum = Number(props.match.params.eventId);
+    let target = 0;
+    for (let i = 0; i < props.userEvents.length; i++) {
+      let targetEvent = props.userEvents[i]
+      if (targetEvent.id === eventNum) {
+        target = i;
+      }
+    }
+
+    if (props.userEvents[target]) {
+      adminCheck = props.auth.isAdmin;
+      ownerCheck = props.userEvents[target].UserEvent.isOwner;
+      coordCheck = props.userEvents[target].UserEvent.isCoordinator;
+    }
+  }
+
   return (
     <div
       className="singleContainer flex column aItemsC background2Down"
@@ -124,17 +148,23 @@ const GuestList = (props) => {
       <h1
         style={{
           alignSelf: 'center',
-          textDecoration: 'underline',
           textAlign: 'center',
           margin: '19px 0px 25px 0px',
         }}
+        className="link"
       >
         Guest List for
         <br></br>
-        {props.singleEvent.eventName}
+        <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
+          <FontAwesomeIcon
+            className="fontAwesomeLink linkIcon"
+            icon={faLink}
+          />
+          {props.singleEvent.eventName}
+        </Link>
       </h1>
       <div className="singleColumn flex column jContentC aItemsC">
-        <form
+        {adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? (<form
           id="guest-list"
           className="flex column"
           style={{ width: '100%' }}
@@ -162,8 +192,8 @@ const GuestList = (props) => {
             {error && error.response ? (
               <p id="guestListAddError"> {error.response.data} </p>
             ) : (
-              false
-            )}
+                false
+              )}
           </div>
           <button
             type="submit"
@@ -172,7 +202,7 @@ const GuestList = (props) => {
           >
             Add New Guest
           </button>
-        </form>
+        </form>) : false}
         <div id="guestListContainer">
           {props.guests &&
             props.guests.map((guest) => {
@@ -180,7 +210,7 @@ const GuestList = (props) => {
               return (
                 <div key={guest.id}>
                   <div
-                    onClick={(e) => selectGuest(e, guest.id)}
+                    onClick={(e) => adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? selectGuest(e, guest.id) : false}
                     className={`flex column aItemsC jContentC guestBox ${colors[count]}`}
                   >
                     <h3 style={{ margin: '0px' }}>
@@ -197,8 +227,8 @@ const GuestList = (props) => {
                               </p>
                             </div>
                           ) : (
-                            <p className="expandedCardRowR">{guest.email}</p>
-                          )}
+                              <p className="expandedCardRowR">{guest.email}</p>
+                            )}
                         </div>
                         {guest.alias && (
                           <div className="expandedCardRow">
@@ -236,15 +266,15 @@ const GuestList = (props) => {
                                 </div>
                               </div>
                             ) : (
-                              <div className="expandedCardRow">
-                                <p className="expandedCardRowL">
-                                  Special Requests:
+                                <div className="expandedCardRow">
+                                  <p className="expandedCardRowL">
+                                    Special Requests:
                                 </p>
-                                <p className="expandedCardRowR">
-                                  {guest.specialRequests}
-                                </p>
-                              </div>
-                            )}
+                                  <p className="expandedCardRowR">
+                                    {guest.specialRequests}
+                                  </p>
+                                </div>
+                              )}
                           </>
                         )}
                         <div
@@ -278,23 +308,27 @@ const GuestList = (props) => {
               );
             })}
         </div>
-        <button
-          type="submit"
-          className="button createButton"
-          style={{ backgroundColor: '#e400678e' }}
-        >
-          Send Invites
-        </button>
+        {adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? (
+          <button
+            type="submit"
+            className="button createButton"
+            style={{ backgroundColor: '#e400678e' }}
+          >
+            Send Invites
+          </button>
+        ) : false}
       </div>
     </div>
   );
 };
 
 const mapState = (state) => ({
+  auth: state.authReducer,
   user: state.userReducer,
   guests: state.guestListReducer,
   error: state.userReducer.error,
   singleEvent: state.eventReducer,
+  userEvents: state.allEventsReducer.userEvents
 });
 
 const mapDispatch = (dispatch) => ({

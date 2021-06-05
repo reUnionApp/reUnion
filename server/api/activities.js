@@ -5,7 +5,7 @@ const { Activity } = require('../db/models');
 module.exports = router;
 
 // All Activities: GET /api/events/:eventID/activities
-// adminsOnly
+
 router.get('/:eventID/activities', guestOrAdmin, async (req, res, next) => {
   try {
     const id = req.params.eventID;
@@ -21,7 +21,7 @@ router.get('/:eventID/activities', guestOrAdmin, async (req, res, next) => {
 });
 
 // Single Event: GET /api/events/:eventID/activities/:activityID
-// userOrAdminOnly
+
 router.get('/:eventID/activities/:activityID', guestOrAdmin, async function (req, res, next) {
   try {
     const activityId = req.params.activityID;
@@ -43,7 +43,7 @@ router.get('/:eventID/activities/:activityID', guestOrAdmin, async function (req
 });
 
 // Single Activity: DELETE /api/events/:eventID/activities/:activityID
-// adminsOnly
+
 router.delete('/:eventID/activities/:activityID', adminOwnerCoordinator, async (req, res, next) => {
   try {
     const activityId = req.params.activityID;

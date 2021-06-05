@@ -72,7 +72,6 @@ const UpdateEvent = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('2nd useEffect fired');
     setEventName(props.event.eventName);
     setEventType(props.event.eventType);
     // setEventCoordinator(props.event.coordinator);
