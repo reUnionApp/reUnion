@@ -1,14 +1,12 @@
 const router = require('express').Router();
-const adminsOnly = require('../auth/adminsOnly');
-const coordinatorsOnly = require('../auth/coordinatorsOnly');
-const ownersOnly = require('../auth/ownersOnly');
-const userOrAdminOnly = require('../auth/userOrAdminOnly');
+const guestOrAdmin = require('../auth/guestOrAdmin');
+const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 const { Activity } = require('../db/models');
 module.exports = router;
 
 // All Activities: GET /api/events/:eventID/activities
-// adminsOnly
-router.get('/:eventID/activities', async (req, res, next) => {
+
+router.get('/:eventID/activities', guestOrAdmin, async (req, res, next) => {
   try {
     const id = req.params.eventID;
     const activities = await Activity.findAll({
@@ -23,8 +21,8 @@ router.get('/:eventID/activities', async (req, res, next) => {
 });
 
 // Single Event: GET /api/events/:eventID/activities/:activityID
-// userOrAdminOnly
-router.get('/:eventID/activities/:activityID', async function (req, res, next) {
+
+router.get('/:eventID/activities/:activityID', guestOrAdmin, async function (req, res, next) {
   try {
     const activityId = req.params.activityID;
     const eventId = req.params.eventID;
@@ -45,8 +43,8 @@ router.get('/:eventID/activities/:activityID', async function (req, res, next) {
 });
 
 // Single Activity: DELETE /api/events/:eventID/activities/:activityID
-// adminsOnly
-router.delete('/:eventID/activities/:activityID', async (req, res, next) => {
+
+router.delete('/:eventID/activities/:activityID', adminOwnerCoordinator, async (req, res, next) => {
   try {
     const activityId = req.params.activityID;
     const eventId = req.params.eventID;
@@ -66,7 +64,7 @@ router.delete('/:eventID/activities/:activityID', async (req, res, next) => {
 
 // Single Activity: POST /api/events/:eventID/activities
 
-router.post('/:eventID/activities', async (req, res, next) => {
+router.post('/:eventID/activities', adminOwnerCoordinator, async (req, res, next) => {
   try {
     const event = req.params.eventID;
     const newActivity = await Activity.create({
@@ -81,11 +79,7 @@ router.post('/:eventID/activities', async (req, res, next) => {
 
 // Single Activity: PUT /api/events/:eventID/activities/:activityID
 
-// Separated authentication into 3 seperate files. If this doesn't work we'll have to combine them into admin, admin+owner, admin+owner+coordinator
-// adminsOnly,
-// ownersOnly,
-// coordinatorsOnly,
-router.put('/:eventID/activities/:activityID', async (req, res, next) => {
+router.put('/:eventID/activities/:activityID', adminOwnerCoordinator, async (req, res, next) => {
   try {
     const activityId = req.params.activityID;
     const eventId = req.params.eventID;
@@ -107,8 +101,9 @@ router.put('/:eventID/activities/:activityID', async (req, res, next) => {
   }
 });
 
-// DELETE ALL activities by NOT event
-router.delete('/:eventID/activities', async (req, res, next) => {
+// Delete All Activities: /api/events/:eventID/activities
+
+router.delete('/:eventID/activities', adminOwnerCoordinator, async (req, res, next) => {
   try {
     await Activity.destroy({
       where: {

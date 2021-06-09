@@ -6,6 +6,10 @@
   align-self: center;
 }
 
+#SAMaster {
+  min-height: 100vh;
+}
+
 .singleContainer {
   padding: 75px 0px;
 }

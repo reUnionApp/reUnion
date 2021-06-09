@@ -72,7 +72,6 @@ const UpdateEvent = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('2nd useEffect fired');
     setEventName(props.event.eventName);
     setEventType(props.event.eventType);
     // setEventCoordinator(props.event.coordinator);
@@ -124,7 +123,11 @@ const UpdateEvent = (props) => {
 
     const resultId = await props.updateEvent(props.match.params.eventId, event);
 
-    props.history.push(`/myEvents/${resultId}`);
+    console.log({ resultId })
+
+    if (resultId !== undefined) {
+      props.history.push(`/myEvents/${resultId.id}`);
+    }
   };
 
   const onLoad = (input) => {
@@ -159,7 +162,7 @@ const UpdateEvent = (props) => {
   return (
     <div
       className="flex column jContentC aItemsC background3Up"
-      // style={{ marginTop: '50px' }}
+    // style={{ marginTop: '50px' }}
     >
       <div
         className="flex column layout jContentC aItemsC"

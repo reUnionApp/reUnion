@@ -1,15 +1,16 @@
 const router = require('express').Router();
 const { default: userEvent } = require('@testing-library/user-event');
 const adminsOnly = require('../auth/adminsOnly');
-const coordinatorsOnly = require('../auth/coordinatorsOnly');
-const ownersOnly = require('../auth/ownersOnly');
+const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
+const guestOrAdmin = require('../auth/guestOrAdmin');
+const ownerOrAdmin = require('../auth/ownerOrAdmin');
 const { Event, Activity, User, UserEvent } = require('../db/models');
 module.exports = router;
 
 // All Events: GET /api/events
-// adminsOnly
-router.get('/', async (req, res, next) => {
+
+router.get('/', adminsOnly, async (req, res, next) => {
   try {
     const events = await Event.findAll({ include: User });
     res.status(200).json(events);
@@ -19,11 +20,12 @@ router.get('/', async (req, res, next) => {
 });
 
 // Single Event: GET /api/events/:eventID
-// userOrAdminOnly
-router.get('/:eventID', async function (req, res, next) {
+
+router.get('/:eventID', guestOrAdmin, async function (req, res, next) {
   const id = req.params.eventID;
   try {
     const thisEvent = await Event.findByPk(id);
+
     if (!thisEvent) {
       res.sendStatus(404).end();
     }
@@ -34,8 +36,8 @@ router.get('/:eventID', async function (req, res, next) {
 });
 
 // Single Event: DELETE /api/events/:eventID
-// adminsOnly
-router.delete('/:eventID', async (req, res, next) => {
+
+router.delete('/:eventID', ownerOrAdmin, async (req, res, next) => {
   try {
     await Activity.destroy({
       where: {
@@ -65,11 +67,7 @@ router.post('/', async (req, res, next) => {
 
 // Single Event: PUT /api/events/:eventID
 
-// Separated authentication into 3 seperate files. If this doesn't work we'll have to combine them into admin, admin+owner, admin+owner+coordinator
-// adminsOnly,
-// ownersOnly,
-// coordinatorsOnly,
-router.put('/:eventID', async (req, res, next) => {
+router.put('/:eventID', adminOwnerCoordinator, async (req, res, next) => {
   const id = req.params.eventID;
   try {
     const event = await Event.findByPk(id);

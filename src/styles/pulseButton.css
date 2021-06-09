@@ -1,0 +1,28 @@
+#pulseButton {
+  letter-spacing: 3px;
+  border-radius: 15px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+    width: 0em;
+    height: 0em;
+  }
+  100% {
+    opacity: 0;
+    width: 36em;
+    height: 36em;
+  }
+}
+
+.pulse {
+  position: absolute;
+  border-radius: 50%;
+  background-color: white;
+  animation: pulse 1s linear 0s 1;
+  transform: translate(-50%, -50%);
+}

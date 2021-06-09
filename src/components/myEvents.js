@@ -15,6 +15,7 @@ const colors = {
 
 const MyEvents = (props) => {
   const userId = props.auth.id;
+  const adminCheck = props.auth.isAdmin;
 
   const deleteSelectedEvent = async (eventId) => {
     await props.removeEvent(eventId);
@@ -29,13 +30,14 @@ const MyEvents = (props) => {
 
   return (
     <div className="flex aItemsC column background1Up" id="myEventsContainer">
-      <h2>test</h2>
       <h2>
         You have {props.userEvents.length}{' '}
         {props.userEvents.length === 1 ? 'event' : 'events'}
       </h2>
       {props.userEvents &&
         props.userEvents.map((event) => {
+          let ownerCheck = event.UserEvent.isOwner;
+          let coordCheck = event.UserEvent.isCoordinator;
           count === 3 ? (count = 1) : ++count;
           return (
             <div
@@ -43,33 +45,37 @@ const MyEvents = (props) => {
               key={event.id}
             >
               {props.auth.id === event.ownerId && (
-                <div style={{ margin: '5px 0px 0px 0px' }}>Host</div>
+                <div style={{ margin: '0px 0px 8px 0px' }}>Host</div>
               )}
               <Link to={`/myEvents/${event.id}`}>
-                <h3 style={{ margin: '8px 0px 19px 0px' }}>
+                <h3 style={{ margin: '0px 0px 19px 0px' }}>
                   {event.eventName}
                 </h3>
               </Link>
               <div className="flex jContentSB w80">
                 <Link to={`/myEvents/${event.id}/update`}>
-                  <button className="MyEventsIcon">
+                  {adminCheck || ownerCheck || coordCheck ? (
+                    <button className="MyEventsIcon">
+                      <FontAwesomeIcon
+                        className="fontAwesomeLink MyEventsIconSVG"
+                        icon={faWrench}
+                        style={{ width: '32px', height: 'auto' }}
+                      />
+                    </button>
+                  ) : false}
+                </Link>
+                {adminCheck || ownerCheck ? (
+                  <button
+                    onClick={() => deleteSelectedEvent(event.id)}
+                    className="MyEventsIcon"
+                  >
                     <FontAwesomeIcon
                       className="fontAwesomeLink MyEventsIconSVG"
-                      icon={faWrench}
-                      style={{ width: '32px', height: 'auto' }}
+                      icon={faTrash}
+                      style={{ width: '30px', height: 'auto' }}
                     />
                   </button>
-                </Link>
-                <button
-                  onClick={() => deleteSelectedEvent(event.id)}
-                  className="MyEventsIcon"
-                >
-                  <FontAwesomeIcon
-                    className="fontAwesomeLink MyEventsIconSVG"
-                    icon={faTrash}
-                    style={{ width: '30px', height: 'auto' }}
-                  />
-                </button>
+                ) : false}
               </div>
             </div>
           );

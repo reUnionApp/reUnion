@@ -35,8 +35,29 @@ const SingleActivity = (props) => {
   const { activityName, description, location, startDateTime, endDateTime } =
     props.eventActivities;
 
+  let adminCheck;
+  let ownerCheck;
+  let coordCheck;
+
+  if (props.userEvents) {
+    const eventNum = Number(eventId);
+    let target = 0;
+    for (let i = 0; i < props.userEvents.length; i++) {
+      let targetEvent = props.userEvents[i]
+      if (targetEvent.id === eventNum) {
+        target = i;
+      }
+    }
+
+    if (props.userEvents[target]) {
+      adminCheck = props.auth.isAdmin;
+      ownerCheck = props.userEvents[target].UserEvent.isOwner;
+      coordCheck = props.userEvents[target].UserEvent.isCoordinator;
+    }
+  }
+
   return (
-    <div className="singleContainer flex column aItemsC background3Down">
+    <div id='SAMaster' className="singleContainer flex column aItemsC background3Down">
       <div className="singleColumn flex column activityEventTitle">
         <h1>
           <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
@@ -47,7 +68,6 @@ const SingleActivity = (props) => {
             {props.singleEvent.eventName}
           </Link>
         </h1>
-
         <div className="confLine">
           <p className="confBold">Activity: </p>
           <p className="confValue" style={{ textAlign: 'end' }}>
@@ -59,14 +79,13 @@ const SingleActivity = (props) => {
           style={{ maxWidth: '100%', alignItems: 'flex-start' }}
         >
           <p className="confBold">Description: </p>
-          {console.log(description)}
           {description && description.length ? (
             <div id="descriptionConfContainer">
               <p className="confValue">{description}</p>
             </div>
           ) : (
-            false
-          )}
+              false
+            )}
           {/* <div id="descriptionConfContainer">
             <p className="confValue">{description}</p>
           </div> */}
@@ -105,21 +124,21 @@ const SingleActivity = (props) => {
             })}
           </p>
         </div>
-        <div className="flex jContentSB" style={{ margin: '20px 0px' }}>
-          <button
-            className="button"
-            style={{
-              width: '130px',
-              height: '60px',
-              backgroundColor: '#38c1d38c',
-            }}
+        {adminCheck || ownerCheck || coordCheck ? (<><div className="flex jContentSB" style={{ margin: '20px 0px' }}>
+          <Link
+            to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
           >
-            <Link
-              to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
+            <button
+              className="button"
+              style={{
+                width: '130px',
+                height: '60px',
+                backgroundColor: '#38c1d38c',
+              }}
             >
               Update Activity
-            </Link>
-          </button>
+            </button>
+          </Link>
           <Link
             to={`/myEvents/${props.singleEvent.id}/createActivity`}
             style={{ margin: '0px 0px 0px 15px' }}
@@ -136,15 +155,15 @@ const SingleActivity = (props) => {
             </button>
           </Link>
         </div>
-        <button
-          className="button bottomSE"
-          style={{ backgroundColor: '#e400678e' }}
-          onClick={() =>
-            deleteSelectedActivity(eventId, props.eventActivities.id)
-          }
-        >
-          Delete Activity
-        </button>
+          <button
+            className="button bottomSE"
+            style={{ backgroundColor: '#e400678e' }}
+            onClick={() =>
+              deleteSelectedActivity(eventId, props.eventActivities.id)
+            }
+          >
+            Delete Activity
+        </button> </>) : false}
       </div>
     </div>
   );
@@ -152,6 +171,7 @@ const SingleActivity = (props) => {
 
 const mapState = (state) => ({
   auth: state.authReducer,
+  userEvents: state.allEventsReducer.userEvents,
   eventActivities: state.activityReducer,
   singleEvent: state.eventReducer,
 });
