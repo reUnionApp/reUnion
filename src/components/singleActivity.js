@@ -57,7 +57,7 @@ const SingleActivity = (props) => {
   }
 
   return (
-    <div className="singleContainer flex column aItemsC background3Down">
+    <div id='SAMaster' className="singleContainer flex column aItemsC background3Down">
       <div className="singleColumn flex column activityEventTitle">
         <h1>
           <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
@@ -124,7 +124,7 @@ const SingleActivity = (props) => {
             })}
           </p>
         </div>
-        {adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? (<><div className="flex jContentSB" style={{ margin: '20px 0px' }}>
+        {adminCheck || ownerCheck || coordCheck ? (<><div className="flex jContentSB" style={{ margin: '20px 0px' }}>
           <Link
             to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
           >

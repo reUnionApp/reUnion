@@ -45,16 +45,16 @@ const MyEvents = (props) => {
               key={event.id}
             >
               {props.auth.id === event.ownerId && (
-                <div style={{ margin: '5px 0px 0px 0px' }}>Host</div>
+                <div style={{ margin: '0px 0px 8px 0px' }}>Host</div>
               )}
               <Link to={`/myEvents/${event.id}`}>
-                <h3 style={{ margin: '8px 0px 19px 0px' }}>
+                <h3 style={{ margin: '0px 0px 19px 0px' }}>
                   {event.eventName}
                 </h3>
               </Link>
               <div className="flex jContentSB w80">
                 <Link to={`/myEvents/${event.id}/update`}>
-                  {adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? (
+                  {adminCheck || ownerCheck || coordCheck ? (
                     <button className="MyEventsIcon">
                       <FontAwesomeIcon
                         className="fontAwesomeLink MyEventsIconSVG"
@@ -64,7 +64,7 @@ const MyEvents = (props) => {
                     </button>
                   ) : false}
                 </Link>
-                {adminCheck && ownerCheck && adminCheck || ownerCheck ? (
+                {adminCheck || ownerCheck ? (
                   <button
                     onClick={() => deleteSelectedEvent(event.id)}
                     className="MyEventsIcon"

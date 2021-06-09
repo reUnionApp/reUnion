@@ -12,6 +12,7 @@ import '../styles/guestList.css';
 import '../styles/create.css';
 import '../styles/single.css';
 import UpdateGuest from './updateGuest';
+import PulseButton from './pulseButton';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { use } from 'passport';
@@ -50,6 +51,8 @@ const GuestList = (props) => {
 
     await props.addPseudoUser(guest);
     await props.getGuestList(props.match.params.eventId);
+
+    e.target.reset();
 
     // console.log(e.target.parentNode.firstName.value)
   };
@@ -109,10 +112,11 @@ const GuestList = (props) => {
   let adminCheck;
   let ownerCheck;
   let coordCheck;
+  let target = 0;
 
   if (props.userEvents) {
     const eventNum = Number(props.match.params.eventId);
-    let target = 0;
+    target = 0;
     for (let i = 0; i < props.userEvents.length; i++) {
       let targetEvent = props.userEvents[i]
       if (targetEvent.id === eventNum) {
@@ -126,6 +130,8 @@ const GuestList = (props) => {
       coordCheck = props.userEvents[target].UserEvent.isCoordinator;
     }
   }
+
+  console.log(111111, props.guests)
 
   return (
     <div
@@ -143,6 +149,7 @@ const GuestList = (props) => {
           handleUpdate={handleUpdate}
           deleteGuest={deleteSelectedGuest}
           updateErrors={updateErrors}
+          eventId={Number(props.match.params.eventId)}
         />
       </div>
       <h1
@@ -164,7 +171,7 @@ const GuestList = (props) => {
         </Link>
       </h1>
       <div className="singleColumn flex column jContentC aItemsC">
-        {adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? (<form
+        {adminCheck || ownerCheck || coordCheck ? (<form
           id="guest-list"
           className="flex column"
           style={{ width: '100%' }}
@@ -195,13 +202,9 @@ const GuestList = (props) => {
                 false
               )}
           </div>
-          <button
-            type="submit"
-            id="addNewGuestButton"
-            className="button createButton"
-          >
-            Add New Guest
-          </button>
+          <div id="addNewGuestButton">
+            <PulseButton type={'submit'} height={50} width={200} fontSize={16} color1={'ffc400a4'} color2={'ffc4006e'} message={'Add New Guest'} />
+          </div>
         </form>) : false}
         <div id="guestListContainer">
           {props.guests &&
@@ -210,7 +213,7 @@ const GuestList = (props) => {
               return (
                 <div key={guest.id}>
                   <div
-                    onClick={(e) => adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? selectGuest(e, guest.id) : false}
+                    onClick={(e) => adminCheck || ownerCheck || coordCheck ? selectGuest(e, guest.id) : false}
                     className={`flex column aItemsC jContentC guestBox ${colors[count]}`}
                   >
                     <h3 style={{ margin: '0px' }}>
@@ -294,6 +297,7 @@ const GuestList = (props) => {
                                 email: guest.email,
                                 id: guest.id,
                                 userType: guest.userType,
+                                events: guest.Events
                               });
                               openClose();
                             }}
@@ -308,7 +312,7 @@ const GuestList = (props) => {
               );
             })}
         </div>
-        {adminCheck && ownerCheck && coordCheck && adminCheck || ownerCheck || coordCheck ? (
+        {adminCheck || ownerCheck || coordCheck ? (
           <button
             type="submit"
             className="button createButton"

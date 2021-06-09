@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { GuestList } from './index';
 import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DeleteEvent from './deleteEvent';
 import '../styles/single.css';
 import '../styles/create.css';
 
@@ -274,7 +275,10 @@ const SingleEvent = (props) => {
             <button
               className="button bottomSE"
               style={{ backgroundColor: '#e400678e' }}
-              onClick={() => deleteSelectedEvent(props.singleEvent.id)}
+              // onClick={() => deleteSelectedEvent(props.singleEvent.id)}
+              onClick={() => {
+                return <DeleteEvent />
+              }}
             >
               Delete Event
             </button>

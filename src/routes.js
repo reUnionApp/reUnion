@@ -92,16 +92,16 @@ class Routes extends Component {
               <Navbar />
             </>
           ) : (
-            <>
-              <Switch>
-                <Route exact path="/" component={LandingPage} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/landingPage" component={LandingPage} />
-                <Route component={Login} />
-              </Switch>
-            </>
-          )}
+              <>
+                <Switch>
+                  <Route exact path="/" component={LandingPage} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Route exact path="/landingPage" component={LandingPage} />
+                  <Route component={Login} />
+                </Switch>
+              </>
+            )}
         </Switch>
       </>
     );
