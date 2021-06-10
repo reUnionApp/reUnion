@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Event, UserEvent } = require('../db/models');
+const { User, Event, UserEvent, Activity } = require('../db/models');
 const adminsOnly = require('../auth/adminsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
 const { FindInPageOutlined } = require('@material-ui/icons');
@@ -98,6 +98,22 @@ router.get('/:userId/events/:eventId', userOrAdminOnly, async (req, res, next) =
 
 router.delete('/:userID', userOrAdminOnly, async (req, res, next) => {
   try {
+
+    const getUserEvents = await User.findByPk(req.params.userID, {
+      include: {
+        model: Event,
+        include: {
+          model: Activity
+        }
+      },
+    });
+
+    await getUserEvents.dataValues.Events.forEach(async (event) => {
+      event.Activities.forEach(async (activity) => {
+        await activity.destroy();
+      });
+      await event.destroy();
+    })
     const user = await User.findByPk(req.params.userID);
     await user.destroy();
     res.json(user);

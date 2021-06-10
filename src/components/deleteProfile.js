@@ -14,8 +14,8 @@ const DeleteProfile = (props) => {
       <button
         className="button dEButton deleteButton"
         onClick={() => {
-          props.deleteUser && props.deleteUser(props.user.id);
-          console.log('props.deleteUser', props.deleteUser)
+          props.deleteSingleUser && props.deleteSingleUser(props.user.id);
+          console.log('props.deleteSingleUser', props.deleteSingleUser)
           console.log('props.user', props.user.id)
           // props.history && props.history.push(`/`);
         }}

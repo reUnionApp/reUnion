@@ -27,6 +27,13 @@ const UpdateProfile = (props) => {
     updateUserState({ ...userState, [e.target.id]: e.target.value });
   };
 
+  const deleteSingleUser = async (userId) => {
+    console.log('in deleteSingleUser!!!!')
+    await props.deleteUser(userId);
+    // props.history.push('/');
+    // openClose();
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dbResponse = await props.updateUser(userState);
@@ -56,7 +63,7 @@ const UpdateProfile = (props) => {
       <div className='deleteProfile DPClosed flex jContentC aItemsC' ref={DP}>
         <DeleteProfile
           openClose={openClose}
-          deleteUser={deleteUser}
+          deleteSingleUser={deleteSingleUser}
           user={authUser}
         />
       </div>
