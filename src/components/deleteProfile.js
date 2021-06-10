@@ -7,14 +7,14 @@ const DeleteProfile = (props) => {
   console.log('props in profile', props);
 
   return (
-    <div id='deleteModal' className='flex column jContentC aItemsC'>
+    <div id='deleteModal' className='flex column jContentSE aItemsC'>
       <h1>Are you sure you want to delete your account?</h1>
       <h3>Deleting an account cannot be undone</h3>
 
       <button
-        className="dEButton"
+        className="button dEButton deleteButton"
         onClick={() => {
-          props.deleteUser && props.deleteUser(props.user.id)
+          props.deleteUser && props.deleteUser(props.user.id);
           console.log('props.deleteUser', props.deleteUser)
           console.log('props.user', props.user.id)
           // props.history && props.history.push(`/`);
@@ -22,7 +22,7 @@ const DeleteProfile = (props) => {
       >
         Delete Your Account
       </button>
-      <button type="button" className="dEButton" onClick={props.openClose}>
+      <button type="button" className="button dEButton" style={{ backgroundColor: '#F6DA83', color: 'black' }} onClick={props.openClose}>
         Cancel
       </button>
     </div>
