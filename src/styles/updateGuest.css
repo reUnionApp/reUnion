@@ -61,7 +61,6 @@
   text-align: center;
 }
 
-
 #buttonDiv {
   display: flex;
   width: 300px;
@@ -78,28 +77,34 @@
   width: 0;
 }
 
-#buttonDiv .radioIcon {
+#buttonDiv .radioIconContainer {
   width: 40px;
   height: 40px;
-  padding: 18px;
-  /* line-height: 40px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   color: #6f6f6f;
-  /* font-size: 36px; */
   border-radius: 50%;
   cursor: pointer;
   box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1),
     2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-#buttonDiv .radioIcon:hover {
+#buttonDiv .radioIconContainer:hover {
   box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1),
     2px 2px 6px rgba(0, 0, 0, 0.8),
     inset -2px -2px 10px rgba(255, 255, 255, 0.05),
     inset 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-#buttonDiv input:checked + label .radioButton {
-  box-shadow: inset -1px -1px 3px rgba(0, 255, 0, 0.1),
-    inset 2px 2px 6px rgba(0, 255, 0, 1);
+#buttonDiv input:checked + label .radioIconContainer {
+  box-shadow: inset -1px -1px 3px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 6px rgba(0, 0, 0, 1);
+  background-color: rgb(162, 254, 181);
+}
+
+.radioIcon {
+  width: 22px;
+  height: auto;
 }
