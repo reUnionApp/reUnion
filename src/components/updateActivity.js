@@ -6,6 +6,7 @@ import {
   updateActivity,
   removeActivity,
 } from '../store';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // React component imports
@@ -162,7 +163,7 @@ const UpdateActivity = (props) => {
     <div className="flex column jContentC aItemsC background2Down">
       <div
         className="flex column layout jContentC aItemsC"
-        style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center', marginBottom: '50px' }}
       >
         <h1>Update {props.activity.activityName}:</h1>
         <form
@@ -320,6 +321,11 @@ const UpdateActivity = (props) => {
             <button type="submit" className="button createButton">
               Update Activity
             </button>
+            <Link to={`/myEvents/${props.match.params.eventId}/activities/${props.match.params.activityId}`} className='flex jContentC aItemsC' style={{ margin: '0px auto' }}>
+              <button type="submit" className="button" style={{ marginBottom: '55px', backgroundColor: '#e400678e' }}>
+                Cancel
+              </button>
+            </Link>
           </div>
         </form>
       </div>

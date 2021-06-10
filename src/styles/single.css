@@ -79,3 +79,57 @@
 .linkIcon path {
   fill: rebeccapurple;
 }
+
+.deleteSingleEvent {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.63);
+  transition-duration: 1s;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.DSEClosed {
+  transform: translateY(100%);
+}
+
+.DSEOpen {
+  transform: translateY(0%);
+}
+
+.deleteSingleActivity {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.63);
+  transition-duration: 1s;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.DSAClosed {
+  transform: translateY(100%);
+}
+
+.DSAOpen {
+  transform: translateY(0%);
+}
+
+.deleteProfile {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.63);
+  transition-duration: 1s;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.DPClosed {
+  transform: translateY(100%);
+}
+
+.DPOpen {
+  transform: translateY(0%);
+}

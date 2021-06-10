@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { getActivity, getEvent, removeActivity } from '../store';
 import { Link } from 'react-router-dom';
@@ -6,12 +6,14 @@ import '../styles/create.css';
 import '../styles/single.css';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DeleteActivity from './deleteActivity';
 
 const SingleActivity = (props) => {
   const id = props.auth.id;
   const eventId = props.match.params.eventId;
 
   const deleteSelectedActivity = async (eventId, activityId) => {
+    openCloseActivity();
     await props.removeActivity(eventId, activityId);
   };
 
@@ -56,116 +58,139 @@ const SingleActivity = (props) => {
     }
   }
 
+  const DSA = useRef(null)
+
+  const openCloseActivity = () => {
+    if (DSA.current.classList.contains('DSAClosed')) {
+      DSA.current.classList.remove('DSAClosed');
+      DSA.current.classList.add('DSAOpen');
+    } else {
+      DSA.current.classList.remove('DSAOpen');
+      DSA.current.classList.add('DSAClosed');
+    }
+  }
+
   return (
-    <div id='SAMaster' className="singleContainer flex column aItemsC background3Down">
-      <div className="singleColumn flex column activityEventTitle">
-        <h1>
-          <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
-            <FontAwesomeIcon
-              className="fontAwesomeLink linkIcon"
-              icon={faLink}
-            />
-            {props.singleEvent.eventName}
-          </Link>
-        </h1>
-        <div className="confLine">
-          <p className="confBold">Activity: </p>
-          <p className="confValue" style={{ textAlign: 'end' }}>
-            {activityName}
-          </p>
-        </div>
-        <div
-          className="confLine"
-          style={{ maxWidth: '100%', alignItems: 'flex-start' }}
-        >
-          <p className="confBold">Description: </p>
-          {description && description.length ? (
-            <div id="descriptionConfContainer">
-              <p className="confValue">{description}</p>
-            </div>
-          ) : (
-              false
-            )}
-          {/* <div id="descriptionConfContainer">
+    <>
+      <div className='deleteSingleActivity DSAClosed flex jContentC aItemsC' ref={DSA}>
+        <DeleteActivity
+          openCloseActivity={openCloseActivity}
+          deleteActivity={deleteSelectedActivity}
+          singleEvent={props.singleEvent}
+          activityToDelete={props.eventActivities}
+          history={props.history}
+        />
+      </div>
+      <div id='SAMaster' className="singleContainer flex column aItemsC background3Down">
+        <div className="singleColumn flex column activityEventTitle">
+          <h1>
+            <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
+              <FontAwesomeIcon
+                className="fontAwesomeLink linkIcon"
+                icon={faLink}
+              />
+              {props.singleEvent.eventName}
+            </Link>
+          </h1>
+          <div className="confLine">
+            <p className="confBold">Activity: </p>
+            <p className="confValue" style={{ textAlign: 'end' }}>
+              {activityName}
+            </p>
+          </div>
+          <div
+            className="confLine"
+            style={{ maxWidth: '100%', alignItems: 'flex-start' }}
+          >
+            <p className="confBold">Description: </p>
+            {description && description.length ? (
+              <div id="descriptionConfContainer">
+                <p className="confValue">{description}</p>
+              </div>
+            ) : (
+                false
+              )}
+            {/* <div id="descriptionConfContainer">
             <p className="confValue">{description}</p>
           </div> */}
-        </div>
-        <div className="confLine">
-          <p className="confBold">Address: </p>
-          <div id="locationConf">
-            <p className="confValue">{location}</p>
           </div>
-        </div>
-        <div className="confLine">
-          <p className="confBold">Start Date: </p>
-          <p className="confValue">{dateFormat(new Date(startDateTime))}</p>
-        </div>
-        <div className="confLine">
-          <p className="confBold">End Date: </p>
-          <p className="confValue">{dateFormat(new Date(endDateTime))}</p>
-        </div>
-        <div className="confLine">
-          <p className="confBold">Start Time: </p>
-          <p className="confValue">
-            {new Date(startDateTime).toLocaleTimeString('en-US', {
-              hour12: true,
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </p>
-        </div>
-        <div className="confLine">
-          <span className="confBold">End Time: </span>
-          <p className="confValue">
-            {new Date(endDateTime).toLocaleTimeString('en-US', {
-              hour12: true,
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </p>
-        </div>
-        {adminCheck || ownerCheck || coordCheck ? (<><div className="flex jContentSB" style={{ margin: '20px 0px' }}>
-          <Link
-            to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
-          >
-            <button
-              className="button"
-              style={{
-                width: '130px',
-                height: '60px',
-                backgroundColor: '#38c1d38c',
-              }}
+          <div className="confLine">
+            <p className="confBold">Address: </p>
+            <div id="locationConf">
+              <p className="confValue">{location}</p>
+            </div>
+          </div>
+          <div className="confLine">
+            <p className="confBold">Start Date: </p>
+            <p className="confValue">{dateFormat(new Date(startDateTime))}</p>
+          </div>
+          <div className="confLine">
+            <p className="confBold">End Date: </p>
+            <p className="confValue">{dateFormat(new Date(endDateTime))}</p>
+          </div>
+          <div className="confLine">
+            <p className="confBold">Start Time: </p>
+            <p className="confValue">
+              {new Date(startDateTime).toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </p>
+          </div>
+          <div className="confLine">
+            <span className="confBold">End Time: </span>
+            <p className="confValue">
+              {new Date(endDateTime).toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </p>
+          </div>
+          {adminCheck || ownerCheck || coordCheck ? (<><div className="flex jContentSB" style={{ margin: '20px 0px' }}>
+            <Link
+              to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
             >
-              Update Activity
+              <button
+                className="button"
+                style={{
+                  width: '130px',
+                  height: '60px',
+                  backgroundColor: '#38c1d38c',
+                }}
+              >
+                Update Activity
             </button>
-          </Link>
-          <Link
-            to={`/myEvents/${props.singleEvent.id}/createActivity`}
-            style={{ margin: '0px 0px 0px 15px' }}
-          >
-            <button
-              className="button"
-              style={{
-                backgroundColor: '#ffc4008c',
-                width: '130px',
-                height: '60px',
-              }}
+            </Link>
+            <Link
+              to={`/myEvents/${props.singleEvent.id}/createActivity`}
+              style={{ margin: '0px 0px 0px 15px' }}
             >
-              Create New Activity
+              <button
+                className="button"
+                style={{
+                  backgroundColor: '#ffc4008c',
+                  width: '130px',
+                  height: '60px',
+                }}
+              >
+                Create New Activity
             </button>
-          </Link>
-        </div>
-          <button
-            className="button bottomSE"
-            style={{ backgroundColor: '#e400678e' }}
-            onClick={() =>
-              deleteSelectedActivity(eventId, props.eventActivities.id)
-            }
-          >
-            Delete Activity
+            </Link>
+          </div>
+            <button
+              className="button bottomSE"
+              style={{ backgroundColor: '#e400678e' }}
+              onClick={() =>
+                openCloseActivity()
+              }
+            >
+              Delete Activity
         </button> </>) : false}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
