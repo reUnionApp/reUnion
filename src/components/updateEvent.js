@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getEvent, updateEvent, removeEvent } from '../store';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // React component imports
 import { DateTimePicker } from './index.js';
@@ -175,6 +176,7 @@ const UpdateEvent = (props) => {
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();
           }}
+          style={{ marginBottom: '70px' }}
         >
           <div className="flex column">
             <div className="boldLabel flex jContentSB marginBottom">
@@ -332,6 +334,11 @@ const UpdateEvent = (props) => {
             <button type="submit" className="button createButton">
               Update Event
             </button>
+            <Link to={`/myEvents/${props.match.params.eventId}`} className='flex jContentC aItemsC'>
+              <button type="submit" className="button" style={{ backgroundColor: '#e400678e' }}>
+                Cancel
+              </button>
+            </Link>
           </div>
         </form>
       </div>

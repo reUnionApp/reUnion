@@ -73,7 +73,9 @@ export const updateUser = (user) => async (dispatch) => {
 
 export const deleteUser = (userId) => async (dispatch) => {
   try {
-    const { data } = axios.delete(`/api/users/${userId}`);
+    console.log('deleteUser fired!!!!!!')
+    const { data } = await axios.delete(`/api/users/${userId}`);
+    console.log(9999999, data)
     dispatch(_deleteUser(data));
   } catch (error) {
     console.error(error);

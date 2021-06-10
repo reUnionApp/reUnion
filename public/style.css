@@ -20,6 +20,9 @@ body {
 .aItemsFS {
   align-items: flex-start;
 }
+.aItemsSE {
+  align-items: flex-start
+}
 .jContentSE {
   justify-content: space-evenly;
 }
