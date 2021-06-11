@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getEvent, createEvent } from "../store";
 import { connect } from "react-redux";
+import { useHistory } from 'react-router'
 
 // React component imports
 import { GoogleMapComponent, DateTimePicker, GuestList } from "./index.js";
@@ -36,8 +37,11 @@ const CreateEvent = (props) => {
   const [eventData, setEventData] = useState({});
   const [eventTextLocation, setEventTextLocation] = useState("");
   const [eventNameError, setEventNameError] = useState("");
+  const [eventCreate, setEventCreated] = useState(false);
 
   let errorArray = [eventName, eventDescription, eventType];
+
+  const history = useHistory()
 
   const handleChange = function (event, hook) {
     hook(event.target.value);
@@ -73,16 +77,16 @@ const CreateEvent = (props) => {
 
     const createEventAttempt = await props.createEvent(event);
 
-    console.log({ createEventAttempt });
-
 
     if (createEventAttempt === 'Validation error') {
       setEventNameError('Event name already exists');
     } else {
       setEventData(event);
       // const result = await props.createEvent(event);
-
-      props.history.push(`/myEvents/${createEventAttempt.id}`);
+      if(event) {
+        setEventCreated(true);
+        props.history.push(`/myEvents/${createEventAttempt.id}`);
+      }
     }
   };
 

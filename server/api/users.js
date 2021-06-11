@@ -3,7 +3,9 @@ const { User, Event, UserEvent, Activity } = require('../db/models');
 const adminsOnly = require('../auth/adminsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
 const { FindInPageOutlined } = require('@material-ui/icons');
+const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 module.exports = router;
+
 
 // All Users: GET /api/users
 
@@ -146,6 +148,38 @@ router.post('/', async (req, res, next) => {
     }
   }
 });
+
+// Single Pseudo User: PUT /api / users /: userID/psuedo
+
+router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => {
+  console.log('line 154!!!!')
+  console.log(88888888, req.body)
+  const id = req.body.updatedInfo.id;
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      res.sendStatus(404);
+    } else if (
+      user.dataValues.userType === 'registered' &&
+      req.session.passport.user !== id
+    ) {
+      res.status(401).send('Cannot update registered user');
+    } else {
+      await user.update(req.body.updatedInfo);
+      console.log('user in pseudo api route', user);
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    if (error.errors) {
+      if (error.errors[0].message === 'email must be unique') {
+        res.status(401).send('Email is already registered');
+      }
+    } else {
+      next(error);
+    }
+  }
+});
+
 
 // Single User: PUT /api/users/:userID
 

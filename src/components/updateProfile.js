@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import { getUser, deleteUser, updateUser, me } from '../store';
 import { Link } from 'react-router-dom';
 import history from '../history';
@@ -8,6 +9,8 @@ import '../styles/updateProfile.css';
 
 const UpdateProfile = (props) => {
   const authUser = props.auth;
+  const history = useHistory();
+
   if (props.auth.specialRequests === null) {
     props.auth.specialRequests = '';
   }
@@ -30,8 +33,7 @@ const UpdateProfile = (props) => {
   const deleteSingleUser = async (userId) => {
     console.log('in deleteSingleUser!!!!')
     await props.deleteUser(userId);
-    // props.history.push('/');
-    // openClose();
+    history.go(0);
   }
 
   const handleSubmit = async (e) => {
