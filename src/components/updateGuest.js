@@ -34,8 +34,6 @@ const UpdateGuest = (props) => {
     const event = props.guestInfo.events.filter(
       (singleEvent) => singleEvent.id === props.eventId
     );
-    console.log('inside if statement');
-    console.log(5555555, event);
   }
 
   return (

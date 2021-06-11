@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const ADD_PSEUDO_USER = 'ADD_PSEUDO_USER';
+const UPDATE_PSEUDO_USER = 'UPDATE_PSEUDO_USER';
 const GET_USER = 'GET_USER';
 const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
@@ -9,6 +10,13 @@ const CLEAR_ERROR = 'CLEAR_ERROR';
 const _addPseudoUser = (user) => {
   return {
     type: ADD_PSEUDO_USER,
+    user,
+  };
+};
+
+const _updatePseudoUser = (user) => {
+  return {
+    type: UPDATE_PSEUDO_USER,
     user,
   };
 };
@@ -37,7 +45,6 @@ const _deleteUser = (user) => {
 export const addPseudoUser = (user) => async (dispatch) => {
   let res;
   try {
-    console.log('POST', user);
     res = await axios.post('/api/users/', user);
   } catch (userError) {
     return dispatch(_addPseudoUser({ error: userError }));
@@ -46,6 +53,19 @@ export const addPseudoUser = (user) => async (dispatch) => {
     dispatch(_addPseudoUser(res.data));
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const updatePseudoUser = (updatedInfo, authUser, eventId) => async (dispatch) => {
+  console.log({ updatedInfo, authUser })
+  try {
+    const payLoad = { id: authUser.id, updatedInfo }
+    const { data } = await axios.put(`/api/users/pseudo/${eventId}`, payLoad);
+    dispatch(_updatePseudoUser(data));
+    return 200;
+  } catch (error) {
+    console.error(error);
+    return error.response.data;
   }
 };
 
@@ -60,9 +80,7 @@ export const getUser = (userId) => async (dispatch) => {
 
 export const updateUser = (user) => async (dispatch) => {
   try {
-    console.log('update user thunk hit');
     const { data } = await axios.put(`/api/users/${user.id}`, user);
-    console.log('THUNK DATA', data);
     dispatch(_updateUser(data));
     return 200;
   } catch (error) {
@@ -73,9 +91,7 @@ export const updateUser = (user) => async (dispatch) => {
 
 export const deleteUser = (userId) => async (dispatch) => {
   try {
-    console.log('deleteUser fired!!!!!!')
     const { data } = await axios.delete(`/api/users/${userId}`);
-    console.log(9999999, data)
     dispatch(_deleteUser(data));
   } catch (error) {
     console.error(error);
@@ -88,6 +104,8 @@ export default function (state = defaultState, action) {
   switch (action.type) {
     case ADD_PSEUDO_USER:
       return action.user;
+    case UPDATE_PSEUDO_USER:
+      return action.user
     case GET_USER:
       return action.user;
     case UPDATE_USER:

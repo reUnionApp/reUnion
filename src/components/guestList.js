@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   addPseudoUser,
+  updatePseudoUser,
   getGuestList,
   removeGuest,
   updateUser,
@@ -16,6 +17,7 @@ import PulseButton from './pulseButton';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { use } from 'passport';
+import { SettingsEthernet, SettingsInputSvideoRounded } from '@material-ui/icons';
 
 const colors = {
   1: 'tealFade',
@@ -27,6 +29,7 @@ const GuestList = (props) => {
   const [guestList, setGuestList] = useState([props.guests]);
   const [editPerson, setEditPerson] = useState(-1);
   const [updateErrors, setUpdateErrors] = useState('');
+  const [guestToUpdate, setGuestToUpdate] = useState({});
   let { error } = props;
 
   useEffect(() => {
@@ -69,7 +72,14 @@ const GuestList = (props) => {
   };
 
   const handleUpdate = async (event, updatedInfo) => {
-    const updateGuestAttempt = await props.updateUser(updatedInfo);
+    let updateGuestAttempt = {};
+    console.log('uttttt', updateGuest.userType)
+
+    if (updateGuest.userType === 'basic') {
+      updateGuestAttempt = await props.updatePseudoUser(updatedInfo, props.auth, Number(props.match.params.eventId));
+    } else {
+      updateGuestAttempt = await props.updateUser(updatedInfo);
+    }
     if (updateGuestAttempt === 200) {
       setUpdateErrors('');
       openClose();
@@ -107,7 +117,7 @@ const GuestList = (props) => {
     }
   };
 
-  const [guestToUpdate, setGuestToUpdate] = useState({});
+  const [updateGuest, setUpdateGuest] = useState({});
 
   let adminCheck;
   let ownerCheck;
@@ -299,6 +309,7 @@ const GuestList = (props) => {
                                 userType: guest.userType,
                                 events: guest.Events
                               });
+                              setUpdateGuest(guest);
                               openClose();
                             }}
                           >
@@ -337,6 +348,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   addPseudoUser: (user) => dispatch(addPseudoUser(user)),
+  updatePseudoUser: (updatedUser, authUser, eventId) => dispatch(updatePseudoUser(updatedUser, authUser, eventId)),
   getGuestList: (id) => dispatch(getGuestList(id)),
   removeGuest: (eventId, guestId) => dispatch(removeGuest(eventId, guestId)),
   clearError: () => dispatch({ type: 'CLEAR_ERROR' }),
