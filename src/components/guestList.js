@@ -73,7 +73,6 @@ const GuestList = (props) => {
 
   const handleUpdate = async (event, updatedInfo) => {
     let updateGuestAttempt = {};
-    console.log('uttttt', updateGuest.userType)
 
     if (updateGuest.userType === 'basic') {
       updateGuestAttempt = await props.updatePseudoUser(updatedInfo, props.auth, Number(props.match.params.eventId));
@@ -307,7 +306,8 @@ const GuestList = (props) => {
                                 email: guest.email,
                                 id: guest.id,
                                 userType: guest.userType,
-                                events: guest.Events
+                                events: guest.Events,
+                                coordStatusProp: guest.Events[0].UserEvent.isCoordinator
                               });
                               setUpdateGuest(guest);
                               openClose();
