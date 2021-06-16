@@ -84,7 +84,6 @@ const CreateEvent = (props) => {
       setEventData(event);
       // const result = await props.createEvent(event);
       if(event) {
-        setEventCreated(true);
         props.history.push(`/myEvents/${createEventAttempt.id}`);
       }
     }

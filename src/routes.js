@@ -38,12 +38,14 @@ class Routes extends Component {
 
     let animationKey = localStorage.getItem('animationPlayed');
 
+
     return (
       <>
         {animationKey !== 'true' && <Animation />}
         <Switch>
           {isLoggedIn ? (
             <>
+              {console.log('logged in switch block')}
               <NavbarTop />
               <Darken />
               <Switch>
@@ -93,6 +95,7 @@ class Routes extends Component {
             </>
           ) : (
               <>
+                {console.log('logged out switch block')}
                 <Switch>
                   <Route exact path="/" component={LandingPage} />
                   <Route exact path="/login" component={Login} />

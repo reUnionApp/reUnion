@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { getEvent, removeEvent, getActivities, removeActivity } from '../store';
+import { getEvent, removeEvent, getActivities, removeActivity, getUserEvents } from '../store';
 import { Link } from 'react-router-dom';
 import { GuestList } from './index';
 import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +38,7 @@ const SingleEvent = (props) => {
   useEffect(() => {
     props.getEvent(eventId);
     props.getActivities(props.match.params.eventId);
+    props.getUserEvents(id);
   }, []);
 
   const dateFormat = (date) => {
@@ -79,7 +80,9 @@ const SingleEvent = (props) => {
       ownerCheck = props.userEvents[target].UserEvent.isOwner;
       coordCheck = props.userEvents[target].UserEvent.isCoordinator;
     }
+    console.log(999999, { adminCheck, ownerCheck, coordCheck })
   }
+
 
   const DSE = useRef(null)
   const DSA = useRef(null)
@@ -348,6 +351,7 @@ const mapDispatch = (dispatch) => ({
   getActivities: (eventId) => dispatch(getActivities(eventId)),
   removeActivity: (eventId, activityId) =>
     dispatch(removeActivity(eventId, activityId)),
+  getUserEvents: (id) => dispatch(getUserEvents(id))
 });
 
 export default connect(mapState, mapDispatch)(SingleEvent);
