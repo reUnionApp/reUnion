@@ -56,7 +56,7 @@
     "build": "react-scripts build",
     "seed": "node seed.js",
     "eject": "react-scripts eject",
-    "start-dev": "nodemon index.js",
+    "start-dev": "nodemon index.js & react-scripts start",
     "test": "jest --verbose"
   },
   "eslintConfig": {
