@@ -118,11 +118,11 @@ const MyEvents = (props) => {
               </div>
             );
           })}
-        <a href="/createEvent">
+        <Link to={"/createEvent"}>
           <button id="createEventLink" type="button" className="button">
             Create Event
         </button>
-        </a>
+        </Link>
       </div>
     </>
   );
