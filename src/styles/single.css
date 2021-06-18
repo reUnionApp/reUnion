@@ -97,3 +97,7 @@
 .DSEOpen, .DSAOpen, .DPOpen {
   transform: translateY(0%);
 }
+
+.test {
+  text-align: center;
+}
