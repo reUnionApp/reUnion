@@ -22,6 +22,7 @@ const SingleEvent = (props) => {
   const id = props.auth.id;
   const eventId = props.match.params.eventId;
   const [activityToDelete, setActivityToDelete] = useState({});
+  const updateEventButton = useRef(null);
 
   const deleteSelectedEvent = async (eventId) => {
     openClose();
@@ -104,6 +105,14 @@ const SingleEvent = (props) => {
     } else {
       DSE.current.classList.remove('DSEOpen');
       DSE.current.classList.add('DSEClosed');
+    }
+  }
+
+  const updateEventStyle = () => {
+    if (coordCheck) {
+      updateEventButton.current.classList.add('test');
+    } else {
+      updateEventButton.current.classList.add('test');
     }
   }
 
@@ -310,11 +319,12 @@ const SingleEvent = (props) => {
             </div>
             <Link to={`/myEvents/${eventId}/update`}>
               {adminCheck || ownerCheck || coordCheck ? (
-                <button
+                <button ref={updateEventButton}
                   className="button bottomSE"
                   style={{
                     backgroundColor: '#ffc4008c',
                   }}
+                  onLoad={updateEventStyle}
                 >
                   Update Event
                 </button>
