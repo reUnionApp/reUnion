@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
-const morgan = require('morgan');
+if (!process.env.PORT) {
+  const morgan = require('morgan');
+}
 const compression = require('compression');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -12,7 +14,8 @@ const app = express();
 const { User } = require('./server/db/models');
 require('dotenv').config();
 module.exports = app;
-
+console.log(888888, process.env.PORT)
+process.env.PORT ? console.log('yes') : console.log('no')
 /**
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
@@ -38,7 +41,9 @@ passport.deserializeUser(async (id, done) => {
 
 const createApp = () => {
   // logging middleware
-  app.use(morgan('dev'));
+  if (!process.env.PORT) {
+    app.use(morgan('dev'));
+  }
 
   // body parsing middleware
   app.use(express.json());
