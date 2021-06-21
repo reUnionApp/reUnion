@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, InlineIcon } from '@iconify/react';
 import DropMenu from './dropMenu';
-import plusIcon from '@iconify-icons/mdi/plus';
 import { Link } from 'react-router-dom';
 import '../styles/navbarTop.css';
 
