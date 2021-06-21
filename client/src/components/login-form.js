@@ -27,7 +27,7 @@ function Copyright() {
     >
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="http://localhost:3000/">
+        <Link color="inherit" to='/'>
           reUnion
         </Link>{' '}
         {new Date().getFullYear()}
@@ -144,7 +144,7 @@ const LoginForm = (props) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="http://localhost:3000/signup" variant="body2">
+                <Link to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
