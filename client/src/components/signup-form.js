@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signup } from '../store/index';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +20,7 @@ function Copyright() {
     <div style={{ marginBottom: '10px' }}>
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" to='/'>
+        <Link to='/'>
           reUnion
         </Link>{' '}
         {new Date().getFullYear()}
@@ -161,7 +161,7 @@ const SignUpForm = (props) => {
             </Button>
             <Grid container justify="center">
               <Grid item>
-                <Link to="/login" variant="body2">
+                <Link to="/login">
                   Already have an account? Sign in
                 </Link>
               </Grid>
