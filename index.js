@@ -3,7 +3,9 @@ const express = require('express');
 if (!process.env.PORT) {
   const morgan = require('morgan');
 }
-const compression = require('compression');
+if (!process.env.PORT) {
+  const compression = require('compression');
+}
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
@@ -50,7 +52,9 @@ const createApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   // compression middleware
-  app.use(compression());
+  if (!process.env.PORT) {
+    app.use(compression());
+  }
 
   // session middleware with passport
   app.use(
