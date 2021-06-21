@@ -1,9 +1,9 @@
 const path = require('path');
 const express = require('express');
-if (!process.env.PORT) {
+if (process.env.PORT !== undefined) {
   const morgan = require('morgan');
 }
-if (!process.env.PORT) {
+if (process.env.PORT !== undefined) {
   const compression = require('compression');
 }
 const session = require('express-session');
@@ -43,7 +43,8 @@ passport.deserializeUser(async (id, done) => {
 
 const createApp = () => {
   // logging middleware
-  if (!process.env.PORT) {
+  if (process.env.PORT !== undefined) {
+    console.log('blah pizza chicken wing')
     app.use(morgan('dev'));
   }
 
@@ -52,7 +53,7 @@ const createApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   // compression middleware
-  if (!process.env.PORT) {
+  if (process.env.PORT !== undefined) {
     app.use(compression());
   }
 
