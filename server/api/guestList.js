@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { default: userEvent } = require('@testing-library/user-event');
+// const { default: userEvent } = require('@testing-library/user-event');
 const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 const { Event, Activity, User, UserEvent } = require('../db/models');
 module.exports = router;

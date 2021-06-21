@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User, Event, UserEvent, Activity } = require('../db/models');
 const adminsOnly = require('../auth/adminsOnly');
 const userOrAdminOnly = require('../auth/userOrAdminOnly');
-const { FindInPageOutlined } = require('@material-ui/icons');
+// const { FindInPageOutlined } = require('@material-ui/icons');
 const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 module.exports = router;
 
