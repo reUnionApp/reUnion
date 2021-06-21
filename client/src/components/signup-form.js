@@ -20,7 +20,7 @@ function Copyright() {
     <div style={{ marginBottom: '10px' }}>
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="http://localhost:3000/">
+        <Link color="inherit" to='/'>
           reUnion
         </Link>{' '}
         {new Date().getFullYear()}
@@ -161,7 +161,7 @@ const SignUpForm = (props) => {
             </Button>
             <Grid container justify="center">
               <Grid item>
-                <Link href="http://localhost:3000/login" variant="body2">
+                <Link to="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
