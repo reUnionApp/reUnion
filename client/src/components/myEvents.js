@@ -71,48 +71,40 @@ const MyEvents = (props) => {
                   <div style={{ margin: '0px 0px 8px 0px' }}>Host</div>
                 )}
                 <Link to={`/myEvents/${event.id}`}>
-                  <h3 style={{ margin: '0px 0px 19px 0px' }}>
+                  <h3 style={{ margin: '15px 0px 0px 0px' }}>
                     {event.eventName}
                   </h3>
                 </Link>
-                <div className="flex jContentSB w80">
-                  <Link to={`/myEvents/${event.id}/update`}>
-                    {adminCheck || ownerCheck || coordCheck ? (
-                      <button className="MyEventsIcon">
+                <div className="MEButtonRow flex jContentC w100">
+                  {adminCheck || ownerCheck || coordCheck ? (
+                    <div className="MEButtonWrapper">
+                      <Link to={`/myEvents/${event.id}/update`}>
+                        <button className="MyEventsIcon">
+                          <FontAwesomeIcon
+                            className="fontAwesomeLink MyEventsIconSVG"
+                            icon={faWrench}
+                            style={{ width: '32px', height: 'auto' }}
+                          />
+                        </button>
+                      </Link>
+                    </div>
+                  ) : false}
+                  {adminCheck || ownerCheck ? (
+                    <div className="MEButtonWrapper">
+                      <button
+                        className="MyEventsIcon"
+                        onClick={() => {
+                          setDeleteEvent(event);
+                          openClose();
+                        }}
+                      >
                         <FontAwesomeIcon
                           className="fontAwesomeLink MyEventsIconSVG"
-                          icon={faWrench}
-                          style={{ width: '32px', height: 'auto' }}
+                          icon={faTrash}
+                          style={{ width: '30px', height: 'auto' }}
                         />
                       </button>
-                    ) : false}
-                  </Link>
-                  {/* {adminCheck || ownerCheck ? (
-                  <button
-                    onClick={() => deleteSelectedEvent(event.id)}
-                    className="MyEventsIcon"
-                  >
-                    <FontAwesomeIcon
-                      className="fontAwesomeLink MyEventsIconSVG"
-                      icon={faTrash}
-                      style={{ width: '30px', height: 'auto' }}
-                    />
-                  </button>
-                ) : false} */}
-                  {adminCheck || ownerCheck ? (
-                    <button
-                      className="MyEventsIcon"
-                      onClick={() => {
-                        setDeleteEvent(event);
-                        openClose();
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        className="fontAwesomeLink MyEventsIconSVG"
-                        icon={faTrash}
-                        style={{ width: '30px', height: 'auto' }}
-                      />
-                    </button>
+                    </div>
                   ) : false}
                 </div>
               </div>

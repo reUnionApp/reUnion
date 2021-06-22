@@ -35,3 +35,11 @@
 .MyEventsIconSVG path {
   fill: white;
 }
+
+.MEButtonWrapper {
+  width: 50%;
+}
+
+.MEButtonRow {
+   margin: auto 0 0 0;
+}
