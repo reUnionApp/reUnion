@@ -1,23 +1,82 @@
-.dropMenuLink {
-  margin: 30px 0px 30px 20px;
-  font-size: 18px;
-  font-weight: 500;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+#DMMaster {
+  position: fixed;
+  width: 100vw;
+  z-index: 99;
+  background-color: transparent;
+  transition: transform 0.4s ease-in;
 }
 
-.linkSpacer {
-  margin: 200px 0px 30px 20px;
+.DMOpen {
+  transform: translateX(0);
+}
+
+.DMClosed {
+  transform: translateX(-100%);
 }
 
 #dropMenuLeft {
   background-color: rgba(255, 255, 255, 0.95);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   width: 50vw;
+  max-width: 360px;
+  font-size: 25px;
+}
+
+.dropMenuLink {
+  font-size: inherit;
+  margin: 3em 1em 3em 1.5em;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#DMLinkWrapper {
+  width: 100%;
+  font-size: inherit;
+  margin: 0em 0em 7em 0em;
 }
 
 #dropMenuRight {
   background-color: transparent;
   width: 50vw;
+}
+
+@media (max-width: 570px), (max-height: 1035px) {
+  #dropMenuLeft {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 450px), (max-height: 850px) {
+  #dropMenuLeft {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 390px), (max-height: 741px) {
+  #dropMenuLeft {
+    font-size: 14px;
+  }
+}
+
+@media (max-height: 615px) {
+  #dropMenuLeft {
+    font-size: 13px;
+  }
+}
+
+@media (max-height: 575px) {
+  #dropMenuLeft {
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 540px) {
+  #dropMenuLeft {
+    font-size: 10.5px;
+  }
+}
+
+@media (max-height: 523px) {
+  #dropMenuLeft {
+    font-size: 8.75px;
+  }
 }

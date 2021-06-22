@@ -3,7 +3,6 @@ html {
 }
 
 .App {
-  min-height: 100vh;
   overflow: hidden;
 }
 
@@ -21,7 +20,7 @@ body {
   align-items: flex-start;
 }
 .aItemsSE {
-  align-items: flex-start
+  align-items: flex-start;
 }
 .jContentSE {
   justify-content: space-evenly;
@@ -78,6 +77,7 @@ body {
   color: black;
   font-family: 'Open Sans', sans-serif;
   -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
 .teal {
@@ -98,6 +98,10 @@ body {
 }
 .yellowFade {
   background-color: #ffc400a4;
+}
+
+button {
+  padding: 0;
 }
 
 .button {
@@ -174,4 +178,12 @@ textarea {
   padding: 5px 15px;
   outline: none;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.desktop {
+  height: 100vh;
+}
+
+.mobile {
+  height: -webkit-fill-available;
 }

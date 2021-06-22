@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import '../styles/animation.css';
 
-const Animation = () => {
-  useEffect(() => {
-    const container = document.getElementById('animationContainer');
+const Animation = (props) => {
+  const container = useRef(null);
 
-    container.addEventListener('animationend', function (e) {
-      if (e.target.id === 'animationContainer') {
-        container.classList.add('animationEnd');
-        localStorage.setItem('animationPlayed', 'true');
-      }
-    });
-  }, []);
+  const animationEnd = (e) => {
+    if (e.target.id === 'animationContainer') {
+      container.current.classList.add('animationEnd');
+      localStorage.setItem('animationPlayed', 'true');
+    }
+  };
 
   return (
-    <div id="animationContainer" className="flex column aItemsC jContentC">
+    <div
+      id="animationContainer"
+      className={`flex column aItemsC jContentC ${
+        props.isMobile ? 'mobile' : 'desktop'
+      }`}
+      onAnimationEnd={animationEnd}
+      ref={container}
+    >
       <img src="/reUnion_Logo.png" alt="logo" id="animationImg" />
       <div id="titleContainer">
-        <div id="animationSlider"></div>
+        <div id="animationSlider" />
         <img src="/reUnion_Title.png" alt="title" id="animationTitle" />
       </div>
     </div>

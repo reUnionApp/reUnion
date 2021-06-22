@@ -8,29 +8,32 @@ import '../styles/dropMenu.css';
 
 const DropMenu = ({ open, setOpen, handleLogout }) => {
   return (
-    <DropMenuBar
-      open={open}
+    <div
+      id="DMMaster"
       onClick={() => {
         setOpen(!open);
         toggleBurger();
       }}
+      className={`flex desktop ${open ? 'DMOpen' : 'DMClosed'}`}
     >
-      <div id="dropMenuLeft">
-        <Link className="dropMenuLink linkSpacer" to="/myEvents">
-          Events
-        </Link>
-        <Link className="dropMenuLink" to="/profile">
-          Profile
-        </Link>
-        <Link className="dropMenuLink" to="/updateProfile">
-          Account Settings
-        </Link>
-        <a className="dropMenuLink" href="#" onClick={handleLogout}>
-          Logout
-        </a>
+      <div id="dropMenuLeft" className="flex column aItemsC jContentC">
+        <div id="DMLinkWrapper" className="flex column">
+          <Link className="dropMenuLink" to="/myEvents">
+            Events
+          </Link>
+          <Link className="dropMenuLink" to="/profile">
+            Profile
+          </Link>
+          <Link className="dropMenuLink" to="/updateProfile">
+            Account Settings
+          </Link>
+          <a className="dropMenuLink" href="#" onClick={handleLogout}>
+            Logout
+          </a>
+        </div>
       </div>
-      <div id="dropMenuRight"></div>
-    </DropMenuBar>
+      <div id="dropMenuRight" />
+    </div>
   );
 };
 
@@ -50,14 +53,3 @@ const mapDispatch = (dispatch) => {
 };
 
 export default connect(mapState, mapDispatch)(DropMenu);
-
-const DropMenuBar = styled.div`
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-  display: flex;
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  z-index: 99;
-  background-color: transparent;
-  transition: transform 0.4s ease-in;
-`;

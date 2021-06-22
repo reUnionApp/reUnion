@@ -28,25 +28,25 @@ import {
 import { me } from './store';
 
 class Routes extends Component {
+  constructor(props) {
+    super();
+  }
   componentDidMount() {
     this.props.loadInitialData();
   }
 
   render() {
-    const { isLoggedIn } = this.props;
-    const { isAdmin } = this.props;
+    const { isLoggedIn, isAdmin, isMobile } = this.props;
 
     let animationKey = localStorage.getItem('animationPlayed');
 
-
     return (
       <>
-        {animationKey !== 'true' && <Animation />}
+        {animationKey !== 'true' && <Animation isMobile={isMobile} />}
         <Switch>
           {isLoggedIn ? (
             <>
-              {console.log('logged in switch block')}
-              <NavbarTop />
+              <NavbarTop isMobile={isMobile} />
               <Darken />
               <Switch>
                 <Route exact path="/users" component={AllUsers} />
@@ -94,17 +94,28 @@ class Routes extends Component {
               <Navbar />
             </>
           ) : (
-              <>
-                {console.log('logged out switch block')}
-                <Switch>
-                  <Route exact path="/" component={LandingPage} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/landingPage" component={LandingPage} />
-                  <Route component={Login} />
-                </Switch>
-              </>
-            )}
+            <>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(defaultProps) => (
+                    <LandingPage {...defaultProps} isMobile={isMobile} />
+                  )}
+                />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <Route
+                  exact
+                  path="/landingPage"
+                  render={(defaultProps) => (
+                    <LandingPage {...defaultProps} isMobile={isMobile} />
+                  )}
+                />
+                <Route component={Login} />
+              </Switch>
+            </>
+          )}
         </Switch>
       </>
     );

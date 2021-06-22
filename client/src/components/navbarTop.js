@@ -40,7 +40,7 @@ const plusFlash = () => {
   }
 };
 
-const NavbarTop = () => {
+const NavbarTop = (props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -63,7 +63,7 @@ const NavbarTop = () => {
         }}
       >
         <div id="circleBurger" className="cbClose">
-          <div id="circleFiller" className="cfClose"></div>
+          <div id="circleFiller" className="cfClose" />
         </div>
       </div>
       <img
@@ -78,7 +78,7 @@ const NavbarTop = () => {
         </div>
       </Link>
 
-      <DropMenu open={open} setOpen={setOpen} />
+      <DropMenu open={open} setOpen={setOpen} isMobile={props.isMobile} />
     </div>
   );
 };
