@@ -14,9 +14,7 @@ const Animation = (props) => {
   return (
     <div
       id="animationContainer"
-      className={`flex column aItemsC jContentC ${
-        props.isMobile ? 'mobile' : 'desktop'
-      }`}
+      className="flex column aItemsC jContentC"
       onAnimationEnd={animationEnd}
       ref={container}
     >

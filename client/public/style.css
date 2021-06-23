@@ -1,13 +1,12 @@
-html {
+html,
+body {
   margin: 0px;
+  width: 100vw;
+  height: 100%;
 }
 
 .App {
   overflow: hidden;
-}
-
-body {
-  margin: 0px;
 }
 
 .flex {
@@ -178,12 +177,4 @@ textarea {
   padding: 5px 15px;
   outline: none;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-.desktop {
-  height: 100vh;
-}
-
-.mobile {
-  height: -webkit-fill-available;
 }

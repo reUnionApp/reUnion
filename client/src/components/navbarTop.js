@@ -78,7 +78,7 @@ const NavbarTop = (props) => {
         </div>
       </Link>
 
-      <DropMenu open={open} setOpen={setOpen} isMobile={props.isMobile} />
+      <DropMenu open={open} setOpen={setOpen} />
     </div>
   );
 };
