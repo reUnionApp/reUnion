@@ -27,10 +27,7 @@ function Copyright() {
     >
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link to='/'>
-          reUnion
-        </Link>{' '}
-        {new Date().getFullYear()}
+        <Link to="/">reUnion</Link> {new Date().getFullYear()}
         {'.'}
       </Typography>
     </div>
@@ -39,7 +36,6 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: '50%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -83,10 +79,10 @@ const LoginForm = (props) => {
         className={classes.login}
       >
         <CssBaseline />
-        <div className={classes.paper}>
+        <div className={`${classes.paper} signInContainer`}>
           <img
+            className="loginLogoImg"
             src="/reUnion_Logo.png"
-            style={{ width: '10vw' }}
             alt="reUnion logo"
           />
           <Typography component="h1" variant="h5">
@@ -139,14 +135,19 @@ const LoginForm = (props) => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to='/'>
-                  Forgot password?
-                </Link>
+                <div className="loginLinkPosition">
+                  <Link to="/" className="loginLink loginLinkPosition">
+                    Forgot password?
+                  </Link>
+                </div>
               </Grid>
               <Grid item>
-                <Link to="/signup">
-                  "Don't have an account? Sign Up"
-                </Link>
+                <p className="loginLinkPosition">
+                  Don't have an account?{' '}
+                  <Link to="/signup" className="loginLink">
+                    Sign Up
+                  </Link>
+                </p>
               </Grid>
             </Grid>
             {error && error.response && <div> {error.response.data} </div>}

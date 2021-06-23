@@ -20,10 +20,7 @@ function Copyright() {
     <div style={{ marginBottom: '10px' }}>
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link to='/'>
-          reUnion
-        </Link>{' '}
-        {new Date().getFullYear()}
+        <Link to="/">reUnion</Link> {new Date().getFullYear()}
         {'.'}
       </Typography>
     </div>
@@ -75,10 +72,10 @@ const SignUpForm = (props) => {
     <div className="flex column aItemsC" style={{ width: '100%' }}>
       <Container component="main" maxWidth="xs" className={classes.signUp}>
         <CssBaseline />
-        <div className={classes.paper} style={{ marginTop: '50%' }}>
+        <div className={`${classes.paper} signInContainer`}>
           <img
             src="reUnion_Logo.png"
-            style={{ width: '10vw' }}
+            className="loginLogoImg"
             alt="reUnion logo"
           />
           <Typography component="h1" variant="h5">
@@ -161,9 +158,7 @@ const SignUpForm = (props) => {
             </Button>
             <Grid container justify="center">
               <Grid item>
-                <Link to="/login">
-                  Already have an account? Sign in
-                </Link>
+                <Link to="/login">Already have an account? Sign in</Link>
               </Grid>
             </Grid>
             {error && error.response && <div> {error.response.data} </div>}
