@@ -12,12 +12,7 @@ SwiperCore.use([Navigation, Pagination, A11y]);
 
 const LandingPage = (props) => {
   return (
-    <div
-      id="LPMaster"
-      className={`flex column jContentC aItemsC ${
-        props.isMobile ? 'mobile' : 'desktop'
-      }`}
-    >
+    <div id="LPMaster" className="flex column jContentC aItemsC">
       <Swiper
         className="landing-wrapper"
         effect="fade"

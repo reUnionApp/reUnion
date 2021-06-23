@@ -14,7 +14,7 @@ const DropMenu = ({ open, setOpen, handleLogout }) => {
         setOpen(!open);
         toggleBurger();
       }}
-      className={`flex desktop ${open ? 'DMOpen' : 'DMClosed'}`}
+      className={`flex ${open ? 'DMOpen' : 'DMClosed'}`}
     >
       <div id="dropMenuLeft" className="flex column aItemsC jContentC">
         <div id="DMLinkWrapper" className="flex column">

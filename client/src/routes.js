@@ -36,17 +36,17 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, isAdmin, isMobile } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
 
     let animationKey = localStorage.getItem('animationPlayed');
 
     return (
       <>
-        {animationKey !== 'true' && <Animation isMobile={isMobile} />}
+        {animationKey !== 'true' && <Animation />}
         <Switch>
           {isLoggedIn ? (
             <>
-              <NavbarTop isMobile={isMobile} />
+              <NavbarTop />
               <Darken />
               <Switch>
                 <Route exact path="/users" component={AllUsers} />
@@ -96,22 +96,10 @@ class Routes extends Component {
           ) : (
             <>
               <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={(defaultProps) => (
-                    <LandingPage {...defaultProps} isMobile={isMobile} />
-                  )}
-                />
+                <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route
-                  exact
-                  path="/landingPage"
-                  render={(defaultProps) => (
-                    <LandingPage {...defaultProps} isMobile={isMobile} />
-                  )}
-                />
+                <Route exact path="/landingPage" component={LandingPage} />
                 <Route component={Login} />
               </Switch>
             </>
