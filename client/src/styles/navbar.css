@@ -1,9 +1,89 @@
 .navbar {
   position: fixed;
   bottom: 0;
+  font-size: 10px;
   z-index: 100;
   border-top: 2px solid black;
-  padding: 20px 0px;
+  padding: 15px 0px;
   background-color: rgba(255, 255, 255, 0.753);
   backdrop-filter: blur(7px);
+}
+
+#navBarGreet {
+  font-weight: bold;
+  font-size: 2em;
+  background-color: #38c1d3;
+  background-image: linear-gradient(90deg, #ffc300, #38c1d3);
+  background-size: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  margin: 0px;
+}
+
+.navBottomLink {
+  color: white;
+  font-weight: bold;
+  font-size: 1.4em;
+  letter-spacing: 0.2em;
+  transition-duration: 0.5s;
+}
+
+.navBottomLinkSelected {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#navMyProfile,
+#navMyEvents {
+  font-size: inherit;
+  border-radius: 1.5em;
+  width: 14em;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.NBLinkSelected {
+  border: 0.3em solid rgba(0, 0, 0, 0.5);
+}
+
+#navMyProfile {
+  background-color: #38c1d3a4;
+}
+
+#navMyEvents {
+  background-color: #ffc400a4;
+}
+
+@media (max-width: 750px) {
+  .navbar {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 625px) {
+  .navbar {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 550px) {
+  .navbar {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 450px) {
+  .navbar {
+    font-size: 6px;
+  }
+}
+
+@media (max-width: 350px) {
+  .navbar {
+    font-size: 5px;
+  }
 }

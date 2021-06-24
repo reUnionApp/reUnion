@@ -5,16 +5,41 @@ import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import '../styles/navbar.css';
 
-const Navbar = ({ handleLogout, isLoggedIn, firstName }) => (
+const Navbar = (props) => (
   <div>
     <nav>
       <div className="flex w100 jContentSA navbar">
-        <strong>Hello, {firstName}!</strong>
-        <Link to="/profile">My Profile</Link>
-        <Link to="/myEvents">My Events</Link>
-        <a href="#" onClick={handleLogout}>
-          Logout
-        </a>
+        <p id="navBarGreet">Hello {props.firstName}!</p>
+        <div
+          id="navMyProfile"
+          className={`${
+            props.location.pathname === '/profile' && 'NBLinkSelected'
+          }`}
+        >
+          <Link
+            to="/profile"
+            className={`navBottomLink ${
+              props.location.pathname === '/profile' && 'navBottomLinkSelected'
+            }`}
+          >
+            My Profile
+          </Link>
+        </div>
+        <div
+          id="navMyEvents"
+          className={`${
+            props.location.pathname === '/myEvents' && 'NBLinkSelected'
+          }`}
+        >
+          <Link
+            to="/myEvents"
+            className={`navBottomLink ${
+              props.location.pathname === '/myEvents' && 'navBottomLinkSelected'
+            }`}
+          >
+            My Events
+          </Link>
+        </div>
       </div>
     </nav>
   </div>

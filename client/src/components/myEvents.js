@@ -4,7 +4,7 @@ import { getUserEvents, removeEvent } from '../store';
 import { Link } from 'react-router-dom';
 import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import DeleteEvent from './deleteEvent'
+import DeleteEvent from './deleteEvent';
 import history from '../history';
 import '../styles/myEvents.css';
 
@@ -31,7 +31,7 @@ const MyEvents = (props) => {
 
   let count = 0;
 
-  const DSE = useRef(null)
+  const DSE = useRef(null);
 
   const openClose = () => {
     if (DSE.current.classList.contains('DSEClosed')) {
@@ -41,11 +41,14 @@ const MyEvents = (props) => {
       DSE.current.classList.remove('DSEOpen');
       DSE.current.classList.add('DSEClosed');
     }
-  }
+  };
 
   return (
     <>
-      <div className='deleteSingleEvent DSEClosed flex jContentC aItemsC' ref={DSE}>
+      <div
+        className="deleteSingleEvent DSEClosed flex jContentC aItemsC"
+        ref={DSE}
+      >
         <DeleteEvent
           openClose={openClose}
           deleteEvent={deleteSelectedEvent}
@@ -53,7 +56,7 @@ const MyEvents = (props) => {
         />
       </div>
       <div className="flex aItemsC column background1Up" id="myEventsContainer">
-        <h2>
+        <h2 id="MEEventCount">
           You have {props.userEvents.length}{' '}
           {props.userEvents.length === 1 ? 'event' : 'events'}
         </h2>
@@ -68,27 +71,30 @@ const MyEvents = (props) => {
                 key={event.id}
               >
                 {props.auth.id === event.ownerId && (
-                  <div style={{ margin: '0px 0px 8px 0px' }}>Host</div>
+                  <div id="eventBoxHost">Host</div>
                 )}
                 <Link to={`/myEvents/${event.id}`}>
-                  <h3 style={{ margin: '15px 0px 0px 0px' }}>
-                    {event.eventName}
-                  </h3>
+                  <h3 id="eventBoxTitle">{event.eventName}</h3>
                 </Link>
                 <div className="MEButtonRow flex jContentC w100">
                   {adminCheck || ownerCheck || coordCheck ? (
                     <div className="MEButtonWrapper">
-                      <Link to={`/myEvents/${event.id}/update`}>
+                      <Link
+                        to={`/myEvents/${event.id}/update`}
+                        id="MEWrenchLink"
+                      >
                         <button className="MyEventsIcon">
                           <FontAwesomeIcon
                             className="fontAwesomeLink MyEventsIconSVG"
                             icon={faWrench}
-                            style={{ width: '32px', height: 'auto' }}
+                            id="MEWrench"
                           />
                         </button>
                       </Link>
                     </div>
-                  ) : false}
+                  ) : (
+                    false
+                  )}
                   {adminCheck || ownerCheck ? (
                     <div className="MEButtonWrapper">
                       <button
@@ -101,20 +107,25 @@ const MyEvents = (props) => {
                         <FontAwesomeIcon
                           className="fontAwesomeLink MyEventsIconSVG"
                           icon={faTrash}
-                          style={{ width: '30px', height: 'auto' }}
+                          id="METrash"
                         />
                       </button>
                     </div>
-                  ) : false}
+                  ) : (
+                    false
+                  )}
                 </div>
               </div>
             );
           })}
-        <Link to={"/createEvent"}>
-          <button id="createEventLink" type="button" className="button">
-            Create Event
-        </button>
-        </Link>
+        <div id="createEventButtonWrapper">
+          <img src="orange-balloon.png" id="CEBalloon" />
+          <Link to={'/createEvent'} id="createEventBLink">
+            <button id="createEventBButton" type="button">
+              Create Event
+            </button>
+          </Link>
+        </div>
       </div>
     </>
   );
