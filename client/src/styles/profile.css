@@ -1,28 +1,119 @@
 #profileContainer {
   margin: 0px;
   height: 100vh;
+  font-size: 10px;
   padding: 75px 0px;
+  position: relative;
 }
 
 .light {
   font-weight: 200;
 }
 
+#updateProfileButton {
+  align-self: flex-end;
+  margin: 0.5em 1.5em 0em 0em;
+}
+
 .updateProfile {
-  height: 40px;
+  font-size: 1.5em;
+  height: 3.5em;
+}
+
+#profileNameTitle {
+  font-size: 3em;
+  margin: 2em 0em 2em 0em;
+  z-index: 1;
+}
+
+#profileInfoHolder {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 28.5em;
+  z-index: 1;
+  transform: translate(19em, 8em);
 }
 
 .profileDataType {
-  font-size: 18px;
-  margin: 50px 0px;
+  font-size: 1.8em;
+  margin: 3em 0em;
+  z-index: 1;
 }
 
 .profileDataValue {
-  margin: 0px 0px 0px 15px;
+  margin: 0em 0em 0em 1em;
+  z-index: 1;
+  text-align: center;
 }
 
 .profileDataValueNone {
   font-style: italic;
-  font-size: 14px;
-  margin: 0px 0px 0px 15px;
+  font-size: 0.8em;
+  margin: 0px 0px 0px 1.25em;
+  z-index: 1;
+  text-align: center;
+}
+
+@keyframes profileBalloon {
+  0% {
+    transform: translate(0em, 100vh);
+  }
+  100% {
+    transform: translate(0em, 20em);
+  }
+}
+
+@keyframes profileBalloonRight {
+  0% {
+    margin-left: -25em;
+  }
+  60% {
+    margin-left: 5em;
+  }
+  65% {
+    margin-left: 5em;
+  }
+  100% {
+    margin-left: 0em;
+  }
+}
+
+#profileInfoBalloonWrapper {
+  position: absolute;
+  width: 60em;
+  transform: translate(0em, 20em);
+  animation: profileBalloon 1.5s ease-out 0s 1 normal forwards,
+    profileBalloonRight 1.5s ease-out 0s 1 normal forwards;
+}
+
+#profileBalloon {
+  width: 45em;
+  height: auto;
+  transform: rotate(-10deg) scaleX(-1) translate(-12em, 2em);
+  z-index: 0;
+}
+
+@media (max-width: 600px) {
+  #profileContainer {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 500px) {
+  #profileContainer {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  #profileContainer {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 325px) {
+  #profileContainer {
+    font-size: 5.5px;
+  }
 }

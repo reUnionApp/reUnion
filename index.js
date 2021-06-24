@@ -12,8 +12,6 @@ const app = express();
 const { User } = require('./server/db/models');
 require('dotenv').config();
 module.exports = app;
-console.log(888888, process.env.PORT)
-process.env.PORT ? console.log('yes') : console.log('no')
 /**
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
@@ -41,14 +39,12 @@ const createApp = () => {
   // logging middleware
   app.use(morgan('dev'));
 
-
   // body parsing middleware
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
   // compression middleware
   app.use(compression());
-
 
   // session middleware with passport
   app.use(
