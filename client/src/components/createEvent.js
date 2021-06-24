@@ -58,7 +58,6 @@ const CreateEvent = (props) => {
 
   const submitEventForm = async function (click) {
     click.preventDefault();
-    console.log("submit form func was fired!!!!!");
 
     let event = {
       eventName: eventName,

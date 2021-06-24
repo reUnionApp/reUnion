@@ -16,6 +16,8 @@ import UpdateGuest from './updateGuest';
 import PulseButton from './pulseButton';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import emailjs from 'emailjs-com';
 import { use } from 'passport';
 import { SettingsEthernet, SettingsInputSvideoRounded } from '@material-ui/icons';
 
@@ -57,15 +59,15 @@ const GuestList = (props) => {
 
     e.target.reset();
 
-    // console.log(e.target.parentNode.firstName.value)
+    console.log(e.target.parentNode.firstName.value)
   };
-  // console.log(props.match.params);
+  console.log(props.match.params);
 
   const deleteSelectedGuest = async (guestId) => {
     openClose();
     const eventId = Number(props.match.params.eventId);
-    console.log('guestId-->', guestId);
-    console.log('eventId-->', eventId);
+    // console.log('guestId-->', guestId);
+    // console.log('eventId-->', eventId);
     await props.removeGuest(eventId, guestId);
     await props.getGuestList(eventId);
     // props.clearError();
@@ -141,6 +143,67 @@ const GuestList = (props) => {
   }
 
   console.log(111111, props.guests)
+
+
+
+  // javascript
+  // const sgMail = require('@sendgrid/mail')
+  // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  // const msg = {
+  //   to: 'myreunionapp@gmail.com', // Change to your recipient
+  //   from: 'myreunionapp@gmail.com', // Change to your verified sender
+  //   subject: 'You\'re Invited!',
+  //   text: `Hello from reUnion!`,
+  //   html: '<h1>Hello from reUnion!</h1>'
+  // }
+  // sgMail
+  //   .send(msg)
+  //   .then(() => {
+  //     console.log('Email sent')
+  //   })
+  //   .catch((error) => {
+  //     console.error(error)
+  //   })
+
+  useEffect(() => {
+    console.log('before axios')
+    // let email = axios.post('https://api.sendgrid.com/v3/mail/send', {
+    //   headers: {
+    //     'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
+    //     'Content-Type': 'application/json'
+    //   },
+    //   data: {
+    //     "personalizations": [{ "to": [{ "email": "myreunionapp@gmail.com" }] }],
+    //     "from": { "email": "myreunionapp@gmail.com" },
+    //     "subject": "Hello, World!",
+    //     "content": [{ "type": "text/plain", "value": "Heya!" }]
+    //   }
+    // })
+
+    var headers = {
+      'Authorization': 'Bearer YOUR_API_KEY_HERE',
+      'Content-Type': 'application/json'
+    };
+
+    var dataString = '{"personalizations": [{"to": [{"email": "recipient@example.com"}]}],"from": {"email": "sendeexampexample@example.com"},"subject": "Hello, World!","content": [{"type": "text/plain", "value": "Howdy!"}]}';
+
+    var options = {
+      url: 'https://api.sendgrid.com/v3/mail/send',
+      method: 'POST',
+      headers: headers,
+      body: dataString
+    };
+
+    function callback(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
+    }
+
+    axios(options, callback);
+
+    console.log('after axios');
+  }, [])
 
   return (
     <div

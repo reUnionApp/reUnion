@@ -17,23 +17,18 @@ const UpdateGuest = (props) => {
       id: props.guestInfo.id,
       coordStatus
     };
-    console.log({ updatedInfo })
     props.handleUpdate(e, updatedInfo);
   };
 
   const deleteGuest = () => {
-    console.log('delete guest fired');
     props.deleteGuest(props.guestInfo.id);
   };
-  console.log(111, props);
 
   if (props.guestInfo.events) {
     const event = props.guestInfo.events.filter(
       (singleEvent) => singleEvent.id === props.eventId
     );
   }
-
-  console.log(22222, coordStatus)
 
   if (Object.keys(props.guestInfo).length && coordStatus === null) {
     setCoordStatus(props.guestInfo.coordStatusProp);

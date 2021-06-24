@@ -1,13 +1,11 @@
-html {
+html, body {
   margin: 0px;
+  width: 100vw;
+  height: 100%;
 }
 
 .App {
   overflow: hidden;
-}
-
-body {
-  margin: 0px;
 }
 
 .flex {
@@ -185,5 +183,7 @@ textarea {
 }
 
 .mobile {
-  height: -webkit-fill-available;
+  height: 100vh;
+  /* height: -webkit-fill-available;
+  height: -moz-available; */
 }

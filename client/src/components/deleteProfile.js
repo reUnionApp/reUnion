@@ -4,8 +4,6 @@ import '../styles/delete.css'
 
 const DeleteProfile = (props) => {
 
-  console.log('props in profile', props);
-
   return (
     <div id='deleteModal' className='flex column jContentSE aItemsC'>
       <h1>Are you sure you want to delete your account?</h1>

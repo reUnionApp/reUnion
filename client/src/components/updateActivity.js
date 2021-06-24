@@ -139,11 +139,6 @@ const UpdateActivity = (props) => {
   const onPlaceChanged = () => {
     if (googleLocation !== null) {
       if (!googleLocation.getPlace().address_components) {
-        console.log('here');
-        console.log(
-          'googleLocation.getPlace().name',
-          googleLocation.getPlace().name
-        );
         setTextLocation(googleLocation.getPlace().name);
         locationUpdate.current = true;
         return;
@@ -151,7 +146,6 @@ const UpdateActivity = (props) => {
 
       setGoogleLocation({});
       setGoogleLocation(googleLocation);
-      console.log('g state after-->', googleLocation);
       setTextLocation('');
       locationUpdate.current = true;
     } else {
