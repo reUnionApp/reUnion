@@ -31,10 +31,10 @@ const UpdateProfile = (props) => {
   };
 
   const deleteSingleUser = async (userId) => {
-    console.log('in deleteSingleUser!!!!')
+    console.log('in deleteSingleUser!!!!');
     await props.deleteUser(userId);
     history.go(0);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +48,7 @@ const UpdateProfile = (props) => {
     }
   };
 
-  const DP = useRef(null)
+  const DP = useRef(null);
 
   const openClose = () => {
     if (DP.current.classList.contains('DPClosed')) {
@@ -58,27 +58,27 @@ const UpdateProfile = (props) => {
       DP.current.classList.remove('DPOpen');
       DP.current.classList.add('DPClosed');
     }
-  }
+  };
 
   return (
     <>
-      <div className='deleteProfile DPClosed flex jContentC aItemsC' ref={DP}>
+      <div className="deleteProfile DPClosed flex jContentC aItemsC" ref={DP}>
         <DeleteProfile
           openClose={openClose}
           deleteSingleUser={deleteSingleUser}
           user={authUser}
         />
       </div>
-      <div id="UPMaster" className="background3Down">
-        <div className="w100 flex jContentSB" id="UPButtonRow">
-          <Link to="/profile">
+      <div id="UPMaster" className="background3Down flex column aItemsC">
+        <div className="w90 flex jContentSB" id="UPButtonRow">
+          <Link to="/profile" id="UPBackButtonLink">
             <button
               type="button"
-              className="button updateProfile yellowFade"
               id="UPBackButton"
+              className="button updateProfile yellowFade"
             >
               Back to Profile
-          </button>
+            </button>
           </Link>
           <button
             type="button"
@@ -89,7 +89,7 @@ const UpdateProfile = (props) => {
             }}
           >
             Delete Profile
-        </button>
+          </button>
         </div>
         <h1 id="UPTitle">{`Update ${props.auth.firstName}'s Profile`}</h1>
         <div id="UPErrorDiv">
@@ -103,7 +103,7 @@ const UpdateProfile = (props) => {
           <div className="formLabInp">
             <label className="updateLabel" htmlFor="email">
               Email:
-          </label>
+            </label>
             <input
               type="email"
               id="email"
@@ -116,7 +116,7 @@ const UpdateProfile = (props) => {
           <div className="formLabInp">
             <label className="inputLabel" htmlFor="dietaryRestrictions">
               Dietary Restrictions:
-          </label>
+            </label>
             <select
               id="dietaryRestrictions"
               className="UPFormInput"
@@ -136,7 +136,7 @@ const UpdateProfile = (props) => {
           <div className="formLabInp">
             <label className="inputLabel" htmlFor="specialRequests">
               Special Requests:
-          </label>
+            </label>
             <input
               id="specialRequests"
               type="text"
@@ -149,7 +149,7 @@ const UpdateProfile = (props) => {
           <div className="formLabInp">
             <label className="inputLabel" htmlFor="alias">
               Nickname:
-          </label>
+            </label>
             <input
               id="alias"
               type="text"
@@ -161,7 +161,7 @@ const UpdateProfile = (props) => {
           </div>
           <button type="submit" className="button tealFade" id="UPSubmitButton">
             Update Profile
-        </button>
+          </button>
         </form>
       </div>
     </>

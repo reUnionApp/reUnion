@@ -10,36 +10,24 @@ const Navbar = (props) => (
     <nav>
       <div className="flex w100 jContentSA navbar">
         <p id="navBarGreet">Hello {props.firstName}!</p>
-        <div
+        <Link
+          to="/profile"
           id="navMyProfile"
-          className={`${
-            props.location.pathname === '/profile' && 'NBLinkSelected'
+          className={`navBottomLink ${
+            props.location.pathname === '/profile' && 'navBottomLinkSelected'
           }`}
         >
-          <Link
-            to="/profile"
-            className={`navBottomLink ${
-              props.location.pathname === '/profile' && 'navBottomLinkSelected'
-            }`}
-          >
-            My Profile
-          </Link>
-        </div>
-        <div
+          My Profile
+        </Link>
+        <Link
+          to="/myEvents"
           id="navMyEvents"
-          className={`${
-            props.location.pathname === '/myEvents' && 'NBLinkSelected'
+          className={`navBottomLink ${
+            props.location.pathname === '/myEvents' && 'navBottomLinkSelected'
           }`}
         >
-          <Link
-            to="/myEvents"
-            className={`navBottomLink ${
-              props.location.pathname === '/myEvents' && 'navBottomLinkSelected'
-            }`}
-          >
-            My Events
-          </Link>
-        </div>
+          My Events
+        </Link>
       </div>
     </nav>
   </div>

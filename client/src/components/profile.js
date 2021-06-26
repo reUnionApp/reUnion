@@ -2,67 +2,103 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getUser, deleteUser, me } from '../store';
 import { Link } from 'react-router-dom';
-import history from '../history';
 import '../styles/profile.css';
 
 const Profile = (props) => {
-  const goToUpdateProfile = () => {
-    props.history.push('/updateprofile');
-  };
-
-  // const [profile, setProfile] = useState(props.auth);
-
-  // props.getUser(props.auth.id);
   useEffect(() => {
     props.me();
   }, []);
+
   return (
     <div id="profileContainer" className="background2Up flex column aItemsC">
-      <button
-        type="button"
-        className="button updateProfile yellowFade"
-        id="updateProfileButton"
-        onClick={goToUpdateProfile}
-      >
-        Update Profile
-      </button>
+      <Link to="/updateprofile" id="updateProfileButton">
+        <button type="button" className="button updateProfile yellowFade">
+          Update Profile
+        </button>
+      </Link>
       <h1 id="profileNameTitle">{`${props.auth.firstName}'s Profile`}</h1>
       <div id="profileInfoBalloonWrapper">
         <img src="largeBalloon.png" id="profileBalloon" />
-        <div id="profileInfoHolder">
-          <h4 className="profileDataType">
-            Email:{' '}
-            <span className="light profileDataValue">{props.auth.email}</span>
-          </h4>
-          <h4 className="profileDataType">
-            Dietary Restrictions:{' '}
-            {props.auth.dietaryRestrictions ? (
-              <span className="light profileDataValue">
-                {props.auth.dietaryRestrictions}
-              </span>
-            ) : (
-              <span className="light profileDataValueNone">None</span>
-            )}
-          </h4>
-          <h4 className="profileDataType">
-            Special Requests:{' '}
-            {props.auth.specialRequests ? (
-              <span className="light profileDataValue">
-                {props.auth.specialRequests}
-              </span>
-            ) : (
-              <span className="light profileDataValueNone">None</span>
-            )}
-          </h4>
-          <h4 className="profileDataType">
-            Nickname:{' '}
-            {props.auth.alias ? (
-              <span className="light profileDataValue">{props.auth.alias}</span>
-            ) : (
-              <span className="light profileDataValueNone">None</span>
-            )}
-          </h4>
-        </div>
+        <svg id="profileInfoHolder" viewBox="0 0 430 400">
+          <path id="PBalloonCurve1" d="M60,75 A 9 3 1 1 1 380 75" fill="none" />
+          <path
+            id="PBalloonCurve2"
+            d="M15,173 A 20 4 1 1 1 420 173"
+            fill="none"
+          />
+          <path
+            id="PBalloonCurve3"
+            d="M15,237 A 20 4 1 1 0 420 237"
+            fill="none"
+          />
+          <path
+            id="PBalloonCurve4"
+            d="M40,335 A 9 3 1 1 0 390 335"
+            fill="none"
+          />
+          <text>
+            <textPath
+              alignmentBaseline="top"
+              href="#PBalloonCurve1"
+              className="profileDataType"
+              startOffset="50%"
+              textAnchor="middle"
+            >
+              Email:{' '}
+              <tspan className="light profileDataValue">
+                {props.auth.email}
+              </tspan>
+            </textPath>
+            <textPath
+              alignmentBaseline="top"
+              href="#PBalloonCurve2"
+              className="profileDataType"
+              startOffset="50%"
+              textAnchor="middle"
+            >
+              Dietary Restrictions:{' '}
+              {props.auth.dietaryRestrictions ? (
+                <tspan className="light profileDataValue">
+                  {props.auth.dietaryRestrictions}
+                </tspan>
+              ) : (
+                <tspan className="light profileDataValueNone">None</tspan>
+              )}
+            </textPath>
+            <textPath
+              alignmentBaseline="top"
+              href="#PBalloonCurve3"
+              className="profileDataType"
+              startOffset="50%"
+              textAnchor="middle"
+            >
+              Special Requests:{' '}
+              {props.auth.specialRequests ? (
+                <tspan className="light profileDataValue">
+                  {props.auth.specialRequests}
+                </tspan>
+              ) : (
+                <tspan className="light profileDataValueNone">None</tspan>
+              )}
+            </textPath>
+            <textPath
+              alignmentBaseline="top"
+              href="#PBalloonCurve4"
+              className="profileDataType"
+              startOffset="50%"
+              textAnchor="middle"
+            >
+              Nickname:{' '}
+              {props.auth.alias ? (
+                <tspan className="light profileDataValue">
+                  {props.auth.alias}
+                </tspan>
+              ) : (
+                <tspan className="light profileDataValueNone">None</tspan>
+              )}
+            </textPath>
+          </text>
+        </svg>
       </div>
     </div>
   );

@@ -18,11 +18,12 @@
 .updateProfile {
   font-size: 1.5em;
   height: 3.5em;
+  margin: 0em 1em 0em 0em;
 }
 
 #profileNameTitle {
   font-size: 3em;
-  margin: 2em 0em 2em 0em;
+  margin: 0.5em 0em 0em 0em;
   z-index: 1;
 }
 
@@ -30,28 +31,23 @@
   top: 0;
   left: 0;
   position: absolute;
-  width: 28.5em;
+  width: 43em;
+  height: 40em;
   z-index: 1;
-  transform: translate(19em, 8em);
+  transform: translate(8.25em, 5em);
 }
 
 .profileDataType {
-  font-size: 1.8em;
-  margin: 3em 0em;
-  z-index: 1;
+  font-size: 18px;
 }
 
 .profileDataValue {
-  margin: 0em 0em 0em 1em;
-  z-index: 1;
   text-align: center;
 }
 
 .profileDataValueNone {
   font-style: italic;
-  font-size: 0.8em;
-  margin: 0px 0px 0px 1.25em;
-  z-index: 1;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -60,7 +56,7 @@
     transform: translate(0em, 100vh);
   }
   100% {
-    transform: translate(0em, 20em);
+    transform: translate(0em, 15em);
   }
 }
 
@@ -82,7 +78,7 @@
 #profileInfoBalloonWrapper {
   position: absolute;
   width: 60em;
-  transform: translate(0em, 20em);
+  transform: translate(0em, 15em);
   animation: profileBalloon 1.5s ease-out 0s 1 normal forwards,
     profileBalloonRight 1.5s ease-out 0s 1 normal forwards;
 }
