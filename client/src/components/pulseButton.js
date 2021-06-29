@@ -12,21 +12,30 @@ const PulseButton = (props) => {
     pulse.current.style.left = `${x}px`;
     pulse.current.style.top = `${y}px`;
     pulse.current.className = 'pulse';
-  }
+  };
 
   return (
-    <button id='pulseButton' type={props.type} onClick={handleClick} style={{
-      height: `${props.height}px`,
-      width: `${props.width}px`,
-      fontSize: `${props.fontSize}px`,
-      background: `linear-gradient(90deg, #${props.color1}, #${props.color2})`
-    }} >
+    <button
+      id="pulseButton"
+      type={props.type}
+      onClick={handleClick}
+      style={{
+        height: `${props.height}px`,
+        width: `${props.width}px`,
+        fontSize: `${props.fontSize}px`,
+        background: `linear-gradient(90deg, #${props.color1}, #${props.color2})`,
+      }}
+    >
       {props.message}
-      <span ref={pulse} onAnimationEnd={() => {
-        pulse.current.className = '';
-      }} style={{ fontSize: `${props.fontSize}px` }} />
+      <span
+        ref={pulse}
+        onAnimationEnd={() => {
+          pulse.current.className = '';
+        }}
+        style={{ fontSize: `${props.fontSize}px` }}
+      />
     </button>
-  )
-}
+  );
+};
 
-export default PulseButton
+export default PulseButton;
