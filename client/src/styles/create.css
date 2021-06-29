@@ -13,7 +13,7 @@
   display: inline-block;
   padding: 0.75em 1.5em;
   border: 0.1em solid black;
-  background-color: #e40067c7;
+  background-color: #e40067a4;
   border-radius: 0.5em;
   margin: 2em 1em;
   cursor: pointer;
@@ -131,6 +131,7 @@
   border-radius: 10px;
   overflow: hidden;
   border-radius: 1em;
+  cursor: pointer;
 }
 
 .createButton:active {
@@ -242,17 +243,19 @@
 }
 
 .CRStampMessage {
-  font-size: 1.3em;
+  font-size: 1.8em;
+  font-family: 'Amatic SC', cursive;
   position: absolute;
-  transform: translate(1.3em, -6.2em);
+  transform: translate(0.9em, -4.5em);
   text-align: center;
-  width: 5em;
+  width: 4em;
 }
 
 .CRStampMessageDTP {
-  font-size: 1.3em;
+  font-size: 1.8em;
+  font-family: 'Amatic SC', cursive;
   position: absolute;
-  transform: translate(-1.25em, -6.3em);
+  transform: translate(-0.9em, -4.4em);
   text-align: center;
   width: 5em;
 }
@@ -427,125 +430,65 @@
   animation: TB3Float 2.5s linear 0s 1 normal forwards;
 }
 
-@media (max-height: 1050px) {
-  #radioContainer {
-    font-size: 9px;
-  }
+#mapBoxBoxShadow {
+  position: fixed;
+  font-size: 10px;
+  width: 55em;
+  height: 45em;
+  border-radius: 5px;
+  z-index: -1;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-@media (max-width: 970px) {
-  .CRBalloonBox {
-    font-size: 9px;
-  }
-}
-
-@media (max-height: 960px) {
-  #googleMapWrapper {
-    font-size: 9px;
-  }
-}
-
-@media (max-width: 940px) {
-  #CRConfMaster {
-    font-size: 9px;
-  }
-}
-
-@media (max-height: 925px) {
-  #radioContainer {
-    font-size: 8px;
-  }
-}
-
-@media (max-height: 875px) {
-  #googleMapWrapper {
-    font-size: 8px;
-  }
-}
-
-@media (max-width: 870px) {
-  #radioContainer {
-    font-size: 9px;
-  }
-  #googleMapWrapper {
-    font-size: 9px;
-  }
-  .CRBalloonBox {
-    font-size: 8px;
-  }
-}
-
-@media (max-height: 825px) {
-  #radioContainer {
-    font-size: 7px;
-  }
-}
-
-@media (max-height: 800px) {
-  #googleMapWrapper {
-    font-size: 7px;
-  }
-}
-
-@media (max-width: 775px) {
-  #CRConfMaster {
-    font-size: 8px;
-  }
-}
-
-@media (max-height: 750px) {
-  #CRConfMaster {
-    font-size: 9px;
-  }
-}
-
-@media (max-height: 725px) {
-  #radioContainer {
-    font-size: 6px;
-  }
-}
-
-@media (max-height: 720px) {
-  #googleMapWrapper {
-    font-size: 6px;
-    margin: 80px 0px 0px 0px;
-    height: 90em;
-  }
-  #mapLocationInput {
-    padding: 5px 20px;
-    font-size: 3em;
-    margin: 1em 0em;
-  }
-  #CREventAddress {
-    font-size: 3em;
-    margin: 0em 0em 0.4em 0em;
-  }
-  #finalLocation {
-    font-size: 2.5em;
-  }
-}
-
-@media (max-width: 700px) {
-  #googleMapWrapper {
-    font-size: 8px;
-  }
-}
-
+/* Text Area Start*/
 @media (max-height: 695px) {
   .createTextArea {
     height: 250px;
   }
 }
 
-@media (max-height: 675px) {
-  #CRConfMaster {
+@media (max-height: 625px) {
+  .createTextArea {
+    height: 200px;
+  }
+}
+@media (max-height: 580px) {
+  .createTextArea {
+    height: 150px;
+  }
+}
+@media (max-height: 525px) {
+  .createTextArea {
+    height: 100px;
+  }
+}
+/* Text Area End */
+
+/* Radio Container Start */
+@media (max-height: 1050px), (max-width: 870px) {
+  #radioContainer {
+    font-size: 9px;
+  }
+}
+
+@media (max-height: 925px), (max-width: 600px) {
+  .CRBalloonBox {
+    transform: translate(10px, 60px);
+  }
+  #radioContainer {
     font-size: 8px;
   }
 }
 
-@media (max-height: 635px) {
-  #googleMapWrapper {
-    font-size: 5px;
+@media (max-height: 825px), (max-width: 500px) {
+  #radioContainer {
+    font-size: 7px;
+  }
+}
+
+@media (max-height: 725px) {
+  #radioContainer {
+    font-size: 6px;
   }
 }
 
@@ -559,42 +502,6 @@
     width: 8.5em;
     height: 4em;
   }
-  .createTextArea {
-    height: 200px;
-  }
-}
-
-@media (max-height: 615px) {
-  #CRConfMaster {
-    padding: 50px 0px 38px 0px;
-  }
-}
-
-@media (max-height: 610px) {
-  #googleMapWrapper {
-    font-size: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .CRBalloonBox {
-    transform: translate(10px, 60px);
-  }
-  #radioContainer {
-    font-size: 8px;
-  }
-}
-
-@media (max-height: 580px) {
-  .createTextArea {
-    height: 150px;
-  }
-}
-
-@media (max-width: 575px) {
-  #googleMapWrapper {
-    font-size: 7px;
-  }
 }
 
 @media (max-height: 550px) {
@@ -603,35 +510,39 @@
   }
 }
 
-@media (max-width: 536px) {
-  .CRBalloonBox {
-    transform: translate(5px, 60px);
+/* Radio Container End */
+
+/* Google Map Wrapper Start */
+@media (max-height: 960px), (max-width: 660px) {
+  #googleMapWrapper,
+  #mapBoxBoxShadow {
+    font-size: 9px;
   }
 }
 
-@media (max-height: 525px) {
-  .createTextArea {
-    height: 100px;
+@media (max-height: 875px), (max-width: 600px) {
+  #googleMapWrapper,
+  #mapBoxBoxShadow {
+    font-size: 8px;
   }
 }
 
-@media (max-height: 500px) {
-  #CRConfMaster {
-    padding: 100px 0px 75px 0px;
-  }
-}
-
-@media (max-width: 500px) {
-  .CRBalloonBox {
+@media (max-height: 800px), (max-width: 545px) {
+  #googleMapWrapper,
+  #mapBoxBoxShadow {
     font-size: 7px;
   }
-  #radioContainer {
-    font-size: 7px;
-  }
+}
+
+@media (max-height: 720px), (max-width: 485px) {
   #googleMapWrapper {
     font-size: 6px;
     margin: 80px 0px 0px 0px;
     height: 90em;
+  }
+  #mapBoxBoxShadow {
+    font-size: 6px;
+    height: 54em;
   }
   #mapLocationInput {
     padding: 5px 20px;
@@ -647,10 +558,27 @@
   }
 }
 
+@media (max-height: 635px), (max-width: 430px) {
+  #googleMapWrapper,
+  #mapBoxBoxShadow {
+    font-size: 5px;
+  }
+}
+
+@media (max-height: 610px), (max-width: 375px) {
+  #googleMapWrapper,
+  #mapBoxBoxShadow {
+    font-size: 4px;
+  }
+}
+
 @media (max-height: 480px) {
   #googleMapWrapper {
     font-size: 3.5px;
     margin: 70px 0px 0px 0px;
+  }
+  #mapBoxBoxShadow {
+    font-size: 3.5px;
   }
   #mapLocationInput {
     font-size: 3em;
@@ -665,9 +593,65 @@
   }
 }
 
-@media (max-width: 425px) {
-  #googleMapWrapper {
-    font-size: 5px;
+/* Google Map Wrapper End */
+
+/* Event Conf Start */
+
+@media (max-height: 750px), (max-width: 650px) {
+  #CRConfMaster {
+    font-size: 9px;
+  }
+}
+
+@media (max-height: 675px), (max-width: 500px) {
+  #CRConfMaster {
+    font-size: 8px;
+  }
+}
+
+@media (max-height: 615px) {
+  #CRConfMaster {
+    padding: 50px 0px 38px 0px;
+  }
+}
+
+@media (max-height: 500px) {
+  #CRConfMaster {
+    padding: 100px 0px 75px 0px;
+  }
+}
+
+/* Event Conf End */
+
+/* Balloon Box Start */
+
+@media (max-width: 970px) {
+  .CRBalloonBox {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 870px) {
+  .CRBalloonBox {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .CRBalloonBox {
+    transform: translate(10px, 60px);
+  }
+}
+
+@media (max-width: 536px) {
+  .CRBalloonBox {
+    transform: translate(5px, 60px);
+  }
+}
+
+@media (max-width: 500px) {
+  .CRBalloonBox {
+    font-size: 7px;
   }
 }
 
@@ -677,8 +661,4 @@
   }
 }
 
-@media (max-width: 370px) {
-  #googleMapWrapper {
-    font-size: 4px;
-  }
-}
+/* Balloon Box End */

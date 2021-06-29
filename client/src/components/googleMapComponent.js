@@ -14,7 +14,7 @@ const GoogleMapComponent = (props) => {
     width: '100%',
     height: '100%',
     borderRadius: '5px',
-    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+    position: 'relative',
   };
 
   const { textLocation, setTextLocation, googleLocation, setGoogleLocation } =
@@ -61,7 +61,9 @@ const GoogleMapComponent = (props) => {
             mapContainerStyle={containerStyle}
             center={coordinates}
             zoom={count === 0 ? 10 : 18}
-          ></GoogleMap>
+          >
+            <div id="mapBoxBoxShadow" />
+          </GoogleMap>
         </div>
 
         <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
@@ -76,12 +78,12 @@ const GoogleMapComponent = (props) => {
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-              <p>
-                {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                  ? `${googleLocation.getPlace().formatted_address}`
-                  : false}
-              </p>
-            )}
+            <p>
+              {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                ? `${googleLocation.getPlace().formatted_address}`
+                : false}
+            </p>
+          )}
         </div>
       </LoadScript>
     </div>
