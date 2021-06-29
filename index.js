@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const { User } = require('./server/db/models');
 require('dotenv').config();
-var cors = require('cors')
 module.exports = app;
 /**
  * In your development environment, you can keep all of your
@@ -43,9 +42,6 @@ const createApp = () => {
   // body parsing middleware
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  app.use(cors());
-  // app.options('*', cors())
 
   app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
