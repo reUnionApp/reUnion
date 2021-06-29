@@ -45,6 +45,7 @@ const GoogleMapComponent = (props) => {
       console.log('Autocomplete is not loaded yet!');
     }
   };
+  // console.log(111111, process.env.REACT_APP_GOOGLE)
 
   return (
     <div style={{ margin: '20px 0px' }} className="flex column aItemsC">
@@ -74,12 +75,12 @@ const GoogleMapComponent = (props) => {
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
           ) : (
-            <p>
-              {googleLocation.gm_bindings_ && googleLocation.getPlace()
-                ? `${googleLocation.getPlace().formatted_address}`
-                : false}
-            </p>
-          )}
+              <p>
+                {googleLocation.gm_bindings_ && googleLocation.getPlace()
+                  ? `${googleLocation.getPlace().formatted_address}`
+                  : false}
+              </p>
+            )}
         </div>
       </LoadScript>
     </div>
