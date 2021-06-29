@@ -2,6 +2,7 @@ const router = require('express').Router();
 // const { default: userEvent } = require('@testing-library/user-event');
 const adminOwnerCoordinator = require('../auth/adminOwnerCoordinator');
 const { Event, Activity, User, UserEvent } = require('../db/models');
+const sgMail = require('@sendgrid/mail');
 module.exports = router;
 
 // Single Event Guest List: GET /api/events/:eventID/guestList
@@ -21,6 +22,8 @@ router.get('/:eventID/guestList', async function (req, res, next) {
   }
 });
 
+// Single Event Guest List: PUT /api/events/:eventID/guestList
+// adminOwnerCoordinator
 router.put('/:eventId/guestList/', adminOwnerCoordinator, async function (req, res, next) {
   const eventId = Number(req.params.eventId);
   try {
@@ -31,3 +34,23 @@ router.put('/:eventId/guestList/', adminOwnerCoordinator, async function (req, r
     next(error);
   }
 });
+
+// router.post('/:eventId/guestList/', adminOwnerCoordinator, (req, res, next) => {
+//   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+//   const msg = {
+//     to: 'myreunionapp@gmail.com', // Change to your recipient
+//     from: 'myreunionapp@gmail.com', // Change to your verified sender
+//     subject: 'You\'re Invited!',
+//     text: `Hello from reUnion!`,
+//     html: '<h1>Hello from reUnion!</h1>'
+//   }
+//   sgMail
+//     .send(msg)
+//     .then(() => {
+//       console.log('Email sent')
+//     })
+//     .catch((error) => {
+//       console.error(error)
+//     });
+// });
+

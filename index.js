@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const { User } = require('./server/db/models');
 require('dotenv').config();
+var cors = require('cors')
 module.exports = app;
 /**
  * In your development environment, you can keep all of your
@@ -42,6 +43,16 @@ const createApp = () => {
   // body parsing middleware
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  app.use(cors());
+  // app.options('*', cors())
+
+  app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT,     PATCH, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+  });
 
   // compression middleware
   app.use(compression());
@@ -88,6 +99,8 @@ const createApp = () => {
     res.status(err.status || 500).send(err.message || 'Internal server error.');
   });
 };
+
+
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
