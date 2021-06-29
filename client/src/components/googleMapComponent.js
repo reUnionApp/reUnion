@@ -45,7 +45,6 @@ const GoogleMapComponent = (props) => {
       console.log('Autocomplete is not loaded yet!');
     }
   };
-  // console.log(111111, process.env.REACT_APP_GOOGLE)
 
   return (
     <div
