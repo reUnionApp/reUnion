@@ -34,24 +34,11 @@ const DateTimePicker = (props) => {
     hook(event);
   };
 
-  const {
-    startDateTime,
-    setStartDateTime,
-    endDateTime,
-    setEndDateTime,
-  } = props;
+  const { startDateTime, setStartDateTime, endDateTime, setEndDateTime } =
+    props;
 
   return (
-    <div
-      style={{
-        border: '1px solid black',
-        borderRadius: '10px',
-        // width: '100%',
-        alignSelf: 'center',
-        boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-        padding: '10px',
-      }}
-    >
+    <div id="CRDTPWrapper">
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Grid container justify="space-around">
           <KeyboardDatePicker

@@ -47,8 +47,12 @@ const GoogleMapComponent = (props) => {
   };
 
   return (
-    <div style={{ margin: '20px 0px' }} className="flex column aItemsC">
+    <div
+      style={{ width: '100%', height: '100%' }}
+      className="flex column aItemsC"
+    >
       <LoadScript
+        style={{ width: '100%', height: '100%' }}
         googleMapsApiKey={process.env.REACT_APP_GOOGLE}
         libraries={['places']}
       >
@@ -67,9 +71,7 @@ const GoogleMapComponent = (props) => {
             id="mapLocationInput"
           />
         </Autocomplete>
-        <h4 style={{ fontSize: '18px', margin: '15px 0px 30px 0px' }}>
-          Event Address:
-        </h4>
+        <h4 id="CREventAddress">Event Address:</h4>
         <div style={{ width: '80%', textAlign: 'center' }}>
           {textLocation !== '' ? (
             <p id="finalLocation">{textLocation}</p>
