@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getEvent, createEvent } from '../store';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router';
 
 // React component imports
 import { GoogleMapComponent, DateTimePicker, GuestList } from './index.js';
@@ -29,7 +28,6 @@ const CreateEvent = (props) => {
   const [eventName, setEventName] = useState('');
   const [eventType, setEventType] = useState('');
   const [eventOwner, setEventOwner] = useState(props.user.firstName);
-  // const [eventCoordinator, setEventCoordinator] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [eventGoogleLocation, setEventGoogleLocation] = useState({});
   const [eventStartDateTime, setEventStartDateTime] = useState(new Date());
@@ -37,15 +35,12 @@ const CreateEvent = (props) => {
   const [eventData, setEventData] = useState({});
   const [eventTextLocation, setEventTextLocation] = useState('');
   const [eventNameError, setEventNameError] = useState('');
-  const [eventCreate, setEventCreated] = useState(false);
   const threeBalloon1 = useRef(null);
   const threeBalloon2 = useRef(null);
   const threeBalloon3 = useRef(null);
   const CRPulse = useRef(null);
 
   let errorArray = [eventName, eventDescription, eventType];
-
-  const history = useHistory();
 
   const handleChange = function (event, hook) {
     hook(event.target.value);
@@ -82,7 +77,6 @@ const CreateEvent = (props) => {
       eventType: eventType,
       owner: eventOwner,
       ownerId: props.user.id,
-      // coordinator: [eventCoordinator],
       description: eventDescription,
       location:
         eventTextLocation !== ''
@@ -98,7 +92,6 @@ const CreateEvent = (props) => {
       setEventNameError('Event name already exists');
     } else {
       setEventData(event);
-      // const result = await props.createEvent(event);
       if (event) {
         props.history.push(`/myEvents/${createEventAttempt.id}`);
       }
@@ -141,7 +134,7 @@ const CreateEvent = (props) => {
             <SwiperSlide className="background3Up CRSlide">
               <div className="flex column aItemsC jContentC CRBalloonBox">
                 <img
-                  src="teal-balloon.png"
+                  src="/teal-balloon.png"
                   alt="balloon"
                   className="CRBalloonTeal"
                 />
@@ -172,21 +165,11 @@ const CreateEvent = (props) => {
                     onChange={(event) => {
                       handleChange(event, setEventName);
                     }}
-                  ></input>
+                  />
                   <div
                     className="swiper-no-swiping"
                     style={{ width: '50vw' }}
-                  ></div>
-                  {/* <input
-                    type="text"
-                    name="coordinators"
-                    className="createInput"
-                    placeholder="Enter coordinators' names here"
-                    value={eventCoordinator}
-                    onChange={(event) => {
-                      handleChange(event, setEventCoordinator);
-                    }}
-                  ></input> */}
+                  />
                 </div>
                 <textarea
                   type="textarea"
@@ -197,7 +180,7 @@ const CreateEvent = (props) => {
                   onChange={(event) => {
                     handleChange(event, setEventDescription);
                   }}
-                ></textarea>
+                />
               </div>
             </SwiperSlide>
             <SwiperSlide className="background1Down">
@@ -283,7 +266,7 @@ const CreateEvent = (props) => {
                 />
                 <p className="CRStampMessage">Where is your event?</p>
               </div>
-              <div id="googleMapWrapper">
+              <div className="googleMapWrapper">
                 <GoogleMapComponent
                   textLocation={eventTextLocation}
                   setTextLocation={setEventTextLocation}
@@ -314,37 +297,11 @@ const CreateEvent = (props) => {
               </div>
             </SwiperSlide>
             <SwiperSlide className="background1Up">
-              <div id="CRConfOverflow">
-                <div
-                  className="flex column aItemsFS jContentC"
-                  id="CRConfMaster"
-                >
-                  {/* <div id="ThreeBalloonBox">
-                  <img
-                    src="teal-balloon.png"
-                    className="threeBalloonBalloon"
-                    id="threeBalloon1"
-                    alt="balloon"
-                  />
-                  <img
-                    src="orange-balloon.png"
-                    className="threeBalloonBalloon"
-                    id="threeBalloon2"
-                    alt="balloon"
-                  />
-                  <img
-                    src="pink-balloon.png"
-                    className="threeBalloonBalloon"
-                    id="threeBalloon3"
-                    alt="balloon"
-                  />
-                </div> */}
-                  <div
-                    id="CRConfWrapper"
-                    className="flex column aItemsFS jContentC"
-                  >
-                    <h1 id="CEEventConfTitle">Event Confirmation</h1>
-                    <div id="TildeErrorDiv" className="flex jContentC aItemsC">
+              <div className="CRConfOverflow">
+                <div className="CRConfMaster flex column aItemsFS jContentC">
+                  <div className="CRConfWrapper flex column aItemsFS jContentC">
+                    <h1 className="CEEventConfTitle">Event Confirmation</h1>
+                    <div className="TildeErrorDiv flex jContentC aItemsC">
                       {eventName.split('').includes('~') && (
                         <p className="confValueError">
                           EVENT NAME CAN'T CONTAIN '~'
@@ -372,7 +329,7 @@ const CreateEvent = (props) => {
                     >
                       <p className="confBold">Description: </p>
                       {eventDescription.length ? (
-                        <div id="descriptionConfContainer">
+                        <div className="descriptionConfContainer">
                           <p className="confValueDesc">{eventDescription}</p>
                         </div>
                       ) : (
@@ -387,21 +344,17 @@ const CreateEvent = (props) => {
                         <p className="confValueError">NO EVENT TYPE</p>
                       )}
                     </div>
-                    {/* <div className="confLine">
-                  <p className="confBold">Coordinator: </p>
-                  <p className="confValue">{eventCoordinator}</p>
-                </div> */}
                     {eventTextLocation !== '' ? (
                       <div className="confLine">
                         <p className="confBold">Address: </p>
-                        <div id="locationConf">
+                        <div className="locationConf">
                           <p className="confValue">{eventTextLocation}</p>
                         </div>
                       </div>
                     ) : (
                       <div className="confLine">
                         <p className="confBold">Address: </p>
-                        <div id="locationConf">
+                        <div className="locationConf">
                           {eventGoogleLocation.gm_bindings_ &&
                           eventGoogleLocation.getPlace() ? (
                             <p className="confValue">
@@ -461,7 +414,7 @@ const CreateEvent = (props) => {
                         {eventNameError}
                       </p>
                     )}
-                    <div id="buttonThreeBallonWrapper">
+                    <div className="buttonThreeBallonWrapper">
                       <button
                         type="submit"
                         className="createButton"
@@ -481,8 +434,7 @@ const CreateEvent = (props) => {
                       </button>
                       <img
                         src="pink-balloon.png"
-                        className="threeBalloonBalloon"
-                        id="threeBalloon1"
+                        className="threeBalloon1 threeBalloonBalloon"
                         ref={threeBalloon1}
                         alt="balloon"
                         onAnimationEnd={() => {
@@ -491,15 +443,13 @@ const CreateEvent = (props) => {
                       />
                       <img
                         src="teal-balloon.png"
-                        className="threeBalloonBalloon"
-                        id="threeBalloon2"
+                        className="threeBalloon2 threeBalloonBalloon"
                         ref={threeBalloon2}
                         alt="balloon"
                       />
                       <img
                         src="orange-balloon.png"
-                        className="threeBalloonBalloon"
-                        id="threeBalloon3"
+                        className="threeBalloon3 threeBalloonBalloon"
                         ref={threeBalloon3}
                         alt="balloon"
                       />

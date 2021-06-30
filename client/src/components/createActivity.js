@@ -1,5 +1,5 @@
 //React/Redux
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getEvent, createActivity } from '../store';
 import { connect } from 'react-redux';
 
@@ -27,22 +27,40 @@ dotenv.config();
 SwiperCore.use([Navigation, Pagination, A11y]);
 
 const CreateActivity = (props) => {
+  useEffect(async () => {
+    await props.getEvent(props.match.params.eventId);
+  }, []);
+
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
   const [activityGoogleLocation, setActivityGoogleLocation] = useState({});
-  const [activityStartDateTime, setActivityStartDateTime] = useState(
-    new Date(props.singleEvent.startDateTime)
-  );
-  const [activityEndDateTime, setActivityEndDateTime] = useState(
-    new Date(props.singleEvent.endDateTime)
-  );
+  const [activityStartDateTime, setActivityStartDateTime] = useState(null);
+  const [activityEndDateTime, setActivityEndDateTime] = useState(null);
   const [activityData, setActivityData] = useState({});
   const [activityTextLocation, setActivityTextLocation] = useState('');
+
+  const threeBalloon1CA = useRef(null);
+  const threeBalloon2CA = useRef(null);
+  const threeBalloon3CA = useRef(null);
+  const CRPulseCA = useRef(null);
+
+  const CRPulseFunc = (e) => {
+    const x = e.clientX - e.target.getBoundingClientRect().left;
+    const y = e.clientY - e.target.getBoundingClientRect().top;
+    CRPulseCA.current.style.left = `${x}px`;
+    CRPulseCA.current.style.top = `${y}px`;
+    CRPulseCA.current.className = 'CRPulse';
+  };
 
   const handleChange = function (activity, hook) {
     activity.preventDefault();
     hook(activity.target.value);
   };
+
+  if (props.singleEvent.id && activityStartDateTime === null) {
+    setActivityStartDateTime(new Date(props.singleEvent.startDateTime));
+    setActivityEndDateTime(new Date(props.singleEvent.endDateTime));
+  }
 
   const dateFormat = (date) => {
     if (!date) {
@@ -56,9 +74,15 @@ const CreateActivity = (props) => {
     return month + '/' + day + '/' + year;
   };
 
-  const submitActivityForm = async function (click) {
-    click.preventDefault(); // disable this after production
+  const submitActivityForm = function (click) {
+    click.preventDefault();
 
+    threeBalloon1CA.current.classList.add('TB1Float');
+    threeBalloon2CA.current.classList.add('TB2Float');
+    threeBalloon3CA.current.classList.add('TB3Float');
+  };
+
+  const completeSubmit = async () => {
     let activity = {
       activityName: activityName,
       description: activityDescription,
@@ -73,11 +97,8 @@ const CreateActivity = (props) => {
       startDateTime: activityStartDateTime,
       endDateTime: activityEndDateTime,
     };
-
     const eventId = props.match.params.eventId;
-
     const resultId = await props.createActivity(eventId, activity);
-
     props.history.push(`/myEvents/${eventId}/activities/${resultId}`);
   };
 
@@ -106,34 +127,42 @@ const CreateActivity = (props) => {
           }}
         >
           <SwiperSlide className="background2Down">
-            <div className="flex column aItemsC jContentC teal cEStamp">
-              <p
-                style={{
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  margin: '0px 5px',
-                }}
-              >
-                What's the activity about?
-              </p>
+            <div className="flex column aItemsC jContentC CRBalloonBox">
+              <img
+                src="/pink-balloon.png"
+                alt="balloon"
+                className="CRBalloonPink"
+              />
+              <p className="CRStampMessage">What's the activity about?</p>
             </div>
             <div
               style={{
                 minHeight: '100%',
                 width: '80%',
+                margin: '130px 0px 55px 0px',
               }}
-              className="flex column jContentC aItemsC"
+              className="flex column jContentFS aItemsC"
             >
-              <input
-                type="text"
-                name="activityName"
-                placeholder="Activity Name"
-                value={activityName}
-                onChange={(click) => {
-                  handleChange(click, setActivityName);
+              <div
+                style={{
+                  width: '80%',
+                  margin: '0px 0px 36px 0px',
                 }}
-                style={{ marginBottom: '30px' }}
-              ></input>
+                className="flex column"
+              >
+                <input
+                  type="text"
+                  className="createInput"
+                  name="activityName"
+                  placeholder="Activity Name"
+                  pattern="^((?!~).)*$"
+                  value={activityName}
+                  onChange={(click) => {
+                    handleChange(click, setActivityName);
+                  }}
+                />
+                <div className="swiper-no-swiping" style={{ width: '50vw' }} />
+              </div>
               <textarea
                 type="textarea"
                 name="description"
@@ -143,22 +172,19 @@ const CreateActivity = (props) => {
                 onChange={(click) => {
                   handleChange(click, setActivityDescription);
                 }}
-              ></textarea>
+              />
             </div>
           </SwiperSlide>
-          <SwiperSlide className="background3Up" style={{ overflow: 'scroll' }}>
-            <div className="flex column aItemsC jContentC teal cEStamp">
-              <p
-                style={{
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  margin: '0px 5px',
-                }}
-              >
-                Where is this activity?
-              </p>
+          <SwiperSlide className="background3Up">
+            <div className="flex column aItemsC jContentC CRBalloonBox">
+              <img
+                src="/orange-balloon.png"
+                alt="balloon"
+                className="CRBalloonOrange"
+              />
+              <p className="CRStampMessage">Where is this activity?</p>
             </div>
-            <div style={{ margin: '130px 0px 55px 0px' }}>
+            <div className="googleMapWrapper">
               <GoogleMapComponent
                 textLocation={activityTextLocation}
                 setTextLocation={setActivityTextLocation}
@@ -168,16 +194,13 @@ const CreateActivity = (props) => {
             </div>
           </SwiperSlide>
           <SwiperSlide className="background1Down">
-            <div className="flex column aItemsC jContentC teal cEStamp">
-              <p
-                style={{
-                  textAlign: 'center',
-                  fontSize: '12px',
-                  margin: '0px 5px',
-                }}
-              >
-                When is this activity?
-              </p>
+            <div className="flex column aItemsC jContentC CRBalloonBox">
+              <img
+                src="/teal-balloon.png"
+                alt="balloon"
+                className="CRBalloonTealDTP"
+              />
+              <p className="CRStampMessageDTP">When is the activity?</p>
             </div>
             <div
               className="flex column jContentC"
@@ -191,110 +214,152 @@ const CreateActivity = (props) => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide className="background2Up" style={{ overflow: 'scroll' }}>
-            <div id="conf" className="layout flex column aItemsC jContentC ">
-              <h1>Activity Confirmation</h1>
-              <div className="confLine">
-                <p className="confBold">Activity Name: </p>
-                <p className="confValue" style={{ textAlign: 'end' }}>
-                  {activityName}
-                </p>
-                {activityName === '' && (
-                  <p className="confValueError">NO ACTIVITY NAME</p>
-                )}
-              </div>
-              <div
-                className="confLine"
-                style={{ maxWidth: '100%', alignItems: 'flex-start' }}
-              >
-                <p className="confBold">Description: </p>
-                {activityDescription.length ? (
-                  <div id="descriptionConfContainer">
-                    <p className="confValue">{activityDescription}</p>
+          <SwiperSlide className="background2Up">
+            <div className="CRConfOverflow">
+              <div className="CRConfMaster flex column aItemsC jContentC ">
+                <div className="CRConfWrapper flex column aItemsFS jContentC">
+                  <h1 className="CEEventConfTitle">Activity Confirmation</h1>
+                  <div className="TildeErrorDiv flex jContentC aItemsC"></div>
+                  <div className="confLine">
+                    <p className="confBold">Activity Name: </p>
+                    <p className="confValue" style={{ textAlign: 'end' }}>
+                      {activityName}
+                    </p>
+                    {activityName === '' && (
+                      <p className="confValueError">NO ACTIVITY NAME</p>
+                    )}
                   </div>
-                ) : (
-                  false
-                )}
-              </div>
-              {activityTextLocation !== '' ? (
-                <div className="confLine">
-                  <p className="confBold">Location: </p>
-                  <div id="locationConf">
-                    <p className="confValue">{activityTextLocation}</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="confLine">
-                  <p className="confBold">Location: </p>
-                  <div id="locationConf">
-                    {activityGoogleLocation.gm_bindings_ &&
-                    activityGoogleLocation.getPlace() ? (
-                      <p className="confValue">
-                        {activityGoogleLocation.getPlace().name},
-                        {activityGoogleLocation.getPlace().formatted_address}
-                      </p>
+                  <div
+                    className="confLine"
+                    style={{ maxWidth: '100%', alignItems: 'flex-start' }}
+                  >
+                    <p className="confBold">Description: </p>
+                    {activityDescription.length ? (
+                      <div className="descriptionConfContainer">
+                        <p className="confValueDesc">{activityDescription}</p>
+                      </div>
                     ) : (
                       false
                     )}
                   </div>
+                  {activityTextLocation !== '' ? (
+                    <div className="confLine">
+                      <p className="confBold">Location: </p>
+                      <div className="locationConf">
+                        <p className="confValue">{activityTextLocation}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="confLine">
+                      <p className="confBold">Location: </p>
+                      <div className="locationConf">
+                        {activityGoogleLocation.gm_bindings_ &&
+                        activityGoogleLocation.getPlace() ? (
+                          <p className="confValue">
+                            {activityGoogleLocation.getPlace().name},
+                            {
+                              activityGoogleLocation.getPlace()
+                                .formatted_address
+                            }
+                          </p>
+                        ) : (
+                          false
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  <div className="confLine">
+                    <p className="confBold">Start Date: </p>
+                    <p className="confValue">
+                      {activityStartDateTime &&
+                        dateFormat(activityStartDateTime)}
+                    </p>
+                  </div>
+                  <div className="confLine">
+                    <p className="confBold">End Date: </p>
+                    <p className="confValue">
+                      {dateFormat(activityEndDateTime)}
+                    </p>
+                  </div>
+                  <div className="confLine">
+                    <p className="confBold">Start Time: </p>
+                    <p className="confValue">
+                      {activityStartDateTime &&
+                        activityStartDateTime.toLocaleTimeString('en-US', {
+                          hour12: true,
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                    </p>
+                  </div>
+                  <div className="confLine">
+                    <span className="confBold">End Time: </span>
+                    <p className="confValue">
+                      {activityEndDateTime &&
+                        activityEndDateTime.toLocaleTimeString('en-US', {
+                          hour12: true,
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                    </p>
+                  </div>
+                  <div className="buttonThreeBallonWrapper">
+                    <button
+                      type="submit"
+                      className="createButton"
+                      onClick={CRPulseFunc}
+                      disabled={activityName === ''}
+                    >
+                      Create Activity{' '}
+                      <span
+                        ref={CRPulseCA}
+                        onAnimationEnd={() => {
+                          CRPulseCA.current.className = '';
+                        }}
+                      />
+                    </button>
+                    <img
+                      src="/pink-balloon.png"
+                      className="threeBalloon1 threeBalloonBalloon"
+                      ref={threeBalloon1CA}
+                      alt="balloon"
+                      onAnimationEnd={() => {
+                        completeSubmit();
+                      }}
+                    />
+                    <img
+                      src="/teal-balloon.png"
+                      className="threeBalloon2 threeBalloonBalloon"
+                      ref={threeBalloon2CA}
+                      alt="balloon"
+                    />
+                    <img
+                      src="/orange-balloon.png"
+                      className="threeBalloon3 threeBalloonBalloon"
+                      ref={threeBalloon3CA}
+                      alt="balloon"
+                    />
+                  </div>
+                  <div style={{ width: '100%' }}>
+                    {activityStartDateTime &&
+                    activityEndDateTime &&
+                    (Date.parse(activityStartDateTime) <
+                      Date.parse(new Date(props.singleEvent.startDateTime)) ||
+                      Date.parse(activityEndDateTime) >
+                        Date.parse(new Date(props.singleEvent.endDateTime))) ? (
+                      <p
+                        className="CATimeError"
+                        style={{ textAlign: 'center' }}
+                      >
+                        Warning! This activity starts or ends outside of the
+                        main event timeframe
+                      </p>
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </div>
-              )}
-              <div className="confLine">
-                <p className="confBold">Start Date: </p>
-                <p className="confValue">
-                  {activityStartDateTime && dateFormat(activityStartDateTime)}
-                </p>
               </div>
-              <div className="confLine">
-                <p className="confBold">End Date: </p>
-                <p className="confValue">
-                  {activityEndDateTime && dateFormat(activityEndDateTime)}
-                </p>
-              </div>
-              <div className="confLine">
-                <p className="confBold">Start Time: </p>
-                <p className="confValue">
-
-                  {activityStartDateTime.toLocaleTimeString('en-US', {
-                    hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </p>
-              </div>
-              <div className="confLine">
-                <span className="confBold">End Time: </span>
-                <p className="confValue">
-                  {activityEndDateTime &&
-                    activityEndDateTime.toLocaleTimeString("en-US", {
-                      hour12: true,
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                </p>
-              </div>
-              <div>
-                {activityStartDateTime &&
-                activityEndDateTime &&
-                (Date.parse(activityStartDateTime) <
-                  Date.parse(props.singleEvent.startDateTime) ||
-                  Date.parse(activityEndDateTime) >
-                    Date.parse(props.singleEvent.endDateTime)) ? (
-                  <p className="confValueError" style={{ textAlign: "center" }}>
-                    Warning! This activity starts or ends outside of the main
-                    event timeframe
-                  </p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <button
-                type="submit"
-                className="button createButton"
-                disabled={activityName === ""}
-              >
-                Create Activity
-              </button>
             </div>
           </SwiperSlide>
         </Swiper>
