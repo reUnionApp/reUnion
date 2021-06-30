@@ -58,12 +58,11 @@ export const getMailGuestList = () => async (dispatch) => {
   }
 };
 
-export const sendMailGuestList = (guests) => async (dispatch) => {
+export const sendMailGuestList = (guests, event) => async (dispatch) => {
   try {
+    const payload = { guests, event }
     console.log('in sendMailGuestList thunk')
-    const data = await axios.post(`/api/email/invitation`, guests);
-    console.log('after axios.post call');
-    console.log('data in sendMailGuestList thunk', data)
+    const data = await axios.post(`/api/email/invitation`, payload);
     dispatch(_sendMailGuestList(data));
   } catch (error) {
     console.error(error);

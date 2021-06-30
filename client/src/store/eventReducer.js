@@ -5,7 +5,6 @@ const GET_EVENT = 'GET_EVENT';
 const CREATE_EVENT = 'CREATE_EVENT';
 const REMOVE_EVENT = 'REMOVE_EVENT';
 const UPDATE_EVENT = 'UPDATE_EVENT';
-const GET_GUEST_LIST = 'GET_GUEST_LIST';
 
 // Action Creators
 const _getEvent = (event) => ({
