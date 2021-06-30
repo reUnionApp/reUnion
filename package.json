@@ -2,6 +2,7 @@
   "name": "reunion-back-end",
   "version": "0.1.0",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.5",
     "compression": "^1.7.4",
     "concurrently": "^6.2.0",
     "connect-session-sequelize": "^7.1.1",

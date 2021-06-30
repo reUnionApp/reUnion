@@ -81,7 +81,6 @@ const SingleEvent = (props) => {
       ownerCheck = props.userEvents[target].UserEvent.isOwner;
       coordCheck = props.userEvents[target].UserEvent.isCoordinator;
     }
-    console.log(999999, { adminCheck, ownerCheck, coordCheck })
   }
 
 

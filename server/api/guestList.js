@@ -34,23 +34,3 @@ router.put('/:eventId/guestList/', adminOwnerCoordinator, async function (req, r
     next(error);
   }
 });
-
-// router.post('/:eventId/guestList/', adminOwnerCoordinator, (req, res, next) => {
-//   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-//   const msg = {
-//     to: 'myreunionapp@gmail.com', // Change to your recipient
-//     from: 'myreunionapp@gmail.com', // Change to your verified sender
-//     subject: 'You\'re Invited!',
-//     text: `Hello from reUnion!`,
-//     html: '<h1>Hello from reUnion!</h1>'
-//   }
-//   sgMail
-//     .send(msg)
-//     .then(() => {
-//       console.log('Email sent')
-//     })
-//     .catch((error) => {
-//       console.error(error)
-//     });
-// });
-
