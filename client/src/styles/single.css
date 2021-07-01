@@ -1,9 +1,17 @@
-.bottomSE {
-  margin: 15px 0px;
-  width: fit-content;
-  height: fit-content;
-  padding: 15px 45px;
+.singleMaster {
+  font-size: 10px;
+  height: 100vh;
+}
+
+.singleWrapper {
+  font-size: inherit;
+}
+
+.singleTitle {
   align-self: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 5em;
+  margin: 0em 0em 0.4em auto;
 }
 
 #SAMaster {
@@ -20,23 +28,19 @@
 
 #activitiesContainer {
   width: 100%;
-  height: 300px;
+  height: 30em;
   overflow-y: auto;
   border: 2px solid black;
-  border-radius: 10px;
-  margin: 10px 0px;
-}
-
-.SEActivityWrapper {
-  width: 100px;
+  border-radius: 1em;
+  margin: 1em 0px;
 }
 
 .singleActivityRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0px;
-  padding: 0px 15px 15px 15px;
+  margin: 2em 0px;
+  padding: 0px 1.5em 1.5em 1.5em;
   width: 70%;
 }
 
@@ -65,9 +69,10 @@
 }
 
 .ALButton {
-  border: 4px solid white;
-  width: 50px;
-  height: 50px;
+  font-size: inherit;
+  border: 0.4em solid white;
+  width: 7em;
+  height: 7em;
   border-radius: 50%;
   background-color: transparent;
 }
@@ -95,13 +100,194 @@
 .DSEClosed,
 .DSAClosed {
   transform: translateY(100%);
+  opacity: 0;
 }
 
 .DSEOpen,
 .DSAOpen {
   transform: translateY(0%);
+  opacity: 1;
 }
 
 .test {
   text-align: center;
+}
+
+.confBoldS {
+  font-size: 16px;
+  font-weight: bolder;
+  margin: 0em 16px 0em 64px;
+}
+
+.confLineS {
+  margin: 10px 0px;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.confValueS {
+  font-size: 14px;
+  margin: 0px 56px 0px auto;
+}
+
+.confValueDescS {
+  font-size: 14px;
+  margin: 0px;
+}
+
+.descriptionConfContainerS {
+  font-size: inherit;
+  width: 125px;
+  height: 25px;
+  overflow: scroll;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0px 10px 10px 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  margin: 0px 52px 0px auto;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.MGLButton {
+  font-size: 1.5em;
+  background-color: #38c1d38c;
+  width: 12em;
+  height: 4.25em;
+}
+
+.CAButtonS {
+  font-size: 1.5em;
+  background-color: #ffc4008c;
+  width: 12em;
+  height: 4.25em;
+}
+
+.singleButtonRow {
+  margin: 3.5em 0em;
+}
+
+.singleALTitle {
+  font-size: 2.75em;
+  margin: 0.5em 0em 1em 0em;
+}
+
+.SEActivityTitle {
+  font-size: 3em;
+  font-weight: normal;
+  margin: 0.5em 0em 0em 0em;
+  align-self: center;
+  letter-spacing: 0.1em;
+}
+
+.singleWrench {
+  font-size: inherit;
+  width: 3.2em;
+  height: auto;
+}
+
+.updateEventS {
+  font-size: 1.2em;
+  height: 4em;
+  width: 10em;
+  margin: 0px;
+}
+
+.deleteEventS {
+  font-size: 1.2em;
+  height: 4em;
+  width: 10em;
+  margin: 0px 0px 0px auto;
+}
+
+@media (max-width: 750px), (max-height: 1125px) {
+  .singleMaster {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 650px), (max-height: 1075px) {
+  .singleMaster {
+    font-size: 8px;
+  }
+  .singleColumn {
+    width: 85%;
+  }
+  #activitiesContainer {
+    width: 82%;
+  }
+  .updateEventS {
+    font-size: 1.5em;
+    padding: 0.8em 1.6em;
+  }
+  .deleteEventS {
+    font-size: 1.5em;
+    padding: 0.8em 1.6em;
+  }
+}
+
+@media (max-width: 475px), (max-height: 1010px) {
+  .singleMaster {
+    font-size: 7px;
+  }
+  .singleColumn {
+    width: 95%;
+  }
+  #activitiesContainer {
+    width: 85%;
+  }
+  .confBoldS {
+    font-size: 14px;
+    margin: 0em 16px 0em 32px;
+  }
+  .confValueS {
+    font-size: 12px;
+    margin: 0px 28px 0px auto;
+  }
+  .descriptionConfContainerS {
+    margin: 0px 28px 0px auto;
+  }
+  .confValueDescS {
+    font-size: 12px;
+  }
+  .updateEventS {
+    text-align: center;
+    width: 6em;
+    padding: 1em 2em;
+  }
+  .deleteEventS {
+    text-align: center;
+    width: 6em;
+    padding: 1em 2em;
+  }
+}
+
+@media (max-height: 915px) {
+  #activitiesContainer {
+    height: 25em;
+    margin: 0em 0px;
+  }
+  .singleButtonRow {
+    margin: 1.75em 0em;
+  }
+  .confLineS {
+    margin: 5px 0px;
+  }
+}
+
+@media (max-height: 765px) {
+  .singleMaster {
+    overflow-y: auto;
+  }
+  #activitiesContainer {
+    height: 20em;
+    margin: 0em 0px 25px 0px;
+  }
+}
+
+@media (max-width: 550px) {
+  .ALButton {
+    margin: 25px 0px 0px 0px;
+  }
 }

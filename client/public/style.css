@@ -62,6 +62,10 @@ body {
   width: 100%;
 }
 
+.w95 {
+  width: 95%;
+}
+
 .w90 {
   width: 90%;
 }
@@ -140,10 +144,12 @@ button {
 
 .darkenOff {
   transform: translateY(100%);
+  opacity: 0;
 }
 
 .darkenOn {
   transform: translateY(0%);
+  opacity: 1;
 }
 
 .background1Up {
@@ -178,4 +184,8 @@ textarea {
   padding: 5px 15px;
   outline: none;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.FSInherit {
+  font-size: inherit;
 }

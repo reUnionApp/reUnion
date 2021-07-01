@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { getEvent, removeEvent, getActivities, removeActivity, getUserEvents } from '../store';
+import {
+  getEvent,
+  removeEvent,
+  getActivities,
+  removeActivity,
+  getUserEvents,
+} from '../store';
 import { Link } from 'react-router-dom';
 import { GuestList } from './index';
 import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -70,7 +76,7 @@ const SingleEvent = (props) => {
     const eventNum = Number(eventId);
     let target = 0;
     for (let i = 0; i < props.userEvents.length; i++) {
-      let targetEvent = props.userEvents[i]
+      let targetEvent = props.userEvents[i];
       if (targetEvent.id === eventNum) {
         target = i;
       }
@@ -83,9 +89,8 @@ const SingleEvent = (props) => {
     }
   }
 
-
-  const DSE = useRef(null)
-  const DSA = useRef(null)
+  const DSE = useRef(null);
+  const DSA = useRef(null);
 
   const openCloseActivity = () => {
     if (DSA.current.classList.contains('DSAClosed')) {
@@ -95,7 +100,7 @@ const SingleEvent = (props) => {
       DSA.current.classList.remove('DSAOpen');
       DSA.current.classList.add('DSAClosed');
     }
-  }
+  };
 
   const openClose = () => {
     if (DSE.current.classList.contains('DSEClosed')) {
@@ -105,7 +110,7 @@ const SingleEvent = (props) => {
       DSE.current.classList.remove('DSEOpen');
       DSE.current.classList.add('DSEClosed');
     }
-  }
+  };
 
   const updateEventStyle = () => {
     if (coordCheck) {
@@ -113,18 +118,24 @@ const SingleEvent = (props) => {
     } else {
       updateEventButton.current.classList.add('test');
     }
-  }
+  };
 
   return (
     <>
-      <div className='deleteSingleEvent DSEClosed flex jContentC aItemsC' ref={DSE}>
+      <div
+        className="deleteSingleEvent DSEClosed flex jContentC aItemsC"
+        ref={DSE}
+      >
         <DeleteEvent
           openClose={openClose}
           deleteEvent={deleteSelectedEvent}
           singleEvent={props.singleEvent}
         />
       </div>
-      <div className='deleteSingleActivity DSAClosed flex jContentC aItemsC' ref={DSA}>
+      <div
+        className="deleteSingleActivity DSAClosed flex jContentC aItemsC"
+        ref={DSA}
+      >
         <DeleteActivity
           openCloseActivity={openCloseActivity}
           deleteActivity={deleteSelectedActivity}
@@ -132,56 +143,74 @@ const SingleEvent = (props) => {
           activityToDelete={activityToDelete}
         />
       </div>
-      <div className="singleContainer flex column aItemsC background1Up">
-
-        <div className=" singleColumn flex column">
-          <h1
-            style={{
-              alignSelf: 'center',
-              textAlign: 'center',
-              margin: '19px 0px 25px 0px',
-            }}
-          >
-            {eventName}
-          </h1>
-          <div className="confLine">
-            <p className="confBold">Event Type: </p>
-            <p className="confValue">{eventType}</p>
+      <div className="singleMaster singleContainer flex column aItemsC background1Up">
+        <div className="singleTopRow flex jContentC w95">
+          {adminCheck || ownerCheck || coordCheck ? (
+            <Link to={`/myEvents/${eventId}/update`}>
+              <button
+                ref={updateEventButton}
+                className="button updateEventS"
+                style={{
+                  backgroundColor: '#ffc4008c',
+                }}
+                onLoad={updateEventStyle}
+              >
+                Update Event
+              </button>
+            </Link>
+          ) : (
+            false
+          )}
+          <h1 className="singleTitle">{eventName}</h1>
+          {adminCheck || ownerCheck ? (
+            <button
+              className="button deleteEventS"
+              style={{ backgroundColor: '#e400678e' }}
+              onClick={() => {
+                openClose();
+              }}
+            >
+              Delete Event
+            </button>
+          ) : (
+            false
+          )}
+        </div>
+        <div className="singleWrapper singleColumn flex column">
+          <div className="confLineS">
+            <p className="confBoldS">Event Type: </p>
+            <p className="confValueS">{eventType}</p>
           </div>
-          <div className="confLine">
-            <p className="confBold">Host: </p>
-            <p className="confValue">{owner}</p>
+          <div className="confLineS">
+            <p className="confBoldS">Host: </p>
+            <p className="confValueS">{owner}</p>
           </div>
-          {/* <div className="confLine">
-          <p className="confBold">Coordinator: </p>
-          <p className="confValue">{coordinator}</p>
-        </div> */}
           <div
-            className="confLine"
+            className="confLineS"
             style={{ maxWidth: '100%', alignItems: 'flex-start' }}
           >
-            <p className="confBold">Description: </p>
-            <div id="descriptionConfContainer">
-              <p className="confValue">{description}</p>
+            <p className="confBoldS">Description: </p>
+            <div className="descriptionConfContainerS">
+              <p className="confValueDescS">{description}</p>
             </div>
           </div>
-          <div className="confLine">
-            <p className="confBold">Address: </p>
-            <div id="locationConf">
-              <p className="confValue">{location}</p>
+          <div className="confLineS">
+            <p className="confBoldS">Address: </p>
+            <div className="locationConf">
+              <p className="confValueS">{location}</p>
             </div>
           </div>
-          <div className="confLine">
-            <p className="confBold">Start Date: </p>
-            <p className="confValue">{dateFormat(new Date(startDateTime))}</p>
+          <div className="confLineS">
+            <p className="confBoldS">Start Date: </p>
+            <p className="confValueS">{dateFormat(new Date(startDateTime))}</p>
           </div>
-          <div className="confLine">
-            <p className="confBold">End Date: </p>
-            <p className="confValue">{dateFormat(new Date(endDateTime))}</p>
+          <div className="confLineS">
+            <p className="confBoldS">End Date: </p>
+            <p className="confValueS">{dateFormat(new Date(endDateTime))}</p>
           </div>
-          <div className="confLine">
-            <p className="confBold">Start Time: </p>
-            <p className="confValue">
+          <div className="confLineS">
+            <p className="confBoldS">Start Time: </p>
+            <p className="confValueS">
               {new Date(startDateTime).toLocaleTimeString('en-US', {
                 hour12: true,
                 hour: '2-digit',
@@ -189,9 +218,9 @@ const SingleEvent = (props) => {
               })}
             </p>
           </div>
-          <div className="confLine">
-            <span className="confBold">End Time: </span>
-            <p className="confValue">
+          <div className="confLineS">
+            <span className="confBoldS">End Time: </span>
+            <p className="confValueS">
               {new Date(endDateTime).toLocaleTimeString('en-US', {
                 hour12: true,
                 hour: '2-digit',
@@ -200,92 +229,56 @@ const SingleEvent = (props) => {
             </p>
           </div>
           {adminCheck || ownerCheck || coordCheck ? (
-            <div className="flex jContentSA" style={{ margin: '36px 0px' }}>
+            <div className="flex jContentSA singleButtonRow">
               <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
-                <button
-                  className="button"
-                  style={{
-                    backgroundColor: '#38c1d38c',
-                    width: '130px',
-                    height: '60px',
-                  }}
-                >
-                  Manage Guest List
-            </button>
+                <button className="button MGLButton">Manage Guest List</button>
               </Link>
-              <Link
-                to={`/myEvents/${props.singleEvent.id}/createActivity`}
-                style={{ margin: '0px 0px 0px 15px' }}
-              >
-                <button
-                  className="button"
-                  style={{
-                    backgroundColor: '#ffc4008c',
-                    width: '130px',
-                    height: '60px',
-                  }}
-                >
-                  Create Activity
-            </button>
+              <Link to={`/myEvents/${props.singleEvent.id}/createActivity`}>
+                <button className="button CAButtonS">Create Activity</button>
               </Link>
             </div>
           ) : (
-              <div className="flex jContentC" style={{ margin: '36px 0px' }}>
-                <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
-                  <button
-                    className="button"
-                    style={{
-                      backgroundColor: '#38c1d38c',
-                      width: '130px',
-                      height: '60px',
-                    }}
-                  >
-                    Guest List
-                </button>
-                </Link>
-              </div>
-            )}
+            <div className="flex jContentC singleButtonRow">
+              <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
+                <button className="button MGLButton">Guest List</button>
+              </Link>
+            </div>
+          )}
 
-          <div className="flex column aItemsC">
-            <h2
-              style={{
-                alignSelf: 'center',
-                textAlign: 'center',
-                margin: '19px 0px 0px 0px',
-                padding: '0px 0px 25px 0px',
-              }}
-            >
+          <div className="flex column aItemsC FSInherit">
+            <h2 className="singleALTitle">
               {props.singleEvent.eventName}'s Activities
-          </h2>
-            <div id="activitiesContainer" className="flex column aItemsC">
+            </h2>
+            <div
+              id="activitiesContainer"
+              className="flex column aItemsC FSInherit"
+            >
               {props.allActivities.length ? (
                 props.allActivities.map((activity, idx) => {
                   count === 3 ? (count = 1) : ++count;
                   return (
                     <div
-                      className={`singleActivityRow ${colors[count]} flex column aItemsC`}
+                      className={`singleActivityRow ${colors[count]} flex column aItemsC FSInherit`}
                       key={idx}
                     >
-                      <div className="SEActivityWrapper">
-                        <h4 style={{ fontSize: '16px', textAlign: 'center' }}>
-                          <Link
-                            to={`/myevents/${activity.EventId}/activities/${activity.id}`}
-                            key={activity.id}
-                          >
-                            {activity.activityName}
-                          </Link>
+                      <Link
+                        to={`/myevents/${activity.EventId}/activities/${activity.id}`}
+                        key={activity.id}
+                      >
+                        <h4 className="SEActivityTitle">
+                          {activity.activityName}
                         </h4>
-                      </div>
+                      </Link>
                       {adminCheck || ownerCheck || coordCheck ? (
-                        <div className="flex jContentSB w100">
+                        <div className="flex jContentSB w100 FSInherit">
                           <Link
                             to={`/myEvents/${activity.EventId}/activities/${activity.id}/update`}
                           >
-                            <button className="button ALButton">
+                            <button className="button ALButton FSInherit">
                               <FontAwesomeIcon
                                 className="fontAwesomeLink AListIcon"
                                 icon={faWrench}
-                                style={{ width: '32px', height: 'auto' }}
+                                style={{ width: '5em', height: 'auto' }}
                               />
                             </button>
                           </Link>
@@ -294,52 +287,29 @@ const SingleEvent = (props) => {
                             onClick={() => {
                               setActivityToDelete(activity);
                               openCloseActivity();
-                            }
-                            }
+                            }}
                           >
                             <FontAwesomeIcon
                               className="fontAwesomeLink AListIcon"
                               icon={faTrash}
                               color="lime"
                               style={{
-                                width: '30px',
+                                width: '4em',
                                 height: 'auto',
                               }}
                             />
                           </button>
                         </div>
-                      ) : false}
+                      ) : (
+                        false
+                      )}
                     </div>
                   );
                 })
               ) : (
-                  <p style={{ textAlign: 'center' }}>No activities planned yet!</p>
-                )}
+                <p className="NoActivities">No activities planned yet!</p>
+              )}
             </div>
-            <Link to={`/myEvents/${eventId}/update`}>
-              {adminCheck || ownerCheck || coordCheck ? (
-                <button ref={updateEventButton}
-                  className="button bottomSE"
-                  style={{
-                    backgroundColor: '#ffc4008c',
-                  }}
-                  onLoad={updateEventStyle}
-                >
-                  Update Event
-                </button>
-              ) : false}
-            </Link>
-            {adminCheck || ownerCheck ? (
-              <button
-                className="button bottomSE"
-                style={{ backgroundColor: '#e400678e' }}
-                onClick={() => {
-                  openClose();
-                }}
-              >
-                Delete Event
-              </button>
-            ) : false}
           </div>
         </div>
       </div>
@@ -360,7 +330,7 @@ const mapDispatch = (dispatch) => ({
   getActivities: (eventId) => dispatch(getActivities(eventId)),
   removeActivity: (eventId, activityId) =>
     dispatch(removeActivity(eventId, activityId)),
-  getUserEvents: (id) => dispatch(getUserEvents(id))
+  getUserEvents: (id) => dispatch(getUserEvents(id)),
 });
 
 export default connect(mapState, mapDispatch)(SingleEvent);
