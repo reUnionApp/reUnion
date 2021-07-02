@@ -138,10 +138,10 @@
   font-size: inherit;
   width: 125px;
   height: 25px;
-  overflow: scroll;
+  overflow-y: auto;
   border: 1px solid black;
   border-radius: 5px;
-  padding: 0px 10px 10px 10px;
+  padding: 5px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   margin: 0px 52px 0px auto;
   background-color: rgba(255, 255, 255, 0.7);
@@ -227,6 +227,28 @@
 .NoActivities {
   font-size: 2em;
   text-align: center;
+}
+
+@media (min-width: 450px) and (min-height: 450px) {
+  .descriptionConfContainerS::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+    background-color: transparent;
+  }
+  .descriptionConfContainerS::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.4);
+    border-radius: 5px;
+  }
+  #activitiesContainer::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+    background-color: transparent;
+  }
+
+  #activitiesContainer::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.4);
+    border-radius: 5px;
+  }
 }
 
 @media (max-width: 750px), (max-height: 1125px) {
