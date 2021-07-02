@@ -1,38 +1,39 @@
-#deleteModal {
+.deleteModal {
   align-items: center;
   height: 80%;
   text-align: center;
   font-size: 10px;
 }
 
-#deleteModal h1 {
+.deleteModal h1 {
   color: white;
   font-size: 3em;
-  margin: 0em 1em;
+  margin: 0em 1em 2em 1em;
 }
 
-#deleteModal h3 {
+.deleteModal h3 {
   color: white;
   font-size: 2em;
   margin: 0em 1em;
 }
 
-.dEButton {
+.deleteButtonModal {
+  font-size: 1.6em;
   width: 50%;
-}
-
-.DPDeleteButton {
+  margin: 6em 0em;
+  padding: 1.7em 0em;
+  max-height: 45px;
   background-color: red;
   color: white;
-  font-size: 1.33em;
   font-weight: bold;
-  padding: 1.1em 0em;
 }
 
-.DPCancelButton {
+.deleteButtonModalCancel {
+  font-size: 1.6em;
+  width: 50%;
+  padding: 1.7em 0em;
+  max-height: 45px;
   font-weight: bold;
-  font-size: 1.33em;
-  padding: 1.1em 0em;
 }
 
 .DPClosed {
@@ -45,26 +46,26 @@
   opacity: 1;
 }
 
-@media (max-width: 550px) {
-  #deleteModal {
+@media (max-width: 550px), (max-height: 1000px) {
+  .deleteModal {
     font-size: 9px;
   }
 }
 
-@media (max-width: 490px) {
-  #deleteModal {
+@media (max-width: 490px), (max-height: 850px) {
+  .deleteModal {
     font-size: 8px;
   }
 }
 
-@media (max-width: 435px) {
-  #deleteModal {
+@media (max-width: 435px), (max-height: 700px) {
+  .deleteModal {
     font-size: 7px;
   }
 }
 
-@media (max-width: 390px) {
-  #deleteModal {
+@media (max-width: 390px), (max-height: 600px) {
+  .deleteModal {
     font-size: 6px;
   }
 }
