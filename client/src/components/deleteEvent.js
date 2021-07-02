@@ -9,14 +9,14 @@ const DeleteEvent = (props) => {
       <h3>Deleting an event cannot be undone</h3>
 
       <button
-        className="dEButton button"
+        className="deleteButtonModal button"
         onClick={() => props.deleteEvent(props.singleEvent.id)}
       >
         Delete {props.singleEvent.eventName}
       </button>
       <button
         type="button"
-        className="dEButtonCancel button"
+        className="deleteButtonModalCancel button"
         onClick={props.openClose}
       >
         Cancel

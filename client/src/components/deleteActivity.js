@@ -9,7 +9,7 @@ const DeleteActivity = (props) => {
       <h3>Deleting an activity cannot be undone</h3>
 
       <button
-        className="dEButton button"
+        className="deleteButtonModal button"
         onClick={() => {
           props.deleteActivity(props.singleEvent.id, props.activityToDelete.id);
           props.history &&
@@ -20,7 +20,7 @@ const DeleteActivity = (props) => {
       </button>
       <button
         type="button"
-        className="dEButtonCancel button"
+        className="deleteButtonModalCancel button"
         onClick={props.openCloseActivity}
       >
         Cancel

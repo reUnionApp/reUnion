@@ -4,12 +4,12 @@ import '../styles/delete.css';
 
 const DeleteProfile = (props) => {
   return (
-    <div id="deleteModal" className="flex column jContentSE aItemsC">
+    <div className="deleteModal flex column jContentC aItemsC">
       <h1>Are you sure you want to delete your account?</h1>
       <h3>Deleting an account cannot be undone</h3>
 
       <button
-        className="button dEButton DPDeleteButton"
+        className="button deleteButtonModal"
         onClick={() => {
           props.deleteSingleUser && props.deleteSingleUser(props.user.id);
         }}
@@ -18,8 +18,7 @@ const DeleteProfile = (props) => {
       </button>
       <button
         type="button"
-        className="button dEButton DPCancelButton"
-        style={{ backgroundColor: '#F6DA83', color: 'black' }}
+        className="button deleteButtonModalCancel"
         onClick={props.openClose}
       >
         Cancel
