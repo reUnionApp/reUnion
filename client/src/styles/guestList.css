@@ -1,6 +1,22 @@
 #GLMaster {
   min-height: 100vh;
   padding: 50px 0px 75px 0px;
+  font-size: 10px;
+  overflow: hidden;
+}
+
+#guestListTitle {
+  font-family: 'Amatic SC', cursive;
+  font-size: 4.5em;
+  margin: 25px 0em 0.75em 0em;
+  padding: 0em 0.5em;
+  color: rgb(231, 242, 242);
+  background-color: rgba(113, 113, 113, 0.51);
+  border-radius: 0.4em;
+}
+
+.GLLabel {
+  font-size: 1.75em;
 }
 
 .formHide {
@@ -15,23 +31,29 @@
 }
 
 #guestListContainer {
-  width: 100%;
-  height: 50%;
-  max-height: 400px;
-  overflow: scroll;
-  border: 1px solid black;
-  padding: 0px 20px;
-  border-radius: 10px;
+  width: 80%;
+  max-height: 30em;
+  overflow-y: auto;
+  border: 2px solid black;
+  padding: 0px 2em;
+  border-radius: 1em;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 0em 0em 4em 0em;
 }
 
 .guestBox {
   width: 100%;
-  padding: 20px 0px;
-  margin: 15px 0px;
+  padding: 2em 0px;
+  margin: 1.5em 0px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 1em;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+}
+
+.guestBoxName {
+  margin: 0em;
+  font-size: 1.75em;
 }
 
 .expandedCard {
@@ -40,12 +62,35 @@
 }
 
 .expandedCardRow {
-  width: 100%;
+  width: 80%;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  /* justify-content: space-between; */
-  margin: 10px 0 0 0;
+  justify-content: center;
+  margin: 1em 0 0 0;
+  align-self: center;
+}
+
+.expandedCardRowL {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0em 0.5em 0em 0em;
+}
+
+.expandedCardRowR {
+  font-size: 1.4em;
+  margin: 0em 0em 0em 0.5em;
+}
+
+#GLUpdateButton {
+  width: 17em;
+  height: 3em;
+}
+
+.GLSendInvites {
+  background-color: #e400678e;
+  width: 20em;
+  font-weight: bold;
+  letter-spacing: 0.1em;
 }
 
 .longEmail {
@@ -68,17 +113,6 @@
   height: 0px; /* If value is 0px, the horizontal bar will disappear but still works*/
 }
 
-.expandedCardRowL {
-  font-weight: bold;
-  margin: 0 10px 0 10px;
-}
-
-.expandedCardRowR {
-  margin: 0 10px 0 10px;
-  /* max-width: 60%; */
-  /* text-align: end; */
-}
-
 .expandedCardRowAlt {
   margin: 0;
   width: 100%;
@@ -92,6 +126,7 @@
   transition-duration: 1s;
   backdrop-filter: blur(4px);
   z-index: 5;
+  overflow-y: auto;
 }
 
 .UGCClosed {
@@ -104,17 +139,13 @@
   opacity: 1;
 }
 
-#GLUpdateButton {
-  /* margin: 36px 0px 0px 0px; */
-}
-
 #addNewGuestButton {
   margin: 15px 0px 30px 0px;
   align-self: center;
 }
 
 #guestListErrorDiv {
-  height: 30px;
+  height: 4em;
   margin: 0px auto;
   display: flex;
   align-items: center;
@@ -122,6 +153,61 @@
 
 #guestListAddError {
   color: rgb(197, 2, 2);
+  font-size: 1.5em;
   font-weight: bold;
   margin: 0px;
+}
+
+@media (min-width: 450px) and (min-width: 450px) {
+  #guestListContainer::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+    background-color: transparent;
+  }
+  #guestListContainer::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.4);
+    border-radius: 5px;
+  }
+}
+
+@media (max-width: 1250px), (max-height: 925px) {
+  #GLMaster {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 1100px), (max-height: 865px) {
+  #GLMaster {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 900px), (max-height: 815px) {
+  #GLMaster {
+    font-size: 7px;
+  }
+}
+
+@media (max-height: 750px) {
+  #GLMaster {
+    overflow-y: auto;
+  }
+  .GLSendInvites {
+    margin: 0px 0px 50px 0px;
+  }
+}
+
+@media (max-width: 750px) {
+  #GLUpdateButton {
+    width: 13em;
+  }
+}
+
+@media (max-width: 400px) {
+  #GLUpdateButton {
+    width: 10em;
+  }
+  .GLSendInvites {
+    margin: 0px 0px 15px 0px;
+  }
 }

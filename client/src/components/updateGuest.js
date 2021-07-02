@@ -15,14 +15,13 @@ const UpdateGuest = (props) => {
       lastName: e.target.UGLastName.value,
       email: e.target.UGEmail.value,
       id: props.guestInfo.id,
-      coordStatus
+      coordStatus,
     };
-    console.log({ updatedInfo })
+    console.log({ updatedInfo });
     props.handleUpdate(e, updatedInfo);
   };
 
   const deleteGuest = () => {
-    console.log('delete guest fired');
     props.deleteGuest(props.guestInfo.id);
   };
 
@@ -36,12 +35,11 @@ const UpdateGuest = (props) => {
     setCoordStatus(props.guestInfo.coordStatusProp);
   }
 
-
   return (
-    <>
+    <div className="updateOverflowWrapper flex column aItemsC">
       {Object.keys(props.guestInfo).length > 0 ? (
         <>
-          <h1 style={{ color: 'white' }}>Update Guest</h1>
+          <h1 className="updateTitle">Update Guest</h1>
           {props.guestInfo.userType === 'registered' ? (
             <form
               id="updateGuestForm"
@@ -51,7 +49,7 @@ const UpdateGuest = (props) => {
               <div id="UGFormDiv" className="flex column">
                 <label htmlFor="UGFirstName" className="UGLabel">
                   First Name
-            </label>
+                </label>
                 <input
                   type="text"
                   className="UGInput"
@@ -63,7 +61,7 @@ const UpdateGuest = (props) => {
                 />
                 <label htmlFor="UGLastName" className="UGLabel">
                   Last Name
-            </label>
+                </label>
                 <input
                   type="text"
                   className="UGInput"
@@ -75,7 +73,7 @@ const UpdateGuest = (props) => {
                 />
                 <label htmlFor="UGEmail" className="UGLabel">
                   Email
-            </label>
+                </label>
                 <input
                   type="email"
                   className="UGInput"
@@ -88,7 +86,7 @@ const UpdateGuest = (props) => {
                 <div id="updateGuestErrorDiv">
                   <p className="updateGuestError">
                     CAN NOT UPDATE REGISTERED GUEST INFO
-              </p>
+                  </p>
                 </div>
               </div>
               <button
@@ -98,13 +96,8 @@ const UpdateGuest = (props) => {
                 disabled={true}
               >
                 Update Guest
-          </button>
-              <button
-                type="button"
-                className="button"
-                id="UGDelete"
-                onClick={deleteGuest}
-              >
+              </button>
+              <button type="button" id="UGDelete" onClick={deleteGuest}>
                 <FontAwesomeIcon
                   className="fontAwesomeLink MyEventsIconSVG"
                   icon={faTrash}
@@ -113,101 +106,111 @@ const UpdateGuest = (props) => {
               </button>
             </form>
           ) : (
-              <form
-                id="updateGuestForm"
-                className="flex column aItemsC"
-                onSubmit={handleSubmit}
-              >
-                <div id="UGFormDiv" className="flex column">
-                  <label htmlFor="UGFirstName" className="UGLabel">
-                    First Name
-            </label>
-                  <input
-                    type="text"
-                    className="UGInput"
-                    id="UGFirstName"
-                    placeholder="first name"
-                    defaultValue={props.guestInfo.firstName}
-                    required
-                  />
-                  <label htmlFor="UGLastName" className="UGLabel">
-                    Last Name
-            </label>
-                  <input
-                    type="text"
-                    className="UGInput"
-                    id="UGLastName"
-                    placeholder="last name"
-                    defaultValue={props.guestInfo.lastName}
-                    required
-                  />
-                  <label htmlFor="UGEmail" className="UGLabel">
-                    Email
-            </label>
-                  <input
-                    type="email"
-                    className="UGInput"
-                    id="UGEmail"
-                    placeholder="email"
-                    defaultValue={props.guestInfo.email}
-                    required
-                  />
-                  <div id="updateGuestErrorDiv">
-                    {props.updateErrors.length > 0 && (
-                      <p className="updateGuestError">{props.updateErrors}</p>
-                    )}
+            <form
+              id="updateGuestForm"
+              className="flex column aItemsC"
+              onSubmit={handleSubmit}
+            >
+              <div id="UGFormDiv" className="flex column">
+                <label htmlFor="UGFirstName" className="UGLabel">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  className="UGInput"
+                  id="UGFirstName"
+                  placeholder="first name"
+                  defaultValue={props.guestInfo.firstName}
+                  required
+                />
+                <label htmlFor="UGLastName" className="UGLabel">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="UGInput"
+                  id="UGLastName"
+                  placeholder="last name"
+                  defaultValue={props.guestInfo.lastName}
+                  required
+                />
+                <label htmlFor="UGEmail" className="UGLabel">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="UGInput"
+                  id="UGEmail"
+                  placeholder="email"
+                  defaultValue={props.guestInfo.email}
+                  required
+                />
+                <div id="updateGuestErrorDiv">
+                  {props.updateErrors.length > 0 && (
+                    <p className="updateGuestError">{props.updateErrors}</p>
+                  )}
+                </div>
+              </div>
+              <h5 id="coordStatusTitle">Coordinator Status</h5>
+              <div id="buttonDiv" className="flex jContentC aItemsC">
+                <input
+                  type="radio"
+                  name="yesNo"
+                  value="false"
+                  id="noRadio"
+                  onChange={() => setCoordStatus(false)}
+                  checked={coordStatus === false}
+                />
+                <label htmlFor="noRadio" className="flex jContentC aItemsC">
+                  <div className="radioIconContainerNo">
+                    <img src="/x.png" alt="X image" className="radioIcon" />
                   </div>
-                </div>
-                <h5>Coordinator Status</h5>
-                <div id="buttonDiv" className="flex jContentC aItemsC">
-                  <input
-                    type="radio"
-                    name="yesNo"
-                    value="false"
-                    id="noRadio"
-                    onChange={() => setCoordStatus(false)}
-                    checked={coordStatus === false}
-                  />
-                  <label htmlFor="noRadio" className="flex jContentC aItemsC">
-                    <div className="radioIconContainerNo">
-                      <img src="/x.png" alt="X image" className="radioIcon" />
-                    </div>
-                  </label>
-                  <input
-                    type="radio"
-                    name="yesNo"
-                    value="true"
-                    id="yesRadio"
-                    onChange={() => setCoordStatus(true)}
-                    checked={coordStatus === true}
-                  />
-                  <label htmlFor="yesRadio" className="flex jContentC aItemsC">
-                    <div className="radioIconContainerYes">
-                      <img src="/check.png" alt="check image" className="radioIcon" />
-                    </div>
-                  </label>
-                </div>
-                <button type="submit" className="button" id="UGSubmit">
-                  Update Guest
-          </button>
-                <button type="button" id="UGDelete" onClick={deleteGuest}>
-                  <FontAwesomeIcon
-                    className="fontAwesomeLink MyEventsIconSVG"
-                    icon={faTrash}
-                    style={{ width: 'auto', height: '25px' }}
-                  />
-                </button>
-              </form>
-            )}
-          <button type="button" className="button" onClick={() => {
-            props.openClose();
-            setCoordStatus(props.guestInfo.coordStatusProp)
-          }}>
+                </label>
+                <input
+                  type="radio"
+                  name="yesNo"
+                  value="true"
+                  id="yesRadio"
+                  onChange={() => setCoordStatus(true)}
+                  checked={coordStatus === true}
+                />
+                <label htmlFor="yesRadio" className="flex jContentC aItemsC">
+                  <div className="radioIconContainerYes">
+                    <img
+                      src="/check.png"
+                      alt="check image"
+                      className="radioIcon"
+                    />
+                  </div>
+                </label>
+              </div>
+              <button type="submit" className="button" id="UGSubmit">
+                Update Guest
+              </button>
+              <button type="button" id="UGDelete" onClick={deleteGuest}>
+                <FontAwesomeIcon
+                  className="fontAwesomeLink MyEventsIconSVG"
+                  icon={faTrash}
+                  style={{ width: 'auto', height: '25px' }}
+                />
+              </button>
+            </form>
+          )}
+          <button
+            type="button"
+            className="button updateCancel"
+            onClick={() => {
+              props.openClose();
+              setCoordStatus(props.guestInfo.coordStatusProp);
+            }}
+          >
             Cancel
-      </button>
+          </button>
         </>
-      ) : <Loading />}
-    </>
+      ) : (
+        <Loading />
+      )}
+    </div>
   );
 };
 

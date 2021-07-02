@@ -9,17 +9,13 @@ import {
   updateUser,
   getEvent,
   getMailGuestList,
-  sendMailGuestList
+  sendMailGuestList,
 } from '../store';
 import '../styles/guestList.css';
 import '../styles/create.css';
 import '../styles/single.css';
 import UpdateGuest from './updateGuest';
 import PulseButton from './pulseButton';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { use } from 'passport';
-import { SettingsEthernet, SettingsInputSvideoRounded } from '@material-ui/icons';
 
 const colors = {
   1: 'tealFade',
@@ -60,13 +56,11 @@ const GuestList = (props) => {
     e.target.reset();
   };
 
-  console.log({ props })
+  console.log({ props });
 
   const deleteSelectedGuest = async (guestId) => {
     openClose();
     const eventId = Number(props.match.params.eventId);
-    console.log('guestId-->', guestId);
-    console.log('eventId-->', eventId);
     await props.removeGuest(eventId, guestId);
     await props.getGuestList(eventId);
     // props.clearError();
@@ -76,7 +70,11 @@ const GuestList = (props) => {
     let updateGuestAttempt = {};
 
     if (updateGuest.userType === 'basic') {
-      updateGuestAttempt = await props.updatePseudoUser(updatedInfo, props.auth, Number(props.match.params.eventId));
+      updateGuestAttempt = await props.updatePseudoUser(
+        updatedInfo,
+        props.auth,
+        Number(props.match.params.eventId)
+      );
     } else {
       updateGuestAttempt = await props.updateUser(updatedInfo);
     }
@@ -128,7 +126,7 @@ const GuestList = (props) => {
     const eventNum = Number(props.match.params.eventId);
     target = 0;
     for (let i = 0; i < props.userEvents.length; i++) {
-      let targetEvent = props.userEvents[i]
+      let targetEvent = props.userEvents[i];
       if (targetEvent.id === eventNum) {
         target = i;
       }
@@ -140,9 +138,6 @@ const GuestList = (props) => {
       coordCheck = props.userEvents[target].UserEvent.isCoordinator;
     }
   }
-
-  console.log(111111, props.guests)
-
 
   return (
     <div
@@ -163,60 +158,57 @@ const GuestList = (props) => {
           eventId={Number(props.match.params.eventId)}
         />
       </div>
-      <h1
-        style={{
-          alignSelf: 'center',
-          textAlign: 'center',
-          margin: '19px 0px 25px 0px',
-        }}
-        className="link"
-      >
-        Guest List for
-        <br></br>
-        <Link className="link" to={`/myEvents/${props.singleEvent.id}`}>
-          <FontAwesomeIcon
-            className="fontAwesomeLink linkIcon"
-            icon={faLink}
-          />
-          {props.singleEvent.eventName}
-        </Link>
-      </h1>
+      <Link to={`/myEvents/${props.singleEvent.id}`}>
+        <h1 id="guestListTitle">{props.singleEvent.eventName}</h1>
+      </Link>
       <div className="singleColumn flex column jContentC aItemsC">
-        {adminCheck || ownerCheck || coordCheck ? (<form
-          id="guest-list"
-          className="flex column"
-          style={{ width: '100%' }}
-          onSubmit={addGuest}
-        >
-          <div className="flex jContentSB marginBottom">
-            <label style={{ fontWeight: 'bold' }} htmlFor="first-name">
-              First Name:
-            </label>
-            <input type="text" id="firstName" required />
-          </div>
-          <div className="flex jContentSB marginBottom">
-            <label style={{ fontWeight: 'bold' }} htmlFor="last-name">
-              Last Name:
-            </label>
-            <input type="text" id="lastName" required />
-          </div>
-          <div className="flex jContentSB marginBottom">
-            <label style={{ fontWeight: 'bold' }} htmlFor="email">
-              Email:
-            </label>
-            <input type="email" id="email" required />
-          </div>
-          <div id="guestListErrorDiv">
-            {error && error.response ? (
-              <p id="guestListAddError"> {error.response.data} </p>
-            ) : (
+        {adminCheck || ownerCheck || coordCheck ? (
+          <form
+            id="guest-list"
+            className="flex column"
+            style={{ width: '100%' }}
+            onSubmit={addGuest}
+          >
+            <div className="flex jContentSB marginBottom">
+              <label className="GLLabel" htmlFor="first-name">
+                First Name:
+              </label>
+              <input type="text" id="firstName" required />
+            </div>
+            <div className="flex jContentSB marginBottom">
+              <label className="GLLabel" htmlFor="last-name">
+                Last Name:
+              </label>
+              <input type="text" id="lastName" required />
+            </div>
+            <div className="flex jContentSB marginBottom">
+              <label className="GLLabel" htmlFor="email">
+                Email:
+              </label>
+              <input type="email" id="email" required />
+            </div>
+            <div id="guestListErrorDiv">
+              {error && error.response ? (
+                <p id="guestListAddError"> {error.response.data} </p>
+              ) : (
                 false
               )}
-          </div>
-          <div id="addNewGuestButton">
-            <PulseButton type={'submit'} height={50} width={200} fontSize={16} color1={'ffc400a4'} color2={'ffc4006e'} message={'Add New Guest'} />
-          </div>
-        </form>) : false}
+            </div>
+            <div id="addNewGuestButton">
+              <PulseButton
+                type={'submit'}
+                height={50}
+                width={200}
+                fontSize={16}
+                color1={'ffc400a4'}
+                color2={'ffc4006e'}
+                message={'Add New Guest'}
+              />
+            </div>
+          </form>
+        ) : (
+          false
+        )}
         <div id="guestListContainer">
           {props.guests &&
             props.guests.map((guest) => {
@@ -224,10 +216,14 @@ const GuestList = (props) => {
               return (
                 <div key={guest.id}>
                   <div
-                    onClick={(e) => adminCheck || ownerCheck || coordCheck ? selectGuest(e, guest.id) : false}
+                    onClick={(e) =>
+                      adminCheck || ownerCheck || coordCheck
+                        ? selectGuest(e, guest.id)
+                        : false
+                    }
                     className={`flex column aItemsC jContentC guestBox ${colors[count]}`}
                   >
-                    <h3 style={{ margin: '0px' }}>
+                    <h3 className="guestBoxName">
                       {guest.firstName} {guest.lastName}
                     </h3>
                     {guest.id === editPerson && (
@@ -241,8 +237,8 @@ const GuestList = (props) => {
                               </p>
                             </div>
                           ) : (
-                              <p className="expandedCardRowR">{guest.email}</p>
-                            )}
+                            <p className="expandedCardRowR">{guest.email}</p>
+                          )}
                         </div>
                         {guest.alias && (
                           <div className="expandedCardRow">
@@ -280,15 +276,15 @@ const GuestList = (props) => {
                                 </div>
                               </div>
                             ) : (
-                                <div className="expandedCardRow">
-                                  <p className="expandedCardRowL">
-                                    Special Requests:
+                              <div className="expandedCardRow">
+                                <p className="expandedCardRowL">
+                                  Special Requests:
                                 </p>
-                                  <p className="expandedCardRowR">
-                                    {guest.specialRequests}
-                                  </p>
-                                </div>
-                              )}
+                                <p className="expandedCardRowR">
+                                  {guest.specialRequests}
+                                </p>
+                              </div>
+                            )}
                           </>
                         )}
                         <div
@@ -309,7 +305,8 @@ const GuestList = (props) => {
                                 id: guest.id,
                                 userType: guest.userType,
                                 events: guest.Events,
-                                coordStatusProp: guest.Events[0].UserEvent.isCoordinator
+                                coordStatusProp:
+                                  guest.Events[0].UserEvent.isCoordinator,
                               });
                               setUpdateGuest(guest);
                               openClose();
@@ -328,16 +325,17 @@ const GuestList = (props) => {
         {adminCheck || ownerCheck || coordCheck ? (
           <button
             // type="submit"
-            className="button createButton"
-            style={{ backgroundColor: '#e400678e' }}
+            className="button GLSendInvites"
             onClick={() => {
               props.getMailGuestList();
-              props.sendMailGuestList(props.guests, props.singleEvent)
+              props.sendMailGuestList(props.guests, props.singleEvent);
             }}
           >
             Send Invites
           </button>
-        ) : false}
+        ) : (
+          false
+        )}
       </div>
     </div>
   );
@@ -349,19 +347,21 @@ const mapState = (state) => ({
   guests: state.guestListReducer.guestList,
   error: state.userReducer.error,
   singleEvent: state.eventReducer,
-  userEvents: state.allEventsReducer.userEvents
+  userEvents: state.allEventsReducer.userEvents,
 });
 
 const mapDispatch = (dispatch) => ({
   addPseudoUser: (user) => dispatch(addPseudoUser(user)),
-  updatePseudoUser: (updatedUser, authUser, eventId) => dispatch(updatePseudoUser(updatedUser, authUser, eventId)),
+  updatePseudoUser: (updatedUser, authUser, eventId) =>
+    dispatch(updatePseudoUser(updatedUser, authUser, eventId)),
   getGuestList: (id) => dispatch(getGuestList(id)),
   removeGuest: (eventId, guestId) => dispatch(removeGuest(eventId, guestId)),
   clearError: () => dispatch({ type: 'CLEAR_ERROR' }),
   updateUser: (user) => dispatch(updateUser(user)),
   getEvent: (id) => dispatch(getEvent(id)),
   getMailGuestList: () => dispatch(getMailGuestList()),
-  sendMailGuestList: (guests, event) => dispatch(sendMailGuestList(guests, event))
+  sendMailGuestList: (guests, event) =>
+    dispatch(sendMailGuestList(guests, event)),
 });
 
 export default connect(mapState, mapDispatch)(GuestList);

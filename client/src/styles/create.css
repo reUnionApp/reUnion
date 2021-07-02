@@ -141,6 +141,7 @@
 .createButton:disabled {
   background-color: #fff2c8;
   opacity: 1;
+  cursor: none;
 }
 
 @keyframes CRPulse {
@@ -270,7 +271,7 @@
   font-size: inherit;
   width: 125px;
   height: 25px;
-  overflow: scroll;
+  overflow-y: auto;
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
@@ -325,7 +326,7 @@
 .CRConfMaster {
   position: relative;
   font-size: 10px;
-  width: 100vw;
+  width: 100%;
   padding: 0em;
   height: 100%;
   overflow: visible;

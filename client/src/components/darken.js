@@ -6,7 +6,7 @@ const Darken = () => {
     <div
       id="darken"
       style={{
-        width: '100vw',
+        width: '100%',
         height: '100vh',
         backgroundColor: 'rgba(0, 0, 0, 0.70)',
         zIndex: '65',

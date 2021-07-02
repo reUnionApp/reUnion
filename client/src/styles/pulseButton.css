@@ -4,6 +4,7 @@
   border: none;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 @keyframes pulse {
