@@ -18,6 +18,14 @@ const UserEvent = db.define('UserEvent', {
       notEmpty: true,
     },
   },
+  receivedInvite: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
 
 module.exports = UserEvent;
