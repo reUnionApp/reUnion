@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { DateTimePicker } from './index.js';
 
 // CSS imports
-import '../styles/create.css';
+import '../styles/updateEA.css';
 
 // MaterialUI
 import 'date-fns';
@@ -124,27 +124,18 @@ const UpdateEvent = (props) => {
 
     const resultId = await props.updateEvent(props.match.params.eventId, event);
 
-    console.log({ resultId })
-
     if (resultId !== undefined) {
       props.history.push(`/myEvents/${resultId.id}`);
     }
   };
 
   const onLoad = (input) => {
-    console.log('autocomplete: ', input);
-
     setGoogleLocation(input);
   };
 
   const onPlaceChanged = () => {
     if (googleLocation !== null) {
       if (!googleLocation.getPlace().address_components) {
-        console.log('here');
-        console.log(
-          'googleLocation.getPlace().name',
-          googleLocation.getPlace().name
-        );
         setTextLocation(googleLocation.getPlace().name);
         locationUpdate.current = true;
         return;
@@ -161,27 +152,33 @@ const UpdateEvent = (props) => {
   };
 
   return (
-    <div
-      className="flex column jContentC aItemsC background3Up"
-    // style={{ marginTop: '50px' }}
-    >
-      <div
-        className="flex column layout jContentC aItemsC"
-        style={{ textAlign: 'center' }}
-      >
-        <h1>Update {props.event.eventName}</h1>
+    <div className="updateMaster flex column jContentC aItemsC background3Up">
+      <div className="updateWrapper flex column aItemsC">
+        <div className="updateTopButtonRow w100 flex jContentFE">
+          <Link
+            to={`/myEvents/${props.match.params.eventId}`}
+            className="flex jContentC aItemsC"
+          >
+            <button type="button" className="button cancelUpdateButton">
+              Cancel
+            </button>
+          </Link>
+        </div>
+        <h1 className="updateEATitle">Update {props.event.eventName}</h1>
         <form
-          className="updateForm"
+          className="updateForm FSInherit"
           onSubmit={submitEventForm}
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();
           }}
-          style={{ marginBottom: '70px' }}
         >
-          <div className="flex column">
-            <div className="boldLabel flex jContentSB marginBottom">
-              Event Type:
+          <div className="flex column FSInherit">
+            <div className="updateDataRow flex jContentSB marginBottom">
+              <label className="boldLabelU" htmlFor="updateEventSelect">
+                Event Type:
+              </label>
               <select
+                id="updateEventSelect"
                 style={{ width: '50%' }}
                 onChange={(event) => {
                   handleChange(event, setEventType);
@@ -195,9 +192,12 @@ const UpdateEvent = (props) => {
                 <option value="other gathering">Other Gathering</option>
               </select>
             </div>
-            <div className="boldLabel flex jContentSB marginBottom">
-              Event Name:
+            <div className="updateDataRow flex jContentSB marginBottom">
+              <label className="boldLabelU" htmlFor="updateEventName">
+                Event Name:
+              </label>
               <input
+                id="updateEventName"
                 style={{ width: '50%' }}
                 type="text"
                 name="eventName"
@@ -207,80 +207,6 @@ const UpdateEvent = (props) => {
                 }}
               ></input>
             </div>
-            {/* <div className="marginBottom">
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="Start Date"
-                    format="MM/dd/yyyy"
-                    inputValue={dateFormat(new Date(eventStartDateTime))}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventStartDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                  <KeyboardTimePicker
-                    margin="normal"
-                    id="time-picker"
-                    label="Start Time"
-                    inputValue={new Date(eventStartDateTime).toLocaleTimeString(
-                      'en-US',
-                      {
-                        hour12: true,
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      }
-                    )}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventStartDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change time',
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="End Date"
-                    format="MM/dd/yyyy"
-                    inputValue={dateFormat(new Date(eventEndDateTime))}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventEndDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                  <KeyboardTimePicker
-                    margin="normal"
-                    id="time-picker"
-                    label="End Time"
-                    inputValue={new Date(eventEndDateTime).toLocaleTimeString(
-                      'en-US',
-                      {
-                        hour12: true,
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      }
-                    )}
-                    onChange={(event) => {
-                      handleDateTimeChange(event, setEventEndDateTime);
-                    }}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change time',
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </div> */}
             <div className="marginBottom flex column">
               <DateTimePicker
                 startDateTime={eventStartDateTime}
@@ -289,56 +215,55 @@ const UpdateEvent = (props) => {
                 setEndDateTime={setEventEndDateTime}
               />
             </div>
-            <div className="boldLabel flex jContentSB marginBottom">
-              Address:
+            <div className="updateDataRow flex column marginBottom">
+              <div className="flex jContentSB">
+                <label className="boldLabelU" htmlFor="updateEventAddress">
+                  Address:
+                </label>
+              </div>
+              <div style={{ marginBottom: '10px' }}>
+                <LoadScript
+                  googleMapsApiKey={process.env.REACT_APP_GOOGLE}
+                  libraries={['places']}
+                >
+                  <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                    <input
+                      id="updateEventAddress"
+                      type="text"
+                      defaultValue={eventLocation}
+                      style={{ width: '100%' }}
+                    />
+                  </Autocomplete>
+                </LoadScript>
+              </div>
             </div>
-            <div style={{ marginBottom: '10px' }}>
-              <LoadScript
-                googleMapsApiKey={process.env.REACT_APP_GOOGLE}
-                libraries={['places']}
-              >
-                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                  <input
-                    type="text"
-                    defaultValue={eventLocation}
-                    style={{ width: '100%' }}
-                  />
-                </Autocomplete>
-              </LoadScript>
+            <div className="updateDataRow">
+              <div className="boldLabelU flex jContentSB marginBottom">
+                <label className="boldLabelU" htmlFor="updateEventDescription">
+                  Description:
+                </label>
+              </div>
+              <div style={{ width: '290px' }}>
+                <textarea
+                  id="updateEventDescription"
+                  style={{
+                    overflow: 'hidden',
+                    maxWidth: '100%',
+                    width: '100%',
+                  }}
+                  type="textarea"
+                  name="description"
+                  placeholder="Enter description of your event"
+                  value={eventDescription}
+                  onChange={(event) => {
+                    handleChange(event, setEventDescription);
+                  }}
+                ></textarea>
+              </div>
             </div>
-
-            {/* <input
-              type="text"
-              name="coordinators"
-              placeholder="Enter coordinators' names here"
-              value={eventCoordinator}
-              onChange={(event) => {
-                handleChange(event, setEventCoordinator);
-              }}
-            ></input> */}
-            <div className="boldLabel flex jContentSB marginBottom">
-              Description:
-            </div>
-            <div style={{ width: '290px' }}>
-              <textarea
-                style={{ overflow: 'hidden', maxWidth: '100%', width: '100%' }}
-                type="textarea"
-                name="description"
-                placeholder="Enter description of your event"
-                value={eventDescription}
-                onChange={(event) => {
-                  handleChange(event, setEventDescription);
-                }}
-              ></textarea>
-            </div>
-            <button type="submit" className="button createButton">
+            <button type="submit" className="updateButton">
               Update Event
             </button>
-            <Link to={`/myEvents/${props.match.params.eventId}`} className='flex jContentC aItemsC'>
-              <button type="submit" className="button" style={{ backgroundColor: '#e400678e' }}>
-                Cancel
-              </button>
-            </Link>
           </div>
         </form>
       </div>

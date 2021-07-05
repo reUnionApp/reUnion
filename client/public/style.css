@@ -33,6 +33,9 @@ body {
 .jContentC {
   justify-content: center;
 }
+.jContentFE {
+  justify-content: flex-end;
+}
 .column {
   flex-direction: column;
 }
