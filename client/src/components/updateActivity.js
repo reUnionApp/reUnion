@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { DateTimePicker } from './index.js';
 
 // CSS imports
-import '../styles/create.css';
+import '../styles/updateEA.css';
 
 // MaterialUI
 import 'date-fns';
@@ -160,23 +160,33 @@ const UpdateActivity = (props) => {
   };
 
   return (
-    <div className="flex column jContentC aItemsC background2Down">
-      <div
-        className="flex column layout jContentC aItemsC"
-        style={{ textAlign: 'center', marginBottom: '50px' }}
-      >
-        <h1>Update {props.activity.activityName}:</h1>
+    <div className="updateMaster flex column jContentC aItemsC background2Down">
+      <div className="updateWrapper flex column aItemsC">
+        <div className="updateTopButtonRow w100 flex jContentFE">
+          <Link
+            to={`/myEvents/${props.match.params.eventId}/activities/${props.match.params.activityId}`}
+            className="flex jContentC aItemsC"
+          >
+            <button type="button" className="button cancelUpdateButton">
+              Cancel
+            </button>
+          </Link>
+        </div>
+        <h1 className="updateEATitle">Update {props.activity.activityName}:</h1>
         <form
-          className="updateForm"
+          className="updateForm FSInherit"
           onSubmit={submitActivityForm}
           onKeyPress={(e) => {
             e.key === 'Enter' && e.preventDefault();
           }}
         >
-          <div className="flex column">
-            <div className="boldLabel flex jContentSB marginBottom">
-              Activity Name:
+          <div className="flex column FSInherit">
+            <div className="updateDataRow flex jContentSB marginBottom">
+              <label className="boldLabelU" htmlFor="updateActivityName">
+                Activity Name:
+              </label>
               <input
+                id="updateActivityName"
                 style={{ width: '50%' }}
                 type="text"
                 name="activityName"
@@ -187,78 +197,6 @@ const UpdateActivity = (props) => {
                 }}
               ></input>
             </div>
-            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                inputValue={dateFormat(new Date(activityStartDateTime))}
-                onChange={(click) => {
-                  handleDateTimeChange(click, setActivityStartDateTime);
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-              <KeyboardTimePicker
-                margin="normal"
-                id="time-picker"
-                label="Time picker"
-                inputValue={new Date(activityStartDateTime).toLocaleTimeString(
-                  'en-US',
-                  {
-                    hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }
-                )}
-                onChange={(click) => {
-                  handleDateTimeChange(click, setActivityStartDateTime);
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                inputValue={dateFormat(new Date(activityEndDateTime))}
-                onChange={(click) => {
-                  handleDateTimeChange(click, setActivityEndDateTime);
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-              <KeyboardTimePicker
-                margin="normal"
-                id="time-picker"
-                label="Time picker"
-                inputValue={new Date(activityEndDateTime).toLocaleTimeString(
-                  'en-US',
-                  {
-                    hour12: true,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }
-                )}
-                onChange={(click) => {
-                  handleDateTimeChange(click, setActivityEndDateTime);
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider> */}
             <div
               className="marginBottom flex column"
               style={{ margin: '20px 0px 0px 0px' }}
@@ -270,62 +208,58 @@ const UpdateActivity = (props) => {
                 setEndDateTime={setActivityEndDateTime}
               />
             </div>
-            <div
-              className="boldLabel flex jContentSB marginBottom"
-              style={{ margin: '20px 0px 0px 0px' }}
-            >
-              Address:
+            <div className="updateDataRow flex column marginBottom">
+              <div className="flex jContentSB" style={{ marginBottom: '10px' }}>
+                <label className="boldLabelU" htmlFor="updateActivityAddress">
+                  Address:
+                </label>
+              </div>
+              <div>
+                <LoadScript
+                  googleMapsApiKey={process.env.REACT_APP_GOOGLE}
+                  libraries={['places']}
+                >
+                  <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                    <input
+                      id="updateActivityAddress"
+                      type="text"
+                      defaultValue={activityLocation}
+                      style={{ width: '100%' }}
+                    />
+                  </Autocomplete>
+                </LoadScript>
+              </div>
             </div>
-            <div style={{ marginBottom: '10px' }}>
-              <LoadScript
-                googleMapsApiKey={process.env.REACT_APP_GOOGLE}
-                libraries={['places']}
-              >
-                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                  <input
-                    type="text"
-                    defaultValue={activityLocation}
-                    style={{ width: '100%' }}
-                  />
-                </Autocomplete>
-              </LoadScript>
+            <div className="updateDataRow">
+              <div className="boldLabelU flex jContentSB marginBottom">
+                <label
+                  className="boldLabelU"
+                  htmlFor="updateActivityDescription"
+                >
+                  Description:
+                </label>
+              </div>
+              <div style={{ width: '290px' }}>
+                <textarea
+                  id="updateActivityDescription"
+                  style={{
+                    overflow: 'hidden',
+                    maxWidth: '100%',
+                    width: '100%',
+                  }}
+                  type="textarea"
+                  name="description"
+                  placeholder="Enter description of your activity"
+                  value={activityDescription}
+                  onChange={(click) => {
+                    handleChange(click, setActivityDescription);
+                  }}
+                ></textarea>
+              </div>
             </div>
-
-            {/* <div className="swiper-no-swiping" style={{ width: '50vw' }}>
-          <GooglePlacesAutocomplete
-            apiKey={process.env.REACT_APP_GOOGLE}
-            selectProps={{
-              activityLocation,
-              onChange: setActivityLocation,
-            }}
-          />
-        </div> */}
-            <div
-              className="boldLabel flex jContentSB marginBottom"
-              style={{ margin: '20px 0px 0px 0px' }}
-            >
-              Description:
-            </div>
-            <div style={{ width: '290px' }}>
-              <textarea
-                style={{ overflow: 'hidden', maxWidth: '100%', width: '100%' }}
-                type="textarea"
-                name="description"
-                placeholder="Enter description of your activity"
-                value={activityDescription}
-                onChange={(click) => {
-                  handleChange(click, setActivityDescription);
-                }}
-              ></textarea>
-            </div>
-            <button type="submit" className="button createButton">
+            <button type="submit" className="updateButton">
               Update Activity
             </button>
-            <Link to={`/myEvents/${props.match.params.eventId}/activities/${props.match.params.activityId}`} className='flex jContentC aItemsC' style={{ margin: '0px auto' }}>
-              <button type="submit" className="button" style={{ marginBottom: '55px', backgroundColor: '#e400678e' }}>
-                Cancel
-              </button>
-            </Link>
           </div>
         </form>
       </div>

@@ -145,26 +145,32 @@ const SingleEvent = (props) => {
       </div>
       <div className="singleMaster singleContainer flex column aItemsC background1Up">
         <div className="singleTopRow flex jContentC w95">
-          <Link to={`/myEvents/${eventId}/update`}>
-            <button
-              ref={updateEventButton}
-              className="button updateEventS"
-              onLoad={updateEventStyle}
-              disabled={!(adminCheck || ownerCheck || coordCheck)}
-            >
-              Update Event
-            </button>
-          </Link>
+          {adminCheck || ownerCheck || coordCheck ? (
+            <Link to={`/myEvents/${eventId}/update`}>
+              <button
+                ref={updateEventButton}
+                className="button updateEventS"
+                onLoad={updateEventStyle}
+              >
+                Update Event
+              </button>
+            </Link>
+          ) : (
+            <button className="button updateEventSBlank">(Update Event)</button>
+          )}
           <h1 className="singleTitle">{eventName}</h1>
-          <button
-            className="button deleteEventS"
-            disabled={!(adminCheck || ownerCheck)}
-            onClick={() => {
-              openClose();
-            }}
-          >
-            Delete Event
-          </button>
+          {adminCheck || ownerCheck ? (
+            <button
+              className="button deleteEventS"
+              onClick={() => {
+                openClose();
+              }}
+            >
+              Delete Event
+            </button>
+          ) : (
+            <button className="button deleteEventSBlank">(Delete Event)</button>
+          )}
         </div>
         <div className="singleWrapper singleColumn flex column">
           <div className="confLineS">

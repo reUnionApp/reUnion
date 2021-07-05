@@ -200,6 +200,25 @@
   margin: 0px 0px 0px auto;
 }
 
+.updateEventSBlank,
+.deleteEventSBlank {
+  background-color: transparent;
+  color: transparent;
+  cursor: default;
+  font-size: 1.2em;
+  height: 4em;
+  width: 10em;
+  box-shadow: none;
+}
+
+.updateEventSBlank {
+  margin: 0px;
+}
+
+.deleteEventSBlank {
+  margin: 0px 0px 0px auto;
+}
+
 .singleActivityLinkWrapper {
   margin: 0em 0em 0.4em auto;
 }
