@@ -86,16 +86,17 @@ const SingleActivity = (props) => {
       </div>
       <div className="singleMaster singleContainer flex column aItemsC background3Down">
         <div className="singleTopRow flex jContentC w95">
-          <Link
-            to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
-          >
-            <button
-              className="button updateEventS"
-              disabled={!(adminCheck || ownerCheck || coordCheck)}
+          {adminCheck || ownerCheck || coordCheck ? (
+            <Link
+              to={`/myEvents/${eventId}/activities/${props.eventActivities.id}/update`}
             >
-              Update Activity
+              <button className="button updateEventS">Update Activity</button>
+            </Link>
+          ) : (
+            <button className="button updateEventSBlank">
+              (Update Activity)
             </button>
-          </Link>
+          )}
           <Link
             to={`/myEvents/${props.singleEvent.id}`}
             className="singleActivityLinkWrapper"
@@ -104,13 +105,18 @@ const SingleActivity = (props) => {
               {props.singleEvent.eventName}
             </button>
           </Link>
-          <button
-            className="button deleteEventS"
-            disabled={!(adminCheck || ownerCheck || coordCheck)}
-            onClick={() => openCloseActivity()}
-          >
-            Delete Activity
-          </button>
+          {adminCheck || ownerCheck || coordCheck ? (
+            <button
+              className="button deleteEventS"
+              onClick={() => openCloseActivity()}
+            >
+              Delete Activity
+            </button>
+          ) : (
+            <button className="button deleteEventSBlank">
+              (Delete Activity)
+            </button>
+          )}
         </div>
         <div className="singleWrapper singleColumn flex column SADetailsSpacer">
           <div className="confLineS">
