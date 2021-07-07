@@ -7,7 +7,7 @@ const loading = () => {
       <img src="/reUnion_Logo.png" alt="logo" id="loadingImg" />
       <div id="loadingTitleContainer">
         <h1 id="loadingTitle">Loading</h1>
-        <div id="loadingDot"></div>
+        <div id="loadingDot" />
       </div>
     </div>
   );
