@@ -83,7 +83,6 @@ router.get('/:userID/events', userOrAdminOnly, async (req, res, next) => {
 // Single User's Single Event: GET /api/users/:userId/events/:eventId
 
 router.get('/:userId/events/:eventId', userOrAdminOnly, async (req, res, next) => {
-  console.log('our NEW route has been HIT!!!');
   const eventId = req.params.eventId;
   try {
     const event = await Event.findByPk(eventId);
@@ -153,7 +152,7 @@ router.post('/', async (req, res, next) => {
 
 router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => {
   console.log('magic methodsssss', Object.keys(User.prototype))
-  console.log(88888888, req.body)
+
   const id = req.body.updatedInfo.id;
   try {
     const user = await User.findByPk(id);
@@ -163,7 +162,7 @@ router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => 
         EventId: req.params.eventID,
         UserId: req.body.updatedInfo.id
       }
-    })
+    });
 
     if (!user) {
       res.sendStatus(404);
