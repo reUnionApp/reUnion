@@ -4,8 +4,14 @@
   font-size: 10px;
 }
 
-#MEEventCount {
+.MEEventCount {
   font-size: 1.5em;
+}
+
+.MEEventType {
+  font-size: 1.3em;
+  font-weight: normal;
+  text-align: center;
 }
 
 .eventBox {

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteEvent from './deleteEvent';
+import EventBox from './eventBox';
 import history from '../history';
 import '../styles/myEvents.css';
 
@@ -43,6 +44,16 @@ const MyEvents = (props) => {
     }
   };
 
+  const eventStatusCount = (eventList, status) => {
+    let statusCount = 0;
+    for (let i = 0; i < eventList.length; i++) {
+      if (eventList[i].UserEvent.rsvpStatus === status) {
+        statusCount++;
+      }
+    }
+    return statusCount;
+  }
+
   return (
     <>
       <div
@@ -56,68 +67,40 @@ const MyEvents = (props) => {
         />
       </div>
       <div className="flex aItemsC column background1Up" id="myEventsContainer">
-        <h2 id="MEEventCount">
-          You have {props.userEvents.length}{' '}
-          {props.userEvents.length === 1 ? 'event' : 'events'}
-        </h2>
-        {props.userEvents &&
-          props.userEvents.map((event) => {
-            let ownerCheck = event.UserEvent.isOwner;
-            let coordCheck = event.UserEvent.isCoordinator;
-            count === 3 ? (count = 1) : ++count;
-            return (
-              <div
-                className={`flex column aItemsC jContentC eventBox ${colors[count]}`}
-                key={event.id}
-              >
-                {props.auth.id === event.ownerId && (
-                  <div id="eventBoxHost">Host</div>
-                )}
-                <Link to={`/myEvents/${event.id}`}>
-                  <h3 id="eventBoxTitle">{event.eventName}</h3>
-                </Link>
-                <div className="MEButtonRow flex jContentC w100">
-                  {adminCheck || ownerCheck || coordCheck ? (
-                    <div className="MEButtonWrapper">
-                      <Link
-                        to={`/myEvents/${event.id}/update`}
-                        id="MEWrenchLink"
-                      >
-                        <button className="MyEventsIcon">
-                          <FontAwesomeIcon
-                            className="fontAwesomeLink MyEventsIconSVG"
-                            icon={faWrench}
-                            id="MEWrench"
-                          />
-                        </button>
-                      </Link>
-                    </div>
-                  ) : (
-                    false
-                  )}
-                  {adminCheck || ownerCheck ? (
-                    <div className="MEButtonWrapper">
-                      <button
-                        className="MyEventsIcon"
-                        onClick={() => {
-                          setDeleteEvent(event);
-                          openClose();
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          className="fontAwesomeLink MyEventsIconSVG"
-                          icon={faTrash}
-                          id="METrash"
-                        />
-                      </button>
-                    </div>
-                  ) : (
-                    false
-                  )}
-                </div>
-              </div>
-            );
-          })}
+        <h2 className="MEEventCount">You Have:</h2>
+        <div>
+          {eventStatusCount(props.userEvents, 'pending') > 0 ? <h2 className='MEEventType'>
+            {eventStatusCount(props.userEvents, 'pending')}{' '}
+            {eventStatusCount(props.userEvents, 'pending') === 1 ? 'Pending Event' : 'Pending Events'}
+          </h2> : false}
+          {props.userEvents &&
+            props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'pending').map((event) => {
+              count === 3 ? (count = 1) : ++count;
+              return <EventBox event={event} colors={colors} count={count} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} />
+            })}
+        </div>
+        <div>
+          <h2 className='MEEventType'>
+            {eventStatusCount(props.userEvents, 'accepted')}{' '}
+            {eventStatusCount(props.userEvents, 'accepted') === 1 ? 'Accepted Event' : 'Accepted Events'}
+          </h2>
+          {props.userEvents &&
+            props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'accepted').map((event) => {
+              count === 3 ? (count = 1) : ++count;
+              return <EventBox event={event} colors={colors} count={count} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} />
+            })}
+        </div>
+        <div>
+          {eventStatusCount(props.userEvents, 'declined') > 0 ? <h2 className='MEEventType'>
+            {eventStatusCount(props.userEvents, 'declined')}{' '}
+            {eventStatusCount(props.userEvents, 'declined') === 1 ? 'Declined Event' : 'Declined Events'}
+          </h2> : false}
+          {props.userEvents &&
+            props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'declined').map((event) => {
+              count === 3 ? (count = 1) : ++count;
+              return <EventBox event={event} colors={colors} count={count} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} />
+            })}
+        </div>
         <div id="createEventButtonWrapper">
           <img src="orange-balloon.png" id="CEBalloon" />
           <Link to={'/createEvent'} id="createEventBLink">
