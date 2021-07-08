@@ -26,6 +26,11 @@ const UserEvent = db.define('UserEvent', {
       notEmpty: true,
     },
   },
+  rsvpStatus: {
+    type: Sequelize.ENUM('pending', 'accepted', 'declined'),
+    defaultValue: 'pending',
+    allowNull: false,
+  },
 });
 
 module.exports = UserEvent;
