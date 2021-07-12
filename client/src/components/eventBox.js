@@ -4,12 +4,12 @@ import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function EventBox(props) {
-  const { colors, count, event, openClose, setDeleteEvent, adminCheck, userId } = props;
+  const { statusColor, event, openClose, setDeleteEvent, adminCheck, userId } = props;
   let ownerCheck = event.UserEvent.isOwner;
   let coordCheck = event.UserEvent.isCoordinator;
   return (
     <div
-      className={`flex column aItemsC jContentC eventBox ${colors[count]}`}
+      className={`flex column aItemsC jContentC eventBox ${statusColor}`}
     >
       {userId === event.ownerId && (
         <div id="eventBoxHost">Host</div>

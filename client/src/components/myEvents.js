@@ -9,12 +9,6 @@ import EventBox from './eventBox';
 import history from '../history';
 import '../styles/myEvents.css';
 
-const colors = {
-  1: 'tealFade',
-  2: 'pinkFade',
-  3: 'yellowFade',
-};
-
 const MyEvents = (props) => {
   const userId = props.auth.id;
   const adminCheck = props.auth.isAdmin;
@@ -29,8 +23,6 @@ const MyEvents = (props) => {
   useEffect(() => {
     props.getUserEvents(userId);
   }, []);
-
-  let count = 0;
 
   const DSE = useRef(null);
 
@@ -75,8 +67,7 @@ const MyEvents = (props) => {
           </h2> : false}
           {props.userEvents &&
             props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'pending').map((event) => {
-              count === 3 ? (count = 1) : ++count;
-              return <EventBox event={event} colors={colors} count={count} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} />
+              return <EventBox event={event} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} statusColor={"yellowFade"} />
             })}
         </div>
         <div>
@@ -86,8 +77,7 @@ const MyEvents = (props) => {
           </h2>
           {props.userEvents &&
             props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'accepted').map((event) => {
-              count === 3 ? (count = 1) : ++count;
-              return <EventBox event={event} colors={colors} count={count} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} />
+              return <EventBox event={event} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} statusColor={"tealFade"} />
             })}
         </div>
         <div>
@@ -97,8 +87,7 @@ const MyEvents = (props) => {
           </h2> : false}
           {props.userEvents &&
             props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'declined').map((event) => {
-              count === 3 ? (count = 1) : ++count;
-              return <EventBox event={event} colors={colors} count={count} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} />
+              return <EventBox event={event} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} statusColor={"pinkFade"} />
             })}
         </div>
         <div id="createEventButtonWrapper">

@@ -6,6 +6,7 @@ import {
   getActivities,
   removeActivity,
   getUserEvents,
+  updateUser
 } from '../store';
 import { Link } from 'react-router-dom';
 import { GuestList } from './index';
@@ -28,6 +29,7 @@ const SingleEvent = (props) => {
   const id = props.auth.id;
   const eventId = props.match.params.eventId;
   const [activityToDelete, setActivityToDelete] = useState({});
+  const [rsvpStatus, setRSVPStatus] = useState('pending');
   const updateEventButton = useRef(null);
 
   const deleteSelectedEvent = async (eventId) => {
@@ -120,6 +122,8 @@ const SingleEvent = (props) => {
     }
   };
 
+  let currentUserEvent = props.userEvents.filter((event) => event.eventName === eventName);
+
   return (
     <>
       <div
@@ -155,7 +159,7 @@ const SingleEvent = (props) => {
                 Update Event
               </button>
             </Link>
-          ) : (
+          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button updateEventS">Accept</button>) : (
             <button className="button updateEventSBlank">(Update Event)</button>
           )}
           <h1 className="singleTitle">{eventName}</h1>
@@ -168,7 +172,7 @@ const SingleEvent = (props) => {
             >
               Delete Event
             </button>
-          ) : (
+          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button deleteEventS" >Decline </button>) : (
             <button className="button deleteEventSBlank">(Delete Event)</button>
           )}
         </div>
@@ -234,12 +238,12 @@ const SingleEvent = (props) => {
               </Link>
             </div>
           ) : (
-            <div className="flex jContentC singleButtonRow">
-              <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
-                <button className="button MGLButton">Guest List</button>
-              </Link>
-            </div>
-          )}
+              <div className="flex jContentC singleButtonRow">
+                <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
+                  <button className="button MGLButton">Guest List</button>
+                </Link>
+              </div>
+            )}
 
           <div className="flex column aItemsC FSInherit">
             <h2 className="singleALTitle">
@@ -297,14 +301,14 @@ const SingleEvent = (props) => {
                           </button>
                         </div>
                       ) : (
-                        false
-                      )}
+                          false
+                        )}
                     </div>
                   );
                 })
               ) : (
-                <p className="NoActivities">No activities planned yet!</p>
-              )}
+                  <p className="NoActivities">No activities planned yet!</p>
+                )}
             </div>
           </div>
         </div>
@@ -327,6 +331,7 @@ const mapDispatch = (dispatch) => ({
   removeActivity: (eventId, activityId) =>
     dispatch(removeActivity(eventId, activityId)),
   getUserEvents: (id) => dispatch(getUserEvents(id)),
+  updateUser: (user) => dispatch(updateUser(user))
 });
 
 export default connect(mapState, mapDispatch)(SingleEvent);

@@ -17,7 +17,6 @@ const UpdateGuest = (props) => {
       id: props.guestInfo.id,
       coordStatus,
     };
-    console.log({ updatedInfo });
     props.handleUpdate(e, updatedInfo);
   };
 
@@ -106,96 +105,97 @@ const UpdateGuest = (props) => {
               </button>
             </form>
           ) : (
-            <form
-              id="updateGuestForm"
-              className="flex column aItemsC"
-              onSubmit={handleSubmit}
-            >
-              <div id="UGFormDiv" className="flex column">
-                <label htmlFor="UGFirstName" className="UGLabel">
-                  First Name
+              <form
+                id="updateGuestForm"
+                className="flex column aItemsC"
+                onSubmit={handleSubmit}
+              >
+                <div id="UGFormDiv" className="flex column">
+                  <label htmlFor="UGFirstName" className="UGLabel">
+                    First Name
                 </label>
-                <input
-                  type="text"
-                  className="UGInput"
-                  id="UGFirstName"
-                  placeholder="first name"
-                  defaultValue={props.guestInfo.firstName}
-                  required
-                />
-                <label htmlFor="UGLastName" className="UGLabel">
-                  Last Name
+                  <input
+                    type="text"
+                    className="UGInput"
+                    id="UGFirstName"
+                    placeholder="first name"
+                    defaultValue={props.guestInfo.firstName}
+                    required
+                  />
+                  <label htmlFor="UGLastName" className="UGLabel">
+                    Last Name
                 </label>
-                <input
-                  type="text"
-                  className="UGInput"
-                  id="UGLastName"
-                  placeholder="last name"
-                  defaultValue={props.guestInfo.lastName}
-                  required
-                />
-                <label htmlFor="UGEmail" className="UGLabel">
-                  Email
+                  <input
+                    type="text"
+                    className="UGInput"
+                    id="UGLastName"
+                    placeholder="last name"
+                    defaultValue={props.guestInfo.lastName}
+                    required
+                  />
+                  <label htmlFor="UGEmail" className="UGLabel">
+                    Email
                 </label>
-                <input
-                  type="email"
-                  className="UGInput"
-                  id="UGEmail"
-                  placeholder="email"
-                  defaultValue={props.guestInfo.email}
-                  required
-                />
-                <div id="updateGuestErrorDiv">
-                  {props.updateErrors.length > 0 && (
-                    <p className="updateGuestError">{props.updateErrors}</p>
-                  )}
+                  <input
+                    type="email"
+                    className="UGInput"
+                    id="UGEmail"
+                    placeholder="email"
+                    defaultValue={props.guestInfo.email}
+                    required
+                  />
+                  <div id="updateGuestErrorDiv">
+                    {props.updateErrors.length > 0 && (
+                      <p className="updateGuestError">{props.updateErrors}</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <h5 id="coordStatusTitle">Coordinator Status</h5>
-              <div id="buttonDiv" className="flex jContentC aItemsC">
-                <input
-                  type="radio"
-                  name="yesNo"
-                  value="false"
-                  id="noRadio"
-                  onChange={() => setCoordStatus(false)}
-                  checked={coordStatus === false}
-                />
-                <label htmlFor="noRadio" className="flex jContentC aItemsC">
-                  <div className="radioIconContainerNo">
-                    <img src="/x.png" alt="X image" className="radioIcon" />
-                  </div>
-                </label>
-                <input
-                  type="radio"
-                  name="yesNo"
-                  value="true"
-                  id="yesRadio"
-                  onChange={() => setCoordStatus(true)}
-                  checked={coordStatus === true}
-                />
-                <label htmlFor="yesRadio" className="flex jContentC aItemsC">
-                  <div className="radioIconContainerYes">
-                    <img
-                      src="/check.png"
-                      alt="check image"
-                      className="radioIcon"
+                {props.guestInfo && props.guestInfo?.events[0].UserEvent.rsvpStatus === 'accepted' ? (<><h5 id="coordStatusTitle">Coordinator Status</h5>
+                  <div id="buttonDiv" className="flex jContentC aItemsC">
+                    <input
+                      type="radio"
+                      name="yesNo"
+                      value="false"
+                      id="noRadio"
+                      onChange={() => setCoordStatus(false)}
+                      checked={coordStatus === false}
                     />
-                  </div>
-                </label>
-              </div>
-              <button type="submit" className="button" id="UGSubmit">
-                Update Guest
+                    <label htmlFor="noRadio" className="flex jContentC aItemsC">
+                      <div className="radioIconContainerNo">
+                        <img src="/x.png" alt="X image" className="radioIcon" />
+                      </div>
+                    </label>
+                    <input
+                      type="radio"
+                      name="yesNo"
+                      value="true"
+                      id="yesRadio"
+                      onChange={() => setCoordStatus(true)}
+                      checked={coordStatus === true}
+                    />
+                    <label htmlFor="yesRadio" className="flex jContentC aItemsC">
+                      <div className="radioIconContainerYes">
+                        <img
+                          src="/check.png"
+                          alt="check image"
+                          className="radioIcon"
+                        />
+                      </div>
+                    </label>
+                  </div></>) : false}
+
+                <button type="submit" className="button" id="UGSubmit">
+                  Update Guest
               </button>
-              <button type="button" id="UGDelete" onClick={deleteGuest}>
-                <FontAwesomeIcon
-                  className="fontAwesomeLink MyEventsIconSVG"
-                  icon={faTrash}
-                  style={{ width: 'auto', height: '25px' }}
-                />
-              </button>
-            </form>
-          )}
+                <button type="button" id="UGDelete" onClick={deleteGuest}>
+                  <FontAwesomeIcon
+                    className="fontAwesomeLink MyEventsIconSVG"
+                    icon={faTrash}
+                    style={{ width: 'auto', height: '25px' }}
+                  />
+                </button>
+              </form>
+            )}
           <button
             type="button"
             className="button updateCancel"
@@ -208,8 +208,8 @@ const UpdateGuest = (props) => {
           </button>
         </>
       ) : (
-        <Loading />
-      )}
+          <Loading />
+        )}
     </div>
   );
 };
