@@ -8,6 +8,7 @@
 }
 
 .singleTitle {
+  text-align: center;
   align-self: center;
   font-family: 'Amatic SC', cursive;
   font-size: 5em;
@@ -176,6 +177,7 @@
   margin: 0.5em 0em 0em 0em;
   align-self: center;
   letter-spacing: 0.1em;
+  text-align: center;
 }
 
 .singleWrench {

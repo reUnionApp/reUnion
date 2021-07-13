@@ -9,6 +9,7 @@ import {
   updateUser
 } from '../store';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { GuestList } from './index';
 import { faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,7 +30,6 @@ const SingleEvent = (props) => {
   const id = props.auth.id;
   const eventId = props.match.params.eventId;
   const [activityToDelete, setActivityToDelete] = useState({});
-  const [rsvpStatus, setRSVPStatus] = useState('pending');
   const updateEventButton = useRef(null);
 
   const deleteSelectedEvent = async (eventId) => {
@@ -124,6 +124,14 @@ const SingleEvent = (props) => {
 
   let currentUserEvent = props.userEvents.filter((event) => event.eventName === eventName);
 
+  const updateRSVPStatus = async (e, status) => {
+    const payload = { eventId: props.match.params.eventId, rsvpStatus: status }
+
+    await axios.put(`/api/users/${id}/rsvp`, payload);
+
+    await props.getUserEvents(id);
+  }
+
   return (
     <>
       <div
@@ -159,7 +167,7 @@ const SingleEvent = (props) => {
                 Update Event
               </button>
             </Link>
-          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button updateEventS">Accept</button>) : (
+          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button acceptedEventS" onClick={(e) => updateRSVPStatus(e, 'accepted')}>Accept</button>) : (
             <button className="button updateEventSBlank">(Update Event)</button>
           )}
           <h1 className="singleTitle">{eventName}</h1>
@@ -172,8 +180,8 @@ const SingleEvent = (props) => {
             >
               Delete Event
             </button>
-          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button deleteEventS" >Decline </button>) : (
-            <button className="button deleteEventSBlank">(Delete Event)</button>
+          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button deleteEventS" onClick={(e) => updateRSVPStatus(e, 'declined')}>Decline</button>) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'accepted' ? (<button className="button deleteEventS" style={{ lineHeight: '1em' }} onClick={(e) => updateRSVPStatus(e, 'declined')}>Change to Decline</button>) : (
+            <button className="button deleteEventS" style={{ backgroundColor: '#38c1d38c', lineHeight: '1em' }} onClick={(e) => updateRSVPStatus(e, 'accepted')}>Change to Accept</button>
           )}
         </div>
         <div className="singleWrapper singleColumn flex column">

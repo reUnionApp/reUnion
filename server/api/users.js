@@ -151,8 +151,6 @@ router.post('/', async (req, res, next) => {
 // Single Pseudo User: PUT /api / users /: userID/psuedo
 
 router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => {
-  console.log('magic methodsssss', Object.keys(User.prototype))
-
   const id = req.body.updatedInfo.id;
   try {
     const user = await User.findByPk(id);
@@ -174,8 +172,7 @@ router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => 
     } else {
       await eventInstance.update({ isCoordinator: req.body.updatedInfo.coordStatus })
       await user.update(req.body.updatedInfo);
-      console.log('user in pseudo api route', user);
-      res.status(200).json(user);
+      res.status(201).json(user);
     }
   } catch (error) {
     if (error.errors) {
@@ -188,6 +185,31 @@ router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => 
   }
 });
 
+// Single User RSVP: PUT /api/users/:userID/rsvp
+
+router.put('/:userID/rsvp', userOrAdminOnly, async (req, res, next) => {
+  const id = req.params.userID;
+
+  try {
+    const user = await User.findByPk(id);
+
+    const eventInstance = await UserEvent.findOne({
+      where: {
+        EventId: req.body.eventId,
+        UserId: id
+      }
+    });
+
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      await eventInstance.update({ rsvpStatus: req.body.rsvpStatus })
+      res.sendStatus(201);
+    }
+  } catch (error) {
+    next(error)
+  }
+});
 
 // Single User: PUT /api/users/:userID
 
@@ -205,7 +227,7 @@ router.put('/:userID', userOrAdminOnly, async (req, res, next) => {
       res.status(401).send('Cannot update registered user');
     } else {
       await user.update(req.body);
-      res.status(200).json(user);
+      res.status(201).json(user);
     }
   } catch (error) {
     if (error.errors) {
@@ -217,3 +239,5 @@ router.put('/:userID', userOrAdminOnly, async (req, res, next) => {
     }
   }
 });
+
+
