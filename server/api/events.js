@@ -58,7 +58,7 @@ router.post('/', async (req, res, next) => {
     req.body.eventName = `${req.body.eventName}~${req.body.ownerId}`;
     const newEvent = await Event.create(req.body);
     res.status(201).json(newEvent);
-    newEvent.setUsers(req.body.ownerId, { through: { isOwner: true } });
+    newEvent.setUsers(req.body.ownerId, { through: { isOwner: true, rsvpStatus: 'accepted' } });
   } catch (error) {
     next(error);
   }

@@ -165,7 +165,6 @@ const GuestList = (props) => {
           <form
             id="guest-list"
             className="flex column"
-            style={{ width: '100%' }}
             onSubmit={addGuest}
           >
             <div className="flex jContentSB marginBottom">
