@@ -1,9 +1,31 @@
-import React from 'react'
+import React from 'react';
 
 function GuestBox(props) {
-  const { guest, adminCheck, coordCheck, ownerCheck, authUser, event, statusColor, openClose, selectGuest, editPerson, setGuestToUpdate, setUpdateGuest } = props;
+  const {
+    guest,
+    adminCheck,
+    coordCheck,
+    ownerCheck,
+    authUser,
+    event,
+    statusColor,
+    openClose,
+    selectGuest,
+    editPerson,
+    setGuestToUpdate,
+    setUpdateGuest,
+  } = props;
   return (
-    <div>
+    <div className="guestBoxMaster">
+      <img
+        alt="corner ribbon"
+        src="/cornerRibbon.png"
+        className="cornerRibbon"
+      />
+
+      {statusColor === 'yellowFade' && <p className="CRFillerP">PENDING</p>}
+      {statusColor === 'tealFade' && <p className="CRFiller">ACCEPTED</p>}
+      {statusColor === 'pinkFade' && <p className="CRFiller">DECLINED</p>}
       <div key={guest.id}>
         <div
           onClick={(e) =>
@@ -22,13 +44,11 @@ function GuestBox(props) {
                 <p className="expandedCardRowL">Email:</p>
                 {guest.email.length >= 20 ? (
                   <div className="longEmail flex column aItemsFS">
-                    <p className="expandedCardRowAlt">
-                      {guest.email}
-                    </p>
+                    <p className="expandedCardRowAlt">{guest.email}</p>
                   </div>
                 ) : (
-                    <p className="expandedCardRowR">{guest.email}</p>
-                  )}
+                  <p className="expandedCardRowR">{guest.email}</p>
+                )}
               </div>
               {guest.alias && (
                 <div className="expandedCardRow">
@@ -38,9 +58,7 @@ function GuestBox(props) {
               )}
               {guest.dietaryRestrictions && (
                 <div className="expandedCardRow">
-                  <p className="expandedCardRowL">
-                    Dietary Restrictions:
-                            </p>
+                  <p className="expandedCardRowL">Dietary Restrictions:</p>
                   <p className="expandedCardRowR">
                     {guest.dietaryRestrictions}
                   </p>
@@ -58,7 +76,7 @@ function GuestBox(props) {
                         style={{ alignSelf: 'flex-start' }}
                       >
                         Special Requests:
-                                </p>
+                      </p>
                       <div className="longText flex column aItemsFS">
                         <p className="expandedCardRowAlt">
                           {guest.specialRequests}
@@ -66,15 +84,13 @@ function GuestBox(props) {
                       </div>
                     </div>
                   ) : (
-                      <div className="expandedCardRow">
-                        <p className="expandedCardRowL">
-                          Special Requests:
-                                </p>
-                        <p className="expandedCardRowR">
-                          {guest.specialRequests}
-                        </p>
-                      </div>
-                    )}
+                    <div className="expandedCardRow">
+                      <p className="expandedCardRowL">Special Requests:</p>
+                      <p className="expandedCardRowR">
+                        {guest.specialRequests}
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
               <div
@@ -95,15 +111,14 @@ function GuestBox(props) {
                       id: guest.id,
                       userType: guest.userType,
                       events: guest.Events,
-                      coordStatusProp:
-                        guest.Events[0].UserEvent.isCoordinator,
+                      coordStatusProp: guest.Events[0].UserEvent.isCoordinator,
                     });
                     setUpdateGuest(guest);
                     openClose();
                   }}
                 >
                   Update
-                          </button>
+                </button>
               </div>
             </div>
           )}
@@ -116,7 +131,7 @@ function GuestBox(props) {
           );
         })} */}
     </div>
-  )
+  );
 }
 
 export default GuestBox;

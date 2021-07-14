@@ -92,11 +92,93 @@
   height: 3em;
 }
 
+#GLSIWrapper {
+  font-size: 1.333em;
+  width: 266.66px;
+  height: 48px;
+}
+
 .GLSendInvites {
-  background-color: #e400678e;
+  background-color: #ec7ea8;
   width: 20em;
   font-weight: bold;
   letter-spacing: 0.1em;
+  z-index: 1;
+  position: absolute;
+}
+
+.guestBoxMaster {
+  position: relative;
+}
+
+.cornerRibbon {
+  font-size: inherit;
+  width: 6.5em;
+  height: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(0.45em, -0.5em);
+}
+
+.CRFiller,
+.CRFillerP {
+  font-size: 0.9em;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  margin: 0;
+  top: 0;
+  right: 0;
+  transform: rotate(45deg) translate(1.25em, 0.45em);
+}
+
+.CRFiller {
+  transform: rotate(45deg) translate(1.25em, 0.45em);
+}
+
+.CRFillerP {
+  transform: rotate(45deg) translate(1.2em, 0.55em);
+}
+
+@keyframes confetti1 {
+  0% {
+    transform: translate(0.75em, -2.7em) scaleY(0.1) scaleX(0.8);
+  }
+  100% {
+    transform: translate(0.75em, 65vh) scaleY(3.5) scaleX(3.5);
+  }
+}
+
+@keyframes confetti2 {
+  0% {
+    transform: translate(0.75em, -3.95em) scaleY(0.1) scaleX(0.8);
+  }
+  100% {
+    transform: translate(0.75em, 65vh) scaleY(3.5) scaleX(3.5);
+  }
+}
+
+#confetti1 {
+  width: 20em;
+  z-index: 0;
+  position: absolute;
+  transform: translate(0.75em, -2.7em) scaleY(0.1) scaleX(0.8);
+}
+
+.confetti1Animation {
+  animation: confetti1 1.8s linear 0s 1 normal forwards;
+}
+
+#confetti2 {
+  width: 17em;
+  z-index: 0;
+  position: absolute;
+  transform: translate(0.75em, -3.95em) scaleY(0.1) scaleX(0.8);
+}
+
+.confetti2Animation {
+  animation: confetti1 2s linear 0s 1 normal forwards;
 }
 
 .longEmail {
@@ -198,7 +280,7 @@
   #GLMaster {
     overflow-y: auto;
   }
-  .GLSendInvites {
+  .GLSIWrapper {
     margin: 0px 0px 50px 0px;
   }
 }
@@ -213,7 +295,7 @@
   #GLUpdateButton {
     width: 10em;
   }
-  .GLSendInvites {
+  .GLSIWrapper {
     margin: 0px 0px 15px 0px;
   }
 }
