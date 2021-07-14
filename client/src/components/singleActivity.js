@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { getActivity, getEvent, removeActivity } from '../store';
+import { getActivity, getEvent, removeActivity, getUserEvents } from '../store';
 import { Link } from 'react-router-dom';
 import '../styles/create.css';
 import '../styles/single.css';
@@ -23,6 +23,7 @@ const SingleActivity = (props) => {
       props.match.params.eventId,
       props.match.params.activityId
     );
+    props.getUserEvents(props.auth.id);
   }, []);
 
   const dateFormat = (date) => {
@@ -93,10 +94,10 @@ const SingleActivity = (props) => {
               <button className="button updateEventS">Update Activity</button>
             </Link>
           ) : (
-            <button className="button updateEventSBlank">
-              (Update Activity)
-            </button>
-          )}
+              <button className="button updateEventSBlank">
+                (Update Activity)
+              </button>
+            )}
           <Link
             to={`/myEvents/${props.singleEvent.id}`}
             className="singleActivityLinkWrapper"
@@ -113,10 +114,10 @@ const SingleActivity = (props) => {
               Delete Activity
             </button>
           ) : (
-            <button className="button deleteEventSBlank">
-              (Delete Activity)
-            </button>
-          )}
+              <button className="button deleteEventSBlank">
+                (Delete Activity)
+              </button>
+            )}
         </div>
         <div className="singleWrapper singleColumn flex column SADetailsSpacer">
           <div className="confLineS">
@@ -135,8 +136,8 @@ const SingleActivity = (props) => {
                 <p className="confValueS">{description}</p>
               </div>
             ) : (
-              false
-            )}
+                false
+              )}
           </div>
           <div className="confLineS">
             <p className="confBoldS">Address: </p>
@@ -200,6 +201,7 @@ const mapDispatch = (dispatch) => ({
     dispatch(getActivity(eventId, activityId)),
   removeActivity: (eventId, activityId) =>
     dispatch(removeActivity(eventId, activityId)),
+  getUserEvents: (id) => dispatch(getUserEvents(id))
 });
 
 export default connect(mapState, mapDispatch)(SingleActivity);
