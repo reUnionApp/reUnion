@@ -31,6 +31,9 @@ const GuestList = (props) => {
   const [guestToUpdate, setGuestToUpdate] = useState({});
   let { error } = props;
 
+  const confetti1 = useRef(null);
+  const confetti2 = useRef(null);
+
   useEffect(() => {
     props.getGuestList(props.match.params.eventId);
   }, [guestList]);
@@ -162,11 +165,7 @@ const GuestList = (props) => {
       </Link>
       <div className="singleColumn flex column jContentC aItemsC">
         {adminCheck || ownerCheck || coordCheck ? (
-          <form
-            id="guest-list"
-            className="flex column"
-            onSubmit={addGuest}
-          >
+          <form id="guest-list" className="flex column" onSubmit={addGuest}>
             <div className="flex jContentSB marginBottom">
               <label className="GLLabel" htmlFor="first-name">
                 First Name:
@@ -189,8 +188,8 @@ const GuestList = (props) => {
               {error && error.response ? (
                 <p id="guestListAddError"> {error.response.data} </p>
               ) : (
-                  false
-                )}
+                false
+              )}
             </div>
             <div id="addNewGuestButton">
               <PulseButton
@@ -205,36 +204,113 @@ const GuestList = (props) => {
             </div>
           </form>
         ) : (
-            false
-          )}
+          false
+        )}
         <div id="guestListContainer">
           {props.guests &&
-            props.guests.filter((guest) => guest.Events[0].UserEvent.rsvpStatus === 'pending').map((guest) => {
-              return <GuestBox guest={guest} adminCheck={adminCheck} coordCheck={coordCheck} ownerCheck={ownerCheck} authUser={props.authUser} event={props.singleEvent} statusColor={"yellowFade"} openClose={openClose} selectGuest={selectGuest} editPerson={editPerson} setGuestToUpdate={setGuestToUpdate} setUpdateGuest={setUpdateGuest} />
-            })}
+            props.guests
+              .filter(
+                (guest) => guest.Events[0].UserEvent.rsvpStatus === 'pending'
+              )
+              .map((guest) => {
+                return (
+                  <GuestBox
+                    guest={guest}
+                    adminCheck={adminCheck}
+                    coordCheck={coordCheck}
+                    ownerCheck={ownerCheck}
+                    authUser={props.authUser}
+                    event={props.singleEvent}
+                    statusColor={'yellowFade'}
+                    openClose={openClose}
+                    selectGuest={selectGuest}
+                    editPerson={editPerson}
+                    setGuestToUpdate={setGuestToUpdate}
+                    setUpdateGuest={setUpdateGuest}
+                  />
+                );
+              })}
           {props.guests &&
-            props.guests.filter((guest) => guest.Events[0].UserEvent.rsvpStatus === 'accepted').map((guest) => {
-              return <GuestBox guest={guest} adminCheck={adminCheck} coordCheck={coordCheck} ownerCheck={ownerCheck} authUser={props.authUser} event={props.singleEvent} statusColor={"tealFade"} openClose={openClose} selectGuest={selectGuest} editPerson={editPerson} setGuestToUpdate={setGuestToUpdate} setUpdateGuest={setUpdateGuest} />
-            })}
+            props.guests
+              .filter(
+                (guest) => guest.Events[0].UserEvent.rsvpStatus === 'accepted'
+              )
+              .map((guest) => {
+                return (
+                  <GuestBox
+                    guest={guest}
+                    adminCheck={adminCheck}
+                    coordCheck={coordCheck}
+                    ownerCheck={ownerCheck}
+                    authUser={props.authUser}
+                    event={props.singleEvent}
+                    statusColor={'tealFade'}
+                    openClose={openClose}
+                    selectGuest={selectGuest}
+                    editPerson={editPerson}
+                    setGuestToUpdate={setGuestToUpdate}
+                    setUpdateGuest={setUpdateGuest}
+                  />
+                );
+              })}
           {props.guests &&
-            props.guests.filter((guest) => guest.Events[0].UserEvent.rsvpStatus === 'declined').map((guest) => {
-              return <GuestBox guest={guest} adminCheck={adminCheck} coordCheck={coordCheck} ownerCheck={ownerCheck} authUser={props.authUser} event={props.singleEvent} statusColor={"pinkFade"} openClose={openClose} selectGuest={selectGuest} editPerson={editPerson} setGuestToUpdate={setGuestToUpdate} setUpdateGuest={setUpdateGuest} />
-            })}
+            props.guests
+              .filter(
+                (guest) => guest.Events[0].UserEvent.rsvpStatus === 'declined'
+              )
+              .map((guest) => {
+                return (
+                  <GuestBox
+                    guest={guest}
+                    adminCheck={adminCheck}
+                    coordCheck={coordCheck}
+                    ownerCheck={ownerCheck}
+                    authUser={props.authUser}
+                    event={props.singleEvent}
+                    statusColor={'pinkFade'}
+                    openClose={openClose}
+                    selectGuest={selectGuest}
+                    editPerson={editPerson}
+                    setGuestToUpdate={setGuestToUpdate}
+                    setUpdateGuest={setUpdateGuest}
+                  />
+                );
+              })}
         </div>
         {adminCheck || ownerCheck || coordCheck ? (
-          <button
-            // type="submit"
-            className="button GLSendInvites"
-            onClick={() => {
-              props.getMailGuestList();
-              props.sendMailGuestList(props.guests, props.singleEvent);
-            }}
-          >
-            Send Invites
-          </button>
+          <div id="GLSIWrapper">
+            <button
+              // type="submit"
+              className="button GLSendInvites"
+              onClick={() => {
+                confetti1.current.className = 'confetti1Animation';
+                confetti2.current.className = 'confetti2Animation';
+              }}
+            >
+              Send Invites
+            </button>
+            <img
+              src="/confetti2.png"
+              id="confetti1"
+              alt="confetti1"
+              ref={confetti1}
+            />
+            <img
+              src="/confetti2.png"
+              id="confetti2"
+              alt="confetti2"
+              ref={confetti2}
+              onAnimationEnd={() => {
+                confetti1.current.className = '';
+                confetti2.current.className = '';
+                props.getMailGuestList();
+                props.sendMailGuestList(props.guests, props.singleEvent);
+              }}
+            />
+          </div>
         ) : (
-            false
-          )}
+          false
+        )}
       </div>
     </div>
   );
