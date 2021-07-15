@@ -62,7 +62,15 @@ const UpdateProfile = (props) => {
 
   return (
     <>
-      <div className="deleteProfile DPClosed flex jContentC aItemsC" ref={DP}>
+      <div
+        className="deleteProfile DPClosed flex jContentC aItemsC"
+        ref={DP}
+        onClick={(e) => {
+          if (e.target.type === undefined) {
+            openClose();
+          }
+        }}
+      >
         <DeleteProfile
           openClose={openClose}
           deleteSingleUser={deleteSingleUser}

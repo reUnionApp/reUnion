@@ -10,6 +10,7 @@ const DeleteProfile = (props) => {
 
       <button
         className="button deleteButtonModal"
+        type="button"
         onClick={() => {
           props.deleteSingleUser && props.deleteSingleUser(props.user.id);
         }}

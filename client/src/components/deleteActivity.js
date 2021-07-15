@@ -10,6 +10,7 @@ const DeleteActivity = (props) => {
 
       <button
         className="deleteButtonModal button"
+        type="button"
         onClick={() => {
           props.deleteActivity(props.singleEvent.id, props.activityToDelete.id);
           props.history &&
