@@ -6,7 +6,7 @@ import {
   getActivities,
   removeActivity,
   getUserEvents,
-  updateUser
+  updateUser,
 } from '../store';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -122,21 +122,28 @@ const SingleEvent = (props) => {
     }
   };
 
-  let currentUserEvent = props.userEvents.filter((event) => event.eventName === eventName);
+  let currentUserEvent = props.userEvents.filter(
+    (event) => event.eventName === eventName
+  );
 
   const updateRSVPStatus = async (e, status) => {
-    const payload = { eventId: props.match.params.eventId, rsvpStatus: status }
+    const payload = { eventId: props.match.params.eventId, rsvpStatus: status };
 
     await axios.put(`/api/users/${id}/rsvp`, payload);
 
     await props.getUserEvents(id);
-  }
+  };
 
   return (
     <>
       <div
         className="deleteSingleEvent DSEClosed flex jContentC aItemsC"
         ref={DSE}
+        onClick={(e) => {
+          if (e.target.type === undefined) {
+            openClose();
+          }
+        }}
       >
         <DeleteEvent
           openClose={openClose}
@@ -167,7 +174,16 @@ const SingleEvent = (props) => {
                 Update Event
               </button>
             </Link>
-          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button acceptedEventS" onClick={(e) => updateRSVPStatus(e, 'accepted')}>Accept</button>) : (
+          ) : !adminCheck &&
+            !ownerCheck &&
+            currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (
+            <button
+              className="button acceptedEventS"
+              onClick={(e) => updateRSVPStatus(e, 'accepted')}
+            >
+              Accept
+            </button>
+          ) : (
             <button className="button updateEventSBlank">(Update Event)</button>
           )}
           <h1 className="singleTitle">{eventName}</h1>
@@ -180,8 +196,33 @@ const SingleEvent = (props) => {
             >
               Delete Event
             </button>
-          ) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (<button className="button deleteEventS" onClick={(e) => updateRSVPStatus(e, 'declined')}>Decline</button>) : !adminCheck && !ownerCheck && currentUserEvent[0]?.UserEvent.rsvpStatus === 'accepted' ? (<button className="button deleteEventS" style={{ lineHeight: '1em' }} onClick={(e) => updateRSVPStatus(e, 'declined')}>Change to Decline</button>) : (
-            <button className="button deleteEventS" style={{ backgroundColor: '#38c1d38c', lineHeight: '1em' }} onClick={(e) => updateRSVPStatus(e, 'accepted')}>Change to Accept</button>
+          ) : !adminCheck &&
+            !ownerCheck &&
+            currentUserEvent[0]?.UserEvent.rsvpStatus === 'pending' ? (
+            <button
+              className="button deleteEventS"
+              onClick={(e) => updateRSVPStatus(e, 'declined')}
+            >
+              Decline
+            </button>
+          ) : !adminCheck &&
+            !ownerCheck &&
+            currentUserEvent[0]?.UserEvent.rsvpStatus === 'accepted' ? (
+            <button
+              className="button deleteEventS"
+              style={{ lineHeight: '1em' }}
+              onClick={(e) => updateRSVPStatus(e, 'declined')}
+            >
+              Change to Decline
+            </button>
+          ) : (
+            <button
+              className="button deleteEventS"
+              style={{ backgroundColor: '#38c1d38c', lineHeight: '1em' }}
+              onClick={(e) => updateRSVPStatus(e, 'accepted')}
+            >
+              Change to Accept
+            </button>
           )}
         </div>
         <div className="singleWrapper singleColumn flex column">
@@ -246,12 +287,12 @@ const SingleEvent = (props) => {
               </Link>
             </div>
           ) : (
-              <div className="flex jContentC singleButtonRow">
-                <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
-                  <button className="button MGLButton">Guest List</button>
-                </Link>
-              </div>
-            )}
+            <div className="flex jContentC singleButtonRow">
+              <Link to={`/myEvents/${props.singleEvent.id}/guestList`}>
+                <button className="button MGLButton">Guest List</button>
+              </Link>
+            </div>
+          )}
 
           <div className="flex column aItemsC FSInherit">
             <h2 className="singleALTitle">
@@ -309,14 +350,14 @@ const SingleEvent = (props) => {
                           </button>
                         </div>
                       ) : (
-                          false
-                        )}
+                        false
+                      )}
                     </div>
                   );
                 })
               ) : (
-                  <p className="NoActivities">No activities planned yet!</p>
-                )}
+                <p className="NoActivities">No activities planned yet!</p>
+              )}
             </div>
           </div>
         </div>
@@ -339,7 +380,7 @@ const mapDispatch = (dispatch) => ({
   removeActivity: (eventId, activityId) =>
     dispatch(removeActivity(eventId, activityId)),
   getUserEvents: (id) => dispatch(getUserEvents(id)),
-  updateUser: (user) => dispatch(updateUser(user))
+  updateUser: (user) => dispatch(updateUser(user)),
 });
 
 export default connect(mapState, mapDispatch)(SingleEvent);

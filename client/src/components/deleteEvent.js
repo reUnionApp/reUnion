@@ -10,6 +10,7 @@ const DeleteEvent = (props) => {
 
       <button
         className="deleteButtonModal button"
+        type="button"
         onClick={() => props.deleteEvent(props.singleEvent.id)}
       >
         Delete {props.singleEvent.eventName}

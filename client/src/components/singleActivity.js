@@ -76,6 +76,11 @@ const SingleActivity = (props) => {
       <div
         className="deleteSingleActivity DSAClosed flex jContentC aItemsC"
         ref={DSA}
+        onClick={(e) => {
+          if (e.target.type === undefined) {
+            openCloseActivity();
+          }
+        }}
       >
         <DeleteActivity
           openCloseActivity={openCloseActivity}
