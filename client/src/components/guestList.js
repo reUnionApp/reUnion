@@ -10,7 +10,7 @@ import {
   getEvent,
   getMailGuestList,
   sendMailGuestList,
-  getUserEvents
+  getUserEvents,
 } from '../store';
 import '../styles/guestList.css';
 import '../styles/create.css';
@@ -140,11 +140,8 @@ const GuestList = (props) => {
       adminCheck = props.auth.isAdmin;
       ownerCheck = props.userEvents[target].UserEvent.isOwner;
       coordCheck = props.userEvents[target].UserEvent.isCoordinator;
-
-
     }
   }
-
 
   return (
     <div
@@ -159,6 +156,7 @@ const GuestList = (props) => {
         <UpdateGuest
           openClose={openClose}
           guestInfo={guestToUpdate}
+          resetGuestInfo={setGuestToUpdate}
           handleUpdate={handleUpdate}
           deleteGuest={deleteSelectedGuest}
           updateErrors={updateErrors}
@@ -169,13 +167,8 @@ const GuestList = (props) => {
         <h1 id="guestListTitle">{props.singleEvent.eventName}</h1>
       </Link>
       <div className="singleColumn flex column jContentC aItemsC">
-        {console.log({ adminCheck, ownerCheck, coordCheck })}
         {adminCheck || ownerCheck || coordCheck ? (
-          <form
-            id="guest-list"
-            className="flex column"
-            onSubmit={addGuest}
-          >
+          <form id="guest-list" className="flex column" onSubmit={addGuest}>
             <div className="flex jContentSB marginBottom">
               <label className="GLLabel" htmlFor="first-name">
                 First Name:
@@ -198,8 +191,8 @@ const GuestList = (props) => {
               {error && error.response ? (
                 <p id="guestListAddError"> {error.response.data} </p>
               ) : (
-                  false
-                )}
+                false
+              )}
             </div>
             <div id="addNewGuestButton">
               <PulseButton
@@ -214,21 +207,81 @@ const GuestList = (props) => {
             </div>
           </form>
         ) : (
-            false
-          )}
+          false
+        )}
         <div id="guestListContainer">
           {props.guests &&
-            props.guests.filter((guest) => guest.Events[0].UserEvent.rsvpStatus === 'pending').map((guest) => {
-              return <GuestBox key={guest.id} guest={guest} adminCheck={adminCheck} coordCheck={coordCheck} ownerCheck={ownerCheck} authUser={props.authUser} event={props.singleEvent} statusColor={"yellowFade"} openClose={openClose} selectGuest={selectGuest} editPerson={editPerson} setGuestToUpdate={setGuestToUpdate} setUpdateGuest={setUpdateGuest} />
-            })}
+            props.guests
+              .filter(
+                (guest) => guest.Events[0].UserEvent.rsvpStatus === 'pending'
+              )
+              .map((guest) => {
+                return (
+                  <GuestBox
+                    key={guest.id}
+                    guest={guest}
+                    adminCheck={adminCheck}
+                    coordCheck={coordCheck}
+                    ownerCheck={ownerCheck}
+                    authUser={props.authUser}
+                    event={props.singleEvent}
+                    statusColor={'yellowFade'}
+                    openClose={openClose}
+                    selectGuest={selectGuest}
+                    editPerson={editPerson}
+                    setGuestToUpdate={setGuestToUpdate}
+                    setUpdateGuest={setUpdateGuest}
+                  />
+                );
+              })}
           {props.guests &&
-            props.guests.filter((guest) => guest.Events[0].UserEvent.rsvpStatus === 'accepted').map((guest) => {
-              return <GuestBox key={guest.id} guest={guest} adminCheck={adminCheck} coordCheck={coordCheck} ownerCheck={ownerCheck} authUser={props.authUser} event={props.singleEvent} statusColor={"tealFade"} openClose={openClose} selectGuest={selectGuest} editPerson={editPerson} setGuestToUpdate={setGuestToUpdate} setUpdateGuest={setUpdateGuest} />
-            })}
+            props.guests
+              .filter(
+                (guest) => guest.Events[0].UserEvent.rsvpStatus === 'accepted'
+              )
+              .map((guest) => {
+                return (
+                  <GuestBox
+                    key={guest.id}
+                    guest={guest}
+                    adminCheck={adminCheck}
+                    coordCheck={coordCheck}
+                    ownerCheck={ownerCheck}
+                    authUser={props.authUser}
+                    event={props.singleEvent}
+                    statusColor={'tealFade'}
+                    openClose={openClose}
+                    selectGuest={selectGuest}
+                    editPerson={editPerson}
+                    setGuestToUpdate={setGuestToUpdate}
+                    setUpdateGuest={setUpdateGuest}
+                  />
+                );
+              })}
           {props.guests &&
-            props.guests.filter((guest) => guest.Events[0].UserEvent.rsvpStatus === 'declined').map((guest) => {
-              return <GuestBox key={guest.id} guest={guest} adminCheck={adminCheck} coordCheck={coordCheck} ownerCheck={ownerCheck} authUser={props.authUser} event={props.singleEvent} statusColor={"pinkFade"} openClose={openClose} selectGuest={selectGuest} editPerson={editPerson} setGuestToUpdate={setGuestToUpdate} setUpdateGuest={setUpdateGuest} />
-            })}
+            props.guests
+              .filter(
+                (guest) => guest.Events[0].UserEvent.rsvpStatus === 'declined'
+              )
+              .map((guest) => {
+                return (
+                  <GuestBox
+                    key={guest.id}
+                    guest={guest}
+                    adminCheck={adminCheck}
+                    coordCheck={coordCheck}
+                    ownerCheck={ownerCheck}
+                    authUser={props.authUser}
+                    event={props.singleEvent}
+                    statusColor={'pinkFade'}
+                    openClose={openClose}
+                    selectGuest={selectGuest}
+                    editPerson={editPerson}
+                    setGuestToUpdate={setGuestToUpdate}
+                    setUpdateGuest={setUpdateGuest}
+                  />
+                );
+              })}
         </div>
         {adminCheck || ownerCheck || coordCheck ? (
           <div id="GLSIWrapper">
@@ -244,8 +297,8 @@ const GuestList = (props) => {
             </button>
           </div>
         ) : (
-            false
-          )}
+          false
+        )}
       </div>
     </div>
   );
@@ -272,7 +325,7 @@ const mapDispatch = (dispatch) => ({
   getMailGuestList: () => dispatch(getMailGuestList()),
   sendMailGuestList: (guests, event) =>
     dispatch(sendMailGuestList(guests, event)),
-  getUserEvents: (id) => dispatch(getUserEvents(id))
+  getUserEvents: (id) => dispatch(getUserEvents(id)),
 });
 
 export default connect(mapState, mapDispatch)(GuestList);
