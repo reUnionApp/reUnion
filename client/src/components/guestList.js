@@ -11,6 +11,7 @@ import {
   getMailGuestList,
   sendMailGuestList,
   getUserEvents,
+  updateRegUser
 } from '../store';
 import '../styles/guestList.css';
 import '../styles/create.css';
@@ -80,7 +81,11 @@ const GuestList = (props) => {
         Number(props.match.params.eventId)
       );
     } else {
-      updateGuestAttempt = await props.updateUser(updatedInfo);
+      updateGuestAttempt = await props.updateRegUser(
+        updatedInfo,
+        props.auth,
+        Number(props.match.params.eventId)
+      );
     }
     if (updateGuestAttempt === 200) {
       setUpdateErrors('');
@@ -143,6 +148,24 @@ const GuestList = (props) => {
     }
   }
 
+  const [coordStatus, setCoordStatus] = useState(null);
+  const [UGFN, setUGFN] = useState('first name');
+  const [UGLN, setUGLN] = useState('last name');
+  const [UGE, setUGE] = useState('email');
+
+  const resetUG = () => {
+    setGuestToUpdate({ reset: true });
+    setUGFN('first name');
+    setUGLN('last name');
+    setUGE('email');
+  };
+
+  const hanldeTransition = () => {
+    if (UGC.current.classList.contains('UGCClosed')) {
+      resetUG();
+    }
+  }
+
   return (
     <div
       className="singleContainer flex column aItemsC background2Down"
@@ -152,15 +175,24 @@ const GuestList = (props) => {
         id="updateGuestContainer"
         className="UGCClosed flex column aItemsC"
         ref={UGC}
+        onTransitionEnd={hanldeTransition}
       >
         <UpdateGuest
           openClose={openClose}
           guestInfo={guestToUpdate}
-          resetGuestInfo={setGuestToUpdate}
           handleUpdate={handleUpdate}
           deleteGuest={deleteSelectedGuest}
           updateErrors={updateErrors}
           eventId={Number(props.match.params.eventId)}
+          authUser={props.auth}
+          coordStatus={coordStatus}
+          setCoordStatus={setCoordStatus}
+          UGFN={UGFN}
+          setUGFN={setUGFN}
+          UGLN={UGLN}
+          setUGLN={setUGLN}
+          UGE={UGE}
+          setUGE={setUGE}
         />
       </div>
       <Link to={`/myEvents/${props.singleEvent.id}`}>
@@ -191,8 +223,8 @@ const GuestList = (props) => {
               {error && error.response ? (
                 <p id="guestListAddError"> {error.response.data} </p>
               ) : (
-                false
-              )}
+                  false
+                )}
             </div>
             <div id="addNewGuestButton">
               <PulseButton
@@ -207,8 +239,8 @@ const GuestList = (props) => {
             </div>
           </form>
         ) : (
-          false
-        )}
+            false
+          )}
         <div id="guestListContainer">
           {props.guests &&
             props.guests
@@ -297,8 +329,8 @@ const GuestList = (props) => {
             </button>
           </div>
         ) : (
-          false
-        )}
+            false
+          )}
       </div>
     </div>
   );
@@ -326,6 +358,9 @@ const mapDispatch = (dispatch) => ({
   sendMailGuestList: (guests, event) =>
     dispatch(sendMailGuestList(guests, event)),
   getUserEvents: (id) => dispatch(getUserEvents(id)),
+  updateRegUser: (updatedUser, authUser, eventId) =>
+    dispatch(updateRegUser(updatedUser, authUser, eventId)),
+
 });
 
 export default connect(mapState, mapDispatch)(GuestList);
