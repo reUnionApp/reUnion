@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const ADD_PSEUDO_USER = 'ADD_PSEUDO_USER';
 const UPDATE_PSEUDO_USER = 'UPDATE_PSEUDO_USER';
+const UPDATE_REG_USER = 'UPDATE_REG_USER';
 const GET_USER = 'GET_USER';
 const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
@@ -17,6 +18,13 @@ const _addPseudoUser = (user) => {
 const _updatePseudoUser = (user) => {
   return {
     type: UPDATE_PSEUDO_USER,
+    user,
+  };
+};
+
+const _updateRegUser = (user) => {
+  return {
+    type: UPDATE_REG_USER,
     user,
   };
 };
@@ -57,11 +65,22 @@ export const addPseudoUser = (user) => async (dispatch) => {
 };
 
 export const updatePseudoUser = (updatedInfo, authUser, eventId) => async (dispatch) => {
-  console.log({ updatedInfo, authUser })
   try {
     const payLoad = { id: authUser.id, updatedInfo }
     const { data } = await axios.put(`/api/users/pseudo/${eventId}`, payLoad);
     dispatch(_updatePseudoUser(data));
+    return 200;
+  } catch (error) {
+    console.error(error);
+    return error.response.data;
+  }
+};
+
+export const updateRegUser = (updatedInfo, authUser, eventId) => async (dispatch) => {
+  try {
+    const payLoad = { id: authUser.id, updatedInfo }
+    const { data } = await axios.put(`/api/users/registered/${eventId}`, payLoad);
+    dispatch(_updateRegUser(data));
     return 200;
   } catch (error) {
     console.error(error);
@@ -105,6 +124,8 @@ export default function (state = defaultState, action) {
     case ADD_PSEUDO_USER:
       return action.user;
     case UPDATE_PSEUDO_USER:
+      return action.user
+    case UPDATE_REG_USER:
       return action.user
     case GET_USER:
       return action.user;

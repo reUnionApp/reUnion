@@ -90,8 +90,6 @@ export default function (state = defaultState, action) {
       return { ...state, email: action.email };
     case SEND_MAIL:
       // return state;
-      console.log('in reducer');
-      console.log('action.email', action.email)
       return { ...state, email: action.email };
     default:
       return state;

@@ -148,7 +148,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// Single Pseudo User: PUT /api / users /: userID/psuedo
+// Single Pseudo User: PUT /api /users/psuedo/:eventID
 
 router.put('/pseudo/:eventID', adminOwnerCoordinator, async (req, res, next) => {
   const id = req.body.updatedInfo.id;
@@ -208,6 +208,31 @@ router.put('/:userID/rsvp', userOrAdminOnly, async (req, res, next) => {
     }
   } catch (error) {
     next(error)
+  }
+});
+
+// Single Pseudo User: PUT /api /users/registered/:eventID
+
+router.put('/registered/:eventID', adminOwnerCoordinator, async (req, res, next) => {
+  const id = req.body.updatedInfo.id;
+  try {
+    const user = await User.findByPk(id);
+
+    const eventInstance = await UserEvent.findOne({
+      where: {
+        EventId: req.params.eventID,
+        UserId: req.body.updatedInfo.id
+      }
+    });
+
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      await eventInstance.update({ isCoordinator: req.body.updatedInfo.coordStatus })
+      res.status(201).json(user);
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
