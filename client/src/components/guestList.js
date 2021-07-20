@@ -148,6 +148,24 @@ const GuestList = (props) => {
     }
   }
 
+  const [coordStatus, setCoordStatus] = useState(null);
+  const [UGFN, setUGFN] = useState('first name');
+  const [UGLN, setUGLN] = useState('last name');
+  const [UGE, setUGE] = useState('email');
+
+  const resetUG = () => {
+    setGuestToUpdate({ reset: true });
+    setUGFN('first name');
+    setUGLN('last name');
+    setUGE('email');
+  };
+
+  const hanldeTransition = () => {
+    if (UGC.current.classList.contains('UGCClosed')) {
+      resetUG();
+    }
+  }
+
   return (
     <div
       className="singleContainer flex column aItemsC background2Down"
@@ -157,16 +175,24 @@ const GuestList = (props) => {
         id="updateGuestContainer"
         className="UGCClosed flex column aItemsC"
         ref={UGC}
+        onTransitionEnd={hanldeTransition}
       >
         <UpdateGuest
           openClose={openClose}
           guestInfo={guestToUpdate}
-          resetGuestInfo={setGuestToUpdate}
           handleUpdate={handleUpdate}
           deleteGuest={deleteSelectedGuest}
           updateErrors={updateErrors}
           eventId={Number(props.match.params.eventId)}
           authUser={props.auth}
+          coordStatus={coordStatus}
+          setCoordStatus={setCoordStatus}
+          UGFN={UGFN}
+          setUGFN={setUGFN}
+          UGLN={UGLN}
+          setUGLN={setUGLN}
+          UGE={UGE}
+          setUGE={setUGE}
         />
       </div>
       <Link to={`/myEvents/${props.singleEvent.id}`}>

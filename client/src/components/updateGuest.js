@@ -5,10 +5,15 @@ import Loading from './loading';
 import '../styles/updateGuest.css';
 
 const UpdateGuest = (props) => {
-  const [coordStatus, setCoordStatus] = useState(null);
-  const [UGFN, setUGFN] = useState('first name');
-  const [UGLN, setUGLN] = useState('last name');
-  const [UGE, setUGE] = useState('email');
+  const { coordStatus,
+    setCoordStatus,
+    UGFN,
+    setUGFN,
+    UGLN,
+    setUGLN,
+    UGE,
+    setUGE,
+  } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +26,6 @@ const UpdateGuest = (props) => {
       coordStatus,
     };
     props.handleUpdate(e, updatedInfo);
-    resetUG();
   };
 
   const deleteGuest = () => {
@@ -47,14 +51,6 @@ const UpdateGuest = (props) => {
   if (UGE === 'email' && props.guestInfo.firstName !== undefined) {
     setUGE(props.guestInfo.email);
   }
-
-  const resetUG = () => {
-    props.resetGuestInfo({ reset: true });
-    setUGFN('first name');
-    setUGLN('last name');
-    setUGE('email');
-  };
-
 
   return (
     <div className="updateOverflowWrapper flex column aItemsC">
@@ -285,7 +281,6 @@ const UpdateGuest = (props) => {
             onClick={() => {
               props.openClose();
               setCoordStatus(props.guestInfo.coordStatusProp);
-              resetUG();
             }}
           >
             Cancel
