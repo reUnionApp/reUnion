@@ -11,7 +11,7 @@ import {
   getMailGuestList,
   sendMailGuestList,
   getUserEvents,
-  updateRegUser
+  updateRegUser,
 } from '../store';
 import '../styles/guestList.css';
 import '../styles/create.css';
@@ -164,6 +164,20 @@ const GuestList = (props) => {
     if (UGC.current.classList.contains('UGCClosed')) {
       resetUG();
     }
+  };
+
+  if (Object.keys(guestToUpdate).length && coordStatus === null) {
+    setCoordStatus(guestToUpdate.coordStatusProp);
+  }
+
+  if (UGFN === 'first name' && guestToUpdate.firstName !== undefined) {
+    setUGFN(guestToUpdate.firstName);
+  }
+  if (UGLN === 'last name' && guestToUpdate.firstName !== undefined) {
+    setUGLN(guestToUpdate.lastName);
+  }
+  if (UGE === 'email' && guestToUpdate.firstName !== undefined) {
+    setUGE(guestToUpdate.email);
   }
 
   return (
@@ -193,6 +207,7 @@ const GuestList = (props) => {
           setUGLN={setUGLN}
           UGE={UGE}
           setUGE={setUGE}
+          UGC={UGC}
         />
       </div>
       <Link to={`/myEvents/${props.singleEvent.id}`}>
@@ -223,8 +238,8 @@ const GuestList = (props) => {
               {error && error.response ? (
                 <p id="guestListAddError"> {error.response.data} </p>
               ) : (
-                  false
-                )}
+                false
+              )}
             </div>
             <div id="addNewGuestButton">
               <PulseButton
@@ -239,8 +254,8 @@ const GuestList = (props) => {
             </div>
           </form>
         ) : (
-            false
-          )}
+          false
+        )}
         <div id="guestListContainer">
           {props.guests &&
             props.guests
@@ -329,8 +344,8 @@ const GuestList = (props) => {
             </button>
           </div>
         ) : (
-            false
-          )}
+          false
+        )}
       </div>
     </div>
   );
@@ -360,7 +375,6 @@ const mapDispatch = (dispatch) => ({
   getUserEvents: (id) => dispatch(getUserEvents(id)),
   updateRegUser: (updatedUser, authUser, eventId) =>
     dispatch(updateRegUser(updatedUser, authUser, eventId)),
-
 });
 
 export default connect(mapState, mapDispatch)(GuestList);
