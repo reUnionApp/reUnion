@@ -76,9 +76,7 @@
 }
 
 #buttonDiv {
-  display: flex;
-  width: 300px;
-  justify-content: space-evenly;
+  width: 100%;
 }
 
 #buttonDiv label {
@@ -144,6 +142,7 @@
 
 #coordStatusTitle {
   font-size: 1.2em;
+  text-align: center;
 }
 
 @media (max-height: 750px) {
