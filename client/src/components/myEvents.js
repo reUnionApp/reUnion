@@ -87,7 +87,7 @@ const MyEvents = (props) => {
           </h2> : false}
           {props.userEvents &&
             props.userEvents.filter((event) => event.UserEvent.rsvpStatus === 'declined').map((event) => {
-              return <EventBox event={event} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} statusColor={"pinkFade"} />
+              return <EventBox event={event} openClose={openClose} setDeleteEvent={setDeleteEvent} adminCheck={adminCheck} key={event.id} userId={userId} statusColor={"pinkFade"} declined={true} />
             })}
         </div>
         <div id="createEventButtonWrapper">
