@@ -8,7 +8,6 @@ module.exports = router;
 // Get /api/email
 router.get('/', async (req, res, next) => {
   try {
-    console.log('in the index backend routes')
     res.send("It's working")
   } catch (error) {
     next(error);
@@ -65,7 +64,6 @@ router.post("/invitation", async (req, res, next) => {
               }
             });
             currGuest.update({ receivedInvite: true });
-            console.log(11111, currGuest)
           }
         }
       }

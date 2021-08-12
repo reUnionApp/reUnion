@@ -39,7 +39,6 @@ export const getGuestList = (id) => async (dispatch) => {
 
 export const removeGuest = (eventId, guestId) => async (dispatch) => {
   try {
-    console.log('from thunk-->', eventId, guestId);
     const { data } = await axios.put(`/api/events/${eventId}/guestList`, {
       guestId,
     });
@@ -61,7 +60,6 @@ export const getMailGuestList = () => async (dispatch) => {
 export const sendMailGuestList = (guests, event) => async (dispatch) => {
   try {
     const payload = { guests, event }
-    console.log('in sendMailGuestList thunk')
     const data = await axios.post(`/api/email/invitation`, payload);
     dispatch(_sendMailGuestList(data));
   } catch (error) {

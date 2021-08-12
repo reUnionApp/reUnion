@@ -31,7 +31,6 @@ const UpdateProfile = (props) => {
   };
 
   const deleteSingleUser = async (userId) => {
-    console.log('in deleteSingleUser!!!!');
     await props.deleteUser(userId);
     history.go(0);
   };
