@@ -4,8 +4,6 @@ module.exports = async (req, res, next) => {
   const eventId = req.params.eventID;
   const userId = req.user.id;
 
-  console.log({ userId });
-
   const ocCheck = await User.findByPk(userId, {
     include: {
       model: Event,

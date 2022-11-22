@@ -143,7 +143,6 @@ const UpdateEvent = (props) => {
 
       setGoogleLocation({});
       setGoogleLocation(googleLocation);
-      console.log('g state after-->', googleLocation);
       setTextLocation('');
       locationUpdate.current = true;
     } else {

@@ -8,7 +8,6 @@ module.exports = router;
 // Get /api/email
 router.get('/', async (req, res, next) => {
   try {
-    console.log('in the index backend routes')
     res.send("It's working")
   } catch (error) {
     next(error);
@@ -40,10 +39,6 @@ router.post("/invitation", async (req, res, next) => {
   const allEmails = finalList.map((guest) => {
     return { "email": `${guest.email}` }
   });
-  console.log('finallisssttt!!!!!', finalList)
-  // console.log(111111, req.body.guests)
-  // console.log(22222222, req.user)
-  // console.log(333333, req.body.event)
 
   const dateFormat = (date) => {
     let dateObj = date;
@@ -53,11 +48,6 @@ router.post("/invitation", async (req, res, next) => {
 
     return month + '/' + day + '/' + year;
   };
-
-  // const testText = `${req.user.firstName} invited you to the event ${req.body.event.eventName} event on ${dateFormat(new Date(req.body.event.startDateTime))}. To see the details for this event, click on the link below. https://myreunionapp.herokuapp.com/
-  // `
-
-  // console.log({ testText })
 
   let updateInviteStatus = async function (arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -74,7 +64,6 @@ router.post("/invitation", async (req, res, next) => {
               }
             });
             currGuest.update({ receivedInvite: true });
-            console.log(11111, currGuest)
           }
         }
       }

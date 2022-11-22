@@ -26,16 +26,16 @@
     <title>reUnion</title>
     <link href="%PUBLIC_URL%/favicon.ico" rel="icon"/>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <!-- <temp data-prettydiff-ignore><temp data-prettydiff-ignore><script>
+    <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("serviceWorker.js").then(
+          navigator.serviceWorker.register("/serviceWorker.js").then(
             function (registration) {
               // Registration was successful
               console.log(
@@ -50,7 +50,7 @@
           );
         });
       }
-    </script></temp></temp> -->
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.
